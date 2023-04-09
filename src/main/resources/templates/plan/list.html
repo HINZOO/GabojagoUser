@@ -1,14 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layout}">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <link rel="stylesheet" href="/webjars/bootstrap/5.2.3/dist/css/bootstrap.min.css">
-    <script src="/webjars/bootstrap/5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-    <link rel="stylesheet" href="/webjars/bootstrap-icons/1.10.3/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="../../static/css/plan.css">
-
+    <title>게시판 상세</title>
 </head>
+
 <style>
     @font-face {
         font-family: 'TheJamsil5Bold';
@@ -57,8 +55,7 @@
     }
 
 </style>
-<body>
-
+<div layout:fragment="content">
 
     <div class="row mx-0 w-100 vh-100">
         <div class="col col-1 listSide" style="background-color: rgba(156,188,255,0.43)">
@@ -104,11 +101,11 @@
 
 
 
-<!--            -->
-<!--            -->
-<!--            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">-->
-<!--                새 플랜 만들기-->
-<!--            </button>-->
+            <!--            -->
+            <!--            -->
+            <!--            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">-->
+            <!--                새 플랜 만들기-->
+            <!--            </button>-->
 
             <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div class="modal-dialog">
@@ -141,11 +138,14 @@
     </div>
 
 
-<script>
-    let newPlanBtn = document.querySelector("#newPlanBtn");
-    newPlanBtn.addEventListener("click",()=>{
-        new bootstrap.Modal(document.getElementById('staticBackdrop'), {}).show();
-    })
-</script>
-</body>
+    <script>
+        let newPlanBtn = document.querySelector("#newPlanBtn");
+        newPlanBtn.addEventListener("click",()=>{
+            new bootstrap.Modal(document.getElementById('staticBackdrop'), {}).show();
+        })
+    </script>
+
+
+
+</div>
 </html>
