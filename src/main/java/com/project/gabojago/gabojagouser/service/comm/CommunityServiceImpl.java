@@ -13,26 +13,31 @@ public class CommunityServiceImpl  implements CommunityService{
     //유저맵퍼..
     @Override
     public List<CommunityDto> list() {
-        return null;
+        List<CommunityDto> list=communityMapper.findAll();
+        return list;
     }
 
     @Override
     public CommunityDto detail(int cId) {
-        return null;
+        CommunityDto detail=communityMapper.findByCId(cId);
+        return detail;
     }
 
     @Override
     public int register(CommunityDto community) {
-        return 0;
+        int register=communityMapper.insertOne(community);
+        return register;
     }
 
     @Override
     public int modify(CommunityDto community) {
-        return 0;
+        int modify=communityMapper.updateOne(community);
+        return modify;
     }
 
     @Override
     public int remove(int cId) {
-        return 0;
+        int remove=communityMapper.deleteOne(cId);
+        return remove;
     }
 }

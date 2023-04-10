@@ -1,9 +1,10 @@
 package com.project.gabojago.gabojagouser.mapper.comm;
 
 import com.project.gabojago.gabojagouser.dto.comm.CommunityDto;
+import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
-
+@Mapper
 public interface CommunityMapper {
     //리스트 //상세 //등록 //수정 //삭제
     List<CommunityDto> findAll();
