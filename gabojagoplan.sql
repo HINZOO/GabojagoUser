@@ -552,13 +552,13 @@ INSERT INTO users (u_id, pw, name, nk_name, email, birth, phone, address, detail
 
 
 
+INSERT INTO plans(u_id, title, info, plan_from, plan_to, img_path, plan_status, review) VALUES('USER01', 'Weekend Trip to the Beach', '이번 주말 해변에 놀러갈 여행 친구 구함', '2023-04-01', '2023-04-03', '/images/beach.jpg', 'PUBLIC', true);
+INSERT INTO plans(u_id, title, info, plan_from, plan_to, img_path, plan_status, review) VALUES('USER02', '놀러가자', '언제놀러가지', '2023-05-01', '2023-05-03', '/images/beach.jpg', 'PUBLIC', true);
+
 INSERT INTO communitys (u_id, p_id, title, content, area, istj, istp, isfj, isfp, intj, intp, infj, infp, estj, estp, esfj, esfp, entj, entp, enfj, enfp) VALUES
     ('USER01', 1, 'Lets hike together!', 'Looking for hiking buddies in the Seoul area. Planning to go to Bukhansan National Park next weekend.', '서울', 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 INSERT INTO communitys (u_id, p_id, title, content, area, istj, istp, isfj, isfp, intj, intp, infj, infp, estj, estp, esfj, esfp, entj, entp, enfj, enfp) VALUES
     ('USER02', 2, 'Coffee lovers unite!', 'Looking for people who enjoy trying out new coffee shops in the Gyeonggi area. Lets share our favorite spots and maybe even organize a coffee tasting event.', '경기', 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-
-INSERT INTO plans(u_id, title, info, plan_from, plan_to, img_path, plan_status, review) VALUES('USER01', 'Weekend Trip to the Beach', '이번 주말 해변에 놀러갈 여행 친구 구함', '2023-04-01', '2023-04-03', '/images/beach.jpg', 'PUBLIC', true);
-INSERT INTO plans(u_id, title, info, plan_from, plan_to, img_path, plan_status, review) VALUES('USER02', '놀러가자', '언제놀러가지', '2023-05-01', '2023-05-03', '/images/beach.jpg', 'PUBLIC', true);
 
 CREATE USER 'gabojagoDba'@'localhost' IDENTIFIED BY 'mysql123';
 GRANT ALL PRIVILEGES ON gabojagoPlan.* TO 'gabojagoDba'@'localhost';
