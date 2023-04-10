@@ -4,8 +4,8 @@ import lombok.Data;
 
 @Data
 public class PlanMembersDto {
-    int mlId; // PK
-    int pId; // FK 플랜아이디
-    int muId; // FK 멤버유저아이디
+    private int mlId; // PK
+    private int pId; // FK 플랜아이디
+    private int muId; // FK 멤버유저아이디
 
 }

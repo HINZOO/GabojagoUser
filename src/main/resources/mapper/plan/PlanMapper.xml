@@ -1,4 +1,34 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.project.gabojago.gabojagouser.mapper.plan.PlanMapper">
+    <resultMap id="planMap" type="PlanDto">
+        <id column="p_id" property="pId"/>
+        <result column="u_id" property="uId"/>
+        <result column="title" property="title"/>
+        <result column="info" property="info"/>
+        <result column="schedule_from" property="from"/>
+        <result column="schedule_to" property="to"/>
+        <result column="post_time" property="postTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="img_path" property="imgPath"/>
+        <result column="status" property="status"/>
+        <result column="review" property="review"/>
+    </resultMap>
+
+    <insert id="insertOne" useGeneratedKeys="true" keyProperty="pId"  parameterType="PlanDto">
+        INSERT INTO plans (u_id, title, info, plan_from, plan_to, img_path, plan_status) VALUE (#{uId}, #{title}, #{info}, #{from}, #{to}, #{imgPath}, #{status})
+    </insert>
+    <update id="updateOne">
+
+    </update>
+    <delete id="deleteOne">
+
+    </delete>
+<!--    <select id="findAll" resultType="com.project.gabojago.gabojagouser.dto.plan.PlanDto">-->
+    <select id="findAll" resultMap="planMap">
+        SELECT * FROM plans
+    </select>
+    <select id="findByBId" resultType="com.project.gabojago.gabojagouser.dto.plan.PlanDto">
+
+    </select>
 </mapper>

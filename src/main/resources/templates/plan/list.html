@@ -1,68 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <link rel="stylesheet" href="/webjars/bootstrap/5.2.3/dist/css/bootstrap.min.css">
-    <script src="/webjars/bootstrap/5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-    <link rel="stylesheet" href="/webjars/bootstrap-icons/1.10.3/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="../../static/css/plan.css">
-
+    <title>게시판 상세</title>
+    <link th:href="@{/css/plan/plan.css}" rel="stylesheet" />
 </head>
-<style>
-    @font-face {
-        font-family: 'TheJamsil5Bold';
-        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/TheJamsil5Bold.woff2') format('woff2');
-        font-weight: 700;
-        font-style: normal;
-    }
-    #newPlanBtn {
-        background-color: #ffffff;
-        width: 130px;
-        height: 170px;
-        box-shadow: 0px 0px 5px 5px #e5e5e5;
-        color: lightgrey;
-        font-size: 30px;
-        font-weight: bold;
-        text-align: center;
-    }
-    #newPlanBtn:hover {
-        box-shadow: 0px 0px 10px 5px lightgrey;
-    }
-    .listMain{
-        padding-top: 40px;
-        padding-left: 40px;
-    }
-    .listMain section {
-        height: 33vh;
-    }
-    .listTitle {
 
-    }
-    .listTitle hr {
-        margin-top: 10px;
-        border: 2px solid grey;
-        width: 95%;
-
-    }
-    .listTitleP {
-        font-size: 25px;
-        font-family: 'TheJamsil5Bold';
-        border-left: 10px solid lightgrey;
-        padding: 2px 10px 2px 10px;
-        color: #3b3b3b;
-    }
-    .listContent {
-        padding-left: 20px;
-    }
-
-</style>
-<body>
+<div layout:fragment="content">
 
 
     <div class="row mx-0 w-100 vh-100">
         <div class="col col-1 listSide" style="background-color: rgba(156,188,255,0.43)">
-            전체보기
+            전체보기2
         </div>
         <div class="col col-11 listMain">
             <section class="row" >
@@ -101,33 +52,74 @@
                 </div>
             </section>
 
-
-
-
-<!--            -->
-<!--            -->
-<!--            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">-->
-<!--                새 플랜 만들기-->
-<!--            </button>-->
-
             <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <div class="modal-dialog">
+                <div class="modal-dialog modal-dialog-centered modal-lg">
                     <div class="modal-content">
-                        <div class="modal-header">
+                        <div class="modal-header bg-primary bg-opacity-10">
                             <h1 class="modal-title fs-5" id="staticBackdropLabel">새 플랜 만들기</h1>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <form>
-                                <label>타이틀 : <input type="text"></label>
-                                <label>기간 : <input type="text"></label>
-                                <label>공개여부 : <input type="text"></label>
-                                <label>플랜 설명 : <input type="text"></label>
-                                <label>대표이미지 설정 : <input type="text"></label>
-                                <label>제 목 : <input type="text"></label>
+                            <form  method="post" action="./insert.do">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="form-floating">
+                                            <input type="file" class="form-control" name="tempImg" id="floatingImg" placeholder="">
+                                            <label for="floatingImg">대표이미지</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="row">
+                                            <div class="col-12 mb-3">
+                                                <div class="form-floating">
+                                                    <input type="text" class="form-control" name="uId" value="USER01" id="floatingId" placeholder="" hidden>
+                                                    <label for="floatingId"></label>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 mb-3">
+                                                <div class="form-floating">
+                                                    <input type="text" class="form-control" name="title" id="floatingTitle" placeholder="">
+                                                    <label for="floatingTitle">플랜 타이틀</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="form-floating">
+                                                    <input type="date" class="form-control" name="from" id="floatingFrom" placeholder="">
+                                                    <label for="floatingFrom">일정 시작</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-6 mb-3">
+                                                <div class="form-floating">
+                                                    <input type="date" class="form-control" name="to" id="floatingTo" placeholder="">
+                                                    <label for="floatingTo">일정 끝</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 mb-3">
+                                                <div class="form-floating">
+                                                    <input type="text" class="form-control" name="info" id="floatingInfo" placeholder="" style="height: 200px">
+                                                    <label for="floatingInfo">설 명</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="status" id="flexRadioDefault1" value="PUBLIC" checked>
+                                                    <label class="form-check-label" for="flexRadioDefault1">공개</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-6 mb-3">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="status" value="PRIVATE" id="flexRadioDefault2" >
+                                                    <label class="form-check-label" for="flexRadioDefault2">비공개</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-primary">Understood</button>
+                                    <button type="submit" class="btn btn-primary">만들기</button>
                                 </div>
                             </form>
                         </div>
@@ -141,11 +133,16 @@
     </div>
 
 
-<script>
-    let newPlanBtn = document.querySelector("#newPlanBtn");
-    newPlanBtn.addEventListener("click",()=>{
-        new bootstrap.Modal(document.getElementById('staticBackdrop'), {}).show();
-    })
-</script>
-</body>
+    <script>
+        let newPlanBtn = document.querySelector("#newPlanBtn");
+        newPlanBtn.addEventListener("click",()=>{
+            new bootstrap.Modal(document.getElementById('staticBackdrop'), {}).show();
+        })
+    </script>
+
+</div>
 </html>
+
+
+
+
