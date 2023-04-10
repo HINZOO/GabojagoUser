@@ -1,4 +1,4 @@
-DROP DATABASE gabojagoPlan;
+
 CREATE DATABASE gabojagoPlan CHARACTER SET utf8;
 use gabojagoPlan;
 
@@ -36,7 +36,7 @@ CREATE TABLE `notices` (
                            `title`	varchar(255) NOT NULL COMMENT '제목',
                            `content`	TEXT COMMENT '내용',
                            `post_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '작성 시간',
-                           `update_time` TIMESTAMP	NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '수정 시간',
+                           `update_time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '최종 수정 시간',
                            `view_count`	INT UNSIGNED DEFAULT 0 COMMENT '조회수',
                            `img_path`	varchar(255) COMMENT '프로필 이미지',
                            FOREIGN KEY (u_id) REFERENCES users (u_id) ON DELETE CASCADE ON UPDATE CASCADE
@@ -69,7 +69,7 @@ CREATE TABLE `trips` (
                          `u_id`	varchar(255)  COMMENT '작성자 아이디',
                          `title`	varchar(255) NOT NULL COMMENT '제목',
                          `post_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '작성 시간',
-                         `update_time` TIMESTAMP	NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '수정 시간',
+                         `update_time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '최종 수정 시간',
                          `area`	ENUM('서울', '인천', '대전', '광주', '대구', '울산', '부산', '세종', '경기', '강원', '충북', '충남', '전북', '전남', '경북', '경남', '제주')NOT NULL COMMENT '지역',
                          `address`	varchar(255) COMMENT '주소',
                          `phone`	varchar(20) UNIQUE NOT NULL COMMENT'핸드폰',
@@ -103,7 +103,7 @@ CREATE TABLE `trip_reviews` (
                                 `content`	TEXT  COMMENT '내용 ',
                                 `visit`	boolean default true COMMENT '방문여부',
                                 `post_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '작성 시간',
-                                `update_time` TIMESTAMP	NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '수정 시간',
+                                `update_time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '최종 수정 시간',
                                 `grade`	int unsigned	COMMENT '평점',
                                 FOREIGN KEY (u_id) REFERENCES users (u_id) ON DELETE CASCADE ON UPDATE CASCADE,
                                 FOREIGN KEY (t_id) REFERENCES trips (t_id) ON DELETE CASCADE ON UPDATE CASCADE
@@ -143,7 +143,7 @@ CREATE TABLE `trip_review_comments` (
                                         `content` TEXT  COMMENT '내용 ',
                                         `status`	enum('PUBLIC','PRIVATE') DEFAULT 'PUBLIC' COMMENT '상태',
                                         `post_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '작성 시간',
-                                        `update_time` TIMESTAMP	NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '수정 시간',
+                                        `update_time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '최종 수정 시간',
                                         `parent_trc_id`	INT UNSIGNED COMMENT '부모 댓글 아이디(대댓글)',
                                         FOREIGN KEY (u_id) REFERENCES users (u_id) ON DELETE CASCADE ON UPDATE CASCADE,
                                         FOREIGN KEY (tr_id) REFERENCES trip_reviews (tr_id) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -213,7 +213,7 @@ CREATE TABLE `plans` (
                          `from`	varchar(255) COMMENT '일정시작',
                          `to`	varchar(255) COMMENT '일정 끝',
                          `post_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '작성 시간',
-                         `update_time` TIMESTAMP	NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '수정 시간',
+                         `update_time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '최종 수정 시간',
                          `img_path`	varchar(255) COMMENT '대표 이미지',
                          `status`	enum('PUBLIC','PRIVATE') DEFAULT 'PUBLIC' COMMENT '상태',
                          `review` boolean COMMENT '리뷰작성 여부',
@@ -236,7 +236,7 @@ CREATE TABLE `sells` (
                          `title`	varchar(255) NOT NULL COMMENT '제목',
                          `content`	TEXT  COMMENT '내용',
                          `post_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '작성 시간',
-                         `update_time` TIMESTAMP	NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '수정 시간',
+                         `update_time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '최종 수정 시간',
                          `view_count`	INT UNSIGNED DEFAULT 0 COMMENT '조회수',
                          `category`	enum('워터','테마','키즈','레저','박물관')	NOT NULL COMMENT '카테고리',
                          `qnt`	int unsigned COMMENT '수량',
@@ -338,7 +338,7 @@ CREATE TABLE `communitys` (
                               `title`	varchar(255) NOT NULL COMMENT '제목',
                               `content`	TEXT  COMMENT '내용',
                               `post_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '작성 시간',
-                              `update_time` TIMESTAMP	NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '수정 시간',
+                              `update_time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '최종 수정 시간',
                               `view_count`	INT UNSIGNED DEFAULT 0 COMMENT '조회수',
                               `status`	enum('PUBLIC','PRIVATE') DEFAULT 'PUBLIC' COMMENT '상태',
                               `area`	ENUM('서울', '인천', '대전', '광주', '대구', '울산', '부산', '세종', '경기', '강원', '충북', '충남', '전북', '전남', '경북', '경남', '제주')NOT NULL,
@@ -371,7 +371,7 @@ CREATE TABLE `comm_comment` (
                                 `content`	TEXT  COMMENT '내용',
                                 `status`	enum('PUBLIC','PRIVATE') DEFAULT 'PUBLIC' COMMENT '상태',
                                 `post_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '작성 시간',
-                                `update_time` TIMESTAMP	NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '수정 시간',
+                                `update_time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '최종 수정 시간',
                                 `parent_cr_id`	INT UNSIGNED COMMENT '부모 댓글 아이디(대댓글)',
                                 FOREIGN KEY (u_id) REFERENCES users (u_id) ON DELETE CASCADE ON UPDATE CASCADE,
                                 FOREIGN KEY (c_id) REFERENCES communitys (c_id) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -518,7 +518,7 @@ CREATE TABLE `qna_replys` (
                               `u_id`	varchar(255) NOT NULL COMMENT '유저 아이디',
                               `content`	text	COMMENT '댓글 내용',
                               `post_time`	TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '작성일',
-                              `update_time`	TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '수정일',
+                              `update_time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '최종 수정 시간',
                               `parent_qna_id`	INT UNSIGNED COMMENT '부모 댓글 아이디(대댓글)',
                               FOREIGN KEY (q_id) REFERENCES qnas (q_id) ON DELETE CASCADE ON UPDATE CASCADE,
                               FOREIGN KEY (u_id) REFERENCES users (u_id) ON DELETE CASCADE ON UPDATE CASCADE,

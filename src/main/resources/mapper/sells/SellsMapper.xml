@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.project.gabojago.gabojagouser.mapper.sells.SellsMapper">
+    <resultMap id="sellsMap" type="com.project.gabojago.gabojagouser.dto.sells.SellsDto">
+        <id column="s_id" property="sId"/>
+        <result column="u_id" property="uId"/>
+        <result column="o_id" property="oId"/>
+        <result column="area" property="area"/>
+        <result column="title" property="title"/>
+        <result column="content" property="content"/>
+        <result column="category" property="category"/>
+        <result column="img_main" property="imgMain"/>
+    </resultMap>
+    <insert id="insertOne" >
+        INSERT INTO sells (u_id,o_id,area,title,content,category) VALUES (#{uId},#{oId},#{area},#{title},#{content},#{category})
+    </insert>
+    <update id="updateOne">
+        UPDATE sells SET area=#{area},title=#{title},content=#{content},category={category},imgMain=#{imgMain} WHERE s_id=#{sId}
+    </update>
+    <delete id="deleteOne">
+
+    </delete>
+    <select id="findAll" resultMap="sellsMap">
+        SELECT * FROM Sells
+    </select>
+    <select id="findBySId" resultMap="sellsMap">
+        SELECT * FROM sells WHERE s_id=#{sId};
+    </select>
+</mapper>
