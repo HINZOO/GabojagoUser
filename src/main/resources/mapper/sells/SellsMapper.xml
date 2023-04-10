@@ -4,15 +4,16 @@
     <resultMap id="sellsMap" type="com.project.gabojago.gabojagouser.dto.sells.SellsDto">
         <id column="s_id" property="sId"/>
         <result column="u_id" property="uId"/>
-        <result column="o_id" property="oId"/>
         <result column="area" property="area"/>
         <result column="title" property="title"/>
         <result column="content" property="content"/>
         <result column="category" property="category"/>
         <result column="img_main" property="imgMain"/>
+        <result column="post_time" property="postTime"/>
+        <result column="update_time" property="updateTime"/>
     </resultMap>
     <insert id="insertOne" >
-        INSERT INTO sells (u_id,o_id,area,title,content,category) VALUES (#{uId},#{oId},#{area},#{title},#{content},#{category})
+        INSERT INTO sells (u_id,area,title,content,category) VALUES (#{uId},#{area},#{title},#{content},#{category})
     </insert>
     <update id="updateOne" >
         UPDATE sells SET area=#{area},title=#{title},content=#{content},category=#{category},img_main=#{imgMain} WHERE s_id=#{sId}
@@ -21,9 +22,13 @@
     DELETE FROM sells where s_id=#{sId}
     </delete>
     <select id="findAll" resultMap="sellsMap">
-        SELECT * FROM Sells
+        SELECT * FROM sells
     </select>
     <select id="findBySId" resultMap="sellsMap">
         SELECT * FROM sells WHERE s_id=#{sId};
+    </select>
+    <select id="findByCategory" parameterType="String" resultMap="sellsMap">
+        SELECT * FROM sells WHERE category=#{category}
+
     </select>
 </mapper>

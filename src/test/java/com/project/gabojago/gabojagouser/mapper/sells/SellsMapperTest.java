@@ -30,11 +30,10 @@ class SellsMapperTest {
 
         SellsDto sell=new SellsDto();
         sell.setUId("user04");
-        sell.setOId(1);
         sell.setArea("인천");
         sell.setTitle("인천 여행");
         sell.setContent("인천 도시 여행");
-        sell.setCategory("테마");
+        sell.setCategory("워터");
         int insert=sellsMapper.insertOne(sell);
         System.out.println("insert = " + insert);
 
@@ -59,4 +58,9 @@ class SellsMapperTest {
         System.out.println("delete = " + delete);
     }
 
+    @Test
+    void findByCategory() {
+        List<SellsDto> sellsCategory=sellsMapper.findByCategory("레저");
+        System.out.println("sellsCategory = " + sellsCategory);
+    }
 }

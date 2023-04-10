@@ -9,6 +9,7 @@ import java.util.List;
 public interface SellsMapper {
 
     List<SellsDto> findAll();
+    List<SellsDto> findByCategory(String category);
 
     SellsDto findBySId(int sId);
 

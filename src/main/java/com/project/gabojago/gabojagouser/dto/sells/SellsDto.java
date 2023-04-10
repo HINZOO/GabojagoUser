@@ -8,7 +8,6 @@ import java.util.Date;
 public class SellsDto {
     private int sId;
     private String uId;
-    private int oId;
     private String area;
     private String title;
     private String content;

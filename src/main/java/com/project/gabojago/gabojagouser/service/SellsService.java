@@ -7,7 +7,7 @@ import java.util.List;
 public interface SellsService {
 
     List<SellsDto> List();
-
+    List<SellsDto> findByCategory(String category);
     SellsDto detail(int sId);
 
     int register(SellsDto sells);
