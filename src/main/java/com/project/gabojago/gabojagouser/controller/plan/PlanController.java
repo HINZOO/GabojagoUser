@@ -30,4 +30,11 @@ public class PlanController {
         register = planService.register(planDto);
         return "/plan/list";
     }
+    @GetMapping("/{pId}/detail.do")
+    public String detail(
+
+    ){
+
+        return "/plan/detail";
+    }
 }
