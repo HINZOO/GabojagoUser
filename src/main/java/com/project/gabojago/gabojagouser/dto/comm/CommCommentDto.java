@@ -4,9 +4,9 @@ import lombok.Data;
 
 @Data
 public class CommCommentDto {
-    private int crId;
-    private int cId;
-    private String uId;
+    private int crId;//PK
+    private int cId;//community c_id//FK
+    private String uId;//User u_id//FK
     private String content;
     private String status;
     private java.util.Date postTime;

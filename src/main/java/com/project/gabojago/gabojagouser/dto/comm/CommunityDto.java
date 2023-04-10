@@ -4,9 +4,9 @@ import lombok.Data;
 
 @Data
 public class CommunityDto {
-    private int cId;
-    private String uId;
-    private int pId;
+    private int cId;//PK
+    private String uId;//User.u_id//FK
+    private int pId;//Plan.p_id//FK
     private String title;
     private String content;
     private java.util.Date postTime;
@@ -14,22 +14,22 @@ public class CommunityDto {
     private int viewCount;
     private String status;
     private String area;
-    private boolean istj=false;
-    private boolean istp=false;
-    private boolean isfj=false;
-    private boolean isfp=false;
-    private boolean intj=false;
-    private boolean intp=false;
-    private boolean infj=false;
-    private boolean infp=false;
-    private boolean estj=false;
-    private boolean estp=false;
-    private boolean esfj=false;
-    private boolean esfp=false;
-    private boolean entj=false;
-    private boolean entp=false;
-    private boolean enfj=false;
-    private boolean enfp=false;
+    private boolean istj;
+    private boolean istp;
+    private boolean isfj;
+    private boolean isfp;
+    private boolean intj;
+    private boolean intp;
+    private boolean infj;
+    private boolean infp;
+    private boolean estj;
+    private boolean estp;
+    private boolean esfj;
+    private boolean esfp;
+    private boolean entj;
+    private boolean entp;
+    private boolean enfj;
+    private boolean enfp;
 
 
 }
