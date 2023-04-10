@@ -12,10 +12,10 @@
                         <a class="nav-link active" aria-current="page" href="#">가보자고</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">같이가자</a>
+                        <a class="nav-link active" aria-current="page" href="#">같이놀자</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/comm/list.do">같이놀자</a>
+                        <a class="nav-link active" aria-current="page" href="/comm/list.do">같이가자</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="#">상품판매</a>
@@ -34,12 +34,6 @@
                             <li><hr class="dropdown-divider"></li> <!--구분선-->
                             <li><a class="dropdown-item" href="#">마이페이지메뉴</a></li>
                         </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">로그인</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">회원가입</a>
                     </li>
                     <th:block th:if="${session.loginUser==null}">
                         <li class="nav-item d-flex ">
@@ -65,6 +59,29 @@
         </button>
     </div>
 </nav>
+<th:block th:if="${loginMsg!=null || session.loginMsg !=null}">
+    <div id="actionModal" class="modal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">알림</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p th:text="${loginMsg}"></p>
+                    <p th:text="${session.loginMsg}"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script th:inline="javascript">
+        const actionModal=document.getElementById("actionModal");
+        new bootstrap.Modal(actionModal).show();
+    </script>
+</th:block>
 </html>
 
 
