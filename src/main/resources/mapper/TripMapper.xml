@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.project.gabojago.gabojagouser.mapper.trips.TripMapper">
+    <resultMap id="TripMap" type="TripDto">
+        <id column="t_id" property="tId"/>
+        <result column="u_id" property="uId"/>
+
+        <result column="title" property="title"/>
+        <result column="post_time" property="postTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="area" property="area"/>
+        <result column="address" property="uId"/>
+        <result column="u_id" property="uId"/>
+        <result column="u_id" property="uId"/>
+        <result column="u_id" property="uId"/>
+        <result column="u_id" property="uId"/>
+
+    </resultMap>
+    <insert useGeneratedKeys="true" keyProperty="tId" id="insertOne" parameterType="TripDto">
+        INSERT INTO trips
+            (u_id, title, area, address, phone, url_address, content,
+             istj, istp, isfj, isfp, intj, intp, infj, infp, estj, estp, esfj,
+             esfp, entj, entp, enfj, enfp, category)
+            VALUE
+            (#{u_id}, #{title}, #{area}, #{address}, #{phone}, #{url_address}, #{content},
+             #{istj}, #{}istp, #{isfj}, #{isfp}, #{intj}, #{intp}, #{infj}, #{infp}, #{estj}, #{estp}, #{esfj},
+             #{esfp}, #{entj}, #{entp}, #{enfj}, #{enfp}, #{category})
+    </insert>
+    <update id="updateOne">
+        UPDATE trips
+        SET title=#{title},
+            area=#{area},
+            address=#{address},
+            phone=#{phone},
+            url_address=#{urlAddress},
+            content=#{content},
+            istj=#{istj},
+            istp=#{istp},
+            isfj=#{isfj},
+            isfp=#{isfp},
+            intj=#{intj},
+            intp=#{intp},
+            infj=#{infj},
+            infp=#{infp},
+            estj=#{estj},
+            estp=#{estp},
+            esfj=#{esfj},
+            esfp=#{esfp},
+            entj=#{entj},
+            entp=#{entp},
+            enfj=#{enfj},
+            enfp=#{enfp},
+            category=#{category}
+            WHERE t_id=#{tId}
+    </update>
+    <delete id="deleteOne">
+        DELETE FROM trips WHERE t_id=#{tId}
+    </delete>
+    <select id="findAll" resultType="com.project.gabojago.gabojagouser.dto.trips.TripDto">
+        SELECT * FROM trips
+    </select>
+    <select id="findByTId" resultType="com.project.gabojago.gabojagouser.dto.trips.TripDto">
+        SELECT * FROM trips WHERE t_id=#{tId}
+    </select>
+</mapper>
