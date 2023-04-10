@@ -32,7 +32,7 @@ class CommunityMapperTest {
         comm.setUId("USER02");
         comm.setTitle("테스트글");
 
-        int insert=communityMapper.insertOne(comm)
+        int insert=communityMapper.insertOne(comm);
     }
 
     @Test
