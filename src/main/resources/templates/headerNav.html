@@ -41,6 +41,22 @@
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="#">회원가입</a>
                     </li>
+                    <th:block th:if="${session.loginUser==null}">
+                        <li class="nav-item d-flex ">
+                            <a class="nav-link me-2" href="/user/login.do">로그인</a>
+                            <a class="nav-link" href="/user/signup.do">회원가입</a>
+                        </li>
+                    </th:block>
+                    <th:block th:if="${session.loginUser!=null}">
+                        <li class="nav-item d-flex">
+                            <a class="nav-link me-2"
+                               th:href="@{'/user/{uId}/detail.do'(uId=${session.loginUser.uId})}">
+                                <span th:text="${session.loginUser.uId}"></span>
+                                (<span th:text="${session.loginUser.name}"></span>)
+                            </a>
+                            <a class="nav-link" href="/user/logout.do">로그아웃</a>
+                        </li>
+                    </th:block>
                 </ul>
             </div>
        </div>
