@@ -375,7 +375,7 @@ CREATE TABLE `comm_comment` (
                                 `parent_cr_id`	INT UNSIGNED COMMENT '부모 댓글 아이디(대댓글)',
                                 FOREIGN KEY (u_id) REFERENCES users (u_id) ON DELETE CASCADE ON UPDATE CASCADE,
                                 FOREIGN KEY (c_id) REFERENCES communitys (c_id) ON DELETE CASCADE ON UPDATE CASCADE,
-                                FOREIGN KEY (parent_cr_id) REFERENCES comm_comment (cc_id) ON DELETE CASCADE ON UPDATE CASCADE
+                                FOREIGN KEY (parent_cr_id) REFERENCES comm_comments (cc_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 #같이놀자 ( 이미지테이블)
 CREATE TABLE `comm_imgs` (
