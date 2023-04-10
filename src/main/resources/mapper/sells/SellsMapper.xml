@@ -14,11 +14,11 @@
     <insert id="insertOne" >
         INSERT INTO sells (u_id,o_id,area,title,content,category) VALUES (#{uId},#{oId},#{area},#{title},#{content},#{category})
     </insert>
-    <update id="updateOne">
-        UPDATE sells SET area=#{area},title=#{title},content=#{content},category={category},imgMain=#{imgMain} WHERE s_id=#{sId}
+    <update id="updateOne" >
+        UPDATE sells SET area=#{area},title=#{title},content=#{content},category=#{category},img_main=#{imgMain} WHERE s_id=#{sId}
     </update>
     <delete id="deleteOne">
-
+    DELETE FROM sells where s_id=#{sId}
     </delete>
     <select id="findAll" resultMap="sellsMap">
         SELECT * FROM Sells

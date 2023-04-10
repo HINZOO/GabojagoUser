@@ -46,7 +46,7 @@ class SellsMapperTest {
         sell.setSId(7);
         sell.setArea("대전");
         sell.setTitle("대전");
-        sell.setContent("대전 여행 !!!");
+        sell.setContent("대전 여행 성공!!!");
         sell.setCategory("워터");
         int update= sellsMapper.updateOne(sell);
         System.out.println("update = " + update);
@@ -55,6 +55,8 @@ class SellsMapperTest {
 
     @Test
     void deleteOne() {
+        int delete=sellsMapper.deleteOne(7);
+        System.out.println("delete = " + delete);
     }
 
 }

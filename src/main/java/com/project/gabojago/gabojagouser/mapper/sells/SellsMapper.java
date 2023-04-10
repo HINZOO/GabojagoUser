@@ -14,6 +14,6 @@ public interface SellsMapper {
 
     int insertOne(SellsDto sells);
     int updateOne(SellsDto sells);
-    int deleteOne(SellsDto sells);
+    int deleteOne(int sId);
 
 }

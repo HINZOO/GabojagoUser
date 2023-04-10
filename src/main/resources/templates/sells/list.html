@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>판매글 리스트</title>
+</head>
+<div layout:fragment="content">
+    <div class="container">
+        <h2>Column Output</h2>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>s_id</th>
+                <th>u_id</th>
+                <th>o_id</th>
+                <th>area</th>
+                <th>title</th>
+                <th>content</th>
+                <th>post_time</th>
+                <th>update_time</th>
+                <th>view_count</th>
+                <th>category</th>
+                <th>qnt</th>
+                <th>img_main</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- 타임루프로 반복하여 데이터 출력 -->
+            <th:block th:each="s:${sells}" >
+                <tr>
+                    <td th:text="${s.getSId()}"></td>
+                    <td>${s.u_id}</td>
+                    <td>${item.o_id}</td>
+                    <td>${item.area}</td>
+                    <td>${item.title}</td>
+                    <td>${item.content}</td>
+                    <td>${item.post_time}</td>
+                    <td>${item.update_time}</td>
+                    <td>${item.view_count}</td>
+                    <td>${item.category}</td>
+                    <td>${item.qnt}</td>
+                    <td>${item.img_main}</td>
+                </tr>
+            </th:block>
+            </tbody>
+        </table>
+    </div>
+
+<h2>하이</h2>
+</div>
+</html>
