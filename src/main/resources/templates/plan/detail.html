@@ -11,16 +11,20 @@
 
 <div layout:fragment="content">
 
-    <div class="container-fluid">
+    <div class="container-fluid px-0">
         <div class="row">
-
             <!--    사이드바 -->
-            <div class="col-md-2  leftGrid" >
+            <div class="col-md-2" >
                 <div class="row row-cols-1 rightGrid">
                     <div class="col infoBox">
                         <div class="infoTitle sideTitle">INFORMATION</div>
                         <div class="infoContent sideContent">
-                            <div class="infoStatus" style="color: #009f00;" >🔒 <span th:text="${plan.getPlanStatus()}"/></div>
+
+                            <div class="infoImg" th:if="${plan.getImgPath()!=null}" th:style="'background-image:url(' + ${plan.getImgPath()} + ');'"></div>
+                            <div class="infoImg" th:if="${plan.getImgPath()==null}" style="background-image:url('/public/img/plan/planDefault.png')"></div>
+                            <div class="infoStatus" >
+                                <i class="bi bi-key"></i>
+                                <span th:text="${plan.getPlanStatus()}"/></div>
                             <div class="infoStatus">📌 <span th:text="${plan.getTitle()}"/></div>
                             <div class="infoSchedule">🗓️ <span th:text="${plan.getPlanFrom()}"/> ~ <span th:text="${plan.getPlanTo()}"/></div>
                         </div>
@@ -29,10 +33,7 @@
                         <div class="calenderTitle sideTitle">CALENDER</div>
                         <div class="calenderContent sideContent">캘린더 내용</div>
                     </div>
-<!--                    <div class="col layerBox">-->
-<!--                        <div class="col layerTitle sideTitle">LAYERS</div>-->
-<!--                        <div class="col layerContent sideContent">내용</div>-->
-<!--                    </div>-->
+
                 </div>
 
 

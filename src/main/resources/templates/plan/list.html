@@ -36,18 +36,16 @@
                     </div>
                     <div class="listContent" style="overflow: hidden">
                         <th:block th:each="plan:${plans}">
-
                             <div class="card" style="width: 300px">
-                                <img src="/public/img/plan/planSample.jpg" class="card-img-top" alt="...">
+                                <img th:if="${plan.getImgPath()!=null}" th:src="@{'{path}'(path=${plan.getImgPath()})}" class="card-img-top" alt="...">
+                                <img th:if="${plan.getImgPath()==null}" src="/public/img/plan/planDefault.png">
                                 <div class="card-body">
+                                    <p><span th:text="${plan.getPlanFrom()}"/> ~ <span th:text="${plan.getPlanTo()}"/></p>
                                     <h5 class="card-title" th:text="${plan.getTitle()}"></h5>
-                                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                    <p class="card-text" th:text="${plan.getInfo()}"></p>
                                     <a th:href="@{'{pId}/detail.do'(pId=${plan.getPId()})}" class="btn btn-primary">이동</a>
                                 </div>
                             </div>
-<!--                                <div class="myScheduleList">-->
-<!--                                    <span th:text="${plan.getTitle()}"/>-->
-<!--                                </div>-->
                         </th:block>
                     </div>
                 </div>
