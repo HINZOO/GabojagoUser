@@ -34,10 +34,11 @@ public class SellsController {
 
     }
     @GetMapping("/{sId}/detail.do")
-    public String detail(Model model){
-        List<SellsDto> sells;
-        sells=sellsService.List();
-        model.addAttribute("sells",sells);
+    public String detail(Model model,@PathVariable int sId){
+            SellsDto sells=sellsService.detail(sId);
+//        List<SellsDto> sells;
+//        sells=sellsService.List();
+        model.addAttribute("s",sells);
         return "/sells/detail";
     }
 
