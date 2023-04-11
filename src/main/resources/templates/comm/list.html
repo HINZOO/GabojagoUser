@@ -21,7 +21,9 @@
                     </div>
                     <div class="col-8">
                         <div class="card-body">
-                            <h5 class="card-title" th:text="${c.title}"></h5>
+                            <h5 class="card-title" >
+                                <a th:text="${c.title}" th:href="@{'/comm/{cId}/detail.do'(cId=${c.cId})}"></a>
+                            </h5>
                             <p>
                                 작성자<span class="me-1" th:text="${c.uId}"></span>
                                 <small class="me-1" th:text="${#dates.format(c.postTime,'yyyy-MM-dd')}">작성일</small>
