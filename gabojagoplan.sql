@@ -1,4 +1,4 @@
-DROP DATABASE gabojagoPlan;
+
 CREATE DATABASE gabojagoPlan CHARACTER SET utf8;
 use gabojagoPlan;
 
