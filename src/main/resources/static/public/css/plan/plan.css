@@ -71,13 +71,37 @@ a:hover { color: black; text-decoration: underline;}
     font-size: 12px;
     margin: 0px;
 }
-.cardTitle{
 
-    font-weight: bold;
-    padding: 5px 0px;
-    border-top: 1px solid lightgrey;
-    border-bottom: 2px solid lightgrey;
+.cardImg{
+    position: relative;
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: nowrap;
+    width: 100%;
+    height: 200px;
+    text-align: center;
+
 }
+.cardImg::before{
+    position: absolute;
+    content: "";
+    opacity: 0.1;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    background-color: #000000;
+}
+
+.cardTitle{
+    font-family: 'TheJamsil5Bold';
+    position: relative;
+    color: white;
+    font-size: 30px;
+    /*text-shadow: -1px 0 gray, 1px 1px gray, 1px 2px gray, 0 -1px gray;*/
+}
+
 .cardInfo{
     min-height: 60px;
     overflow: hidden;

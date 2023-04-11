@@ -32,26 +32,25 @@
                     <div class="listContent" style="overflow: hidden">
                         <th:block th:each="plan:${plans}">
                             <a th:href="@{'{pId}/detail.do'(pId=${plan.getPId()})}">
-                            <div class="card">
-                                <div class="card-header" style="width: 100%">
-                                    <p class="cardSchedule text-start"><span th:text="${plan.getPlanFrom()}"/> ~ <span th:text="${plan.getPlanTo()}"/></p>
-                                </div>
-                                <img th:if="${plan.getImgPath()!=null}" th:src="@{'{path}'(path=${plan.getImgPath()})}" alt="..." onerror="this.src='/public/img/plan/planSample.jpg'">
-                                <img th:if="${plan.getImgPath()==null}" src="/public/img/plan/planDefault.png"  alt="...">
-                                <div class="card-body">
-                                    <h5 class="card-title cardTitle text-center" th:text="${plan.getTitle()}"></h5>
-                                    <p class="card-text cardInfo mb-3" th:text="${plan.getInfo()}"></p>
-                                </div>
-                                <div class="card-footer" style="width: 100%">
-                                    <div class="cardInnerLeft">
-                                        <a href="#" class="btn btn-outline-dark rounded-circle btn-sm"  role="button">　</a>
-                                        <a href="#" class="btn btn-outline-dark rounded-circle btn-sm"  role="button">　</a>
+                                <div class="card">
+                                    <div class="card-header" style="width: 100%">
+                                        <p class="cardSchedule text-start"><span th:text="${plan.getPlanFrom()}"/> ~ <span th:text="${plan.getPlanTo()}"/></p>
                                     </div>
-                                    <div class="cardInnerRight">
-                                        <a href="#" class="btn btn-primary btn-sm" style="color: white;">리뷰작성</a>
+                                    <div class="cardImg" style="background-image:url('/public/img/plan/planSample.jpg');">
+                                        <p class="cardTitle" th:text="${plan.getTitle()}"></p>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="card-text cardInfo mb-3" th:text="${plan.getInfo()}"></p>
+                                    </div>
+                                    <div class="card-footer" style="width: 100%">
+                                        <div class="cardInnerLeft">
+                                            <a href="#" class="btn btn-outline-dark rounded-circle btn-sm"  role="button">　</a>
+                                        </div>
+                                        <div class="cardInnerRight">
+                                            <a href="#" class="btn btn-secondary btn-sm" style="color: white;">리뷰작성</a>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
                             </a>
                         </th:block>
                     </div>
