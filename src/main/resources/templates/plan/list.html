@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<<<<<<< HEAD
 <html lang="ko"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
@@ -10,12 +9,8 @@
 </head>
 
 <div layout:fragment="content">
+    <div class="container listMain">
 
-    <div class="row mx-0 w-100 vh-100">
-        <div class="col col-1 listSide" style="background-color: rgba(156,188,255,0.43)">
-            전체보기2
-        </div>
-        <div class="col col-11 listMain">
             <section class="row" >
                 <div class="col">
                     <div class="listTitle">
@@ -36,16 +31,28 @@
                     </div>
                     <div class="listContent" style="overflow: hidden">
                         <th:block th:each="plan:${plans}">
-                            <div class="card" style="width: 300px">
-                                <img th:if="${plan.getImgPath()!=null}" th:src="@{'{path}'(path=${plan.getImgPath()})}" class="card-img-top" alt="...">
-                                <img th:if="${plan.getImgPath()==null}" src="/public/img/plan/planDefault.png">
+                            <a th:href="@{'{pId}/detail.do'(pId=${plan.getPId()})}">
+                            <div class="card">
+                                <div class="card-header" style="width: 100%">
+                                    <p class="cardSchedule text-start"><span th:text="${plan.getPlanFrom()}"/> ~ <span th:text="${plan.getPlanTo()}"/></p>
+                                </div>
+                                <img th:if="${plan.getImgPath()!=null}" th:src="@{'{path}'(path=${plan.getImgPath()})}" alt="..." onerror="this.src='/public/img/plan/planSample.jpg'">
+                                <img th:if="${plan.getImgPath()==null}" src="/public/img/plan/planDefault.png"  alt="...">
                                 <div class="card-body">
-                                    <p><span th:text="${plan.getPlanFrom()}"/> ~ <span th:text="${plan.getPlanTo()}"/></p>
-                                    <h5 class="card-title" th:text="${plan.getTitle()}"></h5>
-                                    <p class="card-text" th:text="${plan.getInfo()}"></p>
-                                    <a th:href="@{'{pId}/detail.do'(pId=${plan.getPId()})}" class="btn btn-primary">이동</a>
+                                    <h5 class="card-title cardTitle text-center" th:text="${plan.getTitle()}"></h5>
+                                    <p class="card-text cardInfo mb-3" th:text="${plan.getInfo()}"></p>
+                                </div>
+                                <div class="card-footer" style="width: 100%">
+                                    <div class="cardInnerLeft">
+                                        <a href="#" class="btn btn-outline-dark rounded-circle btn-sm"  role="button">　</a>
+                                        <a href="#" class="btn btn-outline-dark rounded-circle btn-sm"  role="button">　</a>
+                                    </div>
+                                    <div class="cardInnerRight">
+                                        <a href="#" class="btn btn-primary btn-sm" style="color: white;">리뷰작성</a>
+                                    </div>
                                 </div>
                             </div>
+                            </a>
                         </th:block>
                     </div>
                 </div>
@@ -61,6 +68,7 @@
                 </div>
             </section>
 
+    </div>
 
             <!--새 플랜 만들기 모달 부분-->
             <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -139,17 +147,17 @@
             </div>
 
 
-        </div>
-    </div>
+
+
 
 
     <script>
         let newPlanBtn = document.querySelector("#newPlanBtn");
         newPlanBtn.addEventListener("click",()=>{
+            console.log("??")
             new bootstrap.Modal(document.getElementById('staticBackdrop'), {}).show();
         })
     </script>
-
 
 </div>
 </html>

@@ -20,7 +20,8 @@
                         <div class="infoTitle sideTitle">INFORMATION</div>
                         <div class="infoContent sideContent">
 
-                            <div class="infoImg" th:if="${plan.getImgPath()!=null}" th:style="'background-image:url(' + ${plan.getImgPath()} + ');'"></div>
+<!--                            <div class="infoImg" th:if="${plan.getImgPath()!=null}" th:style="'background-image:url(' + ${plan.getImgPath()} + ');'"></div>-->
+                            <div class="infoImg" th:if="${plan.getImgPath()!=null}" style="background-image:url('/public/img/plan/planDefault.png');"></div>
                             <div class="infoImg" th:if="${plan.getImgPath()==null}" style="background-image:url('/public/img/plan/planDefault.png')"></div>
                             <div class="infoStatus" >
                                 <i class="bi bi-key"></i>

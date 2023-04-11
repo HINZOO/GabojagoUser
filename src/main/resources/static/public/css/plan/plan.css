@@ -4,22 +4,25 @@
     font-weight: 700;
     font-style: normal;
 }
+a:link { color: black; text-decoration: none;}
+a:visited { color: black; text-decoration: none;}
+a:hover { color: black; text-decoration: underline;}
 #newPlanBtn {
     background-color: #ffffff;
     width: 130px;
     height: 170px;
-    box-shadow: 0px 0px 5px 5px #e5e5e5;
+    box-shadow: 0px 0px 10px 5px whitesmoke;
     color: lightgrey;
     font-size: 30px;
     font-weight: bold;
     text-align: center;
 }
 #newPlanBtn:hover {
-    box-shadow: 0px 0px 10px 5px lightgrey;
+    box-shadow: 0px 0px 10px 5px #e5e5e5;
 }
 .listMain{
-    padding-top: 40px;
-    padding-left: 40px;
+    padding-top: 20px;
+
 }
 .listMain section {
     min-height: 33vh;
@@ -42,13 +45,52 @@
 }
 .listContent {
     overflow: hidden;
-    padding-left: 20px;
+    padding: 20px 0px 20px 30px
 }
 .listContent div {
     display: inline-block;
 }
 .modal-title {
     font-family: 'TheJamsil5Bold';
+}
+.card {
+    width: 300px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px 5px whitesmoke;
+}
+.card:hover {
+    box-shadow: 0px 0px 10px 5px #e5e5e5;
+}
+.card img{
+    width: 100%;
+    object-fit: cover;
+    height: 180px;
+    opacity: 0.9;
+}
+.cardSchedule{
+    font-size: 12px;
+    margin: 0px;
+}
+.cardTitle{
+
+    font-weight: bold;
+    padding: 5px 0px;
+    border-top: 1px solid lightgrey;
+    border-bottom: 2px solid lightgrey;
+}
+.cardInfo{
+    min-height: 60px;
+    overflow: hidden;
+}
+.card-footer{
+    background-color: transparent;
+}
+.cardInnerLeft{
+    width: 180px;
+}
+.cardInnerRight{
+    text-align: right;
+    width: 80px;
 }
 
 
