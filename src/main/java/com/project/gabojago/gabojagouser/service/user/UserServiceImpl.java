@@ -25,8 +25,7 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public UserDto idCheck(String user) {
-    UserDto result = userMapper.findUserByUId(user);
-    return result;
+    return userMapper.findUserByUId(user);
   }
 
   @Override

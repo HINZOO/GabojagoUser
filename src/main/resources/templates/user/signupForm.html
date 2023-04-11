@@ -5,7 +5,7 @@
   <title>회원가입 폼</title>
 </head>
 <div layout:fragment="content">
-  <form name="signup" action="/signup.do" method="post" style="width: 500px;margin: 0 auto;">
+  <form name="signup" action="./signup.do" method="post" style="width: 500px;margin: 0 auto;">
     <h1 class="my-4">회원가입</h1>
     <p class="form-floating">
       <input id="uIdInput" type="text" name="uId" value="" class="form-control" placeholder="??">
@@ -32,7 +32,7 @@
       <label>이메일</label>
     </p>
     <p class="form-floating">
-      <input type="date" name="birth" value="2023-04-15" class="form-control" placeholder="??">
+      <input type="date" name="birth" value="" class="form-control" placeholder="??">
       <label>생일</label>
     </p>
     <p class="form-floating">
@@ -77,8 +77,15 @@
       <label class="input-group-text">프로필</label>
     </p>
     <p class="form-floating">
-      <input type="date" name="postTime" value="2023-04-15" class="form-control" placeholder="??">
+      <input type="date" name="postTime" value="" class="form-control" placeholder="??">
       <label>가입일</label>
+    </p>
+    <p class="form-floating">
+      <select name="permission" class="form-control">
+        <option value="0">일반회원</option>
+        <option value="1">파트너</option>
+        <option value="2">관리자</option>
+      </select>
     </p>
     <p class="form-floating">
       <input type="text" name="storeName" value="" class="form-control" placeholder="??">
@@ -99,11 +106,10 @@
       const uId = uIdInput.value;
       const response = await fetch(`/user/${uId}/checkId.do`);
       const result = await response.json();
-      console.log(result);
-      if (result) {
-        alert('사용 가능한 아이디입니다.');
-      } else {
+      if (result>0) {
         alert('이미 사용중인 아이디입니다.');
+      } else {
+        alert('사용 가능한 아이디입니다.');
       }
     });
   </script>
