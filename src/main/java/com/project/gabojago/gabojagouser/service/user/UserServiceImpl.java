@@ -19,8 +19,14 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public UserDto logout(UserDto user) {
+  public UserDto detail(UserDto user) {
     return null;
+  }
+
+  @Override
+  public UserDto idCheck(String user) {
+    UserDto result = userMapper.findUserByUId(user);
+    return result;
   }
 
   @Override
@@ -30,7 +36,7 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public int signup(UserDto user) {
-    return 0;
+    return userMapper.insertOne(user);
   }
 
   @Override

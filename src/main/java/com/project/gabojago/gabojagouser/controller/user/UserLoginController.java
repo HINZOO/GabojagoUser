@@ -1,4 +1,4 @@
-package com.project.gabojago.gabojagouser.controller;
+package com.project.gabojago.gabojagouser.controller.user;
 
 import com.project.gabojago.gabojagouser.dto.user.UserDto;
 import com.project.gabojago.gabojagouser.service.user.UserService;
