@@ -18,8 +18,13 @@ public class PlanServiceImp implements PlanService {
     }
 
     @Override
+    public List<PlanDto> list(String uId) {
+        return planMapper.findByUId(uId);
+    }
+
+    @Override
     public PlanDto detail(int pId) {
-        return null;
+        return planMapper.findByPId(pId);
     }
 
     @Override

@@ -1,10 +1,217 @@
 <!DOCTYPE html>
-<html lang="en">
+<<<<<<< HEAD
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title>게시판 상세</title>
+    <link th:href="@{/css/plan/plan.css}" rel="stylesheet" />
 </head>
-<body>
- 디테일페이지
-</body>
+
+<div layout:fragment="content">
+
+    <div class="container-fluid">
+        <div class="row">
+
+            <!--    사이드바 -->
+            <div class="col-md-2  leftGrid" >
+                <div class="row row-cols-1 rightGrid">
+                    <div class="col infoBox">
+                        <div class="infoTitle sideTitle">INFORMATION</div>
+                        <div class="infoContent sideContent">
+                            <div class="infoStatus" style="color: #009f00;" >🔒 <span th:text="${plan.getPlanStatus()}"/></div>
+                            <div class="infoStatus">📌 <span th:text="${plan.getTitle()}"/></div>
+                            <div class="infoSchedule">🗓️ <span th:text="${plan.getPlanFrom()}"/> ~ <span th:text="${plan.getPlanTo()}"/></div>
+                        </div>
+                    </div>
+                    <div class="col calenderBox">
+                        <div class="calenderTitle sideTitle">CALENDER</div>
+                        <div class="calenderContent sideContent">캘린더 내용</div>
+                    </div>
+<!--                    <div class="col layerBox">-->
+<!--                        <div class="col layerTitle sideTitle">LAYERS</div>-->
+<!--                        <div class="col layerContent sideContent">내용</div>-->
+<!--                    </div>-->
+                </div>
+
+
+            </div>
+
+
+
+            <div class="col-md-8 mainSection">
+                <div class="row dayHeader" style="margin-top: 20px ">
+                    <div class="col-md-1 dayHeaderSide">
+                        ◀
+                    </div>
+                    <div class="col-md-10  dayHeaderMain">
+                        <small style="color: lightgrey"><small><small>2023.06.11(목)</small></small></small>　　2023.06.10 (수)　　<small style="color: lightgrey"><small><small>2023.06.11(목)</small></small></small>
+                    </div>
+                    <div class="col-md-1 dayHeaderSide">
+                        ▶
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-10">
+                        <div class="btn-group btn-group-horizon btnLine" role="group">
+                            <!--보관함-->
+                            <button class="btn-group btn-group-vertical"  type="button" id="loadBtn">
+                                <i class="bi bi-folder2-open"></i>
+                            </button>
+                            <!-- 지우기 -->
+                            <button class="btn-group btn-group-vertical"  type="button"  id="removeBtn">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                            <!--선택-->
+                            <button class="btn-group btn-group-vertical" type="button" id="selectorBtn">
+                                <i class="bi bi-hand-index"></i>
+                            </button>
+                            <!--이동-->
+                            <button class="btn-group btn-group-vertical" type="button"  id="moveBtn">
+                                <i class="bi bi-arrows-move"></i>
+                            </button>
+                            <!--펜-->
+                            <button class="btn-group btn-group-vertical"  type="button" id="penBtn">
+                                <i class="bi bi-pencil"></i>
+                            </button>
+                            <!--직선-->
+                            <button class="btn-group btn-group-vertical"  type="button" id="lineBtn" >
+                                <i class="bi bi-slash-lg"></i>
+                            </button>
+                            <!--박스 -->
+                            <button class="btn-group btn-group-vertical"  type="button"  id="rectBtn">
+                                <i class="bi bi-square"></i>
+                            </button>
+                            <!--텍스트입력-->
+                            <button class="btn-group btn-group-vertical" type="button"  id="textBtn">
+                                <i class="bi bi-fonts"></i>
+                            </button>
+                            <!--파레트-->
+                            <button class="btn-group btn-group-vertical"  type="button"   id="palateBtn">
+                                <i class="bi bi-palette"></i>
+                            </button>
+                            <!--포스트잇-->
+                            <button class="btn-group btn-group-vertical"  type="button"  id="postBtn">
+                                <i class="bi bi-sticky"></i>
+                            </button>
+                            <!--스템프-->
+                            <button class="btn-group btn-group-vertical"  type="button" id="stampBtn">
+                                <i class="bi bi-star"></i>
+                            </button>
+                            <!--설정-->
+                            <button class="btn-group btn-group-vertical"  type="button"  id="settingBtn">
+                                <i class="bi bi-gear"></i>
+                            </button>
+                            <!--플러스버튼-->
+                            <button class="btn-group btn-group-vertical"  type="button"  id="plusBtn">
+                                <i class="bi bi-plus-circle"></i>
+                            </button>
+                            <!--마이너스버튼-->
+                            <button class="btn-group btn-group-vertical"  type="button"  id="minusBtn">
+                                <i class="bi bi-dash-circle"></i>
+                            </button>
+<!--                            <button class="btn-group btn-group-vertical red" ></button>-->
+<!--                            <button class="btn-group btn-group-vertical orange"></button>-->
+<!--                            <button class="btn-group btn-group-vertical yellow"></button>-->
+<!--                            <button class="btn-group btn-group-vertical green"></button>-->
+<!--                            <button class="btn-group btn-group-vertical blue"></button>-->
+<!--                            <button class="btn-group btn-group-vertical navy"></button>-->
+<!--                            <button class="btn-group btn-group-vertical purple"></button>-->
+<!--                            <button class="btn-group btn-group-vertical black"></button>-->
+<!--                            <button class="btn-group btn-group-vertical white"></button>-->
+<!--                            <button class="btn-group btn-group-vertical clear"></button>-->
+
+                            </div><!--버튼그룹닫기-->
+                        </div> <!--col 9-->
+
+                    <div class="col-md-2 scheduleInputBox">
+
+                        <div class="dropdown scheduleInput">
+                            <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="border-radius: 30px">
+                                추가
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item rowInputBtn" href="#">직접입력</a></li>
+                                <li><a class="dropdown-item" href="#">아이템 검색</a></li>
+                                <li><a class="dropdown-item" href="#">북마크한 일정</a></li>
+                            </ul>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0">
+
+                    <div class="accordion .accordion-flush" id="accordionExample">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed scheduleBtn" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSample" aria-expanded="false" aria-controls="collapse2">
+
+                                    <div class="container scheduleContainer ">
+                                        <div class="row scheduleRow " >
+                                            <div class="col col-md-2 scheduleLeft ">
+                                                ️12:00
+                                            </div>
+                                            <div class="col col-md-10 scheduleCenter">
+                                                <div class="row h-100">
+                                                    <div class="col col-s-11 scheduleCenterInner" >
+                              <span class="scheduleTitle">
+                                「 ##TITLE## 」
+                              </span>
+                                                        <span class="scheduleContent">
+                                ITEM #1 → ITEM #2 → ITEM #3 → ITEM #4
+                              </span>
+
+                                                    </div>
+                                                    <div class="col col-md-1 scheduleRight">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="gray" class="bi bi-three-dots" viewBox="0 0 16 16">
+                                                            <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
+                                                        </svg>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </button>
+                            </h2>
+                            <div id="collapseSample" class="accordion-collapse collapse " data-bs-parent="#accordionExample">
+                                <div class="accordion-body">
+                                    <p class="innerText">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+                                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                                        </svg>
+                                        <br>
+                                        새 화이트보드 추가
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                  </div></div></div>
+            <div class="col-md-2">
+                <div class="row row-cols-1 rightGrid">
+                    <div class="col memberBox">
+                        <div class="memberTitle sideTitle">MEMBER</div>
+                        <div class="memberContent sideContent">              </div>
+                    </div>
+                    <div class="col todoListBox">
+                        <div class="todoListTitle sideTitle">CHECK_LIST</div>
+                        <div class="todoListContent sideContent">투두리 내용</div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+</div>
 </html>
+
