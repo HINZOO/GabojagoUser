@@ -32,7 +32,7 @@
 
     <insert id="insertOne" parameterType="communityDto">
     INSERT INTO communitys (u_id, p_id, title, content, area, istj, istp, isfj, isfp, intj, intp, infj, infp, estj, estp, esfj, esfp, entj, entp, enfj, enfp)
-    VALUE (#{u_id}, #{p_id}, #{title}, #{content}, #{area}, #{istj}, #{istp}, #{isfj}, #{isfp}, #{intj}, #{intp}, #{infj}, #{infp}, #{estj}, #{estp}, #{esfj}, #{esfp}, #{entj}, #{entp}, #{enfj}, #{enfp})
+    VALUE (#{uId}, #{pId}, #{title}, #{content}, #{area}, #{istj}, #{istp}, #{isfj}, #{isfp}, #{intj}, #{intp}, #{infj}, #{infp}, #{estj}, #{estp}, #{esfj}, #{esfp}, #{entj}, #{entp}, #{enfj}, #{enfp})
 
     </insert>
     <update id="updateOne" parameterType="communityDto">
