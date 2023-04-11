@@ -22,7 +22,8 @@
     padding-left: 40px;
 }
 .listMain section {
-    height: 33vh;
+    min-height: 33vh;
+    margin-bottom: 20px;
 }
 .listTitle {
 

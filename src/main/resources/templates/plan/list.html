@@ -6,7 +6,7 @@
       layout:decorate="~{layout}">
 <head>
     <title>게시판 상세</title>
-    <link th:href="@{/css/plan/plan.css}" rel="stylesheet" />
+    <link th:href="@{/public/css/plan/plan.css}" rel="stylesheet" />
 </head>
 
 <div layout:fragment="content">
@@ -38,7 +38,7 @@
                         <th:block th:each="plan:${plans}">
 
                             <div class="card" style="width: 300px">
-                                <img src="..." class="card-img-top" alt="...">
+                                <img src="/public/img/plan/planSample.jpg" class="card-img-top" alt="...">
                                 <div class="card-body">
                                     <h5 class="card-title" th:text="${plan.getTitle()}"></h5>
                                     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
