@@ -3,7 +3,6 @@
 <nav class="navbar navbar-expand-lg bg-body-tertiary bg-light">
     <div class="container-fluid">
         <a class="navbar-brand" href="/">GABOJAGO(LOGO)</a>
-
         <!--📁 메뉴부분 아래 클래스의 d-flex 하면 화면 줄일때 햄버거버튼에 문제가 생겨서 이대로 잠시 둡니다..-->
         <div class="collapse navbar-collapse " id="navbarSupportedContent">
             <div>
@@ -12,7 +11,6 @@
                         <a class="nav-link active" aria-current="page" href="#">가보자고</a>
                     </li>
                     <li class="nav-item">
-
                         <a class="nav-link active" aria-current="page" href="/plan/list.do">같이놀자</a>
                     </li>
                     <li class="nav-item">
@@ -20,6 +18,7 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="/sells/list.do">상품판매</a>
+
                     </li>
                 </ul>
             </div>
@@ -31,17 +30,26 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="#">마이페이지메뉴</a></li>
-                            <li><a class="dropdown-item" href="#">마이페이지메뉴</a></li>
                             <li><hr class="dropdown-divider"></li> <!--구분선-->
                             <li><a class="dropdown-item" href="#">마이페이지메뉴</a></li>
                         </ul>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">로그인</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">회원가입</a>
-                    </li>
+                    <th:block th:if="${session.loginUser==null}">
+                        <li class="nav-item d-flex ">
+                            <a class="nav-link me-2" href="/user/login.do">로그인</a>
+                            <a class="nav-link" href="/user/signupAgree.do">회원가입</a>
+                        </li>
+                    </th:block>
+                    <th:block th:if="${session.loginUser!=null}">
+                        <li class="nav-item d-flex">
+                            <a class="nav-link me-2"
+                               th:href="@{'/user/{uId}/detail.do'(uId=${session.loginUser.uId})}">
+                                <span th:text="${session.loginUser.uId}"></span>
+                                (<span th:text="${session.loginUser.name}"></span>)
+                            </a>
+                            <a class="nav-link" href="/user/logout.do">로그아웃</a>
+                        </li>
+                    </th:block>
                 </ul>
             </div>
        </div>
@@ -50,6 +58,52 @@
         </button>
     </div>
 </nav>
+<th:block th:if="${loginMsg!=null || session.loginMsg !=null}">
+    <div id="actionModal" class="modal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">알림</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p th:text="${loginMsg}"></p>
+                    <p th:text="${session.loginMsg}"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script th:inline="javascript">
+        const actionModal=document.getElementById("actionModal");
+        new bootstrap.Modal(actionModal).show();
+    </script>
+</th:block>
+<th:block th:if="${signupMsg!=null || session.signupMsg !=null}">
+    <div id="signupActionModal" class="modal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">알림</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p th:text="${signupMsg}"></p>
+                    <p th:text="${session.signupMsg}"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script th:inline="javascript">
+        const signupActionModal=document.getElementById("signupActionModal");
+        new bootstrap.Modal(signupActionModal).show();
+    </script>
+</th:block>
 </html>
 
 
