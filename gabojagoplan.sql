@@ -1,4 +1,4 @@
-
+DROP DATABASE gabojagoPlan;
 CREATE DATABASE gabojagoPlan CHARACTER SET utf8;
 use gabojagoPlan;
 
@@ -210,28 +210,20 @@ CREATE TABLE `plans` (
                          `u_id`	varchar(255)  COMMENT '작성자 아이디',
                          `title`	varchar(255) NOT NULL COMMENT '제목',
                          `info`	varchar(255)  COMMENT '설명',
-                         `from`	varchar(255) COMMENT '일정시작',
-                         `to`	varchar(255) COMMENT '일정 끝',
+                         `plan_from`    date COMMENT '일정시작',
+                         `plan_to`  date COMMENT '일정 끝',
                          `post_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '작성 시간',
                          `update_time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '최종 수정 시간',
                          `img_path`	varchar(255) COMMENT '대표 이미지',
-                         `status`	enum('PUBLIC','PRIVATE') DEFAULT 'PUBLIC' COMMENT '상태',
+                         `plan_status`	enum('PUBLIC','PRIVATE') DEFAULT 'PUBLIC' COMMENT '상태',
                          `review` boolean COMMENT '리뷰작성 여부',
                          FOREIGN KEY (u_id) REFERENCES users (u_id) ON UPDATE CASCADE ON DELETE SET NULL
-);
-#상품판매 (상품옵션 테이블)
-CREATE TABLE `sell_options` (
-                                `o_id`	int unsigned AUTO_INCREMENT PRIMARY KEY COMMENT '판매옵션 아이디',
-                                `name`	VARCHAR(255) NOT NULL COMMENT '옵션 이름',
-                                `price`	varchar(255) NOT NULL COMMENT '옵션 가격',
-                                `stock`	int unsigned	COMMENT '재고수량'
 );
 
 #여행지티켓 테이블
 CREATE TABLE `sells` (
                          `s_id`		int unsigned AUTO_INCREMENT PRIMARY KEY COMMENT '판패글 아이디',
                          `u_id`	varchar(255) NOT NULL COMMENT '작성자 아이디',
-                         `o_id` int unsigned NOT NULL COMMENT '옵션 아이디',
                          `area`	ENUM('서울', '인천', '대전', '광주', '대구', '울산', '부산', '세종', '경기', '강원', '충북', '충남', '전북', '전남', '경북', '경남', '제주')	NOT NULL,
                          `title`	varchar(255) NOT NULL COMMENT '제목',
                          `content`	TEXT  COMMENT '내용',
@@ -241,8 +233,16 @@ CREATE TABLE `sells` (
                          `category`	enum('워터','테마','키즈','레저','박물관')	NOT NULL COMMENT '카테고리',
                          `qnt`	int unsigned COMMENT '수량',
                          `img_main`	boolean	COMMENT '대표이미지',
-                         FOREIGN KEY (u_id) REFERENCES users (u_id) ON DELETE CASCADE ON UPDATE CASCADE,
-                         FOREIGN KEY (o_id) REFERENCES sell_options (o_id) ON DELETE CASCADE ON UPDATE CASCADE
+                         FOREIGN KEY (u_id) REFERENCES users (u_id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+#상품판매 (상품옵션 테이블)
+CREATE TABLE `sell_options` (
+                                `o_id` int unsigned AUTO_INCREMENT PRIMARY KEY COMMENT '판매옵션 아이디',
+                                `s_id` int unsigned NOT NULL COMMENT '판매글 아이디',
+                                `name` VARCHAR(255) NOT NULL COMMENT '옵션 이름',
+                                `price` varchar(255) NOT NULL COMMENT '옵션 가격',
+                                `stock` int unsigned COMMENT '재고수량',
+                                FOREIGN KEY (s_id) REFERENCES sells (s_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 #같이가자(그림판)
@@ -267,7 +267,7 @@ CREATE TABLE `plan_check_lists` (
                                     `cl_id`	 int unsigned AUTO_INCREMENT PRIMARY KEY COMMENT '같이가자체크리스트 아이디',
                                     `p_id`	int unsigned NOT NULL COMMENT '같이가자플랜 아이디',
                                     `content`	varchar(255) COMMENT '항목',
-                                    `status`	enum('CHECKED','UNCHECKED')	COMMENT '체크여부',
+                                    `check_status`	enum('CHECKED','UNCHECKED')	COMMENT '체크여부',
                                     FOREIGN KEY (p_id) REFERENCES plans (p_id) ON DELETE CASCADE ON UPDATE CASCADE
 
 );
@@ -320,10 +320,8 @@ CREATE TABLE `sell_details` (
 CREATE TABLE `plan_content_paths` (
                                       `path_id`	int unsigned AUTO_INCREMENT PRIMARY KEY COMMENT '같이가자그림판경로 아이디',
                                       `con_id`	int unsigned  COMMENT '컨텐츠 아이디',
-                                      `s_id` 	int unsigned  COMMENT '판매글 아이디',
                                       `can_path`	MEDIUMTEXT	COMMENT '캔버스 데이터',
-                                      FOREIGN KEY (con_id) REFERENCES plan_contents (con_id) ON DELETE SET NULL ON UPDATE CASCADE,
-                                      FOREIGN KEY (s_id) REFERENCES sell_details (s_id) ON DELETE SET NULL  ON UPDATE CASCADE
+                                      FOREIGN KEY (con_id) REFERENCES plan_contents (con_id) ON DELETE SET NULL ON UPDATE CASCADE
 
 );
 
@@ -485,9 +483,9 @@ CREATE TABLE `sell_refunds` (
 CREATE TABLE `sell_carts` (
                               `cart_id`	int unsigned AUTO_INCREMENT PRIMARY KEY COMMENT '장바구니 아이디',
                               `u_id`	varchar(255) NOT NULL COMMENT '작성자 아이디',
-                              `s_id`	int unsigned NOT NULL COMMENT '옵션 아이디',
+                              `o_id`	int unsigned NOT NULL COMMENT '옵션 아이디',
                               FOREIGN KEY (u_id) REFERENCES users (u_id) ON DELETE CASCADE ON UPDATE CASCADE,
-                              FOREIGN KEY (s_id) REFERENCES sells (s_id) ON DELETE CASCADE ON UPDATE CASCADE
+                              FOREIGN KEY (o_id) REFERENCES sell_options (o_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 
@@ -540,6 +538,7 @@ CREATE TABLE `notes` (
 
 );
 INSERT INTO users (u_id, pw, name, nk_name, email, birth, phone, address, detail_address, pr_content, permission, mbti, img_path, store_name, business_id) VALUES
+
                                                                                                                                                                ('USER01', '1234', '김철수', '바보철수', 'user01@example.com', '1990-01-01', '010-1234-5678', '서울특별시 강남구', '삼성동 123-45', '안녕하세요. 저는 철수입니다.', 'USER', 'ISTJ', '/images/user01.jpg', NULL, NULL),
                                                                                                                                                                ('USER02', '1234', '김영수', '영수', 'kimyoungsoo@gmail.com', '1995-02-03', '010-1111-2222', '서울특별시 강남구', '신사동 123-1', '안녕하세요. 저는 웹 개발자입니다.', 'USER', 'ISTJ', NULL, NULL, NULL),
                                                                                                                                                                ('USER03', '1234', '이은지', '은지', 'leeeunji@gmail.com', '1998-06-17', '010-1234-5679', '서울특별시 관악구', '신림동 543-2', '안녕하세요. 저는 디자이너입니다.', 'USER', 'INFP', NULL, NULL, NULL),
@@ -551,6 +550,45 @@ INSERT INTO users (u_id, pw, name, nk_name, email, birth, phone, address, detail
                                                                                                                                                                ('USER09', '1234','박성준', '성준', 'parksungjun@gmail.com', '1991-11-11', '010-9999-9999', '경기도 의정부시', '송산동 123-4', '안녕하세요. 저는 의사입니다.', 'USER', 'ENTJ', NULL, NULL, NULL),
                                                                                                                                                                ('USER10', '1234', '임수현', '수현', 'limsoohyun@gmail.com', '1996-08-08', '010-7777-7776', '서울특별시 강동구', '천호동 456-7', '안녕하세요. 저는 공무원입니다.', 'USER', 'ISTP', NULL, NULL, NULL);
 
+
+
+INSERT INTO plans(u_id, title, info, plan_from, plan_to, img_path, plan_status, review) VALUES('USER01', 'Weekend Trip to the Beach', '이번 주말 해변에 놀러갈 여행 친구 구함', '2023-04-01', '2023-04-03', '/images/beach.jpg', 'PUBLIC', true);
+INSERT INTO plans(u_id, title, info, plan_from, plan_to, img_path, plan_status, review) VALUES('USER02', '놀러가자', '언제놀러가지', '2023-05-01', '2023-05-03', '/images/beach.jpg', 'PUBLIC', true);
+
+INSERT INTO communitys (u_id, p_id, title, content, area, istj, istp, isfj, isfp, intj, intp, infj, infp, estj, estp, esfj, esfp, entj, entp, enfj, enfp) VALUES
+    ('USER01', 1, 'Lets hike together!', 'Looking for hiking buddies in the Seoul area. Planning to go to Bukhansan National Park next weekend.', '서울', 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+INSERT INTO communitys (u_id, p_id, title, content, area, istj, istp, isfj, isfp, intj, intp, infj, infp, estj, estp, esfj, esfp, entj, entp, enfj, enfp) VALUES
+    ('USER02', 2, 'Coffee lovers unite!', 'Looking for people who enjoy trying out new coffee shops in the Gyeonggi area. Lets share our favorite spots and maybe even organize a coffee tasting event.', '경기', 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+
+#판매글 데이터
+INSERT INTO sells (u_id, area, title, content, category, qnt, img_main)
+VALUES
+    ('user01', '서울', '판매글 제목1', '판매글 내용1', '워터', 5, true),
+    ('user02', '인천', '판매글 제목2', '판매글 내용2', '테마', 3, false),
+    ('user03', '대전', '판매글 제목3', '판매글 내용3', '키즈', 1, true),
+    ('user04', '광주', '판매글 제목4', '판매글 내용4', '레저', 8, true),
+    ('user05', '대구', '판매글 제목5', '판매글 내용5', '박물관', 2, false),
+    ('user06', '울산', '판매글 제목6', '판매글 내용6', '워터', 4, true),
+    ('user07', '부산', '판매글 제목7', '판매글 내용7', '테마', 3, false),
+    ('user08', '세종', '판매글 제목8', '판매글 내용8', '키즈', 2, true),
+    ('user09', '경기', '판매글 제목9', '판매글 내용9', '레저', 5, false),
+    ('user10', '강원', '판매글 제목10', '판매글 내용10', '박물관', 1, true),
+    ('user01', '충북', '판매글 제목11', '판매글 내용11', '워터', 3, false),
+    ('user02', '충남', '판매글 제목12', '판매글 내용12', '테마', 6, true),
+    ('user03', '전북', '판매글 제목13', '판매글 내용13', '키즈', 4, true),
+    ('user04', '전남', '판매글 제목14', '판매글 내용14', '레저', 7, false),
+    ('user05', '경북', '판매글 제목15', '판매글 내용15', '박물관', 2, true),
+    ('user06', '경남', '판매글 제목16', '판매글 내용16', '워터', 5, false),
+    ('user07', '제주', '판매글 제목17', '판매글 내용17', '테마', 1, true),
+    ('user07', '제주', '판매글 제목17', '판매글 내용17', '키즈', 1, true),
+    ('user07', '제주', '판매글 제목171', '판매글 내용17', '레저', 1, true),
+    ('user07', '제주', '판매글 제목171', '판매글 내용17', '테마', 1, true);
+
+INSERT INTO `sell_options` (`s_id`, `name`, `price`, `stock`)
+VALUES
+    (1, '성인', '10000', 20),
+    (1, '청소년', '8000', 30),
+    (1, '소인', '5000', 10);
 
 CREATE USER 'gabojagoDba'@'localhost' IDENTIFIED BY 'mysql123';
 GRANT ALL PRIVILEGES ON gabojagoPlan.* TO 'gabojagoDba'@'localhost';
