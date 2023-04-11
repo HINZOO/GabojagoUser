@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>판매글 리스트</title>
+</head>
+<div layout:fragment="content">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2">
+                <h2>카테고리</h2>
+                <div >
+                <ul class="list-group">
+                    <li class="list-group-item"><a href="/sells/list.do" class="category-link" >전체</a></li>
+                    <li class="list-group-item"><a href="/sells/list.do?category=워터">워터파크</a></li>
+                    <li class="list-group-item"><a href="/sells/list.do?category=테마">테마파크</a></li>
+                    <li class="list-group-item"><a href="/sells/list.do?category=키즈" >키즈</a></li>
+                    <li class="list-group-item"><a href="/sells/list.do?category=레저" >레저</a></li>
+                    <li class="list-group-item"><a href="/sells/list.do?category=박물관">박물관</a></li>
+                </ul>
+                </div>
+            </div>
+            <div class="col-md-10">
+                <h2>상품 리스트</h2>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>s_id</th>
+                        <th>u_id</th>
+                        <th>area</th>
+                        <th>title</th>
+                        <th>content</th>
+                        <th>post_time</th>
+                        <th>update_time</th>
+                        <th>view_count</th>
+                        <th>category</th>
+                        <th>qnt</th>
+                        <th>img_main</th>
+                    </tr>
+                    </thead>
+                    <tbody id="product-list">
+                    <!-- 타임루프로 반복하여 데이터 출력 -->
+                    <th:block th:each="s:${sells}" >
+                        <tr data-category="${s.getCategory().toLowerCase()}">
+                            <td th:text="${s.getSId()}"></td>
+                            <td th:text="${s.getUId()}"></td>
+                            <td th:text="${s.getArea()}"></td>
+                            <td th:text="${s.getTitle()}"></td>
+                            <td th:text="${s.getContent()}"></td>
+                            <td th:text="${s.postTime.toLocaleString()}"></td>
+                            <td th:text="${s.updateTime.toLocaleString()}"></td>
+                            <td th:text="${s.getViewCount()}"></td>
+                            <td th:text="${s.getCategory()}"></td>
+                            <td th:text="${s.getQnt()}"></td>
+                            <td th:text="${s.getImgMain()}"></td>
+                        </tr>
+                    </th:block>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+
+
+</script>
+</html>
