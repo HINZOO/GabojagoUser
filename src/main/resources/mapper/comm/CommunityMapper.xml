@@ -28,6 +28,10 @@
         <result column="entp" property="entp"/>
         <result column="enfj" property="enfj"/>
         <result column="enfp" property="enfp"/>
+        <association property="user"
+                     select="com.project.gabojago.gabojagouser.mapper.user.UserMapper.findUserByUId"
+                     column="u_id"
+                     fetchType="lazy"/>
     </resultMap>
 
     <insert id="insertOne" parameterType="communityDto">
