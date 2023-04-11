@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.project.gabojago.gabojagouser.mapper.user.UserMapper">
+  <insert id="insertOne" parameterType="com.project.gabojago.gabojagouser.dto.user.UserDto">
+    INSERT INTO users (u_id, pw, name, nk_name, email, birth, phone, address, detail_address, pr_content, permission, mbti, img_path, post_time, store_name, business_id)
+    VALUES (#{uId}, #{pw}, #{name}, #{nkName}, #{email}, #{birth}, #{phone}, #{address}, #{detailAddress}, #{prContent}, #{permission}, #{mbti}, #{imgPath}, #{postTime}, #{storeName}, #{businessId})
+  </insert>
+  <select id="findUserByUIdAndPw" resultType="com.project.gabojago.gabojagouser.dto.user.UserDto">
+    SELECT * FROM users WHERE u_id=#{uId} AND pw=#{pw}
+  </select>
+  <select id="findUserByUId" resultType="com.project.gabojago.gabojagouser.dto.user.UserDto">
+    SELECT * FROM users WHERE u_id=#{uId}
+  </select>
+</mapper>

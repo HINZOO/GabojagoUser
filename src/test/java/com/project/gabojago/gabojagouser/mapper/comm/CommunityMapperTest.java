@@ -37,7 +37,6 @@ class CommunityMapperTest {
         comm.setEsfj(true);
 
         int insert=communityMapper.insertOne(comm);
-        System.out.println(comm);
     }
 
     @Test
