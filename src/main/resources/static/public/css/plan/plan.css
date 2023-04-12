@@ -6,7 +6,7 @@
 }
 a:link { color: black; text-decoration: none;}
 a:visited { color: black; text-decoration: none;}
-a:hover { color: black; text-decoration: underline;}
+a:hover { color: black; text-decoration: none;}
 #newPlanBtn {
     background-color: #ffffff;
     width: 130px;
@@ -26,7 +26,10 @@ a:hover { color: black; text-decoration: underline;}
 }
 .listMain section {
     min-height: 33vh;
-    margin-bottom: 20px;
+    padding: 20px 10px;
+    margin-bottom: 50px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px 1px #e3e3e3;
 }
 .listTitle {
 
@@ -38,7 +41,6 @@ a:hover { color: black; text-decoration: underline;}
 }
 .listTitleP {
     font-size: 25px;
-    font-family: 'TheJamsil5Bold';
     border-left: 10px solid lightgrey;
     padding: 2px 10px 2px 10px;
     color: #3b3b3b;
@@ -281,7 +283,7 @@ canvas{
 
 .mainSection{
     padding: 0px 30px;
-    background-color: rgba(0, 0, 0, 0.02);
+
 }
 
 .scheduleBtn{

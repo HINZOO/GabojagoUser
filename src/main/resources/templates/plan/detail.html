@@ -162,6 +162,7 @@
 
 
 
+
     </div> <!--그리드 row 닫기-->
 
 <!--새 플랜 모달 부분-->
@@ -236,7 +237,14 @@
     </div>
 
 
+
     <script>
+        const URL="ws://localhost:7777/plan"
+        let webSocket;
+        webSocket=new WebSocket(URL);
+
+
+
         const scheduleInsertForm = document.getElementById("scheduleInsertForm");
         scheduleInsertForm.onsubmit=registerSchedule;
 
@@ -245,7 +253,7 @@
             new bootstrap.Modal(document.getElementById('staticBackdrop'),{}).show();
         })
 
-        //새 스케쥴 작성시 ResponseBody 요청으로 처리
+        //새 스케쥴 생성시 @ResponseBody 요청 보내고 결과에 따라 콜랩스 생성...나중에
         async function registerSchedule(e){
             e.preventDefault();
             const data=new FormData(scheduleInsertForm);
@@ -264,6 +272,7 @@
 
         // 캔버스 데이터를 가진 스케쥴을 로드하는 부분
         document.addEventListener("DOMContentLoaded",()=>{
+
             let canvasWidth = document.querySelector(".accordion-header");
             let hasCanvasArr = document.querySelectorAll(".hasCanvas");
             Array.from(hasCanvasArr).forEach((hasCanvas)=>{
@@ -302,26 +311,19 @@
                 // this.index = ++canvasCnt;
                 this.canvas.width = 1200;
                 this.canvas.height = 500;
-                this.subCanvas.width = 1200;
-                this.subCanvas.height = 500;
                 this.context.strokeStyle = "black";
                 this.context.lineWidth = 0.5;
                 this.context.scale(1.0,1.0)
                 this.context.translate(0,0)
                 this.context.setLineDash([])
-                this.subContext.strokeStyle = "black";
-                this.subContext.lineWidth = 0.5;
-                this.subContext.scale(1.0,1.0)
-                this.subContext.translate(0,0)
-                this.subContext.setLineDash([])
                 this.context.save();
-                this.subContext.save();
 
                 // 버튼활성화 및 배경디자인 생성
                 this.pageLiner(this.canvas.width,this.canvas.height)
-                // this.toolActivation()
-                // this.colorBtn()
 
+                webSocket.onmessage=function (e){
+                    console.log(e)
+                }
                 document.getElementById("stampBtn").addEventListener("click",()=>{
                     this.stampTool();
                 })
@@ -399,6 +401,9 @@
                 ///배열에 들어간 캔버스가 계속 변경되는 문제 해결 필요
             }
         }
+
+
+
 
 
     </script>
