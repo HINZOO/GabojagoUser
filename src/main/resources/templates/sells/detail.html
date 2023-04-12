@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>판매글 리스트</title>
+</head>
+<div layout:fragment="content">
+    <div class="container">
+        <div class="container my-5">
+            <div class="row">
+                <div class="col-md-6">
+                    <img src="/public/img/sells/1.jpg" alt="상품 이미지" class="img-fluid">
+                </div>
+                <div class="col-md-6">
+                    <h2 class="font-weight-bold mb-3" th:text="${s.title}"></h2>
+                    <span class="text-muted small mb-2" th:text="${s.category}+'/'"></span>
+                    <span class="small mb-2" th:text="${s.area}"></span>
+                    <hr class="my-4">
+                    <h4 class="font-weight-bold mb-3" th:text="${#dates.format(s.postTime,'yyyy-MM-dd')}"  pattern="yyyy-MM-dd"></h4>
+                    <hr class="my-4">
+                    <p class="small mb-2" th:text="${s.content}"></p>
+                    <hr class="my-4">
+                <form>
+                    <div class="form-group" th:each="op:${s.getSellOption()}">
+                        <label for="quantity" th:text="옵션-+${op.getName()}"></label>
+                        <label for="quantity" th:text="${op.getPrice()}+원"></label>
+                        <input type="number" class="form-control" id="quantity" value="{qnt}" min="1">
+                    </div>
+                    <button type="submit" class="btn btn-primary">구매하기</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    </div>
+</div>
+</html>

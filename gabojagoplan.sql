@@ -537,6 +537,8 @@ CREATE TABLE `notes` (
                          FOREIGN KEY (to_users) REFERENCES users (u_id) ON DELETE SET NULL ON UPDATE CASCADE
 
 );
+
+#유저더미
 INSERT INTO users (u_id, pw, name, nk_name, email, birth, phone, address, detail_address, pr_content, permission, mbti, img_path, store_name, business_id) VALUES
 
                                                                                                                                                                ('USER01', '1234', '김철수', '바보철수', 'user01@example.com', '1990-01-01', '010-1234-5678', '서울특별시 강남구', '삼성동 123-45', '안녕하세요. 저는 철수입니다.', 'USER', 'ISTJ', '/images/user01.jpg', NULL, NULL),
@@ -551,7 +553,6 @@ INSERT INTO users (u_id, pw, name, nk_name, email, birth, phone, address, detail
                                                                                                                                                                ('USER10', '1234', '임수현', '수현', 'limsoohyun@gmail.com', '1996-08-08', '010-7777-7776', '서울특별시 강동구', '천호동 456-7', '안녕하세요. 저는 공무원입니다.', 'USER', 'ISTP', NULL, NULL, NULL);
 
 
-
 INSERT INTO plans(u_id, title, info, plan_from, plan_to, img_path, plan_status, review) VALUES('USER01', 'Weekend Trip to the Beach', '이번 주말 해변에 놀러갈 여행 친구 구함', '2023-04-01', '2023-04-03', '/images/beach.jpg', 'PUBLIC', true);
 INSERT INTO plans(u_id, title, info, plan_from, plan_to, img_path, plan_status, review) VALUES('USER02', '놀러가자', '언제놀러가지', '2023-05-01', '2023-05-03', '/images/beach.jpg', 'PUBLIC', true);
 
@@ -559,6 +560,28 @@ INSERT INTO communitys (u_id, p_id, title, content, area, istj, istp, isfj, isfp
     ('USER01', 1, 'Lets hike together!', 'Looking for hiking buddies in the Seoul area. Planning to go to Bukhansan National Park next weekend.', '서울', 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 INSERT INTO communitys (u_id, p_id, title, content, area, istj, istp, isfj, isfp, intj, intp, infj, infp, estj, estp, esfj, esfp, entj, entp, enfj, enfp) VALUES
     ('USER02', 2, 'Coffee lovers unite!', 'Looking for people who enjoy trying out new coffee shops in the Gyeonggi area. Lets share our favorite spots and maybe even organize a coffee tasting event.', '경기', 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+
+#플래너더미
+INSERT INTO plans(u_id, title, info, plan_from, plan_to, img_path, plan_status, review) VALUES('USER01', 'Weekend Trip to the Beach', '이번 주말 해변에 놀러갈 여행 친구 구함', '2023-04-01', '2023-04-03', '/images/beach.jpg', 'PUBLIC', true);
+INSERT INTO plans(u_id, title, info, plan_from, plan_to, img_path, plan_status, review) VALUES('USER02', '놀러가자', '언제놀러가지', '2023-05-01', '2023-05-03', '/images/beach.jpg', 'PUBLIC', true);
+INSERT INTO plans(u_id, title, info, plan_from, plan_to, img_path, plan_status, review) VALUES('USER03', '강원도삼척여행', '강원도다녀오기', '2022-03-11', '2022-03-15', '/images/kang.jpg', 'PUBLIC', true);
+INSERT INTO plans(u_id, title, info, plan_from, plan_to, img_path, plan_status, review) VALUES('USER04', '제주도한달살기', '나의 워라벨을 위함', '2023-02-01', '2023-03-03', '/images/jeju.jpg', 'PUBLIC', true);
+INSERT INTO plans(u_id, title, info, plan_from, plan_to, img_path, plan_status, review) VALUES('USER05', '경주에서수학여행즐기기', '어른이되어 도전하는 수학여행', '2023-06-01', '2023-06-03', '/images/gjtrip.jpg', 'PUBLIC', true);
+
+#커뮤니티더미
+INSERT INTO communitys (u_id, p_id, title, content, area, istj, istp, isfj, isfp, intj, intp, infj, infp, estj, estp, esfj, esfp, entj, entp, enfj, enfp) VALUES
+    ('USER01', 1, 'Lets hike together!', 'Looking for hiking buddies in the Seoul area. Planning to go to Bukhansan National Park next weekend.', '서울', 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+INSERT INTO communitys (u_id, p_id, title, content, area, istj, istp, isfj, isfp, intj, intp, infj, infp, estj, estp, esfj, esfp, entj, entp, enfj, enfp) VALUES
+    ('USER02', 2, 'Coffee lovers unite!2', 'Looking for people who enjoy trying out new coffee shops in the Gyeonggi area. Lets share our favorite spots and maybe even organize a coffee tasting event.1', '서울', 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+INSERT INTO communitys (u_id, p_id, title, content, area, istj, istp, isfj, isfp, intj, intp, infj, infp, estj, estp, esfj, esfp, entj, entp, enfj, enfp) VALUES
+    ('USER03', 3, 'Coffee lovers unite!3', 'Looking for people who enjoy trying out new coffee shops in the Gyeonggi area. Lets share our favorite spots and maybe even organize a coffee tasting event.2', '제주', 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+INSERT INTO communitys (u_id, p_id, title, content, area, istj, istp, isfj, isfp, intj, intp, infj, infp, estj, estp, esfj, esfp, entj, entp, enfj, enfp) VALUES
+    ('USER04', 4, 'Coffee lovers unite!4', 'Looking for people who enjoy trying out new coffee shops in the Gyeonggi area. Lets share our favorite spots and maybe even organize a coffee tasting event.3', '경기', 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0);
+INSERT INTO communitys (u_id, p_id, title, content, area, istj, istp, isfj, isfp, intj, intp, infj, infp, estj, estp, esfj, esfp, entj, entp, enfj, enfp) VALUES
+    ('USER05', 5, 'Coffee lovers unite!5', 'Looking for people who enjoy trying out new coffee shops in the Gyeonggi area.', '강원', 0, 0, 1, 1,1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+
+
+>>>>>>> origin
 
 #판매글 데이터
 INSERT INTO sells (u_id, area, title, content, category, qnt, img_main)
@@ -584,7 +607,12 @@ VALUES
     ('user07', '제주', '판매글 제목171', '판매글 내용17', '레저', 1, true),
     ('user07', '제주', '판매글 제목171', '판매글 내용17', '테마', 1, true);
 
+<<<<<<< HEAD
 INSERT INTO `sell_options` (`s_id`, `name`, `price`, `stock`)
+=======
+
+INSERT INTO `sell_options` (`o_id`, `name`, `price`, `stock`)
+>>>>>>> origin
 VALUES
     (1, '성인', '10000', 20),
     (1, '청소년', '8000', 30),
