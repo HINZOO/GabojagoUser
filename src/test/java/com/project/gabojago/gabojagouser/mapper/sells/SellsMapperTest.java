@@ -31,7 +31,7 @@ class SellsMapperTest {
         SellsDto sell=new SellsDto();
         sell.setUId("user04");
         sell.setArea("인천");
-        sell.setTitle("인천 여행");
+        sell.setTitle("인천 여행111");
         sell.setContent("인천 도시 여행");
         sell.setCategory("워터");
         int insert=sellsMapper.insertOne(sell);

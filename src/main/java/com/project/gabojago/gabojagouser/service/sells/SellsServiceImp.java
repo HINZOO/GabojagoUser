@@ -1,7 +1,9 @@
 package com.project.gabojago.gabojagouser.service.sells;
 
 import com.project.gabojago.gabojagouser.dto.sells.SellsDto;
+import com.project.gabojago.gabojagouser.dto.sells.SellsOptionDto;
 import com.project.gabojago.gabojagouser.mapper.sells.SellsMapper;
+import com.project.gabojago.gabojagouser.mapper.sells.SellsOptionMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 public class SellsServiceImp implements SellsService{
     private SellsMapper sellsMapper;
+    private SellsOptionMapper sellsOptionMapper;
     @Override
     public List<SellsDto> List() {
         return this.sellsMapper.findAll();
@@ -24,6 +27,11 @@ public class SellsServiceImp implements SellsService{
     @Override
     public SellsDto detail(int sId) {
         return this.sellsMapper.findBySId(sId);
+    }
+
+    @Override
+    public int optionRegister(SellsOptionDto sellsOption) {
+        return this.sellsOptionMapper.insertOne(sellsOption);
     }
 
     @Override

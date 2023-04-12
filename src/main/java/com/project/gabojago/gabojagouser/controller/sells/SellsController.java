@@ -1,5 +1,7 @@
 package com.project.gabojago.gabojagouser.controller.sells;
 import com.project.gabojago.gabojagouser.dto.sells.SellsDto;
+import com.project.gabojago.gabojagouser.dto.sells.SellsOptionDto;
+import com.project.gabojago.gabojagouser.dto.user.UserDto;
 import com.project.gabojago.gabojagouser.service.sells.SellsService;
 
 import lombok.AllArgsConstructor;
@@ -9,6 +11,7 @@ import org.springframework.ui.Model;
 
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -40,6 +43,14 @@ public class SellsController {
         model.addAttribute("s",sells);
         return "/sells/detail";
     }
-
+    @GetMapping("/register.do")
+    public void insertForm(){
+    }
+    @PostMapping("/register.do")
+    public String registerAction(@ModelAttribute SellsDto sell
+    ){
+        String redirectPage="redirect:/sells/register.do";
+        return redirectPage;
+    }
 
 }
