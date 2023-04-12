@@ -3,14 +3,11 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout}">
-<head>
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
-</head>
+
 <body>
     <div layout:fragment="content" class="container">
-        <form name="registerForm" class="mx-auto w-80" action="./register.do" method="post"  >
+        <form name="registerForm" class="mx-auto w-80" action="./register.do" method="post"  enctype="multipart/form-data" >
+            <input type="hidden" name="pId" value="1">
             <h2 class="my-4">Community 글쓰기 양식</h2>
             <p class="form-floating">
                 <input id="uIdInput" type="text" name="uId" class="form-control" th:value="${session.loginUser.uId}" readonly placeholder="??">
@@ -21,7 +18,8 @@
                 <label>글 제목</label>
             </p>
 
-            <div id="summernote"></div>
+
+            <th:block th:include="../static/summernote/summerBoard.html"></th:block>
 
             <h5 class="mt-2 my-0 p-0">mbti</h5>
             <div class="d-flex justify-content-evenly">
@@ -72,25 +70,7 @@
                 <button type="submit" class="btn btn-primary me-1">등록</button>
                 <button type="reset" class="btn btn-warning me-1">초기화</button>
             </div>
-            <script>
-                $('#summernote').summernote({
-                    placeholder: 'gabojago Community Register Form',
-                    tabsize: 2,
-                    height: 300,
-                    toolbar: [
-                        ['fontname',['fontname']],
-                        ['fontsize', ['fontsize']],
-                        ['font', ['bold', 'underline', 'clear']],
-                        ['color', ['color']],
-                        ['para', ['ul', 'ol', 'paragraph']],
-                        ['table', ['table']],
-                        ['insert', ['link', 'picture', 'video']],
-                        ['view', ['fullscreen', 'codeview', 'help']]
-                    ],
-                    fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New'],
-                    fontSizes: ['10','12','14','16','18','20','22','24','28','30','36','50','72']
-                });
-            </script>
+
 
         </form>
     </div>
