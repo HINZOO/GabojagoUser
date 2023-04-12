@@ -2,46 +2,46 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-    layout:decorate="~{/layout}">
+      layout:decorate="~{/layout}">
 <head>
     <meta charset="UTF-8">
     <title>맞춤추천 리스트</title>
 </head>
 <script src=""></script>
 <div layout:fragment="content" class="container">
-    <h1  class="my-4">맞춤추천 리스트</h1>
+    <h1 class="my-4">맞춤추천 리스트</h1>
     <section id="tripListCont" class="row row-cols-lg-5 row-cols-1 g-6">
         <div class="col" th:each="t:${trips}">
             <div class="card mt-4">
-<!--                <div class="card-header d-flex justify-content-between align-items-center">-->
-<!--&lt;!&ndash;                    <strong th:text="${t.area}"></strong>&ndash;&gt;-->
-<!--                </div>-->
-
-                <strong th:text="${t.area}"></strong>
-                <div class="text-end position-relative">
-
-
-                    <div class="card-img-overlay bg-black opacity-25">
-                        <p class="card-text text-end p-0 m-0 me-2">
-                            <p class="bi bi-heart-fill text-primary "></p>
-                        </p>
-                    </div>
-                    <img src="/public/img/trip/춘식이라이언.jpg" class="card-img-top" alt="">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <strong th:text="${t.area}"></strong>
+                    <i class="bi bi-heart-fill text-primary"></i>
                 </div>
 
+                <div>
+                    <img src="/public/img/trip/춘식이라이언.jpg" class="card-img-top" alt="...">
+<!--                    <div class="card-img-overlay">-->
+<!--                        <p class="card-text text-end p-0 m-0 mt-5 me-2">-->
+<!--                            <i class="bi bi-heart-fill text-primary"></i>-->
+<!--                        </p>-->
+<!--                    </div>-->
+                </div> <!-- card-img -->
 
                 <div class="card-body">
                     <h5 class="card-title fs-6" th:text="${t.title}"></h5>
-                    <p class="card-text">#enfj#enfp#istj</p>
+                    <p class="card-text">
+                        #enfj#enfp#istj
+                    </p>
+                    <p class="card-text">
+                        <span>☆☆☆☆☆</span>
+                        <small>156</small>
+                    </p>
+                </div> <!-- card-body -->
 
-                    <div class="align-items-center justify-content-between">
-<!--                        별점-->
-                        <div>
-                            <span>☆☆☆☆☆</span>
-                            <small>156</small>
-                        </div>
-                    </div>
-                </div>
+
+
+
+
             </div>
         </div>
     </section>
