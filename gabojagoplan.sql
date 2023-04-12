@@ -553,6 +553,7 @@ INSERT INTO users (u_id, pw, name, nk_name, email, birth, phone, address, detail
                                                                                                                                                                ('USER10', '1234', '임수현', '수현', 'limsoohyun@gmail.com', '1996-08-08', '010-7777-7776', '서울특별시 강동구', '천호동 456-7', '안녕하세요. 저는 공무원입니다.', 'USER', 'ISTP', NULL, NULL, NULL);
 
 
+
 #플래너더미
 INSERT INTO plans(u_id, title, info, plan_from, plan_to, img_path, plan_status, review) VALUES('USER01', 'Weekend Trip to the Beach', '이번 주말 해변에 놀러갈 여행 친구 구함', '2023-04-01', '2023-04-03', '/images/beach.jpg', 'PUBLIC', true);
 INSERT INTO plans(u_id, title, info, plan_from, plan_to, img_path, plan_status, review) VALUES('USER02', '놀러가자', '언제놀러가지', '2023-05-01', '2023-05-03', '/images/beach.jpg', 'PUBLIC', true);
@@ -571,6 +572,7 @@ INSERT INTO communitys (u_id, p_id, title, content, area, istj, istp, isfj, isfp
     ('USER04', 4, 'Coffee lovers unite!4', 'Looking for people who enjoy trying out new coffee shops in the Gyeonggi area. Lets share our favorite spots and maybe even organize a coffee tasting event.3', '경기', 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0);
 INSERT INTO communitys (u_id, p_id, title, content, area, istj, istp, isfj, isfp, intj, intp, infj, infp, estj, estp, esfj, esfp, entj, entp, enfj, enfp) VALUES
     ('USER05', 5, 'Coffee lovers unite!5', 'Looking for people who enjoy trying out new coffee shops in the Gyeonggi area.', '강원', 0, 0, 1, 1,1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+
 
 
 #판매글 데이터
@@ -596,6 +598,7 @@ VALUES
     ('user07', '제주', '판매글 제목17', '판매글 내용17', '키즈', 1, true),
     ('user07', '제주', '판매글 제목171', '판매글 내용17', '레저', 1, true),
     ('user07', '제주', '판매글 제목171', '판매글 내용17', '테마', 1, true);
+
 
 INSERT INTO `sell_options` (`o_id`, `name`, `price`, `stock`)
 VALUES
