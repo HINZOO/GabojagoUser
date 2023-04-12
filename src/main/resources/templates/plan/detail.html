@@ -9,18 +9,22 @@
     <link th:href="@{/public/css/plan/plan.css}" rel="stylesheet" />
 </head>
 
-<div layout:fragment="content">
-
-    <div class="container-fluid px-0">
+<div layout:fragment="content" class="container-fluid px-0">
         <div class="row">
+
             <!--    사이드바 -->
             <div class="col-md-2" >
                 <div class="row row-cols-1 rightGrid">
+                    <div class="col calenderBox">
+                        <div class="calenderTitle sideTitle">CALENDER</div>
+                        <div class="calenderContent sideContent">테스트용</div>
+                    </div>
+
                     <div class="col infoBox">
                         <div class="infoTitle sideTitle">INFORMATION</div>
                         <div class="infoContent sideContent">
 
-<!--                            <div class="infoImg" th:if="${plan.getImgPath()!=null}" th:style="'background-image:url(' + ${plan.getImgPath()} + ');'"></div>-->
+                            <!--   <div class="infoImg" th:if="${plan.getImgPath()!=null}" th:style="'background-image:url(' + ${plan.getImgPath()} + ');'"></div>-->
                             <div class="infoImg" th:if="${plan.getImgPath()!=null}" style="background-image:url('/public/img/plan/planDefault.jpeg');"></div>
                             <div class="infoImg" th:if="${plan.getImgPath()==null}" style="background-image:url('/public/img/plan/planDefault.jpeg')"></div>
                             <div class="infoStatus" >
@@ -28,17 +32,13 @@
                                 <span th:text="${plan.getPlanStatus()}"/></div>
                             <div class="infoStatus">📌 <span th:text="${plan.getTitle()}"/></div>
                             <div class="infoSchedule">🗓️ <span th:text="${plan.getPlanFrom()}"/> ~ <span th:text="${plan.getPlanTo()}"/></div>
+
                         </div>
-                    </div>
-                    <div class="col calenderBox">
-                        <div class="calenderTitle sideTitle">CALENDER</div>
-                        <div class="calenderContent sideContent">캘린더 내용</div>
                     </div>
 
                 </div>
 
-
-            </div>
+            </div> <!--좌측사이드닫기-->
 
 
 
@@ -129,73 +129,24 @@
                         </div> <!--col 9-->
 
                     <div class="col-md-2 scheduleInputBox">
-
                         <div class="dropdown scheduleInput">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <button class="btn btn-secondary" id="newScheduleBtn">
                                 일정추가
                             </button>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item rowInputBtn" href="#">직접입력</a></li>
-                                <li><a class="dropdown-item" href="#">아이템 검색</a></li>
-                                <li><a class="dropdown-item" href="#">북마크한 일정</a></li>
-                            </ul>
                         </div>
-
                     </div>
-
                 </div>
 
 
-                <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0">
-
-                    <div class="accordion .accordion-flush" id="accordionExample">
-                        <div class="accordion-item">
-                            <h2 class="accordion-header">
-                                <button class="accordion-button collapsed scheduleBtn" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSample" aria-expanded="false" aria-controls="collapse2">
-
-                                    <div class="container scheduleContainer ">
-                                        <div class="row scheduleRow " >
-                                            <div class="col col-md-2 scheduleLeft ">
-                                                ️HH:MM
-                                            </div>
-                                            <div class="col col-md-10 scheduleCenter">
-                                                <div class="row h-100">
-                                                    <div class="col col-s-11 scheduleCenterInner" >
-                              <span class="scheduleTitle">
-                                「 ##TITLE## 」
-                              </span>
-                                                        <span class="scheduleContent">
-                                ITEM #1 → ITEM #2 → ITEM #3 → ITEM #4
-                              </span>
-
-                                                    </div>
-                                                    <div class="col col-md-1 scheduleRight">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="gray" class="bi bi-three-dots" viewBox="0 0 16 16">
-                                                            <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
-                                                        </svg>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </button>
-                            </h2>
-                            <div id="collapseSample" class="accordion-collapse collapse " data-bs-parent="#accordionExample">
-                                <div class="accordion-body">
-                                    <p class="innerText">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
-                                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                                            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
-                                        </svg>
-                                        <br>
-                                        새 화이트보드 추가
-                                    </p>
-                                </div>
-                            </div>
+                    <div class="accordion .accordion-flush" id="accordionSection">
+                        <div class="accordion-item" th:each="content:${plan.getContents()}">
+                            <th:block th:include="/plan/contents"></th:block>
                         </div>
+                    </div>
 
-                  </div></div></div>
+            </div> <!--메인섹션닫기-->
+
+
             <div class="col-md-2">
                 <div class="row row-cols-1 rightGrid">
                     <div class="col memberBox">
@@ -208,12 +159,252 @@
                     </div>
 
                 </div>
+            </div> <!--우측사이드 닫기-->
+
+
+
+    </div> <!--그리드 row 닫기-->
+
+<!--새 플랜 모달 부분-->
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-primary bg-opacity-10">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">새 스케쥴 작성</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form  method="post" id="scheduleInsertForm">
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="row">
+                                    <div class="col-12 mb-3">
+                                        <div class="form-floating">
+<!--                                            <input type="text" class="form-control" name="pId" th:value="${plan.getPId()}"  id="floatingId" placeholder="" hidden>-->
+                                            <input type="text" class="form-control" name="pId" value="1"  id="floatingId" placeholder="" hidden>
+                                            <label for="floatingId"></label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 mb-3">
+                                        <div class="form-floating">
+                                            <input type="text" class="form-control" name="tId" value="" id="tId" placeholder="" hidden>
+                                            <label for="tId"></label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 mb-3">
+                                        <div class="form-floating">
+                                            <input type="text" class="form-control" name="sId" value="" id="sId" placeholder="" hidden>
+                                            <label for="sId"></label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 mb-3">
+                                        <div class="form-floating">
+                                            <input type="text" class="form-control" name="title" id="floatingTitle" placeholder="">
+                                            <label for="floatingTitle">여행지</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 mb-3">
+                                        <div class="form-floating">
+                                            <input type="text" class="form-control" name="info" id="info" placeholder="">
+                                            <label for="info">경유지</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-floating">
+                                            <input type="time" class="form-control" name="time" id="time" placeholder="">
+                                            <label for="time">시간</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-floating">
+                                    <input type="" class="form-control" name="" id="floatingImg" placeholder="">
+                                    <label for="floatingImg">북마크넣을부분</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">만들기</button>
+                        </div>
+                    </form>
+                </div>
 
             </div>
         </div>
     </div>
 
 
-</div>
+    <script>
+        const scheduleInsertForm = document.getElementById("scheduleInsertForm");
+        scheduleInsertForm.onsubmit=registerSchedule;
+
+        const newScheduleBtn = document.querySelector("#newScheduleBtn");
+        newScheduleBtn.addEventListener("click",()=>{
+            new bootstrap.Modal(document.getElementById('staticBackdrop'),{}).show();
+        })
+
+        //새 스케쥴 작성시 ResponseBody 요청으로 처리
+        async function registerSchedule(e){
+            e.preventDefault();
+            const data=new FormData(scheduleInsertForm);
+            let url="/plan/contents/insert.do"
+            const resp=await fetch(url,{method:"POST",body:data});
+            if(resp.status===200){
+                const json=await resp.json();
+                if(true){
+                    alert(JSON.stringify(json));
+                }
+            }else {
+                alert("등록 실패 status :"+resp.status);
+            }
+        }
+
+
+        // 캔버스 데이터를 가진 스케쥴을 로드하는 부분
+        document.addEventListener("DOMContentLoaded",()=>{
+            let canvasWidth = document.querySelector(".accordion-header");
+            let hasCanvasArr = document.querySelectorAll(".hasCanvas");
+            Array.from(hasCanvasArr).forEach((hasCanvas)=>{
+                let h = 500/1200*canvasWidth.clientWidth+16; //16은 부트스트랩에 설정된 상하 패딩값을 보정해준 것
+                hasCanvas.style.height = h+"px";
+                let newCanvas = new CanvasCreate();
+                let canvas = newCanvas.canvas;
+                canvas.setAttribute("id",hasCanvas.parentElement.getAttribute("id"))
+                hasCanvas.append(canvas);
+            })
+         })
+
+
+
+        class CanvasCreate {
+            index;
+            canvas; context; subCanvas; subContext;
+            layerArray = []; //레이어 구현용 배열
+            jsonArray = []; //레이어 구현용 배열
+            activatedTool; //활성화 툴 체크용
+            pageZoom = 100/1200; //페이지 사이즈 변화에 따른 배율 조졍용(아직)
+            functionZoom = 1.0; //줌기능 배율 조졍용
+
+            constructor() {
+                // 캔버스 본체
+                this.canvas = document.createElement("canvas");
+                this.context = this.canvas.getContext("2d")
+                // 레이어 구현용 보조캔버스
+                this.subCanvas = document.createElement("canvas");
+                this.subContext = this.subCanvas.getContext("2d");
+                // 캔버스 초기화
+                this.init()
+            }
+            init(){
+                // 스타일 관련 초기 설정
+                // this.index = ++canvasCnt;
+                this.canvas.width = 1200;
+                this.canvas.height = 500;
+                this.subCanvas.width = 1200;
+                this.subCanvas.height = 500;
+                this.context.strokeStyle = "black";
+                this.context.lineWidth = 0.5;
+                this.context.scale(1.0,1.0)
+                this.context.translate(0,0)
+                this.context.setLineDash([])
+                this.subContext.strokeStyle = "black";
+                this.subContext.lineWidth = 0.5;
+                this.subContext.scale(1.0,1.0)
+                this.subContext.translate(0,0)
+                this.subContext.setLineDash([])
+                this.context.save();
+                this.subContext.save();
+
+                // 버튼활성화 및 배경디자인 생성
+                this.pageLiner(this.canvas.width,this.canvas.height)
+                // this.toolActivation()
+                // this.colorBtn()
+
+                document.getElementById("stampBtn").addEventListener("click",()=>{
+                    this.stampTool();
+                })
+            }
+
+
+            stampTool() {
+                let canvasObj = this;
+                let moveHandler;
+                function startFunction(e) {
+
+                        let startX = e.offsetX;
+                        let startY = e.offsetY;
+                        let pathArray = [];
+                        canvasObj.context.beginPath()
+                        canvasObj.context.moveTo(e.offsetX,e.offsetY);
+                        this.addEventListener("mousemove", moveHandler = function (e){
+
+                            canvasObj.context.lineTo(e.offsetX,e.offsetY);
+                            canvasObj.context.stroke()
+                        })
+                        this.addEventListener("mouseup",(e)=>{
+                            this.removeEventListener("mousemove", moveHandler)
+                        },{once:true})
+                    }
+
+                this.canvas.addEventListener("mousedown", startFunction);
+            };
+
+            // 캔버스 기본 배경
+            pageLiner(width,height){
+                let x = 0;
+                let y = 0;
+                while (x<=height){
+                    this.context.beginPath();
+                    if(x===0 || height-x===0){
+                        this.context.strokeStyle="black"
+                        this.context.lineWidth=1.0;
+                    } else if(x%50===0){
+                        this.context.strokeStyle="gray"
+                        this.context.lineWidth=0.2;
+                    } else{
+                        this.context.strokeStyle="gray"
+                        this.context.lineWidth=0.1;
+                    }
+                    this.context.moveTo(0, x);
+                    this.context.lineTo(width, x);
+                    this.context.stroke();
+                    x+=10;
+                }
+                while (y<=width){
+                    this.context.beginPath();
+                    if(y===0 || y===width){
+                        this.context.strokeStyle="black"
+                        this.context.lineWidth=1.0;
+                    } else if(y%50===0){
+                        if(y/50===12){
+                            this.context.strokeStyle="red"
+                            this.context.lineWidth=0.3;
+                        } else {
+                            this.context.strokeStyle="gray"
+                            this.context.lineWidth=0.2;
+                        }
+                    } else{
+                        this.context.strokeStyle="gray"
+                        this.context.lineWidth=0.1;
+                    }
+                    this.context.moveTo(y, 0);
+                    this.context.lineTo(y, height);
+                    this.context.stroke();
+                    y+=10;
+                }
+                this.context.restore()
+                this.context.save()
+                ///배열에 들어간 캔버스가 계속 변경되는 문제 해결 필요
+            }
+        }
+
+
+    </script>
+
+
+</div> <!--레이아웃 닫기-->
 </html>
 

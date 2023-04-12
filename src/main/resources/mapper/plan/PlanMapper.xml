@@ -13,6 +13,10 @@
         <result column="img_path" property="imgPath"/>
         <result column="plan_status" property="planStatus"/>
         <result column="review" property="review"/>
+        <collection property="contents"
+                    select="com.project.gabojago.gabojagouser.mapper.plan.PlanContentsMapper.findByPId"
+                    column="p_id"
+                    fetchType="lazy"/>
     </resultMap>
 
     <insert id="insertOne" useGeneratedKeys="true" keyProperty="pId"  parameterType="PlanDto">

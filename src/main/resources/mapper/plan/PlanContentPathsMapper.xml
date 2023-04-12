@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.project.gabojago.gabojagouser.mapper.plan.PlanContentPathsMapper">
+    <resultMap id="planContentPathMap" type="planContentPathsDto">
+        <id column="path_id" property="pathId"/>
+        <result column="con_id" property="conId"/>
+        <result column="can_path" property="canPath"/>
+    </resultMap>
+
+    <select id="findByConId" resultMap="planContentPathMap">
+        SELECT * FROM plan_content_paths WHERE con_id=#{conId}
+    </select>
+</mapper>

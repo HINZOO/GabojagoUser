@@ -50,9 +50,6 @@ a:hover { color: black; text-decoration: underline;}
 .listContent div {
     display: inline-block;
 }
-.modal-title {
-    font-family: 'TheJamsil5Bold';
-}
 .card {
     width: 300px;
     border-radius: 10px;
