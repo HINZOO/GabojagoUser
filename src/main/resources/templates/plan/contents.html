@@ -1,5 +1,5 @@
 <h2 class="accordion-header" xmlns="http://www.w3.org/1999/html">
-          <button class="accordion-button collapsed scheduleBtn" type="button" data-bs-toggle="collapse" th:data-bs-target="'#content_'+${content.getConId()}" aria-expanded="false" th:aria-controls="'content_'+${content.getConId()}">
+          <button class="accordion-button collapsed scheduleBtn" type="button" data-bs-toggle="collapse" th:data-bs-target="'#content_'+${content.getConId()}" aria-expanded="false" th:aria-controls="'#content_'+${content.getConId()}">
 
               <div class="container scheduleContainer ">
                   <div class="row scheduleRow " >
@@ -27,7 +27,9 @@
       </h2>
 
       <div th:id="'content_'+${content.getConId()}" class="accordion-collapse collapse " data-bs-parent="#accordionSection">
-          <div class="accordion-body" th:if="${content.getPath()}!=null" th:classappend="hasCanvas"></div>
+          <div class="accordion-body" th:if="${content.getPath()}!=null" th:classappend="hasCanvas">
+
+          </div>
 
 
           <div class="accordion-body" th:if="${content.getPath()}==null">
