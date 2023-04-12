@@ -1,4 +1,4 @@
-package com.project.gabojago.gabojagouser.service;
+package com.project.gabojago.gabojagouser.service.sells;
 
 import com.project.gabojago.gabojagouser.dto.sells.SellsDto;
 

@@ -7,7 +7,6 @@ import java.util.List;
 
 @Mapper
 public interface SellsMapper {
-
     List<SellsDto> findAll();
     List<SellsDto> findByCategory(String category);
 

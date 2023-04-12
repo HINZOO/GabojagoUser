@@ -27,17 +27,15 @@
                 <table class="table">
                     <thead>
                     <tr>
-                        <th>s_id</th>
-                        <th>u_id</th>
-                        <th>area</th>
-                        <th>title</th>
-                        <th>content</th>
-                        <th>post_time</th>
-                        <th>update_time</th>
-                        <th>view_count</th>
-                        <th>category</th>
-                        <th>qnt</th>
-                        <th>img_main</th>
+                        <th>글번호</th>
+                        <th>작성자</th>
+                        <th>지역</th>
+                        <th>제목</th>
+                        <th>내용</th>
+                        <th>조회수</th>
+                        <th>카테고리</th>
+                        <th>총수량</th>
+                        <th>메인이미지</th>
                     </tr>
                     </thead>
                     <tbody id="product-list">
@@ -47,14 +45,13 @@
                             <td th:text="${s.getSId()}"></td>
                             <td th:text="${s.getUId()}"></td>
                             <td th:text="${s.getArea()}"></td>
-                            <td th:text="${s.getTitle()}"></td>
+                            <td >
+                                <a th:text="${s.getTitle()}" th:href="@{'/sells/{sId}/detail.do'(sId=${s.sId})}"></a>
+                            </td>
                             <td th:text="${s.getContent()}"></td>
-                            <td th:text="${s.postTime.toLocaleString()}"></td>
-                            <td th:text="${s.updateTime.toLocaleString()}"></td>
                             <td th:text="${s.getViewCount()}"></td>
                             <td th:text="${s.getCategory()}"></td>
-                            <td th:text="${s.getQnt()}"></td>
-                            <td th:text="${s.getImgMain()}"></td>
+                            <td th:text="${s.imgMain}"></td>
                         </tr>
                     </th:block>
                     </tbody>

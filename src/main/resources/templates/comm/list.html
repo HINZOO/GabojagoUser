@@ -4,8 +4,11 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout}">
 <div layout:fragment="content">
-    <section id="commListContainer" class=" row">
-        <p>가보자고(Community)</p>
+    <section id="commListContainer" class="row">
+        <h2>가보자고(Community)</h2>
+        <p class="text-end">
+            <a class="btn btn-outline-success me-5" href="/comm/register.do">글쓰기</a>
+        </p>
         <hr>
         <div class="col-11 my-2" th:each="c:${communities}">
             <div class="card" >
@@ -21,17 +24,20 @@
                     </div>
                     <div class="col-8">
                         <div class="card-body">
-                            <h5 class="card-title" th:text="${c.title}"></h5>
+                            <h4 class="card-title" >
+                                <a class="text-decoration-none text-dark" th:text="${c.title}" th:href="@{'/comm/{cId}/detail.do'(cId=${c.cId})}"></a>
+                            </h4>
                             <p>
-                                작성자<span class="me-1" th:text="${c.uId}"></span>
-                                <small class="me-1" th:text="${#dates.format(c.postTime,'yyyy-MM-dd')}">작성일</small>
-                                <small class="me-1" th:text="${#dates.format(c.updateTime,'yyyy-MM-dd')}">수정일</small>
-                                <small >조회수</small> </p>
+                                <i class="bi bi-person fs-5"></i>
+                                <strong class="me-1" th:text="${c.user.nkName}"></strong>
+                                <small class="text-muted me-1" th:text="P.+${#dates.format(c.postTime,'yyyy-MM-dd')}"></small>
+                                <small class="text-muted me-1" th:text="M.+${#dates.format(c.updateTime,'yyyy-MM-dd')}"></small>
+                                <small class="text-muted">조회수</small> </p>
                             <p class="card-text" th:text="${c.content}"></p>
                         </div>
                         <div class="text-end me-2 my-2">
-                            <a href="#" class="btn btn-primary me-2">수정</a>
-                            <a href="#" class="btn btn-danger">삭제</a>
+                            <a href="#" class="btn btn-primary btn-sm me-1">수정</a>
+                            <a href="#" class="btn btn-danger btn-sm">삭제</a>
                         </div>
                     </div>
                 </div>
