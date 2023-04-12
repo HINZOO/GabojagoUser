@@ -7,6 +7,8 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
@@ -24,4 +26,19 @@ public class CommController {
         model.addAttribute("communities",communities);
         return "/comm/list";
     }
+
+    @GetMapping("/{cId}/detail.do")
+    public String detail(Model model,
+                         @PathVariable int cId){
+        CommunityDto comm=communityService.detail(cId);
+        model.addAttribute("c",comm);
+        return "/comm/detail";
+    }
+    @GetMapping("/register.do")
+    public void registerForm(){
+    }
+/*    @PostMapping("/register.do")
+    public String registerAction(){
+        return "/comm/register.do";
+    }*/
 }
