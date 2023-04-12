@@ -7,6 +7,7 @@ import com.project.gabojago.gabojagouser.service.sells.SellsService;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 
 import org.springframework.web.bind.annotation.*;
@@ -46,10 +47,35 @@ public class SellsController {
     @GetMapping("/register.do")
     public void insertForm(){
     }
+    @Transactional
     @PostMapping("/register.do")
-    public String registerAction(@ModelAttribute SellsDto sell
-    ){
-        String redirectPage="redirect:/sells/register.do";
+    public String registerAction(@ModelAttribute SellsDto sell,
+                                 @ModelAttribute SellsOptionDto sellsOptionDto,
+                                 @RequestParam(value="name") String[] name,
+                                 @RequestParam(value="price") int[] price) {
+        String redirectPage="redirect:/sells/list.do";
+        try {
+
+            // 판매글 등록
+             sellsService.register(sell);
+
+            // 옵션 등록
+            if (name.length != price.length) {
+                throw new IllegalArgumentException("옵션 등록 실패");
+            }
+            for (int i = 0; i < name.length; i++) {
+                SellsOptionDto sellsOption = new SellsOptionDto();
+                sellsOption.setSId(sell.getSId());
+                sellsOption.setName(name[i]);
+                sellsOption.setPrice(price[i]);
+                System.out.println("sellsOption = " + sellsOption);
+                sellsService.optionRegister(sellsOption);
+            }
+            redirectPage="redirect:/sells/list.do";
+        }catch (Exception e){
+            log.error(e.getMessage());
+        }
+
         return redirectPage;
     }
 

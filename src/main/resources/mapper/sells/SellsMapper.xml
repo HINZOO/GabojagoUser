@@ -17,7 +17,11 @@
                     fetchType="eager"/>
     </resultMap>
     <insert id="insertOne" >
-        INSERT INTO sells (u_id,area,title,content,category) VALUES (#{uId},#{area},#{title},#{content},#{category})
+        INSERT INTO sells (u_id,area,title,content,category)
+        VALUES (#{uId},#{area},#{title},#{content},#{category})
+        <selectKey keyProperty="sId" order="AFTER" resultType="java.lang.Integer">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
     </insert>
     <update id="updateOne" >
         UPDATE sells SET area=#{area},title=#{title},content=#{content},category=#{category},img_main=#{imgMain} WHERE s_id=#{sId}
