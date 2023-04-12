@@ -40,10 +40,10 @@ public class UserLoginController {
       log.error(e.getMessage());
     }
     if(loginUser!=null) {
-      redirectAttributes.addFlashAttribute("loginMsg", "로그인 성공");
+      redirectAttributes.addFlashAttribute("msg", "로그인 성공");
       session.setAttribute("loginUser", loginUser);
     } else {
-      redirectAttributes.addFlashAttribute("loginMsg", "로그인 실패: 아이디나 패스워드를 확인하세요");
+      redirectAttributes.addFlashAttribute("msg", "로그인 실패: 아이디나 패스워드를 확인하세요");
       return "redirect:/user/login.do";
     }
     return "redirect:/";

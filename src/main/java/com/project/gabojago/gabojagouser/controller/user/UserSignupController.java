@@ -31,10 +31,10 @@ public class UserSignupController {
       RedirectAttributes redirectAttributes) {
     int signupResult = userService.signup(user);
     if(signupResult>0) {
-      redirectAttributes.addFlashAttribute("signupMsg", "회원가입 성공");
+      redirectAttributes.addFlashAttribute("msg", "회원가입 성공");
       return "redirect:/";
     } else {
-      redirectAttributes.addFlashAttribute("signupMsg", "회원가입 실패");
+      redirectAttributes.addFlashAttribute("msg", "회원가입 실패");
     }
     return "user/loginForm";
   }

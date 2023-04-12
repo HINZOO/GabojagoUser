@@ -20,7 +20,7 @@ public class UserLogoutController {
       RedirectAttributes redirectAttributes,
       HttpServletResponse resp) {
     session.removeAttribute("loginUser");
-    redirectAttributes.addFlashAttribute("loginMsg", "로그아웃 성공");
+    redirectAttributes.addFlashAttribute("msg", "로그아웃 성공");
     return "redirect:/";
   }
 }
