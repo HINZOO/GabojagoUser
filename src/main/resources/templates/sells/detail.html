@@ -18,7 +18,7 @@
                     <span class="text-muted small mb-2" th:text="${s.category}+'/'"></span>
                     <span class="small mb-2" th:text="${s.area}"></span>
                     <hr class="my-4">
-                    <h4 class="font-weight-bold mb-3" th:text="${s.postTime.toLocaleString()}"  pattern="yyyy-MM-dd"></h4>
+                    <h4 class="font-weight-bold mb-3" th:text="${#dates.format(s.postTime,'yyyy-MM-dd')}"  pattern="yyyy-MM-dd"></h4>
                     <hr class="my-4">
                     <p class="small mb-2" th:text="${s.content}"></p>
                     <hr class="my-4">
