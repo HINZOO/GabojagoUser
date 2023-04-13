@@ -9,7 +9,7 @@
     <title>여행지 등록</title>
 </head>
 <div layout:fragment="content">
-    <form enctype="multipart/form-data" action="/trip/register.do" method="post" style="width: 500px; margin: 0 auto;">
+    <form enctype="multipart/form-data" action="./register.do" method="post" style="width: 500px; margin: 0 auto;">
         <h1 class="my-4">여행지 등록</h1>
 
         <p class="form-floating">
@@ -47,7 +47,7 @@
         </p>
 
         <p class="form-floating">
-            <input readonly type="text" name="title" value="" class="form-control" placeholder="??">
+            <input type="text" name="title" value="" class="form-control" placeholder="??">
             <label>여행지명</label>
         </p>
 
@@ -76,7 +76,7 @@
             <label>해시태그 입력</label>
         </p>
 
-        <p id="imgCont" class="">
+        <p id="imgCont">
             <button id="imgAddBtn" class="btn btn-danger w-100" type="button">
                 이미지
                 <i class="bi bi-plus-square"></i>
