@@ -19,4 +19,5 @@ class UserMapperTest {
     user.setPw("1234");
     userMapper.findUserByUIdAndPw(user);
   }
+
 }

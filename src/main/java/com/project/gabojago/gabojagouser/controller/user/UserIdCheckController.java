@@ -16,8 +16,7 @@ import org.springframework.web.bind.annotation.*;
 public class UserIdCheckController {
 
   private UserService userService;
-  //checkId.do?uId=user01... 쿼리스트링
-  // /user01/checkId.do
+
   @GetMapping("/{uId}/checkId.do")
   public @ResponseBody int idCheck(@PathVariable String uId) {
     UserDto result = userService.idCheck(uId);
@@ -27,4 +26,5 @@ public class UserIdCheckController {
       return 0;
     }
   }
+
 }
