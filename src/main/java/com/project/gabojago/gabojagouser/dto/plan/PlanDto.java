@@ -2,6 +2,8 @@ package com.project.gabojago.gabojagouser.dto.plan;
 
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class PlanDto {
     private int pId; // PK
@@ -15,4 +17,5 @@ public class PlanDto {
     private String imgPath; // 대표이미지 경로
     private String planStatus; // 상태(공개,비공개)
     private int review; // 리뷰작성여부
+    private List<PlanContentsDto> contents; // 개별 스케쥴 데이터
 }
