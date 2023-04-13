@@ -1,4 +1,4 @@
-package com.project.gabojago.gabojagouser.service;
+package com.project.gabojago.gabojagouser.service.trips;
 
 import com.project.gabojago.gabojagouser.dto.trips.TripDto;
 

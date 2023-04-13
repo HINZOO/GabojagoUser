@@ -1,7 +1,7 @@
-package com.project.gabojago.gabojagouser.controller;
+package com.project.gabojago.gabojagouser.controller.trips;
 
 import com.project.gabojago.gabojagouser.dto.trips.TripDto;
-import com.project.gabojago.gabojagouser.service.TripService;
+import com.project.gabojago.gabojagouser.service.trips.TripService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
