@@ -20,6 +20,12 @@ public class SellsServiceImp implements SellsService{
     }
 
     @Override
+    public List<SellsDto> findByTitle(String title) {
+        List<SellsDto> findByTitle=sellsMapper.findByTitle(title);
+        return findByTitle;
+    }
+
+    @Override
     public List<SellsDto> findByCategory(String category) {
         return this.sellsMapper.findByCategory(category);
     }

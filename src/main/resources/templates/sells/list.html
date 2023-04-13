@@ -8,12 +8,18 @@
 </head>
 <div layout:fragment="content">
     <div class="container">
-        <div class="row">
-                <div class="col-md-12 text-end"> <!--th:if="${session.loginUser!=null && session.loginUser.getPermission()=='PARTNER'}"-->
-                    <a href="/sells/register.do" class="btn btn-primary">게시글 작성</a>
-                </div>
+        <div class="row align-items-end">
+            <div class="col-md-6">
+                <form class="d-flex" role="search" id="searchForm">
+                    <input class="form-control me-2" type="search" placeholder="제목을 입력해 주세요" aria-label="Search"id="searchInput">
+                    <button class="btn btn-outline-success" type="submit" id="searchBtn">Search</button>
+                </form>
+            </div>
+            <div class="col-md-6 text-end">
+                <a href="/sells/register.do" class="btn btn-primary">게시글 작성</a>
             </div>
         </div>
+    </div>
         <div class="row">
             <div class="col-md-2">
                 <h2>카테고리</h2>
@@ -64,9 +70,34 @@
                 </table>
             </div>
         </div>
-    </div>
 <script>
 
+    const searchButton = document.getElementById("searchBtn");
+    const searchInput = document.getElementById("searchInput");
+    const searchForm = document.getElementById("searchForm");
 
+    searchButton.addEventListener("click", (e) => {
+        const searchValue = searchInput.value;
+        if (searchValue) {
+            const url = `/sells/${searchValue}/search.do`;
+            window.location.href = url;
+        }else {
+        e.preventDefault();
+        alert("검색어를 입력하세요");
+    }
+    });
+
+    searchForm.addEventListener("submit", (e) => {
+            const searchValue = searchInput.value;
+        if (searchValue) {
+            e.preventDefault();
+            const url = `/sells/${searchValue}/search.do`;
+            window.location.href = url;
+        }else {
+            e.preventDefault();
+            alert("검색어를 입력하세요");
+        }
+    });
 </script>
+    </div>
 </html>

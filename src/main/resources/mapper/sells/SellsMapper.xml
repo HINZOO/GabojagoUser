@@ -35,4 +35,7 @@
     <select id="findByCategory" parameterType="String" resultMap="sellsMap">
         SELECT * FROM sells WHERE category=#{category}
     </select>
+    <select id="findByTitle" resultMap="sellsMap">
+        SELECT * FROM sells WHERE title like CONCAT('%', #{title}, '%');
+    </select>
 </mapper>

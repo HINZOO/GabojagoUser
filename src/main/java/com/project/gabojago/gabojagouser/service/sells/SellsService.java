@@ -8,6 +8,7 @@ import java.util.List;
 public interface SellsService {
 
     List<SellsDto> List();
+    List<SellsDto> findByTitle(String title);
     List<SellsDto> findByCategory(String category);
     SellsDto detail(int sId);
     int optionRegister(SellsOptionDto sellsOption);

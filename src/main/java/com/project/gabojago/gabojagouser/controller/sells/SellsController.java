@@ -21,6 +21,15 @@ import java.util.List;
 @Log4j2
 public class SellsController {
     private SellsService sellsService;
+    @RequestMapping("/{title}/search.do")
+    public String searchSells(@PathVariable String title,
+                              Model model
+                              ){
+        List<SellsDto> sells;
+        sells=sellsService.findByTitle(title);
+        model.addAttribute("sells",sells);
+        return "/sells/list";
+    }
     @GetMapping("list.do")
     public String list(
             Model model,
@@ -31,7 +40,7 @@ public class SellsController {
         }else {
          sells=sellsService.findByCategory(category);
         }
-        System.out.println("sells = " + sells);
+//        System.out.println("sells = " + sells);
         model.addAttribute("sells",sells);
         return "/sells/list";
 
