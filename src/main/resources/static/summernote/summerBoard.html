@@ -8,6 +8,7 @@
 
 <body>
 <div id="summernote"></div>
+<!--https://velog.io/@hellocdpa/220307-SpringBoot-%ED%83%80%EC%9E%84%EB%A6%AC%ED%94%84-%EC%8D%B8%EB%A8%B8%EB%85%B8%ED%8A%B8summernote-%EC%A0%80%EC%9E%A5%EA%B3%BC-%EC%A1%B0%ED%9A%8C-->
 <script>
     $('#summernote').summernote({
         placeholder: 'gabojago Community Register Form',
@@ -25,7 +26,13 @@
         ],
         fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New'],
         fontSizes: ['10','12','14','16','18','20','22','24','28','30','36','50','72'],
-
+        callbacks: {
+            onImageLinkInsert: function(url) {
+                let fileName = Date.now()+'_'+parseInt(Math.random()*10000);
+                $img = $('<img>').attr({ src:"/static/public/img/comm/"+fileName+'.jpg'})
+                $summernote.summernote('insertNode', $img[0]);
+            }
+        }
     });
 
 

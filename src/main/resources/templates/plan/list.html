@@ -1,21 +1,16 @@
 <!DOCTYPE html>
-<<<<<<< HEAD
 <html lang="ko"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout}">
 <head>
     <title>게시판 상세</title>
-    <link th:href="@{/css/plan/plan.css}" rel="stylesheet" />
+    <link th:href="@{/public/css/plan/plan.css}" rel="stylesheet" />
 </head>
 
 <div layout:fragment="content">
+    <div class="container listMain">
 
-    <div class="row mx-0 w-100 vh-100">
-        <div class="col col-1 listSide" style="background-color: rgba(156,188,255,0.43)">
-            전체보기2
-        </div>
-        <div class="col col-11 listMain">
             <section class="row" >
                 <div class="col">
                     <div class="listTitle">
@@ -32,19 +27,39 @@
             <section class="row" >
                 <div class="col">
                     <div class="listTitle">
-                        <span class="listTitleP">나의 일정</span>
-                        <hr>
+                        <span class="listTitleP">나의 일정</span><hr>
                     </div>
-                    <div class="listContent">
-                        <a href="1/detail.do">유저1 디테일페이지</a>
+                    <div class="listContent" style="overflow: hidden">
+                        <th:block th:each="plan:${plans}">
+                            <a th:href="@{'{pId}/detail.do'(pId=${plan.getPId()})}">
+                                <div class="card">
+                                    <div class="card-header" style="width: 100%">
+                                        <p class="cardSchedule text-start"><span th:text="${plan.getPlanFrom()}"/> ~ <span th:text="${plan.getPlanTo()}"/></p>
+                                    </div>
+                                    <div class="cardImg" style="background-image:url('/public/img/plan/planSample.jpg');">
+                                        <p class="cardTitle" th:text="${plan.getTitle()}"></p>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="card-text cardInfo mb-3" th:text="${plan.getInfo()}"></p>
+                                    </div>
+                                    <div class="card-footer" style="width: 100%">
+                                        <div class="cardInnerLeft">
+                                            <a href="#" class="btn btn-outline-dark rounded-circle btn-sm"  role="button">　</a>
+                                        </div>
+                                        <div class="cardInnerRight">
+                                            <a href="#" class="btn btn-secondary btn-sm" style="color: white;">리뷰작성</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </th:block>
                     </div>
                 </div>
             </section>
             <section class="row" >
                 <div class="col">
                     <div class="listTitle">
-                        <span class="listTitleP">북 마 크</span>
-                        <hr>
+                        <span class="listTitleP">북 마 크</span><hr>
                     </div>
                     <div class="listContent">
                         내용
@@ -52,6 +67,9 @@
                 </div>
             </section>
 
+    </div>
+
+            <!--새 플랜 만들기 모달 부분-->
             <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered modal-lg">
                     <div class="modal-content">
@@ -84,13 +102,13 @@
                                             </div>
                                             <div class="col-6">
                                                 <div class="form-floating">
-                                                    <input type="date" class="form-control" name="from" id="floatingFrom" placeholder="">
+                                                    <input type="date" class="form-control" name="planFrom" id="floatingFrom" placeholder="">
                                                     <label for="floatingFrom">일정 시작</label>
                                                 </div>
                                             </div>
                                             <div class="col-6 mb-3">
                                                 <div class="form-floating">
-                                                    <input type="date" class="form-control" name="to" id="floatingTo" placeholder="">
+                                                    <input type="date" class="form-control" name="planTo" id="floatingTo" placeholder="">
                                                     <label for="floatingTo">일정 끝</label>
                                                 </div>
                                             </div>
@@ -102,20 +120,19 @@
                                             </div>
                                             <div class="col-6">
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="status" id="flexRadioDefault1" value="PUBLIC" checked>
+                                                    <input class="form-check-input" type="radio" name="planStatus" id="flexRadioDefault1" value="PUBLIC" checked>
                                                     <label class="form-check-label" for="flexRadioDefault1">공개</label>
                                                 </div>
                                             </div>
                                             <div class="col-6 mb-3">
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="status" value="PRIVATE" id="flexRadioDefault2" >
+                                                    <input class="form-check-input" type="radio" name="planStatus" value="PRIVATE" id="flexRadioDefault2" >
                                                     <label class="form-check-label" for="flexRadioDefault2">비공개</label>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-
 
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -129,17 +146,17 @@
             </div>
 
 
-        </div>
-    </div>
+
+
 
 
     <script>
         let newPlanBtn = document.querySelector("#newPlanBtn");
         newPlanBtn.addEventListener("click",()=>{
+            console.log("??")
             new bootstrap.Modal(document.getElementById('staticBackdrop'), {}).show();
         })
     </script>
-
 
 </div>
 </html>
