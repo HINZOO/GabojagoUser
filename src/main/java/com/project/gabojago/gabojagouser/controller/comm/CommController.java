@@ -62,15 +62,17 @@ public class CommController {
     public String registerAction(
             @SessionAttribute(required = false) UserDto loginUser,
             @ModelAttribute CommunityDto commBoard,
-            @RequestParam("files") MultipartFile[] imgs
+            @RequestParam(value = "files",required = false) MultipartFile[] imgs
             ) throws IOException {
         String redirectPage="redirect:/comm/register.do";
+        System.out.println("commBoard = " + commBoard);
         //if(!loginUser.getUId().equals(commBoard.getCId())) return redirectPage;
         List<CommImgDto> commImgs=null;
         if(imgs!=null){
             commImgs=new ArrayList<>();
             for(MultipartFile img:imgs){
                 if(!img.isEmpty()){
+                    System.out.println("img.getContentType() = " + img.getContentType());
                     String[] contentTypes=img.getContentType().split("/");
                     if(contentTypes[0].equals("image")){
                         String fileName=System.currentTimeMillis()+"_"+(int)(Math.random()*10000)+"."+contentTypes[1];
@@ -78,13 +80,16 @@ public class CommController {
                         img.transferTo(path);
                         CommImgDto imgDto=new CommImgDto();
                         imgDto.setImgPath("/public/img/comm/"+fileName);//서버배포경로
+                        imgDto.setCId(commBoard.getCId());
                         commImgs.add(imgDto);
+
+                        //C:\Users\m_okk\DEV\GabojagoUser\src\main\resources\static\public\img\comm
                     }
                 }
             }
         }
         commBoard.setImgs(commImgs);
-        log.info(commBoard);
+        log.info(commImgs);
         int register=0;
         try{
             register=communityService.register(commBoard);
@@ -101,6 +106,17 @@ public class CommController {
                 }
             }
         }
+        return redirectPage;
+    }
+
+    @GetMapping("/{cId}/remove.do")
+    public String removeAction(@PathVariable int cId,
+                               @SessionAttribute UserDto loginUser,
+                               RedirectAttributes redirectAttributes){
+        String redirectPage="redirect:/board/"+cId+"/list.do";
+        String msg="삭제실패";
+        CommunityDto board=null;
+
         return redirectPage;
     }
 }
