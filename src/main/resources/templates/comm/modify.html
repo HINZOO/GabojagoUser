@@ -6,23 +6,27 @@
 
 <body>
     <div layout:fragment="content" class="container">
-        <form name="registerForm" class="mx-auto w-80" action="./register.do" method="post"  enctype="multipart/form-data" >
+        <form name="registerForm" class="mx-auto w-80" action="./modify.do" method="post"  enctype="multipart/form-data" >
             <input type="hidden" name="pId" value="1">
             <input type="hidden" name="content" value="">
 
-            <h2 class="my-4">Community 글쓰기 양식</h2>
+            <h2 class="my-4">Community 글수정 양식</h2>
             <p class="form-floating">
                 <input id="uIdInput" type="text" name="uId" class="form-control" th:value="${session.loginUser.uId}" readonly placeholder="??">
                 <label>글쓴이</label>
             </p>
             <p class="form-floating">
-                <input id="titleInput" type="text" name="title" class="form-control" >
+                <input id="titleInput" type="text" name="title" class="form-control" th:value="${c.title}" >
                 <label>글 제목</label>
             </p>
 
 
             <th:block th:include="../static/summernote/summerBoard.html"></th:block>
-
+            <input type="hidden"  id="contentVal" th:value="${c.content}">
+            <script>
+                let content=document.getElementById("contentVal");
+                 $('#summernote').summernote('pasteHTML',content.value);
+            </script>
 
             <h5 class="mt-2 my-0 p-0">mbti</h5>
             <div class="d-flex justify-content-evenly">

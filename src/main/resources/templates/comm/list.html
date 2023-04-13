@@ -38,8 +38,8 @@
 
                         </div>
                         <div class="text-end me-2 my-2">
-                            <a href="#" class="btn btn-primary btn-sm me-1">수정</a>
-                            <a th:href="@{'comm/{cId}/remove.do'(cId=${c.cId})}" class="btn btn-danger btn-sm">삭제</a>
+                            <a th:href="@{'/comm/{cId}/modify.do'(cId=${c.cId})}" class="btn btn-primary btn-sm me-1">수정</a>
+                            <a th:href="@{'/comm/{cId}/remove.do'(cId=${c.cId})}" class="btn btn-danger btn-sm">삭제</a>
                         </div>
                     </div>
                 </div>
