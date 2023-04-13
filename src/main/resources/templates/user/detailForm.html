@@ -8,7 +8,7 @@
   <form name="detail" action="./update.do" method="get" style="width: 500px;margin: 0 auto;">
     <h1 class="my-4">상세내역</h1>
     <p th:text="${user.uId}"></p>
-    <p th:text="${user.pw}"></p>
+    <p th:hidden="${user.pw}"></p>
     <p th:text="${user.name}"></p>
     <p th:text="${user.nkName}"></p>
     <p th:text="${user.email}"></p>
@@ -19,6 +19,7 @@
     <p th:text="${user.prContent}"></p>
     <p th:text="${user.mbti}"></p>
     <p th:text="${user.imgPath}"></p>
+    <p th:text="${user.postTime}"></p>
     <p class="text-end">
       <button class="btn btn-outline-primary">수정</button>
       <a href="dropout.html" class="btn btn-outline-warning">탈퇴</a>

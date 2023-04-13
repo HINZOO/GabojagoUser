@@ -41,7 +41,6 @@
     permission=#{permission},
     mbti=#{mbti},
     img_path=#{imgPath},
-    post_time=#{postTime},
     store_name=#{storeName},
     business_id=#{businessId}
     WHERE u_id=#{uId}

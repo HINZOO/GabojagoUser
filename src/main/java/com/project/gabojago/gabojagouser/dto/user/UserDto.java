@@ -21,7 +21,8 @@ public class UserDto {
     private String permission;
     private String mbti;
     private String imgPath;
-    private String postTime;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date postTime;
     private String storeName;
     private String businessId;
 }

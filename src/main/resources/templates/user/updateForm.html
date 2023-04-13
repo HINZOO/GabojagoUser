@@ -11,14 +11,14 @@
       <input id="uIdInput" type="text" name="uId" th:value="${user.uId}" class="form-control" placeholder="??" readonly>
       <label>아이디</label>
     </p>
-<!--    <p class="form-floating">-->
-<!--      <input type="password" name="pw" value="" class="form-control" placeholder="??">-->
-<!--      <label>패스워드</label>-->
-<!--    </p>-->
-<!--    <p class="form-floating">-->
-<!--      <input type="password" name="checkPw" value="" class="form-control" placeholder="??">-->
-<!--      <label>패스워드 확인</label>-->
-<!--    </p>-->
+    <p class="form-floating">
+      <input type="password" name="pw" value="" class="form-control" placeholder="??">
+      <label>패스워드</label>
+    </p>
+    <p class="form-floating">
+      <input type="password" name="checkPw" value="" class="form-control" placeholder="??">
+      <label>패스워드 확인</label>
+    </p>
     <p class="form-floating">
       <input type="text" name="name" th:value="${user.name}" class="form-control" placeholder="??">
       <label>이름</label>
@@ -75,10 +75,6 @@
     <p class="input-group">
       <input type="file" name="imgPath" th:value="${user.imgPath}" class="form-control" placeholder="??">
       <label class="input-group-text">프로필</label>
-    </p>
-    <p class="form-floating">
-      <input type="" name="postTime" th:value="${user.postTime}" class="form-control" placeholder="??" readonly>
-      <label>가입일</label>
     </p>
     <p class="form-floating">
       <select name="permission" class="form-control" th:value="${user.permission}">
