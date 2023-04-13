@@ -3,6 +3,8 @@ package com.project.gabojago.gabojagouser.dto.comm;
 import com.project.gabojago.gabojagouser.dto.user.UserDto;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class CommunityDto {
     private int cId;//PK
@@ -32,5 +34,6 @@ public class CommunityDto {
     private boolean enfj;
     private boolean enfp;
     private UserDto user;
+    private List<CommImgDto> imgs;
 
 }

@@ -1,4 +1,9 @@
+<<<<<<<< HEAD:src/main/java/com/project/gabojago/gabojagouser/service/trip/TripService.java
 package com.project.gabojago.gabojagouser.service.trip;
+========
+package com.project.gabojago.gabojagouser.service.trips;
+>>>>>>>> origin:src/main/java/com/project/gabojago/gabojagouser/service/trips/TripService.java
+
 import com.project.gabojago.gabojagouser.dto.trip.TripDto;
 
 import java.util.List;
