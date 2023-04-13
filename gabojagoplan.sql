@@ -581,8 +581,6 @@ INSERT INTO communitys (u_id, p_id, title, content, area, istj, istp, isfj, isfp
     ('USER05', 5, 'Coffee lovers unite!5', 'Looking for people who enjoy trying out new coffee shops in the Gyeonggi area.', '강원', 0, 0, 1, 1,1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 
 
->>>>>>> origin
-
 #판매글 데이터
 INSERT INTO sells (u_id, area, title, content, category, qnt, img_main)
 VALUES
@@ -607,19 +605,36 @@ VALUES
     ('user07', '제주', '판매글 제목171', '판매글 내용17', '레저', 1, true),
     ('user07', '제주', '판매글 제목171', '판매글 내용17', '테마', 1, true);
 
-<<<<<<< HEAD
-INSERT INTO `sell_options` (`s_id`, `name`, `price`, `stock`)
-=======
 
-INSERT INTO `sell_options` (`o_id`, `name`, `price`, `stock`)
->>>>>>> origin
+INSERT INTO `sell_options` (`s_id`, `name`, `price`, `stock`)
 VALUES
     (1, '성인', '10000', 20),
     (1, '청소년', '8000', 30),
     (1, '소인', '5000', 10);
+
+#가보자고 더미
+INSERT INTO gabojagoPlan.trips (u_id, title, area, address, phone, url_address, content,
+                                istj, istp, isfj, isfp, intj, intp, infj, infp, estj, estp, esfj,
+                                esfp, entj, entp, enfj, enfp, category)
+VALUES
+    ('user01', '제주에서 즐기는 봄꽃 여행', '제주', '서귀포', '01011112222', 'https://www.visitjeju.net/kr/','제주의 아름다운 벚꽃을 감상하며 봄을 느껴보세요.', 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '힐링'),
+    ('user02', '서울에서 즐기는 봄꽃 여행', '서울', '여의도', '01011123222', 'https://www.visitjeju.net/kr/','서울의 아름다운 벚꽃을 감상하며 봄을 느껴보세요.', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, '힐링'),
+    ('user03', '대전에서 즐기는 봄꽃 여행', '대전', '동구', '01013145222', 'https://www.visitjeju.net/kr/','대전의 아름다운 벚꽃을 감상하며 봄을 느껴보세요.', 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, '힐링'),
+    ('user04', '강원도에서 즐기는 봄꽃 여행', '강원', '속초', '01022115522', 'https://www.visitjeju.net/kr/','강원도의 아름다운 벚꽃을 감상하며 봄을 느껴보세요.', 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, '힐링'),
+    ('user05', '인천에서 즐기는 봄꽃 여행', '인천', '강화도', '01014312222', 'https://www.visitjeju.net/kr/','인천의 아름다운 벚꽃을 감상하며 봄을 느껴보세요.', 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, '힐링'),
+    ('user06', '부산에서 즐기는 봄꽃 여행', '부산', '목포', '01055115322', 'https://www.visitjeju.net/kr/','부산의 아름다운 벚꽃을 감상하며 봄을 느껴보세요.', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, '힐링');
+
+DROP USER IF EXISTS 'gabojagoDba'@'localhost';
+DROP USER IF EXISTS 'gabojagoServerDev'@'localhost';
+
 
 CREATE USER 'gabojagoDba'@'localhost' IDENTIFIED BY 'mysql123';
 GRANT ALL PRIVILEGES ON gabojagoPlan.* TO 'gabojagoDba'@'localhost';
 
 CREATE USER 'gabojagoServerDev'@'localhost' IDENTIFIED BY 'mysql123';
 GRANT SELECT, INSERT, UPDATE, DELETE ON gabojagoPlan.* TO 'gabojagoServerDev'@'localhost';
+
+
+
+
+

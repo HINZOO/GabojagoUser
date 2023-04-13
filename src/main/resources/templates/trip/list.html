@@ -10,6 +10,9 @@
 <script src=""></script>
 <div layout:fragment="content" class="container">
     <h1 class="my-4">맞춤추천 리스트</h1>
+        <div class="text-end">
+            <a class="btn btn-primary" href="/trip/register.do" role="button">여행지 등록</a>
+        </div>
     <section id="tripListCont" class="row row-cols-lg-5 row-cols-1 g-6">
         <div class="col" th:each="t:${trips}">
             <div class="card mt-4">
