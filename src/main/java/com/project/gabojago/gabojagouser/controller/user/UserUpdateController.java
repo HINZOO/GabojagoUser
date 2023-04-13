@@ -44,5 +44,4 @@ public class UserUpdateController {
       return "redirect:/user/"+user.getUId()+"/update.do";
     }
   }
-
 }
