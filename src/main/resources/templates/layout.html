@@ -15,9 +15,37 @@
     <main class="container-fluid">
         <th:block layout:fragment="content"></th:block>
     </main>
+
+    <!--재사용 모달 창-->
+    <th:block th:if="${msg!=null || session.msg!=null}">
+        <div  id="actionModal" class="modal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">
+                            <i class="bi bi-airplane">Gabojago</i></h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p th:text="${msg}"></p><!--메세지거나 세션메세지거나..-->
+                        <p th:text="${session.msg}"></p><!--메세지거나 세션메세지거나..-->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script th:inline="javascript">
+            const actionModal=document.getElementById("actionModal");
+            new bootstrap.Modal(actionModal).show();
+        </script>
+    </th:block>
     <script>
         const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
         const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
     </script>
 </body>
+
 </html>
+

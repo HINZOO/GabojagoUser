@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+
+<body>
+    <div layout:fragment="content" class="container">
+        <form name="registerForm" class="mx-auto w-80" action="./register.do" method="post"  enctype="multipart/form-data" >
+            <input type="hidden" name="pId" value="1">
+            <h2 class="my-4">Community 글쓰기 양식</h2>
+            <p class="form-floating">
+                <input id="uIdInput" type="text" name="uId" class="form-control" th:value="${session.loginUser.uId}" readonly placeholder="??">
+                <label>글쓴이</label>
+            </p>
+            <p class="form-floating">
+                <input id="titleInput" type="text" name="title" class="form-control" >
+                <label>글 제목</label>
+            </p>
+
+
+            <th:block th:include="../static/summernote/summerBoard.html"></th:block>
+
+            <h5 class="mt-2 my-0 p-0">mbti</h5>
+            <div class="d-flex justify-content-evenly">
+                <label><p><input class="form-check-input" type="checkbox" value="istj"> istj</p></label>
+                <label><p><input class="form-check-input" type="checkbox" value="istp"> istp</p></label>
+                <label><p><input class="form-check-input" type="checkbox" value="isfj"> isfj</p></label>
+                <label><p><input class="form-check-input" type="checkbox" value="isfp"> isfp</p></label>
+                <label><p><input class="form-check-input" type="checkbox" value="intj"> intj</p></label>
+                <label><p><input class="form-check-input" type="checkbox" value="intp"> intp</p></label>
+                <label><p><input class="form-check-input" type="checkbox" value="infj"> infj</p></label>
+                <label><p><input class="form-check-input" type="checkbox" value="infp"> infp</p></label>
+            </div>
+            <div class="d-flex justify-content-evenly">
+                <label><p><input class="form-check-input" type="checkbox" value="estj"> estj</p></label>
+                <label><p><input class="form-check-input" type="checkbox" value="estp"> estp</p></label>
+                <label><p><input class="form-check-input" type="checkbox" value="esfj"> esfj</p></label>
+                <label><p><input class="form-check-input" type="checkbox" value="esfp"> esfp</p></label>
+                <label><p><input class="form-check-input" type="checkbox" value="entj"> entj</p></label>
+                <label><p><input class="form-check-input" type="checkbox" value="entp"> entp</p></label>
+                <label><p><input class="form-check-input" type="checkbox" value="enfj"> enfj</p></label>
+                <label><p><input class="form-check-input" type="checkbox" value="enfp"> enfp</p></label>
+            </div>
+
+            <p class="form-floating mt-3">
+                <select class="form-select" name="area" placeholder="??">
+                    <option value="서울">서울</option>
+                    <option value="인천">인천</option>
+                    <option value="대전">대전</option>
+                    <option value="광주">광주</option>
+                    <option value="대구">대구</option>
+                    <option value="울산">울산</option>
+                    <option value="부산">부산</option>
+                    <option value="세종">세종</option>
+                    <option value="경기">경기</option>
+                    <option value="강원">강원</option>
+                    <option value="충북">충북</option>
+                    <option value="충남">충남</option>
+                    <option value="전북">전북</option>
+                    <option value="전남">전남</option>
+                    <option value="경북">경북</option>
+                    <option value="경남">경남</option>
+                    <option value="제주">제주</option>
+                </select>
+                <label>지역</label>
+            </p>
+
+            <div class="text-end m-2">
+                <button type="submit" class="btn btn-primary me-1">등록</button>
+                <button type="reset" class="btn btn-warning me-1">초기화</button>
+            </div>
+
+
+        </form>
+    </div>
+</body>
+
+</html>

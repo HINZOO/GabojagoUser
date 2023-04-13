@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.project.gabojago.gabojagouser.mapper.user.UserMapper">
+  <resultMap id="UserMap" type="UserDto">
+    <id column="u_id" property="uId"></id>
+    <result column="pw" property="pw"/>
+    <result column="name" property="name"/>
+    <result column="nk_name" property="nkName"/>
+    <result column="email" property="email"/>
+    <result column="birth" property="birth"/>
+    <result column="phone" property="phone"/>
+    <result column="address" property="address"/>
+    <result column="detail_address" property="detailAddress"/>
+    <result column="pr_content" property="prContent"/>
+    <result column="permission" property="permission"/>
+    <result column="mbti" property="mbti"/>
+    <result column="img_path" property="imgPath"/>
+    <result column="post_time" property="postTime"/>
+    <result column="store_name" property="storeName"/>
+    <result column="business_id" property="businessId"/>
+  </resultMap>
+  <insert id="insertOne" parameterType="com.project.gabojago.gabojagouser.dto.user.UserDto">
+    INSERT INTO users (u_id, pw, name, nk_name, email, birth, phone, address, detail_address, pr_content, permission, mbti, img_path, post_time, store_name, business_id)
+    VALUES (#{uId}, #{pw}, #{name}, #{nkName}, #{email}, #{birth}, #{phone}, #{address}, #{detailAddress}, #{prContent}, #{permission}, #{mbti}, #{imgPath}, #{postTime}, #{storeName}, #{businessId})
+  </insert>
+  <select id="findUserByUIdAndPw" resultMap="UserMap">
+    SELECT * FROM users WHERE u_id=#{uId} AND pw=#{pw}
+  </select>
+  <select id="findUserByUId" resultMap="UserMap">
+    SELECT * FROM users WHERE u_id=#{uId}
+  </select>
+</mapper>
