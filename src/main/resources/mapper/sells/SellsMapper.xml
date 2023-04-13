@@ -16,12 +16,9 @@
                     column="s_id"
                     fetchType="eager"/>
     </resultMap>
-    <insert id="insertOne" >
+    <insert id="insertOne" useGeneratedKeys="true" keyProperty="sId" >
         INSERT INTO sells (u_id,area,title,content,category)
         VALUES (#{uId},#{area},#{title},#{content},#{category})
-        <selectKey keyProperty="sId" order="AFTER" resultType="java.lang.Integer">
-            SELECT LAST_INSERT_ID()
-        </selectKey>
     </insert>
     <update id="updateOne" >
         UPDATE sells SET area=#{area},title=#{title},content=#{content},category=#{category},img_main=#{imgMain} WHERE s_id=#{sId}
@@ -30,7 +27,7 @@
     DELETE FROM sells where s_id=#{sId}
     </delete>
     <select id="findAll" resultMap="sellsMap">
-        SELECT * FROM sells
+        SELECT * FROM sells ORDER BY s_id DESC
     </select>
     <select id="findBySId" resultMap="sellsMap">
         SELECT * FROM sells WHERE s_id=#{sId};
