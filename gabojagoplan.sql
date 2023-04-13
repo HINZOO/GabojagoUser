@@ -5,7 +5,7 @@ use gabojagoPlan;
 DROP USER IF EXISTS 'gabojagoDba'@'localhost';
 DROP USER IF EXISTS 'gabojagoServerDev'@'localhost';
 
-CREATE USER 'gabojavkdlgoDba'@'localhost' IDENTIFIED BY 'mysql123';
+CREATE USER 'gabojagoDba'@'localhost' IDENTIFIED BY 'mysql123';
 GRANT ALL PRIVILEGES ON gabojagoPlan.* TO 'gabojagoDba'@'localhost';
 
 CREATE USER 'gabojagoServerDev'@'localhost' IDENTIFIED BY 'mysql123';
