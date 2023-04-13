@@ -16,8 +16,9 @@
                     column="s_id"
                     fetchType="eager"/>
     </resultMap>
-    <insert id="insertOne" >
-        INSERT INTO sells (u_id,area,title,content,category) VALUES (#{uId},#{area},#{title},#{content},#{category})
+    <insert id="insertOne" useGeneratedKeys="true" keyProperty="sId" >
+        INSERT INTO sells (u_id,area,title,content,category)
+        VALUES (#{uId},#{area},#{title},#{content},#{category})
     </insert>
     <update id="updateOne" >
         UPDATE sells SET area=#{area},title=#{title},content=#{content},category=#{category},img_main=#{imgMain} WHERE s_id=#{sId}
@@ -26,12 +27,15 @@
     DELETE FROM sells where s_id=#{sId}
     </delete>
     <select id="findAll" resultMap="sellsMap">
-        SELECT * FROM sells
+        SELECT * FROM sells ORDER BY s_id DESC
     </select>
     <select id="findBySId" resultMap="sellsMap">
         SELECT * FROM sells WHERE s_id=#{sId};
     </select>
     <select id="findByCategory" parameterType="String" resultMap="sellsMap">
         SELECT * FROM sells WHERE category=#{category}
+    </select>
+    <select id="findByTitle" resultMap="sellsMap">
+        SELECT * FROM sells WHERE title like CONCAT('%', #{title}, '%');
     </select>
 </mapper>
