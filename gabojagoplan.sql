@@ -2,6 +2,15 @@ DROP DATABASE gabojagoPlan;
 CREATE DATABASE gabojagoPlan CHARACTER SET utf8;
 use gabojagoPlan;
 
+DROP USER IF EXISTS 'gabojagoDba'@'localhost';
+DROP USER IF EXISTS 'gabojagoServerDev'@'localhost';
+
+CREATE USER 'gabojagoDba'@'localhost' IDENTIFIED BY 'mysql123';
+GRANT ALL PRIVILEGES ON gabojagoPlan.* TO 'gabojagoDba'@'localhost';
+
+CREATE USER 'gabojagoServerDev'@'localhost' IDENTIFIED BY 'mysql123';
+GRANT SELECT, INSERT, UPDATE, DELETE ON gabojagoPlan.* TO 'gabojagoServerDev'@'localhost';
+
 #유저 테이블
 #MBTI NULL OR NOT NULL??필수 선택??
 CREATE TABLE `users` (
@@ -606,8 +615,16 @@ VALUES
     (1, '청소년', '8000', 30),
     (1, '소인', '5000', 10);
 
-CREATE USER 'gabojagoDba'@'localhost' IDENTIFIED BY 'mysql123';
-GRANT ALL PRIVILEGES ON gabojagoPlan.* TO 'gabojagoDba'@'localhost';
 
-CREATE USER 'gabojagoServerDev'@'localhost' IDENTIFIED BY 'mysql123';
-GRANT SELECT, INSERT, UPDATE, DELETE ON gabojagoPlan.* TO 'gabojagoServerDev'@'localhost';
+#가보자고 더미
+INSERT INTO gabojagoPlan.trips (u_id, title, area, address, phone, url_address, content,
+                                istj, istp, isfj, isfp, intj, intp, infj, infp, estj, estp, esfj,
+                                esfp, entj, entp, enfj, enfp, category)
+VALUES
+    ('user01', '제주에서 즐기는 봄꽃 여행', '제주', '서귀포', '01011112222', 'https://www.visitjeju.net/kr/','제주의 아름다운 벚꽃을 감상하며 봄을 느껴보세요.', 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '힐링'),
+    ('user02', '서울에서 즐기는 봄꽃 여행', '서울', '여의도', '01011123222', 'https://www.visitjeju.net/kr/','서울의 아름다운 벚꽃을 감상하며 봄을 느껴보세요.', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, '힐링'),
+    ('user03', '대전에서 즐기는 봄꽃 여행', '대전', '동구', '01013145222', 'https://www.visitjeju.net/kr/','대전의 아름다운 벚꽃을 감상하며 봄을 느껴보세요.', 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, '힐링'),
+    ('user04', '강원도에서 즐기는 봄꽃 여행', '강원', '속초', '01022115522', 'https://www.visitjeju.net/kr/','강원도의 아름다운 벚꽃을 감상하며 봄을 느껴보세요.', 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, '힐링'),
+    ('user05', '인천에서 즐기는 봄꽃 여행', '인천', '강화도', '01014312222', 'https://www.visitjeju.net/kr/','인천의 아름다운 벚꽃을 감상하며 봄을 느껴보세요.', 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, '힐링'),
+    ('user06', '부산에서 즐기는 봄꽃 여행', '부산', '목포', '01055115322', 'https://www.visitjeju.net/kr/','부산의 아름다운 벚꽃을 감상하며 봄을 느껴보세요.', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, '힐링');
+
