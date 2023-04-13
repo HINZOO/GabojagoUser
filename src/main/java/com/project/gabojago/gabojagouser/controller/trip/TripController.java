@@ -45,7 +45,7 @@ public class TripController {
                 if(!img.isEmpty()){
                     String[] contentTypes=img.getContentType().split("/");
                     if(contentTypes[0].equals("image")){
-                        String fileName=System.currentTimeMillis()+"_"+(int)(Math.random()*10000);
+                        String fileName=System.currentTimeMillis()+"_"+(int)(Math.random()*10000)+"."+contentTypes[1];
 //                        Path path= Paths.get()
                     }
                 }
