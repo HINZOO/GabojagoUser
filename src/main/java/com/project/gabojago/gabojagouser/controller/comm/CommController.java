@@ -84,8 +84,7 @@ public class CommController {
             }
         }
         commBoard.setImgs(commImgs);
-        System.out.println("컴보드"+commBoard);
-        System.out.println("셋이미지"+commImgs);
+        log.info(commBoard);
         int register=0;
         try{
             register=communityService.register(commBoard);
