@@ -1,8 +1,10 @@
 package com.project.gabojago.gabojagouser.service.user;
-
 import com.project.gabojago.gabojagouser.dto.user.UserDto;
 
+import java.util.List;
+
 public interface UserService {
+  List<UserDto> list();
   UserDto login(UserDto user);
   UserDto detail(UserDto user);
   UserDto idCheck(String userId);
