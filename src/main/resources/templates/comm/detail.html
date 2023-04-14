@@ -75,13 +75,33 @@
             </div>
 
             <div class="card-body" id="contentPage">
-                <p class="card-text" th:utext="${c.content}">내용들어가는곳 </p>
+                <p class="card-text" th:utext="${c.content}"> </p>
             </div>
+
+            <!--답글 구현-->
             <div class="card-body" id="repliesPage">
-                <div>
-                    <a href="/comm/modify.do" class="card-link">수정</a>
-                    <a href="/comm/list.do" class="card-link">목록</a>
+                <h5>댓글</h5>
+                <div id="replyCont">
+                    <ul class="list-group" >
+                        <li class="list-group-item" th:each="r:${c.replies}">
+                            <th:block th:include="/comm/reply/detail"></th:block>
+                        </li>
+                    </ul>
                 </div>
+                <form name="replyInsertForm"  action="/comm/reply/insert.do" method="post">
+<!--                    <input type="hidden" name="uId" th:value="">-->
+                    <input type="hidden" name="cId" th:value="${c.cId}">
+                   <div class="d-flex">
+                    <div class="col-3 p-0">
+                        <input type="text" class="form-control" name="parentCrId" >
+                    </div>
+                    <div class="col p-0">
+                      <input type="text" class="form-control" name="content" placeholder="댓글내용">
+                    </div>
+                    <button class="btn btn-secondary">제출</button>
+                   </div>
+                </form>
+
             </div>
         </div>
     </div>

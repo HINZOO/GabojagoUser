@@ -36,6 +36,10 @@
                     select="com.project.gabojago.gabojagouser.mapper.comm.CommImgMapper.findByCId"
                     column="c_id"
                     fetchType="lazy"/>
+        <collection property="replies"
+                    select="com.project.gabojago.gabojagouser.mapper.comm.CommReplyMapper.findByCId"
+                    column="c_id"
+                    fetchType="lazy"/>
     </resultMap>
 
     <insert id="insertOne" parameterType="communityDto" useGeneratedKeys="true" keyProperty="cId">

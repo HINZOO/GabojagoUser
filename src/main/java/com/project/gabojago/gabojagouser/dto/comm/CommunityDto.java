@@ -35,5 +35,7 @@ public class CommunityDto {
     private int enfp;
     private UserDto user;
     private List<CommImgDto> imgs;
+    private List<CommReplyDto> replies;
+
 
 }

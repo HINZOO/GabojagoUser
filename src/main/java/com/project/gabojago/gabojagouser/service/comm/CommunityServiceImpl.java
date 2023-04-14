@@ -4,6 +4,7 @@ import com.project.gabojago.gabojagouser.dto.comm.CommImgDto;
 import com.project.gabojago.gabojagouser.dto.comm.CommunityDto;
 import com.project.gabojago.gabojagouser.mapper.comm.CommImgMapper;
 import com.project.gabojago.gabojagouser.mapper.comm.CommunityMapper;
+import com.project.gabojago.gabojagouser.mapper.user.UserMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,6 +16,7 @@ import java.util.List;
 public class CommunityServiceImpl implements CommunityService{
     private CommunityMapper communityMapper;
     private CommImgMapper commImgMapper;
+    private UserMapper userMapper;
     //유저맵퍼..
     @Override
     public List<CommunityDto> list() {

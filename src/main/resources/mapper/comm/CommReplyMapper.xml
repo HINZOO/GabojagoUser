@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.project.gabojago.gabojagouser.mapper.comm.CommCommentMapper">
-    <resultMap id="CommReplyMap" type="CommCommentDto">
+<mapper namespace="com.project.gabojago.gabojagouser.mapper.comm.CommReplyMapper">
+    <resultMap id="CommReplyMap" type="CommReplyDto">
         <id property="ccId" column="ccId"/>
         <result property="cId" column="c_id"/>
         <result property="uId" column="u_id"/>
@@ -11,10 +11,10 @@
         <result property="updateTime" column="updateTime"/>
         <result property="parentCrId" column="parent_cr_id"/>
     </resultMap>
-    <insert id="insertOne" useGeneratedKeys="true" keyProperty="ccId" parameterType="commCommentDto">
+    <insert id="insertOne" useGeneratedKeys="true" keyProperty="ccId" parameterType="commReplyDto">
         INSERT INTO comm_comment (c_id, u_id, content, parent_cr_id)VALUES(#{cId},#{uId},#{content},#{parentCrId})
     </insert>
-    <update id="updateOne" parameterType="commCommentDto">
+    <update id="updateOne" parameterType="commReplyDto">
         UPDATE comm_comment SET content=#{content} WHERE cc_id=#{ccId}
     </update>
     <delete id="deleteOne">
@@ -23,7 +23,10 @@
     <select id="findAll" resultMap="CommReplyMap">
         SELECT * FROM comm_comment
     </select>
-    <select id="findByCId" resultMap="CommReplyMap">
+    <select id="findByCcId" resultMap="CommReplyMap">
         SELECT * FROM comm_comment WHERE cc_id=#{ccId}
+    </select>
+    <select id="findByCId" resultMap="CommReplyMap">
+        SELECT * FROM comm_comment WHERE c_id=#{cId};
     </select>
 </mapper>
