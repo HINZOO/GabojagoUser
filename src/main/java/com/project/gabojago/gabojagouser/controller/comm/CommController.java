@@ -82,14 +82,11 @@ public class CommController {
                         img.transferTo(path);
                         CommImgDto imgDto = new CommImgDto();
                         imgDto.setImgPath("/public/img/comm/" + fileName);//서버배포경로
-                        imgDto.setCId(commBoard.getCId());
                         commImgs.add(imgDto);
-                        //C:\Users\m_okk\DEV\GabojagoUser\src\main\resources\static\public\img\comm
                     }
                 }
             }
             commBoard.setImgs(commImgs);
-
             int register = 0;
             try {
                 register = communityService.register(commBoard);
@@ -119,13 +116,39 @@ public class CommController {
         return "/comm/modify";
     }
 
+    @PostMapping("/modify.do")
+    public String modifyAction(
+            @ModelAttribute CommunityDto commBoard,
+            @RequestParam(value="delImgId",required = false) int[] delImgIds,
+            @RequestParam(value="img",required = false) MultipartFile[] imgs
+    ){
+        String redirectPage="redirect:/comm/"+commBoard.getCId()+"/modify.do";
+        List<CommImgDto> imgDtos=null;
+        int modify=0;
+        try{
+            if(delImgIds!=null) imgDtos=communityService.imgList(delImgIds);
+            modify=communityService.modify(commBoard,delImgIds);
+        }catch (Exception e){
+            log.error(e.getMessage());
+       }
+        if(modify>0){
+            if(imgDtos!=null){
+                for(CommImgDto i:imgDtos){
+                    File imgFile=new File(staticPath+i.getImgPath());
+                    if(imgFile.exists()) imgFile.delete();
+                }
+            }
+            redirectPage="redirect:/comm/list.do";
+        }
+        return redirectPage;
+
+    }
 
     @GetMapping("/{cId}/remove.do")
     public String removeAction(@PathVariable int cId,
                                @SessionAttribute UserDto loginUser,
                                RedirectAttributes redirectAttributes){
         String redirectPage="redirect:/comm/list.do";
-        String msg="삭제실패";
         CommunityDto board=null;
 
         int del=communityService.remove(cId);

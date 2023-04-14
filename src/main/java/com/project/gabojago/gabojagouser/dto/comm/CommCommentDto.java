@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class CommCommentDto {
-    private int crId;//PK
+    private int ccId;//PK
     private int cId;//community c_id//FK
     private String uId;//User u_id//FK
     private String content;

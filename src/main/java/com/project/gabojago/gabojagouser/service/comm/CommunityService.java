@@ -11,7 +11,7 @@ public interface CommunityService {
     List<CommImgDto> imgList(int[] ciId);
     CommunityDto detail(int cId);
     int register(CommunityDto community);
-    int modify(CommunityDto community);
+    int modify(CommunityDto community, int[] delImgIds);
     int remove(int cId);
 
 }

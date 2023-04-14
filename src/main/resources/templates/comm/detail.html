@@ -26,8 +26,24 @@
                 <small>수정일: <span th:text="${#dates.format(c.updateTime,'yyyy-MM-dd')}"></span></small>
                 <small><i class="bi bi-eye"></i>조</small>
             </p>
-            <img src="https://www.hdfcsales.com/blog/wp-content/uploads/2021/09/cancelling-a-trip-with-travel-insurance-policy-1-1.jpg"
-                 class="card-img-top h-25" alt="...">
+            <div class="card-body">
+                <div th:if="${c.imgs!=null}" th:id="'carousel'+${c.cId}" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item" th:each="img,state:${c.imgs}" th:classappend="${(state.first)?'active':''}">
+                            <img th:src="@{'{path}'(path=${img.imgPath})}" class="d-block w-100" alt="게시글 이미지">
+                        </div>
+                    </div>
+                    <button class="carousel-control-prev" type="button" th:data-bs-target="'#carousel'+${c.cId}" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" th:data-bs-target="'#carousel'+${c.cId}" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+            </div>
+
             <div class="card-body">
                 <h5 class="card-title" >일정들어가는곳</h5>
             </div>
@@ -42,15 +58,26 @@
                 </div>
 
             </div>
+            <div class="card-body">
+                <p class="mb-1">추천 MBTI</p>
+                <p id="mbtiChk">
+                    <a href="#" class="" th:classappend="${c.istj}?'btn btn-secondary btn-sm rounded-5 p-1 m-1':''"  type="button">
+                        <i class="bi bi-hash"></i>
+                        <span>istj</span>
+                    </a>
+
+                </p>
+            </div>
             <div class="card-body me-4 fs-4 text-center ">
-                <a  class="text-decoration-none text-muted" href="" >상세페이지</a>
+                <a  class="text-decoration-none text-muted" href="#contentPage" >상세페이지</a>
                 <span>|</span>
-                <a class="text-decoration-none text-muted" href="" >덧글</a>
+                <a class="text-decoration-none text-muted" href="#repliesPage" >덧글</a>
             </div>
-            <div class="card-body">
-                <p class="card-text" th:text="${c.content}">내용들어가는곳 </p>
+
+            <div class="card-body" id="contentPage">
+                <p class="card-text" th:utext="${c.content}">내용들어가는곳 </p>
             </div>
-            <div class="card-body">
+            <div class="card-body" id="repliesPage">
                 <div>
                     <a href="/comm/modify.do" class="card-link">수정</a>
                     <a href="/comm/list.do" class="card-link">목록</a>

@@ -55,8 +55,14 @@ public class CommunityServiceImpl implements CommunityService{
     }
 
     @Override
-    public int modify(CommunityDto community) {
+    @Transactional
+    public int modify(CommunityDto community, int[] delImgIds) {
         int modify=communityMapper.updateOne(community);
+        if(delImgIds!=null){
+            for(int ciId:delImgIds){
+                modify+=commImgMapper.deleteOne(ciId);
+            }
+        }
         return modify;
     }
 
