@@ -15,6 +15,10 @@
                     select="com.project.gabojago.gabojagouser.mapper.sells.SellsOptionMapper.findBySId"
                     column="s_id"
                     fetchType="eager"/>
+        <collection property="sellImgs"
+                    select="com.project.gabojago.gabojagouser.mapper.sells.SellImgsMapper.findBySId"
+                    column="s_id"
+                    fetchType="eager"/>
     </resultMap>
     <insert id="insertOne" useGeneratedKeys="true" keyProperty="sId" >
         INSERT INTO sells (u_id,area,title,content,category)
@@ -27,7 +31,7 @@
     DELETE FROM sells where s_id=#{sId}
     </delete>
     <select id="findAll" resultMap="sellsMap">
-        SELECT * FROM sells ORDER BY s_id DESC
+        SELECT * FROM sells  ORDER BY s_id DESC
     </select>
     <select id="findBySId" resultMap="sellsMap">
         SELECT * FROM sells WHERE s_id=#{sId};
