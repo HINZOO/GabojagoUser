@@ -23,7 +23,7 @@ public class CommunityServiceImpl implements CommunityService{
     }
 
     @Override
-    public List<CommImgDto> list(int[] ciId) {
+    public List<CommImgDto> imgList(int[] ciId) {
         List<CommImgDto> imgList=null;
         if(ciId!=null){
             imgList=new ArrayList<>();
@@ -45,12 +45,12 @@ public class CommunityServiceImpl implements CommunityService{
     @Transactional
     public int register(CommunityDto community) {
         int register=communityMapper.insertOne(community);
-//        if(community.getImgs()!=null){
-//            for(CommImgDto img:community.getImgs()){
-//                img.setCId(community.getCId());
-//                register+=commImgMapper.insertOne(img);
-//            }
-//        }
+        if(community.getImgs()!=null){
+            for(CommImgDto img:community.getImgs()){
+                img.setCId(community.getCId());
+                register+=commImgMapper.insertOne(img);
+            }
+        }
         return register;
     }
 

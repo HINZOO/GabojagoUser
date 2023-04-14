@@ -8,7 +8,7 @@ import java.util.List;
 public interface CommunityService {
     //리스트 //상세 //등록 //수정 //삭제
     List<CommunityDto> list();
-    List<CommImgDto> list(int[] ciId);
+    List<CommImgDto> imgList(int[] ciId);
     CommunityDto detail(int cId);
     int register(CommunityDto community);
     int modify(CommunityDto community);

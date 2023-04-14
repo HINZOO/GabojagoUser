@@ -26,24 +26,24 @@
 
             <h5 class="mt-2 my-0 p-0">mbti</h5>
             <div class="d-flex justify-content-evenly">
-                <label><p><input class="form-check-input" name="mbti" type="checkbox" value="istj"> istj</p></label>
-                <label><p><input class="form-check-input" name="mbti" type="checkbox" value="istp"> istp</p></label>
-                <label><p><input class="form-check-input" name="mbti" type="checkbox" value="isfj"> isfj</p></label>
-                <label><p><input class="form-check-input" name="mbti" type="checkbox" value="isfp"> isfp</p></label>
-                <label><p><input class="form-check-input" name="mbti" type="checkbox" value="intj"> intj</p></label>
-                <label><p><input class="form-check-input" name="mbti" type="checkbox" value="intp"> intp</p></label>
-                <label><p><input class="form-check-input" name="mbti" type="checkbox" value="infj"> infj</p></label>
-                <label><p><input class="form-check-input" name="mbti" type="checkbox" value="infp"> infp</p></label>
+                <label><p><input class="form-check-input" name="istj" type="checkbox" value="1"> istj</p></label>
+                <label><p><input class="form-check-input" name="istp" type="checkbox" value="1"> istp</p></label>
+                <label><p><input class="form-check-input" name="isfj" type="checkbox" value="1"> isfj</p></label>
+                <label><p><input class="form-check-input" name="isfp" type="checkbox" value="1"> isfp</p></label>
+                <label><p><input class="form-check-input" name="intj" type="checkbox" value="1"> intj</p></label>
+                <label><p><input class="form-check-input" name="intp" type="checkbox" value="1"> intp</p></label>
+                <label><p><input class="form-check-input" name="infj" type="checkbox" value="1"> infj</p></label>
+                <label><p><input class="form-check-input" name="infp" type="checkbox" value="1"> infp</p></label>
             </div>
             <div class="d-flex justify-content-evenly">
-                <label><p><input class="form-check-input" name="mbti" type="checkbox" value="estj"> estj</p></label>
-                <label><p><input class="form-check-input" name="mbti" type="checkbox" value="estp"> estp</p></label>
-                <label><p><input class="form-check-input" name="mbti" type="checkbox" value="esfj"> esfj</p></label>
-                <label><p><input class="form-check-input" name="mbti" type="checkbox" value="esfp"> esfp</p></label>
-                <label><p><input class="form-check-input" name="mbti" type="checkbox" value="entj"> entj</p></label>
-                <label><p><input class="form-check-input" name="mbti" type="checkbox" value="entp"> entp</p></label>
-                <label><p><input class="form-check-input" name="mbti" type="checkbox" value="enfj"> enfj</p></label>
-                <label><p><input class="form-check-input" name="mbti" type="checkbox" value="enfp"> enfp</p></label>
+                <label><p><input class="form-check-input" name="estj" type="checkbox" value="1"> estj</p></label>
+                <label><p><input class="form-check-input" name="estp" type="checkbox" value="1"> estp</p></label>
+                <label><p><input class="form-check-input" name="esfj" type="checkbox" value="1"> esfj</p></label>
+                <label><p><input class="form-check-input" name="esfp" type="checkbox" value="1"> esfp</p></label>
+                <label><p><input class="form-check-input" name="entj" type="checkbox" value="1"> entj</p></label>
+                <label><p><input class="form-check-input" name="entp" type="checkbox" value="1"> entp</p></label>
+                <label><p><input class="form-check-input" name="enfj" type="checkbox" value="1"> enfj</p></label>
+                <label><p><input class="form-check-input" name="enfp" type="checkbox" value="1"> enfp</p></label>
             </div>
 
             <p class="form-floating mt-3">
@@ -68,6 +68,13 @@
                 </select>
                 <label>지역</label>
             </p>
+            
+            <p id="imgCont">
+                <button id="imgAddBtn" class="btn btn-secondary" type="button" >
+                    이미지
+                    <i class="bi bi-plus-square"></i>
+                </button>
+            </p>
 
             <div class="text-end m-2">
                 <button type="submit" class="btn btn-primary me-1">등록</button>
@@ -77,6 +84,12 @@
 
         </form>
         <script>
+            const imgAddBtn=document.getElementById('imgAddBtn');
+            const imgCont=document.getElementById('imgCont');
+            imgAddBtn.addEventListener("click",(e)=>{
+                imgCont.insertAdjacentHTML("beforeend", imgInputComponent())
+            });
+
             let fileName=Date.now()+parseInt(Math.random()*10000);
             let url ="/public/img/comm/"+fileName;
 
@@ -89,6 +102,15 @@
             }
 
 
+            function imgInputComponent(label="이미지",name="img"){
+                return `<p class="input-group w-75 mt-2">
+              <label class="input-group-text">${label}</label>
+              <input class="form-control  type="file" name="${name}" >
+              <button type="button" class="btn btn-danger" onclick="this.closest('.input-group').remove()">
+                <i class="bi bi-x-lg"></i>
+              </button>
+              </p>`;
+            }
         </script>
     </div>
 
