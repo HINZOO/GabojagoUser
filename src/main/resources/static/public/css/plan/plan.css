@@ -222,10 +222,9 @@ canvas{
     border-radius: 20px !important;
 }
 .accordion-button{
+    background-color: #fafafa;
     border-top: 1px solid lightgray;
     border-bottom: 2px solid lightgray;
-    box-shadow: 0px 0px 5px 5px rgba(135, 206, 250, 0.04);
-    background-color: #fafafa;
 }
 .scheduleInputBox{
     text-align: right;
@@ -298,12 +297,11 @@ canvas{
 }
 .scheduleLeft{
     background-color: rgb(199, 220, 255);
-    box-sizing: border-box;
     height: 100%;
     line-height: 50px;
     font-weight: bold;
-    border-right: 30px double white;
-    border-left: 30px solid rgb(161, 193, 255);
+    border-right: 15px solid white;
+    border-left: 25px solid rgb(161, 193, 255);
     border-radius: 10px 0px 0px 10px;
     text-align: left;
     font-size: 25px;
@@ -314,6 +312,9 @@ canvas{
     border-left-color: rgba(108, 108, 108, 0.69);
 }
 .scheduleCenter{
+
+    font-weight: bold;
+    border-left: 15px solid rgb(199, 220, 255);
     line-height: 50px;
     height: 100%;
     position: relative;
@@ -339,7 +340,6 @@ canvas{
 .scheduleContent{
 
     font-weight: bold;
-    /*color: #737373;*/
     color: #8c8c8c;
     /*text-shadow: -1px 0 lightgrey, 0 1px lightgrey, 1px 0 lightgrey, 0 -1px lightgrey;*/
     font-size: 20px;
@@ -347,32 +347,27 @@ canvas{
 }
 .scheduleTitle{
 
-    /*text-shadow: -1px 0 transparent, 1px 1px #8eabe3, 1px 2px #8eabe3, 0 -1px transparent;*/
-    color: #565656;
+    text-shadow: -1px 0 transparent, 1px 1px lightgrey, 1px 2px lightgrey, 0 -1px transparent;
+    color: #595959;
     font-weight: bolder;
     font-size: 25px;
     padding: 0px 5px;
 }
-.scheduleTitleCover{
-    border-radius: 8px;
-    /*background-color: rgba(212, 244, 255, 0.51);*/
-    font-size: 25px;
-    font-weight: bolder;
-    padding: 5px 5px;
-}
-.scheduleModifyBtn{
+.scheduleSideBtn1, .scheduleSideBtn2 {
 
     border: 1px solid lightgray;
     border-radius: 10px;
-
     padding: 3px 10px;
-    font-size: 30px;
+    font-size: 25px;
     float: right;
-    margin-right: -55px;
+    margin-right: -50px;
 }
-.scheduleModifyBtn:hover{
+.scheduleSideBtn2{
+    margin-top: 50px;
+}
+
+.sbHover:hover{
     background-color: whitesmoke;
-    float: right;
 }
 
 

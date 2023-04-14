@@ -6,10 +6,8 @@
                           <span th:text="${content.getTime()}"></span>
                       </div>
                       <div class="col col-md-9 scheduleCenter">
-                          <span class="scheduleTitleCover">「<span class="scheduleTitle" th:text="${content.getTitle()}"></span>」</span>
-
-                            <span class="scheduleContent" th:text="${content.getInfo()}"></span>
-
+                         <span class="scheduleTitle" th:text="${content.getTitle()}"></span>
+                          <span class="scheduleContent" th:text="${content.getInfo()}"></span>
                       </div>
                   </div>
               </div>
@@ -17,11 +15,8 @@
       </h2>
 
       <div th:id="'content_'+${content.getConId()}" class="accordion-collapse collapse " data-bs-parent="#accordionSection">
-          <p class="scheduleModifyBtn">
-              <i class="bi bi-three-dots"></i>
-                <br>
-              <i class="bi bi-trash3"></i>
-          </p>
+          <p class="scheduleSideBtn1 sbHover"><i class="bi bi-three-dots"></i></p>
+          <p class="scheduleSideBtn2 sbHover"><i class="bi bi-trash3"></i></p>
 
           <div class="accordion-body" th:if="${content.getPath()}!=null" th:classappend="hasCanvas"></div>
 
