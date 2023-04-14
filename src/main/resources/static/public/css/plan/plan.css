@@ -222,9 +222,10 @@ canvas{
     border-radius: 20px !important;
 }
 .accordion-button{
-    border: 1px solid lightgrey;
+    border-top: 1px solid lightgray;
+    border-bottom: 2px solid lightgray;
     box-shadow: 0px 0px 5px 5px rgba(135, 206, 250, 0.04);
-    background-color: whitesmoke;
+    background-color: #fafafa;
 }
 .scheduleInputBox{
     text-align: right;
@@ -237,7 +238,6 @@ canvas{
     /*background-color: rgba(232, 232, 232, 0.27);*/
     border: 1px solid lightgrey;
 
-    /*height: 25vh;*/
     margin-top: 20px;
     border-radius: 8px;
     font-weight: bold;
@@ -302,7 +302,7 @@ canvas{
     height: 100%;
     line-height: 50px;
     font-weight: bold;
-    border-right: 15px solid snow;
+    border-right: 30px double white;
     border-left: 30px solid rgb(161, 193, 255);
     border-radius: 10px 0px 0px 10px;
     text-align: left;
@@ -355,7 +355,7 @@ canvas{
 }
 .scheduleTitleCover{
     border-radius: 8px;
-    background-color: rgba(212, 244, 255, 0.51);
+    /*background-color: rgba(212, 244, 255, 0.51);*/
     font-size: 25px;
     font-weight: bolder;
     padding: 5px 5px;
