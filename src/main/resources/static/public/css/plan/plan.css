@@ -191,17 +191,18 @@ canvas{
 
 }
 .accordion-body{
+
     position: relative;
     overflow: hidden! important;
     height: 130px;
 }
-.accordion-body .innerText{
+.accordion-body .newCanvasBtn{
     font-weight: bold;
-    font-size: 30px;
+    font-size: 60px;
     text-align: center;
     color: lightgrey;
 }
-.accordion-body .innerText:hover{
+.accordion-body .newCanvasBtn:hover{
     color: #7c7cff;
 }
 
