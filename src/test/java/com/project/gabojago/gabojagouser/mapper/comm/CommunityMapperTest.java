@@ -34,7 +34,7 @@ class CommunityMapperTest {
         comm.setTitle("테스트글");
         comm.setContent("테스트내용입니다.");
         comm.setArea("인천");
-        comm.setEsfj(true);
+
 
         int insert=communityMapper.insertOne(comm);
     }
@@ -47,8 +47,7 @@ class CommunityMapperTest {
         comm.setTitle("수정테스트글");
         comm.setContent("수정테스트내용입니다.");
         comm.setArea("경기");
-        comm.setEntj(true);
-        comm.setInfj(true);
+
         int update=communityMapper.updateOne(comm);
         System.out.println(comm);
         System.out.println("update = " + update);

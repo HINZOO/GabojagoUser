@@ -28,6 +28,15 @@
         fontSizes: ['10','12','14','16','18','20','22','24','28','30','36','50','72'],
 
     });
+    $('#summernote').summernote({
+        callbacks: {
+            onImageLinkInsert: function (url) {
+                let fileName = Date.now() + '_' + parseInt(Math.random() * 10000);
+                $img = $('<img>').attr({src: "/static/public/img/comm/" + fileName + '.jpg'})
+                $summernote.summernote('insertNode', $img[0]);
+            }
+        }
+    })
 
 
 </script>

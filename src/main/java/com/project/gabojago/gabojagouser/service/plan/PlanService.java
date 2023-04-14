@@ -6,6 +6,7 @@ import java.util.List;
 
 public interface PlanService {
     List<PlanDto> list();
+    List<PlanDto> list(String uId);
 
     PlanDto detail(int pId);
     int register(PlanDto plan);
