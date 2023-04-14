@@ -48,4 +48,20 @@ public class UserLoginController {
     }
     return "redirect:/";
   }
+
+  @GetMapping("/autoLogin.do")
+  public String autoLogin(
+      @SessionAttribute(required = false) UserDto loginUser,
+      HttpSession session,
+      RedirectAttributes redirectAttributes,
+      HttpServletResponse resp) {
+    if(loginUser!=null) {
+      redirectAttributes.addFlashAttribute("msg", "자동로그인 성공");
+      session.setAttribute("loginUser", loginUser);
+    } else {
+      redirectAttributes.addFlashAttribute("msg", "자동로그인 실패: 로그인을 먼저 해주세요");
+      return "redirect:/user/login.do";
+    }
+    return "redirect:/";
+  }
 }
