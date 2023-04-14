@@ -127,11 +127,6 @@ body{
     padding: 0;
 }
 
-.subCanvas{
-    position: absolute;
-    width: calc(100% - 40px);
-}
-
 canvas{
     position: relative;
     width: 100%;
@@ -212,7 +207,7 @@ canvas{
 
 .accordion-header, .accordion-button {
     border-radius: 10px !important;
-    height: 60px;
+    height: 50px;
 }
 .accordion-header{
     font-size: 0px;
@@ -228,7 +223,7 @@ canvas{
 .accordion-button{
     border: 1px solid lightgrey;
     box-shadow: 0px 0px 5px 5px rgba(135, 206, 250, 0.04);
-    background-color: rgb(207, 240, 255);
+    background-color: whitesmoke;
 }
 .scheduleInputBox{
     text-align: right;
@@ -288,6 +283,7 @@ canvas{
 
 .scheduleBtn{
     padding: 0px 15px 0px 0px;
+
 }
 .scheduleContainer{
     margin: 0px;
@@ -303,7 +299,7 @@ canvas{
     background-color: rgb(199, 220, 255);
     box-sizing: border-box;
     height: 100%;
-    line-height: 55px;
+    line-height: 50px;
     font-weight: bold;
     border-right: 15px solid snow;
     border-left: 30px solid rgb(161, 193, 255);
@@ -317,13 +313,12 @@ canvas{
     border-left-color: rgba(108, 108, 108, 0.69);
 }
 .scheduleCenter{
+    line-height: 50px;
     height: 100%;
     position: relative;
     overflow: hidden !important;
 }
-.scheduleCenterInner{
-    line-height: 60px;
-}
+
 
 .scheduleCenter::before{
     position: absolute;
@@ -339,9 +334,6 @@ canvas{
 }
 
 
-.scheduleRight{
-    text-align: center;
-}
 
 .scheduleContent{
 
@@ -353,15 +345,33 @@ canvas{
     padding-left: 25px;
 }
 .scheduleTitle{
+
     /*text-shadow: -1px 0 transparent, 1px 1px #8eabe3, 1px 2px #8eabe3, 0 -1px transparent;*/
     color: #565656;
     font-weight: bolder;
     font-size: 25px;
-    border-radius: 20px;
-    padding-left: 10px;
+    padding: 0px 5px;
 }
-/*.scheduleTitleText{*/
-/*  padding: 3px 15px;*/
-/*  border-radius: 10px;*/
-/*  !*background-color: rgba(0, 0, 255, 0.07);*!*/
-/*}*/
+.scheduleTitleCover{
+    border-radius: 8px;
+    background-color: rgba(212, 244, 255, 0.51);
+    font-size: 25px;
+    font-weight: bolder;
+    padding: 5px 5px;
+}
+.scheduleModifyBtn{
+
+    border: 1px solid lightgray;
+    border-radius: 10px;
+
+    padding: 3px 10px;
+    font-size: 30px;
+    float: right;
+    margin-right: -55px;
+}
+.scheduleModifyBtn:hover{
+    background-color: whitesmoke;
+    float: right;
+}
+
+

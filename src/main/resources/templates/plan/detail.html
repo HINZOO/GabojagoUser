@@ -6,6 +6,10 @@
 <head>
     <title>게시판 상세</title>
     <link th:href="@{/public/css/plan/plan.css}" rel="stylesheet" />
+<!--    <script  src="../../static/public/js/plan/pageFunction.js"></script>-->
+    <script type="text/javascript" th:src="@{/public/js/plan/pageFunction.js}"></script>
+
+
 </head>
 
 <div layout:fragment="content" class="container-fluid px-0">
@@ -244,7 +248,6 @@
         webSocket=new WebSocket(URL);
 
 
-
         const scheduleInsertForm = document.getElementById("scheduleInsertForm");
         scheduleInsertForm.onsubmit=registerSchedule;
 
@@ -252,6 +255,8 @@
         newScheduleBtn.addEventListener("click",()=>{
             new bootstrap.Modal(document.getElementById('staticBackdrop'),{}).show();
         })
+
+
 
         //새 스케쥴 생성시 @ResponseBody 요청 보내고 결과에 따라 콜랩스 생성...나중에
         async function registerSchedule(e){
@@ -269,14 +274,13 @@
             }
         }
 
-
+        const accordionWidth = document.querySelector(".accordion-item").clientWidth;
         // 캔버스 데이터를 가진 스케쥴을 로드하는 부분
         document.addEventListener("DOMContentLoaded",()=>{
 
-            let canvasWidth = document.querySelector(".accordion-header");
             let hasCanvasArr = document.querySelectorAll(".hasCanvas");
             Array.from(hasCanvasArr).forEach((hasCanvas)=>{
-                let h = 500/1200*canvasWidth.clientWidth+16; //16은 부트스트랩에 설정된 상하 패딩값을 보정해준 것
+                let h = 500/1200*accordionWidth+16; //16은 부트스트랩에 설정된 상하 패딩값을 보정해준 것
                 hasCanvas.style.height = h+"px";
                 let newCanvas = new CanvasCreate();
                 let canvas = newCanvas.canvas;
@@ -285,122 +289,24 @@
             })
          })
 
+        let newCanvasBtn = document.getElementsByClassName("innerText");
+        Array.from(newCanvasBtn).forEach((btn)=>{
+            btn.addEventListener("click",()=>{
+                let h = 500/1200*accordionWidth+16;
+                btn.parentNode.style.height = h+"px";
+                let newCanvas = new CanvasCreate();
+                let canvas = newCanvas.canvas;
+                // canvas.setAttribute("id",hasCanvas.parentElement.getAttribute("id"))
+                btn.style.display = "none"
+                btn.parentNode.append(canvas);
 
 
-        class CanvasCreate {
-            index;
-            canvas; context; subCanvas; subContext;
-            layerArray = []; //레이어 구현용 배열
-            jsonArray = []; //레이어 구현용 배열
-            activatedTool; //활성화 툴 체크용
-            pageZoom = 100/1200; //페이지 사이즈 변화에 따른 배율 조졍용(아직)
-            functionZoom = 1.0; //줌기능 배율 조졍용
 
-            constructor() {
-                // 캔버스 본체
-                this.canvas = document.createElement("canvas");
-                this.context = this.canvas.getContext("2d")
-                // 레이어 구현용 보조캔버스
-                this.subCanvas = document.createElement("canvas");
-                this.subContext = this.subCanvas.getContext("2d");
-                // 캔버스 초기화
-                this.init()
-            }
-            init(){
-                // 스타일 관련 초기 설정
-                // this.index = ++canvasCnt;
-                this.canvas.width = 1200;
-                this.canvas.height = 500;
-                this.context.strokeStyle = "black";
-                this.context.lineWidth = 0.5;
-                this.context.scale(1.0,1.0)
-                this.context.translate(0,0)
-                this.context.setLineDash([])
-                this.context.save();
-
-                // 버튼활성화 및 배경디자인 생성
-                this.pageLiner(this.canvas.width,this.canvas.height)
-
-                webSocket.onmessage=function (e){
-                    console.log(e)
-                }
-                document.getElementById("stampBtn").addEventListener("click",()=>{
-                    this.stampTool();
-                })
-            }
+            })
+        })
 
 
-            stampTool() {
-                let canvasObj = this;
-                let moveHandler;
-                function startFunction(e) {
 
-                        let startX = e.offsetX;
-                        let startY = e.offsetY;
-                        let pathArray = [];
-                        canvasObj.context.beginPath()
-                        canvasObj.context.moveTo(e.offsetX,e.offsetY);
-                        this.addEventListener("mousemove", moveHandler = function (e){
-
-                            canvasObj.context.lineTo(e.offsetX,e.offsetY);
-                            canvasObj.context.stroke()
-                        })
-                        this.addEventListener("mouseup",(e)=>{
-                            this.removeEventListener("mousemove", moveHandler)
-                        },{once:true})
-                    }
-
-                this.canvas.addEventListener("mousedown", startFunction);
-            };
-
-            // 캔버스 기본 배경
-            pageLiner(width,height){
-                let x = 0;
-                let y = 0;
-                while (x<=height){
-                    this.context.beginPath();
-                    if(x===0 || height-x===0){
-                        this.context.strokeStyle="black"
-                        this.context.lineWidth=1.0;
-                    } else if(x%50===0){
-                        this.context.strokeStyle="gray"
-                        this.context.lineWidth=0.2;
-                    } else{
-                        this.context.strokeStyle="gray"
-                        this.context.lineWidth=0.1;
-                    }
-                    this.context.moveTo(0, x);
-                    this.context.lineTo(width, x);
-                    this.context.stroke();
-                    x+=10;
-                }
-                while (y<=width){
-                    this.context.beginPath();
-                    if(y===0 || y===width){
-                        this.context.strokeStyle="black"
-                        this.context.lineWidth=1.0;
-                    } else if(y%50===0){
-                        if(y/50===12){
-                            this.context.strokeStyle="red"
-                            this.context.lineWidth=0.3;
-                        } else {
-                            this.context.strokeStyle="gray"
-                            this.context.lineWidth=0.2;
-                        }
-                    } else{
-                        this.context.strokeStyle="gray"
-                        this.context.lineWidth=0.1;
-                    }
-                    this.context.moveTo(y, 0);
-                    this.context.lineTo(y, height);
-                    this.context.stroke();
-                    y+=10;
-                }
-                this.context.restore()
-                this.context.save()
-                ///배열에 들어간 캔버스가 계속 변경되는 문제 해결 필요
-            }
-        }
 
 
 

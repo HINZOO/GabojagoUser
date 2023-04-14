@@ -1,25 +1,15 @@
-<h2 class="accordion-header" xmlns="http://www.w3.org/1999/html">
+        <h2 class="accordion-header" xmlns="http://www.w3.org/1999/html">
           <button class="accordion-button collapsed scheduleBtn" type="button" data-bs-toggle="collapse" th:data-bs-target="'#content_'+${content.getConId()}" aria-expanded="false" th:aria-controls="'#content_'+${content.getConId()}">
-
               <div class="container scheduleContainer ">
                   <div class="row scheduleRow " >
-                      <div class="col col-md-2 scheduleLeft ">
+                      <div class="col col-md-3 scheduleLeft ">
                           <span th:text="${content.getTime()}"></span>
                       </div>
-                      <div class="col col-md-10 scheduleCenter">
-                          <div class="row">
-                              <div class="col col-s-11 scheduleCenterInner" >
-                                    <span class="scheduleTitle">
-                                      「<span th:text="${content.getTitle()}"></span>」
-                                    </span>
-                                  <span class="scheduleContent">
-                                       <span th:text="${content.getInfo()}"></span>
-                                  </span>
-                              </div>
-                              <div class="col col-s-1 scheduleRight">
-                                  <i class="bi bi-three-dots"></i>
-                              </div>
-                          </div>
+                      <div class="col col-md-9 scheduleCenter">
+                          <span class="scheduleTitleCover">「<span class="scheduleTitle" th:text="${content.getTitle()}"></span>」</span>
+
+                            <span class="scheduleContent" th:text="${content.getInfo()}"></span>
+
                       </div>
                   </div>
               </div>
@@ -27,10 +17,14 @@
       </h2>
 
       <div th:id="'content_'+${content.getConId()}" class="accordion-collapse collapse " data-bs-parent="#accordionSection">
-          <div class="accordion-body" th:if="${content.getPath()}!=null" th:classappend="hasCanvas">
+          <p class="scheduleModifyBtn">
+              <i class="bi bi-three-dots"></i>
+          <br>
+              <i class="bi bi-trash3"></i>
+          </p>
 
-          </div>
 
+          <div class="accordion-body" th:if="${content.getPath()}!=null" th:classappend="hasCanvas"></div>
 
           <div class="accordion-body" th:if="${content.getPath()}==null">
                   <p class="innerText">
