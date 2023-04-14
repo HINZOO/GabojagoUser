@@ -2,6 +2,7 @@ package com.project.gabojago.gabojagouser.controller.trip;
 
 import com.project.gabojago.gabojagouser.dto.trip.TripDto;
 import com.project.gabojago.gabojagouser.dto.trip.TripImgDto;
+import com.project.gabojago.gabojagouser.dto.user.UserDto;
 import com.project.gabojago.gabojagouser.service.trip.TripService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
@@ -33,23 +34,65 @@ public class TripController {
         this.tripService = tripService;
     }
 
-//    @GetMapping("/{tId}/detail.do")
-//    public String detail(Model model, @PathVariable int tId){
-//        TripDto trip=tripService.detail(tId);
-//        model.addAttribute("t", trip);
-//        return "/trip/detail";
-//    }
+
+    @GetMapping("/{tId}/modify.do")
+    public String modifyForm(
+            Model model,
+            @PathVariable int tId,
+            @SessionAttribute UserDto loginUser){
+        TripDto trip=tripService.detail(tId);
+        model.addAttribute("t",trip);
+        return "/trip/modify";
+    }
+
+    @PostMapping("/modify.do")
+    public String modifyAction(
+            @ModelAttribute TripDto trip,
+            @RequestParam(value="delImgId", required = false) int [] delImgIds
+    ){
+        String redirectPage="redirect:/trip/"+trip.getTId()+"/modify.do";
+        List<TripImgDto> imgDtos=null;
+        int modify=0;
+        // 삭제할 이미지아이디가 있으면 => 수정
+        try{
+            if(delImgIds!=null) imgDtos=tripService.imgList(delImgIds);
+            modify=tripService.modify(trip,delImgIds);
+        }catch (Exception e){
+            log.error(e.getMessage());
+        }
+        if(modify>0){ // 수정성공
+            if(imgDtos!=null) { // 삭제할 이미지 있으면
+                for(TripImgDto ti : imgDtos){
+                    File imgFile=new File(staticPath+ti.getImgPath());
+                    if(imgFile.exists()) imgFile.delete();
+                }
+            }
+            redirectPage="redirect:/trip/list.do";
+        }
+        return redirectPage;
+
+    }
+
+
+    @GetMapping("/{tId}/detail.do")
+    public String detail(Model model, @PathVariable int tId){
+        TripDto trip=tripService.detail(tId);
+        model.addAttribute("t", trip);
+        return "/trip/detail";
+    }
 
 
     @GetMapping("/register.do")
-    public void registerForm(){
+    public void registerForm(@SessionAttribute UserDto loginUser){
     }
 
     @PostMapping("/register.do")
     public String registerAction(
+            @SessionAttribute UserDto loginUser, // 글쓴이와 로그인한 사람 같은지 확인예정
             @ModelAttribute TripDto trip,
             @RequestParam(name="img")MultipartFile[] imgs) throws IOException {
         String redirectPage="redirect:/trip/register.do";
+        if(!loginUser.getUId().equals(trip.getUId())) return redirectPage; // 다르면 다시 등록페이지로 이동
         List<TripImgDto> imgDtos=null;
         if(imgs!=null){
             imgDtos=new ArrayList<>();
@@ -89,7 +132,8 @@ public class TripController {
     }
 
     @GetMapping("/list.do")
-    public String list(Model model){
+    public String list(Model model,
+                       @SessionAttribute(required = false) UserDto loginUser){
         List<TripDto> trips;
         trips=tripService.list();
         model.addAttribute("trips",trips);

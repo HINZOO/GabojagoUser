@@ -31,11 +31,12 @@
         <result column="category" property="category"/>
 
         <!-- 조인) 리뷰, 좋아요한 유저, 이미지, 북마크, 좋아요, 조회수 -->
-        <!-- 🍉property Dto 필드명 -->
-<!--        <collection property="imgs"-->
-<!--                    select=""-->
-<!--                    />-->
 
+        <!-- 🍉property Dto 필드명 -->
+        <collection property="imgs"
+                    select="com.project.gabojago.gabojagouser.mapper.trip.TripImgMapper.findByTId"
+                    column="t_id"
+                    fetchType="lazy"/>
     </resultMap>
     <insert useGeneratedKeys="true" keyProperty="tId" id="insertOne" parameterType="TripDto">
         INSERT INTO trips

@@ -7,6 +7,7 @@ import com.project.gabojago.gabojagouser.mapper.trip.TripMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -16,7 +17,20 @@ public class TripServiceImp implements TripService {
     private TripImgMapper tripImgMapper;
 
     @Override
-    public List<TripDto> list() {
+    public List<TripImgDto> imgList(int[] tiId) { // 이미지 리스트
+        List<TripImgDto> imgList=null;
+        if(tiId!=null){
+            imgList=new ArrayList<>();
+            for(int id : tiId){
+                TripImgDto imgDto=tripImgMapper.findByTiId(id);
+                imgList.add(imgDto);
+            }
+        }
+        return imgList;
+    }
+
+    @Override
+    public List<TripDto> list() { // 여행정보 리스트
         List<TripDto> list=tripMapper.findAll();
         return list;
     }
@@ -43,6 +57,11 @@ public class TripServiceImp implements TripService {
     @Override
     public int modify(TripDto trip, int[] delImgIds) {
         int modify=tripMapper.updateOne(trip);
+        if(delImgIds!=null){
+            for(int tiId : delImgIds){
+                modify+=tripImgMapper.deleteOne(tiId);
+            }
+        }
         return modify;
     }
 

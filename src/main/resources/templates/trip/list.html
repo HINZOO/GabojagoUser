@@ -10,54 +10,70 @@
 </head>
 <div layout:fragment="content" class="container">
     <h1 class="my-4">맞춤추천 리스트</h1>
-        <div class="text-end">
+        <div class="text-end" th:if="${session.loginUser!=null}">
             <a class="btn btn-primary" href="/trip/register.do" role="button">여행지 등록</a>
         </div>
     <section id="tripListCont" class="row row-cols-lg-4 row-cols-1 g-6">
         <div class="col" th:each="t:${trips}">
-            <div class="card mt-4">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                    <strong th:text="${t.area}"></strong>
-                    <!--                    <i class="bi bi-heart-fill text-primary"></i>-->
-
-                    <div class="dropdown">
-                        <a href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="bi bi-three-dots fs-4"></i>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Action</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
-                        </ul>
+                <div class="card mt-4">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <strong th:text="${t.area}"></strong>
+                        <i class="bi bi-heart text-danger"></i>
                     </div>
+
+                    <!-- 게시글 이미지 + 내용 클릭시 상세보기 이동 -->
+                    <a class="text-dark text-decoration-none" th:href="@{'/trip/{tId}/detail.do'(tId=${t.tId})}">
+                        <!-- imgs 가 null 이 아니면 보이기! null 이면 안보이기! -->
+                        <div th:if="${t.imgs!=null}" th:id="'carousel'+${t.tId}" class="carousel slide" data-bs-ride="carousel">
+                            <div class="carousel-inner">
+                                <div class="carousel-item" th:each="img,state : ${t.imgs}" th:classappend="${state.first}?'active':''">
+                                    <img th:src="@{'{path}'(path=${img.imgPath})}" class="d-block w-100" style="width: 100%; height: 150px; object-fit: contain" alt="...">
+                                </div>
+                            </div>
+                            <button class="carousel-control-prev" type="button" th:data-bs-target="'#carousel'+${t.tId}" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" th:data-bs-target="'#carousel'+${t.tId}" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
+                            </button>
+                        </div>
+
+                        <div class="card-body">
+                            <div class="d-flex align-items-center">
+                                <p class="card-title fs-6 mb-0" th:text="${t.title}"></p>
+                            </div>
+
+                            <p class="card-text">
+                                <span></span>
+                                #enfj#enfp#istj
+                            </p>
+
+                            <div class="card-text d-flex justify-content-between">
+                                <p class="m-0">
+                                    <span>☆☆☆☆☆</span>
+                                    <small>156</small>
+                                </p>
+
+                                <div class="dropdown">
+                                    <a href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="bi bi-three-dots-vertical text-muted"></i>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <!-- 로그인 + 로그인유저와 게시글의 유저가 동일할때 보이기! -->
+                                        <li th:if="${session.loginUser!=null}">
+                                            <a class="dropdown-item" th:href="@{'/trip/{tId}/modify.do'(tId=${t.tId})}">수정폼</a>
+                                        </li>
+                                        <li><a class="dropdown-item" href="#">Another action</a></li>
+                                        <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div> <!-- card-body -->
+                    </a>
                 </div>
-
-                <div>
-                    <img src="/public/img/trip/춘식이라이언.jpg" class="card-img-top" alt="...">
-                    <div class="">
-<!--                    <div class="card-img-overlay"> &lt;!&ndash; 오버레이 있으면 드롭다운 메뉴를 덮어서 안눌린다. => 드롭다운메뉴 z-index 올리기 &ndash;&gt;-->
-                        <p class="card-text text-end p-0 m-0 mt-5 me-2">
-                            <i class="bi bi-heart text-dark bg-light border rounded-circle fs-4" style="width: 45px; height: 45px;"></i>
-                        </p>
-                    </div>
-                </div> <!-- card-img -->
-
-                <div class="card-body">
-                    <h5 class="card-title fs-6" th:text="${t.title}"></h5>
-                    <p class="card-text">
-                        <span></span>
-                        #enfj#enfp#istj
-                    </p>
-                    <p class="card-text">
-                        <span>☆☆☆☆☆</span>
-                        <small>156</small>
-                    </p>
-                </div> <!-- card-body -->
-            </div>
         </div>
-<!--        <a  th:href="@{'/trip/{tId}/register.do'(tId=${t.tId})}">-->
-<!--            -->
-<!--        </a>-->
 
     </section>
 

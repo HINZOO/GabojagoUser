@@ -11,6 +11,10 @@
 <div layout:fragment="content">
     <form enctype="multipart/form-data" action="./register.do" method="post" style="width: 500px; margin: 0 auto;">
         <h1 class="my-4">여행지 등록</h1>
+        <p class="form-floating">
+            <input readonly type="text" id="" name="uId" th:value="${session.loginUser.uId}" class="form-control" placeholder="??">
+            <label for="">아이디(글쓴이)</label>
+        </p>
 
         <p class="form-floating">
             <select name="category" id="category" class="form-select">
