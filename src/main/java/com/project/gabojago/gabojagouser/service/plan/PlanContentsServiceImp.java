@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class PlanContentsServiceImp implements PlanContentsService {
 
-    PlanContentsMapper planContentsMapper;
+    private PlanContentsMapper planContentsMapper;
     @Override
     public int register(PlanContentsDto planContentsDto) {
         return planContentsMapper.insertOne(planContentsDto);

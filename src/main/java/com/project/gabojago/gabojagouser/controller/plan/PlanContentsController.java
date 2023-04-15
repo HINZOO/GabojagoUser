@@ -1,7 +1,9 @@
 package com.project.gabojago.gabojagouser.controller.plan;
 
+import com.project.gabojago.gabojagouser.dto.plan.PlanContentPathsDto;
 import com.project.gabojago.gabojagouser.dto.plan.PlanContentsDto;
 import com.project.gabojago.gabojagouser.dto.plan.PlanDto;
+import com.project.gabojago.gabojagouser.service.plan.PlanContentPathsService;
 import com.project.gabojago.gabojagouser.service.plan.PlanContentsService;
 import com.project.gabojago.gabojagouser.service.plan.PlanService;
 import lombok.AllArgsConstructor;
@@ -23,17 +25,19 @@ import java.util.List;
 @Log4j2
 public class PlanContentsController {
     private PlanContentsService planContentsService;
+    private PlanContentPathsService planContentPathsService;
 
 
     @PostMapping("/insert.do")
-    public @ResponseBody PlanContentsDto insert(@ModelAttribute PlanContentsDto planContentsDto) throws IOException {
-            int register=planContentsService.register(planContentsDto);
-            return planContentsDto;
+    public @ResponseBody PlanContentsDto insert(@ModelAttribute PlanContentsDto content) throws IOException {
+            int register = planContentsService.register(content);
+            return content;
         }
-//    @GetMapping("/{pId}/detail.do")
-//    public String detail(@PathVariable int pId, Model model){ // 플랜 detail 보기
-//        PlanDto plan = planService.detail(pId);
-//        model.addAttribute("plan", plan);
-//        return "/plan/detail";
-//    }
+
+    @GetMapping("/{conId}/canInsert.do")
+    public @ResponseBody int canInsert(@PathVariable int conId) throws IOException {
+        int register = planContentPathsService.register(conId);
+        return register;
+    }
+
 }

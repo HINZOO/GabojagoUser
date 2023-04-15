@@ -6,6 +6,9 @@
         <result column="con_id" property="conId"/>
         <result column="can_path" property="canPath"/>
     </resultMap>
+    <insert id="insert" useGeneratedKeys="true" keyProperty="path_id"  parameterType="planContentPathsDto">
+        INSERT INTO plan_content_paths (con_id) VALUE (#{conId})
+    </insert>
 
     <select id="findByConId" resultMap="planContentPathMap">
         SELECT * FROM plan_content_paths WHERE con_id=#{conId}

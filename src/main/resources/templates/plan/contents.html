@@ -1,29 +1,30 @@
         <h2 class="accordion-header" xmlns="http://www.w3.org/1999/html">
-          <button class="accordion-button collapsed scheduleBtn" type="button" data-bs-toggle="collapse" th:data-bs-target="'#content_'+${content.getConId()}" aria-expanded="false" th:aria-controls="'#content_'+${content.getConId()}">
+          <button class="accordion-button collapsed scheduleBtn" type="button">
+<!--              a role="button"-->
               <div class="container scheduleContainer ">
                   <div class="row scheduleRow " >
                       <div class="col col-md-3 scheduleLeft ">
                           <span th:text="${content.getTime()}"></span>
                       </div>
-                      <div class="col col-md-9 scheduleCenter">
-                         <span class="scheduleTitle" th:text="${content.getTitle()}"></span>
+                      <p class="col col-md-9 scheduleCenter" role="button" data-bs-toggle="collapse" th:data-bs-target="'#content_'+${content.getConId()}" aria-expanded="false" th:aria-controls="'#content_'+${content.getConId()}">
+                          <span class="scheduleTitle" th:text="${content.getTitle()}"></span>
                           <span class="scheduleContent" th:text="${content.getInfo()}"></span>
-                      </div>
+                      </p>
                   </div>
               </div>
           </button>
       </h2>
 
-      <div th:id="'content_'+${content.getConId()}" class="accordion-collapse collapse " data-bs-parent="#accordionSection">
-          <p class="scheduleSideBtn1 sbHover"><i class="bi bi-three-dots"></i></p>
-          <p class="scheduleSideBtn2 sbHover"><i class="bi bi-trash3"></i></p>
+        <div th:id="'content_'+${content.getConId()}" class="accordion-collapse collapse " data-bs-parent="#accordionSection">
+            <p class="scheduleSideBtn1 sbHover"><i class="bi bi-three-dots"></i></p>
+            <p class="scheduleSideBtn2 sbHover"><i class="bi bi-trash3"></i></p>
 
-          <div class="accordion-body" th:if="${content.getPath()}!=null" th:classappend="hasCanvas"></div>
+            <div class="accordion-body">
+                <p class="newCanvasBtn" onclick=newCanvasBtn(this) th:if="${content.getPath()}!=null" th:classappend="hasCanvas"><i class="bi bi-plus-circle"></i></p>
+                <p class="newCanvasBtn" onclick=newCanvasBtn(this) th:if="${content.getPath()}==null"><i class="bi bi-plus-circle"></i></p>
+            </div>
+        </div>
 
-          <div class="accordion-body" th:if="${content.getPath()}==null">
-              <p class="newCanvasBtn"><i class="bi bi-plus-circle"></i></p>
-          </div>
-      </div>
 
 
 
