@@ -10,6 +10,12 @@
         <result property="postTime" column="post_time"/>
         <result property="updateTime" column="updateTime"/>
         <result property="parentCrId" column="parent_cr_id"/>
+        <collection
+                property="replies"
+                select="findByCcId"
+                column="cc_id"
+                fetchType="lazy"
+        />
     </resultMap>
     <insert id="insertOne" useGeneratedKeys="true" keyProperty="ccId" parameterType="commReplyDto">
         INSERT INTO comm_comment (c_id, u_id, content, parent_cr_id)VALUES(#{cId},#{uId},#{content},#{parentCrId})
@@ -26,7 +32,10 @@
     <select id="findByCcId" resultMap="CommReplyMap">
         SELECT * FROM comm_comment WHERE cc_id=#{ccId}
     </select>
-    <select id="findByCId" resultMap="CommReplyMap">
+    <select id="findByCId" resultMap="CommReplyMap">--
         SELECT * FROM comm_comment WHERE c_id=#{cId};
+    </select>
+    <select id="findByParentCrId" resultMap="CommReplyMap">
+        SELECT * FROM comm_comment WHERE parent_cr_id=#{parentCrId}
     </select>
 </mapper>

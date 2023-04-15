@@ -14,7 +14,7 @@ public class CommReplyServiceImpl implements CommReplyService {
 
     @Override
     public List<CommReplyDto> list(int cId) {
-        List<CommReplyDto> list=commReplyMapper.findByCIdAndCcIdIsNull(cId);
+        List<CommReplyDto> list=commReplyMapper.findByCId(cId);
         return list;
     }
 
