@@ -27,6 +27,10 @@ public class PlanContentsController {
     private PlanContentsService planContentsService;
     private PlanContentPathsService planContentPathsService;
 
+    @Data
+    class CanvasHandlerDto{
+
+    }
 
     @PostMapping("/insert.do")
     public @ResponseBody PlanContentsDto insert(@ModelAttribute PlanContentsDto content) throws IOException {
@@ -34,10 +38,9 @@ public class PlanContentsController {
             return content;
         }
 
-    @GetMapping("/{conId}/canInsert.do")
-    public @ResponseBody int canInsert(@PathVariable int conId) throws IOException {
-        int register = planContentPathsService.register(conId);
-        return register;
+    @PostMapping ("/canvasHandler.do")
+    public @ResponseBody int canInsert(@RequestBody String conId) throws IOException {
+        return planContentPathsService.register(Integer.parseInt(conId));
     }
 
 }

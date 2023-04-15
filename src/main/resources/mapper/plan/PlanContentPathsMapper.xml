@@ -6,7 +6,7 @@
         <result column="con_id" property="conId"/>
         <result column="can_path" property="canPath"/>
     </resultMap>
-    <insert id="insert" useGeneratedKeys="true" keyProperty="path_id"  parameterType="planContentPathsDto">
+    <insert id="insert" useGeneratedKeys="true" parameterType="planContentPathsDto">
         INSERT INTO plan_content_paths (con_id) VALUE (#{conId})
     </insert>
 

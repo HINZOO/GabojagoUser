@@ -6,8 +6,7 @@
 <head>
     <title>게시판 상세</title>
     <link th:href="@{/public/css/plan/plan.css}" rel="stylesheet" />
-<!--    <script  src="../../static/public/js/plan/pageFunction.js"></script>-->
-    <script type="text/javascript" th:src="@{/public/js/plan/pageFunction.js}"></script>
+
 
 
 </head>
@@ -242,7 +241,11 @@
 
 
 
-    <script>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+
+        // var a = `[[${plan.getContents()[0].getPath().getCanPath()}]]`;
+
         const URL="ws://localhost:7777/plan"
         let webSocket;
         webSocket=new WebSocket(URL);
@@ -277,32 +280,36 @@
         // 캔버스 데이터를 가진 스케쥴을 로드하는 부분
         document.addEventListener("DOMContentLoaded",()=>{
             let hasCanvasArr = document.querySelectorAll(".hasCanvas");
-            Array.from(hasCanvasArr).forEach((hasCanvas)=>{
-                newCanvas(hasCanvas)
+            Array.from(hasCanvasArr).forEach((hasCanvas,i)=>{
+                let conId = hasCanvas.closest("div[id^='content']").getAttribute("id").split("_")[1];
+                console.log(i)
+
+
+                newCanvas(hasCanvas,conId)
             })
          })
 
-        function newCanvas(ele, path){
+        function newCanvas(ele,id, path){
             let w = document.querySelector(".accordion-item").clientWidth;
             let h = 500/1200*w+16; //16은 부트스트랩 아코디언바디에 설정된 상하 패딩값을 보정해준 것
             ele.parentNode.style.height = h +"px";
             let newCanvas = new CanvasCreate();
             let canvas = newCanvas.canvas;
-            // canvas.setAttribute("id",hasCanvas.parentElement.getAttribute("id"))
+            newCanvas.id = id;
+            newCanvas.layerArr = path;
             ele.style.display = "none"
             ele.parentNode.append(canvas);
         }
 
         async function newCanvasBtn(ele){
             let conId = ele.closest("div[id^='content']").getAttribute("id").split("_")[1]
-            let url =`/plan/contents/${conId}/canInsert.do`
-            const resp = await fetch(url);
-            if(resp.status===200){
-                // console.log(resp)
-                // newCanvas(ele);
+            let url =`/plan/contents/canvasHandler.do`
+            const resp = await fetch(url,{method:"POST",body:conId});
+            const result = await resp.json();
+            if(resp.status===200 && result===1){
+                newCanvas(ele, conId);
             }else {
                 alert("캔버스 생성 실패 status :"+resp.status);
-                return 0;
             }
         }
 
@@ -311,9 +318,9 @@
 
 
 
-
+        /*]]>*/
     </script>
-
+    <script type="text/javascript" th:src="@{/public/js/plan/pageFunction.js}"></script>
 
 </div> <!--레이아웃 닫기-->
 </html>
