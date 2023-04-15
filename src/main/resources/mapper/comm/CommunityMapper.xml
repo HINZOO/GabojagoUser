@@ -35,10 +35,14 @@
         <collection property="imgs"
                     select="com.project.gabojago.gabojagouser.mapper.comm.CommImgMapper.findByCId"
                     column="c_id"
-                    fetchType="eager"/>
+                    fetchType="lazy"/>
+        <collection property="replies"
+                    select="com.project.gabojago.gabojagouser.mapper.comm.CommReplyMapper.findByCId"
+                    column="c_id"
+                    fetchType="lazy"/>
     </resultMap>
 
-    <insert id="insertOne" parameterType="communityDto">
+    <insert id="insertOne" parameterType="communityDto" useGeneratedKeys="true" keyProperty="cId">
     INSERT INTO communitys (u_id, p_id, title, content, area, istj, istp, isfj, isfp, intj, intp, infj, infp, estj, estp, esfj, esfp, entj, entp, enfj, enfp)
     VALUE (#{uId}, #{pId}, #{title}, #{content}, #{area}, #{istj}, #{istp}, #{isfj}, #{isfp}, #{intj}, #{intp}, #{infj}, #{infp}, #{estj}, #{estp}, #{esfj}, #{esfp}, #{entj}, #{entp}, #{enfj}, #{enfp})
 

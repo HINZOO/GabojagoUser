@@ -1,0 +1,25 @@
+<div class="header d-flex justify-content-between pb-1 border-0 ">
+    <!--     th:classappend="${(session.loginUser!=null && session.loginUser.uId==c.uId)?'border-bottom':''}">-->
+    <div>
+        @<strong th:text="${r.uId}"></strong>
+        <small>•</small>
+        <a class="" th:href="@{'/user/{uId}/follow.do'(uId=${r.uId})}">팔로우</a>
+    </div>
+    <small th:text="${#dates.format(r.updateTime,'yyyy-MM-dd')}"></small>
+    <!--  <img th:src="@{'{path}'(path=${r.uimgPath})}" alt="프로필이미지">-->
+</div>
+<div class="body p-1 row" >
+    <div class="col">
+        <span th:text="${r.content}"></span>
+    </div>
+</div>
+<div>
+    <a href="javascript:void(0)" class="me-2" >수정</a>
+    <a href="javascript:void(0)">댓글 달기</a>
+</div>
+<!--<ul class="list-group">-->
+<!--    <li class="list-group-item" th:each="r:${r.replies}">-->
+<!--        <th:block th:include="/comm/reply/detail"></th:block>-->
+<!--    </li>-->
+<!--</ul>-->
+<!--😎이 주석을 해제하면 오류가 뜬다..-->

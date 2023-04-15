@@ -5,78 +5,122 @@
 <head>
     <meta charset="UTF-8">
     <title>판매글 리스트</title>
+
 </head>
 <div layout:fragment="content">
     <div class="container">
         <div class="container my-5">
             <div class="row">
-                <div class="col-md-6">
-                    <img src="/public/img/sells/1.jpg" alt="상품 이미지" class="img-fluid">
+                <div th:if="${sells.sellImgs != null}" th:id="'carousel' + ${sells.sId}" class=" col carousel slide" data-bs-ride="carousel" >
+                    <div class="carousel-inner">
+                        <div class="carousel-item img-thumbnail" th:each="img, state: ${sells.sellImgs}" th:classappend="${state.first ? 'active' : ''}">
+                            <img th:src="@{'{path}'(path=${img.imgPath})}" class="d-block w-100" alt="게시글 이미지">
+                        </div>
+                    </div>
+                    <button class="carousel-control-prev" type="button" th:data-bs-target="'#carousel' + ${sells.sId}" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" th:data-bs-target="'#carousel' + ${sells.sId}" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
                 </div>
                 <div class="col-md-6">
-                    <h2 class="font-weight-bold mb-3" th:text="${s.title}"></h2>
-                    <span class="text-muted small mb-2" th:text="${s.category}+'/'"></span>
-                    <span class="small mb-2" th:text="${s.area}"></span>
+                    <h2 class="font-weight-bold mb-3" th:text="${sells.title}"></h2>
+                    <span class="text-muted small mb-2" th:text="${sells.category}+'/'"></span>
+                    <span class="small mb-2" th:text="${sells.area}"></span>
                     <hr class="my-4">
-                    <h4 class="font-weight-bold mb-3" th:text="${#dates.format(s.postTime,'yyyy-MM-dd')}"  pattern="yyyy-MM-dd"></h4>
+                    <h4 class="font-weight-bold mb-3" th:text="${#dates.format(sells.postTime,'yyyy-MM-dd')}"  pattern="yyyy-MM-dd"></h4>
                     <hr class="my-4">
-                    <p class="small mb-2" th:text="${s.content}"></p>
+                    <p class="small mb-2" th:text="${sells.content}"></p>
                     <hr class="my-4">
-                    <form>
+                    <form id="optionForm">
                         <div class="form-group">
-                            <label for="option-select">옵션</label>
-                            <select class="form-control" id="option-select" name="option">
-                                <option th:each="op:${s.getSellOption()}" th:value="${op.getName()}" th:text="${op.getName() + ' - ' + op.getPrice() + '원'}"></option>
+                            <label for="optionSelect">옵션</label>
+                            <select class="form-control" id="optionSelect" name="option">
+                                <option th:each="op:${sells.getSellOption()}" th:value="${op.getName()+'|'+op.getPrice()}" th:text="${op.getName() + ' - ' + op.getPrice() + '원'}"></option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="quantity">수량</label>
-                            <input type="number" class="form-control" id="quantity" name="quantity" value="1" min="1">
+                            <div class="input-group">
+                                <button class="btn btn-outline-secondary" type="button" onclick="down()">-</button>
+                                <input type="text" class="form-control" readonly id="quantity" name="quantity" value="1" min="1">
+                                <button class="btn btn-outline-secondary" type="button" onclick="up()">+</button>
+                            </div>
                         </div>
-                        <button type="submit" class="btn btn-primary">추가하기</button>
+                        <button type="submit" class="btn btn-warning  mt-2">추가하기</button>
                     </form>
-                    <div id="selected-option"></div>
+                    <div id="selectedOption"></div>
+                    <hr>
+                    <h3 class="text-end" id="totalPrice"></h3>
+                    <hr>
+                    <div class="text-end">
+                        <a class="btn btn-secondary" th:href="@{'/sells/{sId}/modify.do'(sId=${sells.getSId()})}" >수정하기</a>
+                        <button type="submit" class="btn btn-primary ">결제하기</button>
+                    </div>
             </div>
         </div>
     </div>
     </div>
     <script>
-        document.querySelector('form').addEventListener('submit', function(event) {
-            event.preventDefault(); // 폼 제출 막기
-            const option = document.querySelector('#option-select').value;
-            const quantity = document.querySelector('#quantity').value;
+        function up(){
+            quantityInput.value++
+        }function down(){
+            quantityInput.value--
+        }
 
-            showSelectedOption(option, quantity);
+        const quantityInput = document.getElementById("quantity");
+        const selectOpton = document.getElementById("selectedOption");
+        const totalPrice = document.getElementById("totalPrice");
+        const optionForm = document.getElementById("optionForm");
+        const optionSet=new Set;
+        let totalOptionPrice = 0;
+
+        optionForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const quantity = quantityInput.value;
+            if (quantityInput.value<=0){alert("수량을 정확히 입력하세요")
+                return;}
+
+            const selectedOption = document.getElementById("optionSelect").value;
+            const optionName = selectedOption.split("|")[0];
+            const price = selectedOption.split("|")[1];
+            const total = price * quantity;
+            if(!optionSet.has(optionName)){
+                optionSet.add(optionName)
+            selectOpton.insertAdjacentHTML("beforeend", selectOptionComponent(optionName,quantity,total));
+            totalOptionPrice += total;
+            totalPrice.textContent = `총 결제금액: ${totalOptionPrice}원`;
+            }else {
+                alert("이미 추가한 옵션입니다.")
+            }
         });
 
-        function showSelectedOption(option, quantity) {
-            const selectedOptionEl = document.querySelector('#selected-option');
-            selectedOptionEl.insertAdjacentHTML("beforeend",action(option, quantity));
+        function selectOptionComponent(optionName,quantity,total){
+
+            return `<div class="card mb-3">
+    <div class="card-body d-flex justify-content-between align-items-center">
+      <div>
+        <p class="card-text mb-0"><strong>옵션:</strong> <span>${optionName}</span></p>
+        <p class="card-text"><strong>수량:</strong> <span>${quantity}</span></p>
+        <p class="card-text"><strong>가격:</strong> <span>${total}</span></p>
+      </div>
+      <button type="button" class="btn-close" aria-label="Close" onclick="removeOption(this, ${total},'${optionName}')"></button>
+    </div>
+  </div>`
         }
 
-        function action(option,quantity){
-            return`<div class="card">
-  <div class="card-body">
-    <h5 class="card-title">선택한 옵션</h5>
-    <div class="row">
-      <div class="col-6">
-        <p class="card-text">옵션:</p>
-      </div>
-      <div class="col-6">
-        <p class="card-text" id="selected-option-option">${option}</p>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-6">
-        <p class="card-text">수량:</p>
-      </div>
-      <div class="col-6">
-        <p class="card-text" id="selected-option-quantity">${quantity}</p>
-      </div>
-    </div>
-  </div>
-</div>`
+        function removeOption(element, total,optionName) {
+
+            const card = element.closest('.card');
+            totalOptionPrice -= total;
+            card.remove();
+            optionSet.delete(optionName);
+            totalPrice.textContent = totalOptionPrice > 0 ? `${totalOptionPrice}원` : '';
         }
+
     </script>
 </div>
 </html>
