@@ -1,7 +1,6 @@
 
 class CanvasCreate {
-    id;
-    canvas; ctx;
+    id; canvas; ctx;
     layerArr = []; //레이어 구현용 배열
     activatedTool; //활성화 툴 체크용
     pageSize = 200/1200; //페이지 사이즈 변화에 따른 배율 조졍용(아직)
@@ -18,6 +17,7 @@ class CanvasCreate {
         this.init()
     }
     init(){
+
         // 스타일 관련 초기 설정
         // this.index = ++canvasCnt;
         this.canvas.width = 1200;
@@ -36,6 +36,7 @@ class CanvasCreate {
             console.log(e)
         }
         document.getElementById("stampBtn").addEventListener("click",()=>{
+            console.log(this.id + ": 배열 입력 확인용 = " + this.layerArr)
             this.stampTool();
         })
     }
