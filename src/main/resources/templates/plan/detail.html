@@ -6,7 +6,7 @@
 <head>
     <title>게시판 상세</title>
     <link th:href="@{/public/css/plan/plan.css}" rel="stylesheet" />
-    <script type="text/javascript" th:src="@{/public/js/plan/pageFunction.js}"></script>
+
 </head>
 
 <div layout:fragment="content" class="container-fluid px-0">
@@ -14,27 +14,26 @@
 
             <!--    사이드바 -->
             <div class="col-md-2" >
-                <div class="row row-cols-1 rightGrid">
+                <div class="row row-cols-1 sideGrid">
+                    <div class="col titleBox">
+                        <span th:text="${plan.getTitle()}"/>
+                    </div>
                     <div class="col calenderBox">
-                        <div class="calenderTitle sideTitle">CALENDER</div>
-                        <div class="calenderContent sideContent">테스트용</div>
+                        <th:block th:include="/plan/calender"></th:block>
                     </div>
 
                     <div class="col infoBox">
-                        <div class="infoTitle sideTitle">INFORMATION</div>
-                        <div class="infoContent sideContent">
-
                             <!--   <div class="infoImg" th:if="${plan.getImgPath()!=null}" th:style="'background-image:url(' + ${plan.getImgPath()} + ');'"></div>-->
                             <div class="infoImg" th:if="${plan.getImgPath()!=null}" style="background-image:url('/public/img/plan/planDefault.jpeg');"></div>
                             <div class="infoImg" th:if="${plan.getImgPath()==null}" style="background-image:url('/public/img/plan/planDefault.jpeg')"></div>
                             <div class="infoStatus" >
                                 <i class="bi bi-key"></i>
                                 <span th:text="${plan.getPlanStatus()}"/></div>
-                            <div class="infoStatus">📌 <span th:text="${plan.getTitle()}"/></div>
+
                             <div class="infoSchedule">🗓️ <span th:text="${plan.getPlanFrom()}"/> ~ <span th:text="${plan.getPlanTo()}"/></div>
 
                         </div>
-                    </div>
+
 
                 </div>
 
@@ -43,19 +42,8 @@
 
 
             <div class="col-md-8 mainSection">
-<!--                <div class="row dayHeader" style="margin-top: 20px ">-->
-<!--                    <div class="col-md-1 dayHeaderSide">-->
-<!--                        ◀-->
-<!--                    </div>-->
-<!--                    <div class="col-md-10  dayHeaderMain">-->
-<!--                        <small style="color: lightgrey"><small><small>2023.06.11(목)</small></small></small>　　2023.06.10 (수)　　<small style="color: lightgrey"><small><small>2023.06.11(목)</small></small></small>-->
-<!--                    </div>-->
-<!--                    <div class="col-md-1 dayHeaderSide">-->
-<!--                        ▶-->
-<!--                    </div>-->
-<!--                </div>-->
 
-                <div class="row" style="margin-top: 20px ">
+                <div class="row mainHeader" style="margin-top: 20px ">
                     <div class="col-md-10">
                         <div class="btn-group btn-group-horizon btnLine" role="group">
                             <!--보관함-->
@@ -148,7 +136,7 @@
 
 
             <div class="col-md-2">
-                <div class="row row-cols-1 rightGrid">
+                <div class="row row-cols-1 sideGrid">
                     <div class="col memberBox">
                         <div class="memberTitle sideTitle">MEMBER</div>
                         <div class="memberContent sideContent">              </div>
@@ -240,10 +228,16 @@
 
 
     <script th:inline="javascript">
+        let bb = document.getElementsByClassName("scheduleLeft")
+        Array.from(bb).forEach((e)=>{
+            e.addEventListener("click",()=>{
+                console.log("되나?")
+            })
+        })
 
         /*
-        게시글 입장시 화면 초기화
-        스케쥴은 추가되었으나 캔버스가 생성된 경우와 그렇지 않은 경우를 구분하여 처리
+        게시글을 로드 할 때 화면 초기화
+        스케쥴이 추가되고 그림판까지 만든 경우와, 그림판은 만들지 않은 경우를 구분하여 처리
          */
         document.addEventListener("DOMContentLoaded",()=>{
             let initArr=[];
@@ -252,23 +246,26 @@
             if([[${c.getPath()}]]!=null) initArr.push([[${c.getPath()}]])
             [/];
             initArr.forEach((a)=>{
-               let ele = document.querySelector(`#content_${a.conId}`).querySelector(".newCanvasBtn");
-               newCanvas(ele,a.canPath);
+               let ele = document.querySelector(`#content_${a.conId}`).lastElementChild;
+                newCanvas(ele,a.conId,a.canPath);
             });
         });
 
-
+        // 웹소켓용
         const URL="ws://localhost:7777/plan"
         let webSocket;
         webSocket=new WebSocket(URL);
 
-        const scheduleInsertForm = document.getElementById("scheduleInsertForm");
-        scheduleInsertForm.onsubmit=registerSchedule;
 
+        // 새 스케쥴 등록 모달
         const newScheduleBtn = document.querySelector("#newScheduleBtn");
         newScheduleBtn.addEventListener("click",()=>{
             new bootstrap.Modal(document.getElementById('staticBackdrop'),{}).show();
         });
+
+        // 새 스케쥴 제출시
+        const scheduleInsertForm = document.getElementById("scheduleInsertForm");
+        scheduleInsertForm.onsubmit=registerSchedule;
 
 
 
@@ -291,25 +288,23 @@
 
 
 
-        function newCanvas(ele, path){
-            let conId = ele.closest("div[id^='content']").getAttribute("id").split("_")[1]
+        function newCanvas(ele,conId,path){
             let w = document.querySelector(".accordion-item").clientWidth;
             let h = 500/1200*w+16; //16은 부트스트랩 아코디언바디에 설정된 상하 패딩값을 보정해준 것
-            ele.parentNode.style.height = h +"px";
-            let newCanvas = new CanvasCreate();
+            ele.style.height = h +"px";
+            let newCanvas = new CanvasCreate(conId, path);
             let canvas = newCanvas.canvas;
-            newCanvas.id = conId;
-            newCanvas.layerArr = path;
-            ele.style.display = "none"
-            ele.parentNode.append(canvas);
+            ele.lastElementChild.style.display = "none"
+            ele.append(canvas);
         }
 
         async function newCanvasBtn(ele){
+            let conId = ele.parentElement.getAttribute("id").split("_")[1]
             let url =`/plan/contents/canvasHandler.do`
             const resp = await fetch(url,{method:"POST",body:conId});
             const result = await resp.json();
             if(resp.status===200 && result===1){
-                newCanvas(ele);
+                newCanvas(ele, conId);
             }else {
                 alert("캔버스 생성 실패 status :"+resp.status);
             }
@@ -323,7 +318,7 @@
 
     </script>
 
-
+    <script type="text/javascript" th:src="@{/public/js/plan/canvasFunction.js}"></script>
 </div> <!--레이아웃 닫기-->
 </html>
 

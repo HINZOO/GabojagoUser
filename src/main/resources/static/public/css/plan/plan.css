@@ -1,9 +1,15 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Do+Hyeon&family=DynaPuff:wght@400;600&display=swap');
+
+
+
 @font-face {
     font-family: 'TheJamsil5Bold';
     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/TheJamsil5Bold.woff2') format('woff2');
     font-weight: 700;
     font-style: normal;
 }
+
 a:link { color: black; text-decoration: none;}
 a:visited { color: black; text-decoration: none;}
 a:hover { color: black; text-decoration: none;}
@@ -135,32 +141,15 @@ canvas{
 
 }
 
-.dayHeader{
-    height: 50px;
+.mainHeader{
+    height: 60px;
     /*background-color: rgba(186, 228, 246, 0.24);*/
-    /*border-radius: 30px;*/
-    border-top: 3px solid lightgrey;
-    border-bottom: 2px solid lightgrey;
-
-    font-weight: bold;
-    text-align: center;
+    border-radius: 30px;
+    border: 1px solid #a1a1a1;
+    /*border-top: 3px solid gray;*/
+    /*border-bottom: 3px solid gray;*/
+    line-height: 30px;
     margin-bottom: 20px;
-    line-height: 50px;
-}
-.dayHeaderMain{
-    font-size: 30px;
-    line-height: 40px;
-    color: #5b5b5b;
-}
-.dayHeaderSide{
-    line-height: 40px;
-    font-size: 30px;
-    color: rgba(111, 118, 152, 0.51);
-}
-.dayTitle{
-    font-weight: bolder;
-    color: #232323;
-    text-align: center;
 }
 
 .btnLine{
@@ -230,16 +219,16 @@ canvas{
 .scheduleInputBox{
     text-align: right;
 }
-.rightGrid, .leftGrid{
-    padding: 0px 10px;
-}
-.rightGrid> div{
-    padding: 8px;
-    /*background-color: rgba(232, 232, 232, 0.27);*/
-    border: 1px solid lightgrey;
 
+
+.sideGrid{
+    padding: 0px 30px;
+}
+.sideGrid> div{
+    padding: 8px;
+    border: 2px solid lightgrey;
     margin-top: 20px;
-    border-radius: 8px;
+    border-radius: 10px;
     font-weight: bold;
 }
 .sideTitle{
@@ -263,9 +252,20 @@ canvas{
     border: 1px solid lightgrey;
     padding: 2px 0px 2px 5px;
 }
-.calenderBox{
-    height: 25vh;
+.titleBox{
+    text-align: center;
+    font-size: 30px;
+    font-weight: bold;
+
 }
+.calenderBox {
+    background-color : white;
+    width: 100%;
+    margin: 0px;
+    padding: 20px;
+    margin: 0 auto;
+}
+
 .infoBox{
 
 }
@@ -278,7 +278,7 @@ canvas{
 }
 
 .mainSection{
-    padding: 0px 30px;
+    padding: 0px 20px;
 
 }
 
@@ -297,17 +297,19 @@ canvas{
 
 }
 .scheduleLeft{
+    font-family: DynaPuff;
     background-color: rgb(199, 220, 255);
+    letter-spacing: 3px;
     height: 100%;
     line-height: 50px;
     font-weight: bold;
-    border-right: 15px solid white;
+    border-right: 10px solid white;
     border-left: 25px solid rgb(161, 193, 255);
     border-radius: 10px 0px 0px 10px;
-    text-align: left;
-    font-size: 25px;
+    text-align: center;
+    font-size: 33px;
     color: white;
-    text-shadow: -1px 0 lightgrey, 1px 1px gray, 1px 2px gray, 0 -1px lightgrey;
+    text-shadow: -1px 0 lightgrey, 1px 1px #adadad, 1px 2px #adadad, 0 -1px lightgrey;
 }
 .scheduleLeft:hover {
     border-left-color: rgba(108, 108, 108, 0.69);
@@ -315,7 +317,7 @@ canvas{
 .scheduleCenter{
 
     font-weight: bold;
-    border-left: 15px solid rgb(199, 220, 255);
+    border-left: 10px solid rgb(199, 220, 255);
     line-height: 50px;
     height: 100%;
     position: relative;

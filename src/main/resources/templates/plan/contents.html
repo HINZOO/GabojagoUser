@@ -1,13 +1,12 @@
         <h2 class="accordion-header">
-          <button class="accordion-button collapsed scheduleBtn" type="button">
-<!--              a role="button"-->
+          <button class="accordion-button collapsed scheduleBtn" type="button" data-bs-toggle="collapse" th:data-bs-target="'#content_'+${content.getConId()}"
+                  aria-expanded="false" th:aria-controls="'#content_'+${content.getConId()}">
               <div class="container scheduleContainer ">
                   <div class="row scheduleRow " >
                       <div class="col col-md-3 scheduleLeft ">
                           <span class="scheduleTime" th:text="${content.getTime()}"></span>
                       </div>
-                      <p class="col col-md-9 scheduleCenter" role="button" data-bs-toggle="collapse" th:data-bs-target="'#content_'+${content.getConId()}"
-                         aria-expanded="false" th:aria-controls="'#content_'+${content.getConId()}">
+                      <p class="col col-md-9 scheduleCenter">
                           <span class="scheduleTitle" th:text="${content.getTitle()}"></span>
                           <span class="scheduleContent" th:text="${content.getInfo()}"></span>
                       </p>
@@ -20,11 +19,9 @@
             <p class="scheduleSideBtn1 sbHover"><i class="bi bi-three-dots"></i></p>
             <p class="scheduleSideBtn2 sbHover"><i class="bi bi-trash3"></i></p>
             <div class="accordion-body">
-                <p class="newCanvasBtn" onclick=newCanvasBtn(this)><i class="bi bi-plus-circle"></i></p>
+                <p class="newCanvasBtn" onclick=newCanvasBtn(this.parentElement)><i class="bi bi-plus-circle"></i></p>
             </div>
         </div>
-
-<!--                <p class="newCanvasBtn" onclick=newCanvasBtn(this) th:if="${content.getPath()}!=null" th:classappend="hasCanvas"><i class="bi bi-plus-circle"></i></p>-->
 
 
 
