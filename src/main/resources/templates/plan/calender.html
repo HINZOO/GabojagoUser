@@ -11,10 +11,18 @@
       text-align: center;
     }
 
+    .calbtn {
+      background-color: rgb(161, 193, 255);
+      border-radius: 10px;
+      color: white;
+    }
+
     .calendar>thead>tr:first-child>td {
       font-family: DynaPuff;
       font-size: 1em;
       font-weight: 400;
+      padding: 0px 3px;
+
     }
 
     .calendar>thead>tr:last-child>td {
@@ -68,11 +76,10 @@
     <thead>
     <tr>
       <td colspan="5">
-        <span id="calYear"></span>.
-        <span id="calMonth"></span>.
+        <p id="calHead"></p>
       </td>
-      <td onClick="prevCalendar();" style="cursor:pointer;">&#60;</td>
-      <td onClick="nextCalendar();" style="cursor:pointer;">&#62;</td>
+      <td onClick="prevCalendar();" style="cursor:pointer;"><p class="calbtn">&#60;</p></td>
+      <td onClick="nextCalendar();" style="cursor:pointer;"><p class="calbtn">&#62;</p></td>
     </tr>
     <tr>
       <td style="color: red">Sun</td>
@@ -91,6 +98,10 @@
 
 
   <script>
+    /*
+    https://gurtn.tistory.com/54
+    캘린더 부분은 위 링크를 참조하여 구성하였음
+     */
     window.onload = function () { buildCalendar(); }    // 웹 페이지가 로드되면 buildCalendar 실행
 
     let nowMonth = new Date();  // 현재 달을 페이지를 로드한 날의 달로 초기화
@@ -104,8 +115,7 @@
       let lastDate = new Date(nowMonth.getFullYear(), nowMonth.getMonth() + 1, 0);  // 이번달 마지막날
 
       let tbody_Calendar = document.querySelector(".calendar > tbody");
-      document.getElementById("calYear").innerText = nowMonth.getFullYear();             // 연도 숫자 갱신
-      document.getElementById("calMonth").innerText = leftPad(nowMonth.getMonth() + 1);  // 월 숫자 갱신
+      document.getElementById("calHead").innerText = nowMonth.getFullYear() +"."+ leftPad(nowMonth.getMonth() + 1);   // 년, 월 갱신
 
       while (tbody_Calendar.rows.length > 0) {                        // 이전 출력결과가 남아있는 경우 초기화
         tbody_Calendar.deleteRow(tbody_Calendar.rows.length - 1);
@@ -120,7 +130,6 @@
       for (let nowDay = firstDate; nowDay <= lastDate; nowDay.setDate(nowDay.getDate() + 1)) {   // day는 날짜를 저장하는 변수, 이번달 마지막날까지 증가시키며 반복
 
         let nowColumn = nowRow.insertCell();        // 새 열을 추가하고
-
 
         let newDIV = document.createElement("p");
         newDIV.innerHTML = leftPad(nowDay.getDate());        // 추가한 열에 날짜 입력

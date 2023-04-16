@@ -626,15 +626,15 @@ VALUES
 
 
 #플래너더미
-INSERT INTO plans(u_id, title, info, plan_from, plan_to, img_path, plan_status, review) VALUES('USER01', '취업 기원 제주도 여행', '취업 좀 하자 제발', '2023-04-01', '2023-04-03', '/img/plan/', 'PUBLIC', false);
-INSERT INTO plans(u_id, title, info, plan_from, plan_to, img_path, plan_status, review) VALUES('USER01', '강원도삼척여행', '강원도다녀오기', '2022-03-11', '2022-03-15', '/img/plan/', 'PUBLIC', true);
-INSERT INTO plans(u_id, title, info, plan_from, plan_to, img_path, plan_status, review) VALUES('USER02', '놀러가자', '언제놀러가지', '2023-05-01', '2023-05-03', '/img/plan/', 'PUBLIC', false);
-INSERT INTO plans(u_id, title, info, plan_from, plan_to, img_path, plan_status, review) VALUES('USER04', '제주도한달살기', '나의 워라벨을 위함', '2023-02-01', '2023-03-03', '/img/plan/', 'PUBLIC', false);
-INSERT INTO plans(u_id, title, info, plan_from, plan_to, img_path, plan_status, review) VALUES('USER05', '경주에서수학여행즐기기', '어른이되어 도전하는 수학여행', '2023-06-01', '2023-06-03', '/img/plan/', 'PUBLIC', false);
+INSERT INTO plans(u_id, title, info, plan_from, plan_to, img_path, plan_status, review) VALUES('USER01', '취업 기원 제주도여행', '취업 좀 하자 제발', '2023-04-01', '2023-04-03', '/public/img/plan/p1Sample.jpg', 'PUBLIC', false);
+INSERT INTO plans(u_id, title, info, plan_from, plan_to, img_path, plan_status, review) VALUES('USER01', '강원도 삼척 행', '강원도 다녀오기', '2022-03-11', '2022-03-15', '/public/img/plan/p2Sample.jpg', 'PUBLIC', true);
+INSERT INTO plans(u_id, title, info, plan_from, plan_to, img_path, plan_status, review) VALUES('USER02', '놀러가자', '언제놀러가지', '2023-05-01', '2023-05-03', '/public/img/plan/p1Sample.jpg', 'PUBLIC', false);
+INSERT INTO plans(u_id, title, info, plan_from, plan_to, img_path, plan_status, review) VALUES('USER04', '제주도 한 달 살기', '나의 워라벨을 위함', '2023-02-01', '2023-03-03', '/public/img/plan/p1Sample.jpg', 'PUBLIC', false);
+INSERT INTO plans(u_id, title, info, plan_from, plan_to, img_path, plan_status, review) VALUES('USER05', '경주에서 수학여행 즐기기', '어른이되어 도전하는 수학여행', '2023-06-01', '2023-06-03', '/public/img/plan/p1Sample.jpg', 'PUBLIC', false);
 
 #플래너 그림판 로딩 테스트용 더미(User01로 접속하면 나옴)
 
-INSERT INTO gabojagoplan.plan_contents (con_id, p_id, t_id, s_id, title, info, time, img_path) VALUES (1, 1, null, null, '한라산', '그림판 로딩 테스트용 → 삭제금지 → 여기 뭐 넣지', '06:00 ~ 12:00', null);
+INSERT INTO gabojagoplan.plan_contents (con_id, p_id, t_id, s_id, title, info, time, img_path) VALUES (1, 1, null, null, '한라산', '그림판 로딩 테스트 → 그림판 데이터가 있는 경우', '06:00 ~ 12:00', null);
 INSERT INTO gabojagoplan.plan_contents (con_id, p_id, t_id, s_id, title, info, time, img_path) VALUES (2, 1, null, null, '툇마루 카페', '스케쥴은 추가 했지만 그림판을 아직 안 만든 경우', '14:00 ~ 19:00', null);
 INSERT INTO gabojagoplan.plan_contents (con_id, p_id, t_id, s_id, title, info, time, img_path) VALUES (3, 1, null, null, '몽돌해변', '그림판까지 만들었지만, 아무것도 안 그린 경우', '19:00 ~ 23:00', null);
 INSERT INTO gabojagoplan.plan_content_paths (path_id, con_id, can_path) VALUES (2, 3, null);

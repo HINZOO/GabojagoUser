@@ -1,10 +1,10 @@
 const box = document.querySelector(".accordion-header").clientWidth-40
-console.log(box)
+
 class CanvasCreate {
     id; canvas; ctx;
-    layerArr = []; //레이어 구현용 배열
+    layerArr = []; // 레이어 구현용 배열
     activatedTool; //활성화 툴 체크용
-    pageSize = box/1200; //페이지 사이즈 변화에 따른 배율 조졍용(아직)
+    pageSize = box/1200; // 페이지 사이즈 변화에 따른 배율 조졍용(아직)
     currentScale = 1.0; // 줌기능 배율 조졍용
     currentCanvas = new Image(); // 배율 조정시 리로드용
     defaultBack = new Image(); // 초기 배경화면 저장용
@@ -15,6 +15,7 @@ class CanvasCreate {
         if (path!==null){
         this.layerArr = JSON.parse(path); // JSON 경로 받아서 다시 js로 변환
         }
+
 
         // 캔버스 본체
         this.canvas = document.createElement("canvas");
@@ -33,8 +34,6 @@ class CanvasCreate {
         this.ctx.translate(0,0)
         this.ctx.setLineDash([0,0])
         this.ctx.save();
-
-
 
         // 레이어 데이터가 있는 경우 로딩
         this.layerLoad();
@@ -430,7 +429,6 @@ class CanvasCreate {
         else if(index !== undefined && rest === false){ arr = co.layerArr.filter((c,i)=>{return i === index}); }
 
 
-
         arr.forEach((c)=>{
             co.ctx.strokeStyle=c.strokeStyle;
             co.ctx.lineWidth=c.lineWidth;
@@ -457,8 +455,8 @@ class CanvasCreate {
         })
 
         co.canvasRestore();
-        // // console.log(JSON.stringify(this.layerArr));
-        // // console.log(JSON.parse(JSON.stringify(this.layerArr)));
+        // console.log(JSON.stringify(this.layerArr));
+        // console.log(JSON.parse(JSON.stringify(this.layerArr)));
 
     }
 
@@ -486,6 +484,7 @@ class CanvasCreate {
         });
         ///////배열 테스트용/////
         document.getElementById("loadBtn").addEventListener("click", ()=>{
+            console.log(this.layerArr)
             this.layerLoad()
         });
 
