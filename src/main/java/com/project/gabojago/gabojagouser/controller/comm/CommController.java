@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.File;
@@ -18,7 +19,9 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/comm")
@@ -62,46 +65,93 @@ public class CommController {
     public String registerAction(
             @SessionAttribute(required = false) UserDto loginUser,
             @ModelAttribute CommunityDto commBoard,
-            @RequestParam("files") MultipartFile[] imgs
+            @RequestParam(value ="img",required = false) MultipartFile[] imgs
             ) throws IOException {
-        String redirectPage="redirect:/comm/register.do";
+        String redirectPage = "redirect:/comm/register.do";
+        System.out.println("commBoard = " + commBoard);
         //if(!loginUser.getUId().equals(commBoard.getCId())) return redirectPage;
-        List<CommImgDto> commImgs=null;
-        if(imgs!=null){
-            commImgs=new ArrayList<>();
-            for(MultipartFile img:imgs){
-                if(!img.isEmpty()){
-                    String[] contentTypes=img.getContentType().split("/");
-                    if(contentTypes[0].equals("image")){
-                        String fileName=System.currentTimeMillis()+"_"+(int)(Math.random()*10000)+"."+contentTypes[1];
-                        Path path = Paths.get(staticPath+"/public/img/comm/"+fileName);//컴퓨터의 실제 저장위치.
+        List<CommImgDto> commImgs = null;
+        if (imgs != null) {
+            commImgs = new ArrayList<>();
+            for (MultipartFile img : imgs) {
+                if (!img.isEmpty()) {
+                    String[] contentTypes = img.getContentType().split("/");
+                    if (contentTypes[0].equals("image")) {
+                        String fileName = System.currentTimeMillis() + "_" + (int) (Math.random() * 10000) + "." + contentTypes[1];
+                        Path path = Paths.get(staticPath + "/public/img/comm/" + fileName);//컴퓨터의 실제 저장위치.
                         img.transferTo(path);
-                        CommImgDto imgDto=new CommImgDto();
-                        imgDto.setImgPath("/public/img/comm/"+fileName);//서버배포경로
+                        CommImgDto imgDto = new CommImgDto();
+                        imgDto.setImgPath("/public/img/comm/" + fileName);//서버배포경로
                         commImgs.add(imgDto);
                     }
                 }
             }
+            commBoard.setImgs(commImgs);
+            int register = 0;
+            try {
+                register = communityService.register(commBoard);
+            } catch (Exception e) {
+                log.error(e.getMessage());
+            }
+            if (register > 0) {
+                redirectPage = "redirect:/comm/list.do";
+            } else {
+                if (commImgs != null) {
+                    for (CommImgDto i : commImgs) {
+                        File imgFile = new File(staticPath + i.getImgPath());
+                        if (imgFile.exists()) imgFile.delete();
+                    }
+                }
+            }
         }
-        commBoard.setImgs(commImgs);
-        System.out.println("컴보드"+commBoard);
-        System.out.println("셋이미지"+commImgs);
-        int register=0;
+            return redirectPage;
+    }
+
+    @GetMapping("/{cId}/modify.do")
+    public String modifyForm(Model model,
+                             @PathVariable int cId,
+                             @SessionAttribute UserDto loginUser){
+        CommunityDto comm= communityService.detail(cId);
+        model.addAttribute("c",comm);
+        return "/comm/modify";
+    }
+
+    @PostMapping("/modify.do")
+    public String modifyAction(
+            @ModelAttribute CommunityDto commBoard,
+            @RequestParam(value="delImgId",required = false) int[] delImgIds,
+            @RequestParam(value="img",required = false) MultipartFile[] imgs
+    ){
+        String redirectPage="redirect:/comm/"+commBoard.getCId()+"/modify.do";
+        List<CommImgDto> imgDtos=null;
+        int modify=0;
         try{
-            register=communityService.register(commBoard);
+            if(delImgIds!=null) imgDtos=communityService.imgList(delImgIds);
+            modify=communityService.modify(commBoard,delImgIds);
         }catch (Exception e){
             log.error(e.getMessage());
-        }
-        if(register>0){
-            redirectPage="redirect:/comm/list.do";
-        }else{
-            if(commImgs!=null){
-                for(CommImgDto i:commImgs){
+       }
+        if(modify>0){
+            if(imgDtos!=null){
+                for(CommImgDto i:imgDtos){
                     File imgFile=new File(staticPath+i.getImgPath());
                     if(imgFile.exists()) imgFile.delete();
                 }
             }
+            redirectPage="redirect:/comm/list.do";
         }
+        return redirectPage;
+
+    }
+
+    @GetMapping("/{cId}/remove.do")
+    public String removeAction(@PathVariable int cId,
+                               @SessionAttribute UserDto loginUser,
+                               RedirectAttributes redirectAttributes){
+        String redirectPage="redirect:/comm/list.do";
+        CommunityDto board=null;
+
+        int del=communityService.remove(cId);
         return redirectPage;
     }
 }

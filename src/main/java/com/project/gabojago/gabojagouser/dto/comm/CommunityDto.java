@@ -17,23 +17,25 @@ public class CommunityDto {
     private int viewCount;
     private String status;
     private String area;
-    private boolean istj;
-    private boolean istp;
-    private boolean isfj;
-    private boolean isfp;
-    private boolean intj;
-    private boolean intp;
-    private boolean infj;
-    private boolean infp;
-    private boolean estj;
-    private boolean estp;
-    private boolean esfj;
-    private boolean esfp;
-    private boolean entj;
-    private boolean entp;
-    private boolean enfj;
-    private boolean enfp;
+    private int istj;
+    private int istp;
+    private int isfj;
+    private int isfp;
+    private int intj;
+    private int intp;
+    private int infj;
+    private int infp;
+    private int estj;
+    private int estp;
+    private int esfj;
+    private int esfp;
+    private int entj;
+    private int entp;
+    private int enfj;
+    private int enfp;
     private UserDto user;
     private List<CommImgDto> imgs;
+    private List<CommReplyDto> replies;
+
 
 }

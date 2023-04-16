@@ -19,4 +19,5 @@ public class SellsDto {
     private int qnt;
     private boolean imgMain;
     private List<SellsOptionDto> sellOption;
+    private List<SellImgsDto> sellImgs;
 }

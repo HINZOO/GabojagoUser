@@ -8,7 +8,7 @@
         <result property="imgMain" column="img_main"/>
     </resultMap>
     <insert id="insertOne" useGeneratedKeys="true" keyProperty="ciId" parameterType="commImgDto">
-        INSERT INTO comm_imgs (ci_id,cId,imgPath,imgMain) VALUE (#{ciId},#{cId},#{imgPath},#{imgMain} )
+        INSERT INTO comm_imgs (c_id,img_path,img_main) VALUE (#{cId},#{imgPath},#{imgMain})
     </insert>
     <delete id="deleteOne">
         DELETE FROM comm_imgs WHERE ci_id=#{ciId}

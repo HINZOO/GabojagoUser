@@ -8,10 +8,22 @@
 </head>
 <div layout:fragment="content">
     <div class="container">
-        <div class="row">
-            <div class="col-md-2">
-                <h2>카테고리</h2>
-                <div >
+        <div class="row align-items-end">
+            <div class="col-md-6">
+                <form class="d-flex" role="search" id="searchForm">
+                    <input class="form-control me-2" type="search" placeholder="제목을 입력해 주세요" aria-label="Search"id="searchInput">
+                    <button class="btn btn-outline-success" type="submit" id="searchBtn">Search</button>
+                </form>
+            </div>
+            <div class="col-md-6 text-end">
+                <a href="/sells/register.do" class="btn btn-primary">게시글 작성</a>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2">
+            <h2>카테고리</h2>
+            <div >
                 <ul class="list-group">
                     <li class="list-group-item"><a href="/sells/list.do" class="category-link" >전체</a></li>
                     <li class="list-group-item"><a href="/sells/list.do?category=워터">워터파크</a></li>
@@ -20,48 +32,60 @@
                     <li class="list-group-item"><a href="/sells/list.do?category=레저" >레저</a></li>
                     <li class="list-group-item"><a href="/sells/list.do?category=박물관">박물관</a></li>
                 </ul>
-                </div>
             </div>
-            <div class="col-md-10">
-                <h2>상품 리스트</h2>
-                <table class="table">
-                    <thead>
-                    <tr>
-                        <th>글번호</th>
-                        <th>작성자</th>
-                        <th>지역</th>
-                        <th>제목</th>
-                        <th>내용</th>
-                        <th>조회수</th>
-                        <th>카테고리</th>
-                        <th>총수량</th>
-                        <th>메인이미지</th>
-                    </tr>
-                    </thead>
-                    <tbody id="product-list">
-                    <!-- 타임루프로 반복하여 데이터 출력 -->
-                    <th:block th:each="s:${sells}" >
-                        <tr data-category="${s.getCategory().toLowerCase()}">
-                            <td th:text="${s.getSId()}"></td>
-                            <td th:text="${s.getUId()}"></td>
-                            <td th:text="${s.getArea()}"></td>
-                            <td >
-                                <a th:text="${s.getTitle()}" th:href="@{'/sells/{sId}/detail.do'(sId=${s.sId})}"></a>
-                            </td>
-                            <td th:text="${s.getContent()}"></td>
-                            <td th:text="${s.getViewCount()}"></td>
-                            <td th:text="${s.getCategory()}"></td>
-                            <td th:text="${s.imgMain}"></td>
-                        </tr>
-                    </th:block>
-                    </tbody>
-                </table>
+        </div>
+        <div class="col-md-10">
+            <h2>상품 리스트</h2>
+            <div class="row">
+                <!-- 타임루프로 반복하여 데이터 출력 -->
+                <th:block th:each="s:${sells}" >
+                    <div class="col-md-4">
+                        <div class="card mb-4 box-shadow">
+                            <a th:href="@{'/sells/{sId}/detail.do'(sId=${s.sId})}">
+                                <img class="card-img-top" src="/public/img/sells/1.jpg" alt="${s.title}">
+                            </a>
+                            <div class="card-body">
+                                <p class="card-text" th:text="${s.title}"></p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <small th:text="${s.getSId()}"></small>
+                                    <small class="text-muted" th:text="${#dates.format(s.postTime,'yyyy-MM-dd')}"></small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </th:block>
             </div>
         </div>
     </div>
-</div>
+
 <script>
 
+    const searchButton = document.getElementById("searchBtn");
+    const searchInput = document.getElementById("searchInput");
+    const searchForm = document.getElementById("searchForm");
 
+    searchButton.addEventListener("click", (e) => {
+        const searchValue = searchInput.value;
+        if (searchValue) {
+            const url = `/sells/${searchValue}/search.do`;
+            window.location.href = url;
+        }else {
+        e.preventDefault();
+        alert("검색어를 입력하세요");
+    }
+    });
+
+    searchForm.addEventListener("submit", (e) => {
+            const searchValue = searchInput.value;
+        if (searchValue) {
+            e.preventDefault();
+            const url = `/sells/${searchValue}/search.do`;
+            window.location.href = url;
+        }else {
+            e.preventDefault();
+            alert("검색어를 입력하세요");
+        }
+    });
 </script>
+    </div>
 </html>
