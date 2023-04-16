@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.project.gabojago.gabojagouser.mapper.comm.CommReplyMapper">
     <resultMap id="CommReplyMap" type="CommReplyDto">
-        <id property="ccId" column="ccId"/>
+        <id property="ccId" column="cc_id"/>
         <result property="cId" column="c_id"/>
         <result property="uId" column="u_id"/>
         <result property="content" column="content"/>
@@ -30,10 +30,10 @@
         SELECT * FROM comm_comment
     </select>
     <select id="findByCcId" resultMap="CommReplyMap">
-        SELECT * FROM comm_comment WHERE cc_id=#{ccId}
+        SELECT * FROM comm_comment WHERE parent_cr_id=#{ccId}
     </select>
-    <select id="findByCId" resultMap="CommReplyMap">--
-        SELECT * FROM comm_comment WHERE c_id=#{cId};
+    <select id="findByCId" resultMap="CommReplyMap">
+        SELECT * FROM comm_comment WHERE c_id=#{cId} AND parent_cr_id IS NULL;
     </select>
     <select id="findByParentCrId" resultMap="CommReplyMap">
         SELECT * FROM comm_comment WHERE parent_cr_id=#{parentCrId}

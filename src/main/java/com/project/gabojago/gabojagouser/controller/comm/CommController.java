@@ -57,7 +57,7 @@ public class CommController {
         if(loginUser==null){
             String msg="로그인한 사용자만 이용할 수 있습니다.";
             redirectAttributes.addFlashAttribute("msg",msg);
-            return "redirect:/comm/list.do";
+            return "redirect:/user/login.do";
         }
         return "/comm/register";
     }
@@ -110,7 +110,13 @@ public class CommController {
     @GetMapping("/{cId}/modify.do")
     public String modifyForm(Model model,
                              @PathVariable int cId,
-                             @SessionAttribute UserDto loginUser){
+                             @SessionAttribute UserDto loginUser,
+                             RedirectAttributes redirectAttributes){
+        if(loginUser==null){
+            String msg="로그인한 사용자만 이용할 수 있습니다.";
+            redirectAttributes.addFlashAttribute("msg",msg);
+            return "redirect:/user/login.do";
+        }
         CommunityDto comm= communityService.detail(cId);
         model.addAttribute("c",comm);
         return "/comm/modify";
