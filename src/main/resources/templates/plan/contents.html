@@ -1,45 +1,27 @@
-<h2 class="accordion-header" xmlns="http://www.w3.org/1999/html">
-          <button class="accordion-button collapsed scheduleBtn" type="button" data-bs-toggle="collapse" th:data-bs-target="'#content_'+${content.getConId()}" aria-expanded="false" th:aria-controls="'#content_'+${content.getConId()}">
-
+        <h2 class="accordion-header">
+          <button class="accordion-button collapsed scheduleBtn" type="button" data-bs-toggle="collapse" th:data-bs-target="'#content_'+${content.getConId()}"
+                  aria-expanded="false" th:aria-controls="'#content_'+${content.getConId()}">
               <div class="container scheduleContainer ">
                   <div class="row scheduleRow " >
-                      <div class="col col-md-2 scheduleLeft ">
-                          <span th:text="${content.getTime()}"></span>
+                      <div class="col col-md-3 scheduleLeft ">
+                          <span class="scheduleTime" th:text="${content.getTime()}"></span>
                       </div>
-                      <div class="col col-md-10 scheduleCenter">
-                          <div class="row">
-                              <div class="col col-s-11 scheduleCenterInner" >
-                                    <span class="scheduleTitle">
-                                      「<span th:text="${content.getTitle()}"></span>」
-                                    </span>
-                                  <span class="scheduleContent">
-                                       <span th:text="${content.getInfo()}"></span>
-                                  </span>
-                              </div>
-                              <div class="col col-s-1 scheduleRight">
-                                  <i class="bi bi-three-dots"></i>
-                              </div>
-                          </div>
-                      </div>
+                      <p class="col col-md-9 scheduleCenter">
+                          <span class="scheduleTitle" th:text="${content.getTitle()}"></span>
+                          <span class="scheduleContent" th:text="${content.getInfo()}"></span>
+                      </p>
                   </div>
               </div>
           </button>
       </h2>
 
-      <div th:id="'content_'+${content.getConId()}" class="accordion-collapse collapse " data-bs-parent="#accordionSection">
-          <div class="accordion-body" th:if="${content.getPath()}!=null" th:classappend="hasCanvas">
-
-          </div>
-
-
-          <div class="accordion-body" th:if="${content.getPath()}==null">
-                  <p class="innerText">
-                      <i class="bi bi-plus-circle"></i>
-                      <br>
-                      새 화이트보드 추가
-                  </p>
-          </div>
-      </div>
+        <div th:id="'content_'+${content.getConId()}" class="accordion-collapse collapse " data-bs-parent="#accordionSection">
+            <p class="scheduleSideBtn1 sbHover"><i class="bi bi-three-dots"></i></p>
+            <p class="scheduleSideBtn2 sbHover"><i class="bi bi-trash3"></i></p>
+            <div class="accordion-body">
+                <p class="newCanvasBtn" onclick=newCanvasBtn(this.parentElement)><i class="bi bi-plus-circle"></i></p>
+            </div>
+        </div>
 
 
 

@@ -1,0 +1,56 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+  <title>마이페이지</title>
+</head>
+
+<div layout:fragment="content" class="container-fluid">
+<div class="d-flex">
+    <div>
+      <th:block th:include="/my/dropDownMenu"></th:block>
+    </div>
+    <div>
+      <div class="card mb-5 mt-5" style="width: 500px; float: none; margin: 0 auto">
+        <div class="row g-0">
+          <div class="col-md-4">
+            <img src="/img/user/프로필.png" class="img-fluid rounded-start card-img-top" alt="회원이미지">
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+              <h5 class="card-title">후추</h5>
+              <p class="card-text">후추바보대머리깎아라</p>
+              <p class="card-text"><small class="text-body-secondary">자기소개</small></p>
+              <p>마일리지</p>
+              <p>팔로우 0명 팔로워 0명</p>
+              <a class="btn btn-info" href="#">쪽지함</a>
+              <a class="btn btn-secondary" href="/{uId}/detail.do">정보수정</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+        <div class="card-group" style="width: 70%; float: none; margin: 0 auto">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">나의일정1</h5>
+              <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">나의일정2</h5>
+              <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">나의일정3</h5>
+              <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
+            </div>
+          </div>
+      </div>
+    </div>
+</div>
+</div>
+</html>

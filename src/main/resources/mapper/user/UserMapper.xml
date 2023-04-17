@@ -20,13 +20,38 @@
     <result column="business_id" property="businessId"/>
   </resultMap>
   <insert id="insertOne" parameterType="com.project.gabojago.gabojagouser.dto.user.UserDto">
-    INSERT INTO users (u_id, pw, name, nk_name, email, birth, phone, address, detail_address, pr_content, permission, mbti, img_path, post_time, store_name, business_id)
-    VALUES (#{uId}, #{pw}, #{name}, #{nkName}, #{email}, #{birth}, #{phone}, #{address}, #{detailAddress}, #{prContent}, #{permission}, #{mbti}, #{imgPath}, #{postTime}, #{storeName}, #{businessId})
+    INSERT INTO users
+      (u_id, pw, name, nk_name, email, birth, phone, address, detail_address,
+       pr_content, permission, mbti, img_path, post_time, store_name, business_id)
+    VALUES
+      (#{uId}, #{pw}, #{name}, #{nkName}, #{email}, #{birth}, #{phone}, #{address}, #{detailAddress},
+       #{prContent}, #{permission}, #{mbti}, #{imgPath}, #{postTime}, #{storeName}, #{businessId})
   </insert>
+  <update id="updateOne" parameterType="com.project.gabojago.gabojagouser.dto.user.UserDto">
+    UPDATE users SET
+    pw=#{pw},
+    name=#{name},
+    nk_name=#{nkName},
+    email=#{email},
+    birth=#{birth},
+    phone=#{phone},
+    address=#{address},
+    detail_address=#{detailAddress},
+    pr_content=#{prContent},
+    permission=#{permission},
+    mbti=#{mbti},
+    img_path=#{imgPath},
+    store_name=#{storeName},
+    business_id=#{businessId}
+    WHERE u_id=#{uId}
+  </update>
   <select id="findUserByUIdAndPw" resultMap="UserMap">
     SELECT * FROM users WHERE u_id=#{uId} AND pw=#{pw}
   </select>
   <select id="findUserByUId" resultMap="UserMap">
     SELECT * FROM users WHERE u_id=#{uId}
   </select>
+    <select id="findAll" resultType="com.project.gabojago.gabojagouser.dto.user.UserDto">
+        SELECT * FROM users
+    </select>
 </mapper>

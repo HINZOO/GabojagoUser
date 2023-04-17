@@ -6,6 +6,7 @@
 <head>
     <title>게시판 상세</title>
     <link th:href="@{/public/css/plan/plan.css}" rel="stylesheet" />
+
 </head>
 
 <div layout:fragment="content" class="container-fluid px-0">
@@ -13,27 +14,26 @@
 
             <!--    사이드바 -->
             <div class="col-md-2" >
-                <div class="row row-cols-1 rightGrid">
+                <div class="row row-cols-1 sideGrid">
+                    <div class="col titleBox">
+                        <span th:text="${plan.getTitle()}"/>
+                    </div>
                     <div class="col calenderBox">
-                        <div class="calenderTitle sideTitle">CALENDER</div>
-                        <div class="calenderContent sideContent">테스트용</div>
+                        <th:block th:include="/plan/calender"></th:block>
                     </div>
 
                     <div class="col infoBox">
-                        <div class="infoTitle sideTitle">INFORMATION</div>
-                        <div class="infoContent sideContent">
-
-                            <!--   <div class="infoImg" th:if="${plan.getImgPath()!=null}" th:style="'background-image:url(' + ${plan.getImgPath()} + ');'"></div>-->
-                            <div class="infoImg" th:if="${plan.getImgPath()!=null}" style="background-image:url('/public/img/plan/planDefault.jpeg');"></div>
-                            <div class="infoImg" th:if="${plan.getImgPath()==null}" style="background-image:url('/public/img/plan/planDefault.jpeg')"></div>
+                            <!--   <div class="infoImg" th:if="${plan.getImgPath()!=null}" th:style="'background-image:url(' +  + ');'"></div>-->
+                            <img class="infoImg" th:if="${plan.getImgPath()!=null}" th:src="${plan.getImgPath()}"></img>
+                            <img class="infoImg" th:if="${plan.getImgPath()==null}" src="/public/img/plan/planDefault.jpeg"></img>
                             <div class="infoStatus" >
                                 <i class="bi bi-key"></i>
                                 <span th:text="${plan.getPlanStatus()}"/></div>
-                            <div class="infoStatus">📌 <span th:text="${plan.getTitle()}"/></div>
+
                             <div class="infoSchedule">🗓️ <span th:text="${plan.getPlanFrom()}"/> ~ <span th:text="${plan.getPlanTo()}"/></div>
 
                         </div>
-                    </div>
+
 
                 </div>
 
@@ -42,19 +42,8 @@
 
 
             <div class="col-md-8 mainSection">
-                <div class="row dayHeader" style="margin-top: 20px ">
-                    <div class="col-md-1 dayHeaderSide">
-                        ◀
-                    </div>
-                    <div class="col-md-10  dayHeaderMain">
-                        <small style="color: lightgrey"><small><small>2023.06.11(목)</small></small></small>　　2023.06.10 (수)　　<small style="color: lightgrey"><small><small>2023.06.11(목)</small></small></small>
-                    </div>
-                    <div class="col-md-1 dayHeaderSide">
-                        ▶
-                    </div>
-                </div>
 
-                <div class="row">
+                <div class="row mainHeader" style="margin-top: 20px ">
                     <div class="col-md-10">
                         <div class="btn-group btn-group-horizon btnLine" role="group">
                             <!--보관함-->
@@ -70,7 +59,7 @@
                                 <i class="bi bi-hand-index"></i>
                             </button>
                             <!--이동-->
-                            <button class="btn-group btn-group-vertical" type="button"  id="moveBtn">
+                            <button class="btn-group btn-group-vertical" type="button"  id="moveBtn" style="background-color: #5d5d5d">
                                 <i class="bi bi-arrows-move"></i>
                             </button>
                             <!--펜-->
@@ -86,23 +75,23 @@
                                 <i class="bi bi-square"></i>
                             </button>
                             <!--텍스트입력-->
-                            <button class="btn-group btn-group-vertical" type="button"  id="textBtn">
+                            <button class="btn-group btn-group-vertical" type="button"  id="textBtn" style="background-color: #5d5d5d">
                                 <i class="bi bi-fonts"></i>
                             </button>
                             <!--파레트-->
-                            <button class="btn-group btn-group-vertical"  type="button"   id="palateBtn">
+                            <button class="btn-group btn-group-vertical"  type="button"   id="palateBtn" style="background-color: #5d5d5d">
                                 <i class="bi bi-palette"></i>
                             </button>
                             <!--포스트잇-->
-                            <button class="btn-group btn-group-vertical"  type="button"  id="postBtn">
+                            <button class="btn-group btn-group-vertical"  type="button"  id="postBtn" style="background-color: #5d5d5d">
                                 <i class="bi bi-sticky"></i>
                             </button>
                             <!--스템프-->
-                            <button class="btn-group btn-group-vertical"  type="button" id="stampBtn">
+                            <button class="btn-group btn-group-vertical"  type="button" id="stampBtn" style="background-color: #5d5d5d">
                                 <i class="bi bi-star"></i>
                             </button>
                             <!--설정-->
-                            <button class="btn-group btn-group-vertical"  type="button"  id="settingBtn">
+                            <button class="btn-group btn-group-vertical"  type="button"  id="settingBtn" style="background-color: #5d5d5d">
                                 <i class="bi bi-gear"></i>
                             </button>
                             <!--플러스버튼-->
@@ -147,7 +136,7 @@
 
 
             <div class="col-md-2">
-                <div class="row row-cols-1 rightGrid">
+                <div class="row row-cols-1 sideGrid">
                     <div class="col memberBox">
                         <div class="memberTitle sideTitle">MEMBER</div>
                         <div class="memberContent sideContent">              </div>
@@ -238,20 +227,47 @@
 
 
 
-    <script>
+    <script th:inline="javascript">
+        let bb = document.getElementsByClassName("scheduleLeft")
+        Array.from(bb).forEach((e)=>{
+            e.addEventListener("click",()=>{
+                console.log("되나?")
+            })
+        })
+
+        /*
+        게시글을 로드 할 때 화면 초기화
+        스케쥴이 추가되고 그림판까지 만든 경우와, 그림판은 만들지 않은 경우를 구분하여 처리
+         */
+        document.addEventListener("DOMContentLoaded",()=>{
+            let initArr=[];
+            let nBtns = document.querySelectorAll(".newCanvasBtn");
+            [# th:each="c,s:${plan.getContents()}"]
+            if([[${c.getPath()}]]!=null) initArr.push([[${c.getPath()}]])
+            [/];
+            initArr.forEach((a)=>{
+               let ele = document.querySelector(`#content_${a.conId}`).lastElementChild;
+                newCanvas(ele,a.conId,a.canPath);
+            });
+        });
+
+        // 웹소켓용
         const URL="ws://localhost:7777/plan"
         let webSocket;
         webSocket=new WebSocket(URL);
 
 
-
-        const scheduleInsertForm = document.getElementById("scheduleInsertForm");
-        scheduleInsertForm.onsubmit=registerSchedule;
-
+        // 새 스케쥴 등록 모달
         const newScheduleBtn = document.querySelector("#newScheduleBtn");
         newScheduleBtn.addEventListener("click",()=>{
             new bootstrap.Modal(document.getElementById('staticBackdrop'),{}).show();
-        })
+        });
+
+        // 새 스케쥴 제출시
+        const scheduleInsertForm = document.getElementById("scheduleInsertForm");
+        scheduleInsertForm.onsubmit=registerSchedule;
+
+
 
         //새 스케쥴 생성시 @ResponseBody 요청 보내고 결과에 따라 콜랩스 생성...나중에
         async function registerSchedule(e){
@@ -270,135 +286,27 @@
         }
 
 
-        // 캔버스 데이터를 가진 스케쥴을 로드하는 부분
-        document.addEventListener("DOMContentLoaded",()=>{
-
-            let canvasWidth = document.querySelector(".accordion-header");
-            let hasCanvasArr = document.querySelectorAll(".hasCanvas");
-            Array.from(hasCanvasArr).forEach((hasCanvas)=>{
-                let h = 500/1200*canvasWidth.clientWidth+16; //16은 부트스트랩에 설정된 상하 패딩값을 보정해준 것
-                hasCanvas.style.height = h+"px";
-                let newCanvas = new CanvasCreate();
-                let canvas = newCanvas.canvas;
-                // canvas.setAttribute("id",hasCanvas.parentElement.getAttribute("id"))
-                hasCanvas.append(canvas);
-            })
-         })
 
 
+        function newCanvas(ele,conId,path=null){
+            let w = document.querySelector(".accordion-item").clientWidth;
+            let h = 500/1200*w+16; //16은 부트스트랩 아코디언바디에 설정된 상하 패딩값을 보정해준 것
+            ele.style.height = h +"px";
+            let newCanvas = new CanvasCreate(conId, path);
+            let canvas = newCanvas.canvas;
+            ele.lastElementChild.style.display = "none"
+            ele.append(canvas);
+        }
 
-        class CanvasCreate {
-            index;
-            canvas; context; subCanvas; subContext;
-            layerArray = []; //레이어 구현용 배열
-            jsonArray = []; //레이어 구현용 배열
-            activatedTool; //활성화 툴 체크용
-            pageZoom = 100/1200; //페이지 사이즈 변화에 따른 배율 조졍용(아직)
-            functionZoom = 1.0; //줌기능 배율 조졍용
-
-            constructor() {
-                // 캔버스 본체
-                this.canvas = document.createElement("canvas");
-                this.context = this.canvas.getContext("2d")
-                // 레이어 구현용 보조캔버스
-                this.subCanvas = document.createElement("canvas");
-                this.subContext = this.subCanvas.getContext("2d");
-                // 캔버스 초기화
-                this.init()
-            }
-            init(){
-                // 스타일 관련 초기 설정
-                // this.index = ++canvasCnt;
-                this.canvas.width = 1200;
-                this.canvas.height = 500;
-                this.context.strokeStyle = "black";
-                this.context.lineWidth = 0.5;
-                this.context.scale(1.0,1.0)
-                this.context.translate(0,0)
-                this.context.setLineDash([])
-                this.context.save();
-
-                // 버튼활성화 및 배경디자인 생성
-                this.pageLiner(this.canvas.width,this.canvas.height)
-
-                webSocket.onmessage=function (e){
-                    console.log(e)
-                }
-                document.getElementById("stampBtn").addEventListener("click",()=>{
-                    this.stampTool();
-                })
-            }
-
-
-            stampTool() {
-                let canvasObj = this;
-                let moveHandler;
-                function startFunction(e) {
-
-                        let startX = e.offsetX;
-                        let startY = e.offsetY;
-                        let pathArray = [];
-                        canvasObj.context.beginPath()
-                        canvasObj.context.moveTo(e.offsetX,e.offsetY);
-                        this.addEventListener("mousemove", moveHandler = function (e){
-
-                            canvasObj.context.lineTo(e.offsetX,e.offsetY);
-                            canvasObj.context.stroke()
-                        })
-                        this.addEventListener("mouseup",(e)=>{
-                            this.removeEventListener("mousemove", moveHandler)
-                        },{once:true})
-                    }
-
-                this.canvas.addEventListener("mousedown", startFunction);
-            };
-
-            // 캔버스 기본 배경
-            pageLiner(width,height){
-                let x = 0;
-                let y = 0;
-                while (x<=height){
-                    this.context.beginPath();
-                    if(x===0 || height-x===0){
-                        this.context.strokeStyle="black"
-                        this.context.lineWidth=1.0;
-                    } else if(x%50===0){
-                        this.context.strokeStyle="gray"
-                        this.context.lineWidth=0.2;
-                    } else{
-                        this.context.strokeStyle="gray"
-                        this.context.lineWidth=0.1;
-                    }
-                    this.context.moveTo(0, x);
-                    this.context.lineTo(width, x);
-                    this.context.stroke();
-                    x+=10;
-                }
-                while (y<=width){
-                    this.context.beginPath();
-                    if(y===0 || y===width){
-                        this.context.strokeStyle="black"
-                        this.context.lineWidth=1.0;
-                    } else if(y%50===0){
-                        if(y/50===12){
-                            this.context.strokeStyle="red"
-                            this.context.lineWidth=0.3;
-                        } else {
-                            this.context.strokeStyle="gray"
-                            this.context.lineWidth=0.2;
-                        }
-                    } else{
-                        this.context.strokeStyle="gray"
-                        this.context.lineWidth=0.1;
-                    }
-                    this.context.moveTo(y, 0);
-                    this.context.lineTo(y, height);
-                    this.context.stroke();
-                    y+=10;
-                }
-                this.context.restore()
-                this.context.save()
-                ///배열에 들어간 캔버스가 계속 변경되는 문제 해결 필요
+        async function newCanvasBtn(ele){
+            let conId = ele.parentElement.getAttribute("id").split("_")[1]
+            let url =`/plan/contents/canvasHandler.do`
+            const resp = await fetch(url,{method:"POST",body:conId});
+            const result = await resp.json();
+            if(resp.status===200 && result===1){
+                newCanvas(ele, conId);
+            }else {
+                alert("캔버스 생성 실패 status :"+resp.status);
             }
         }
 
@@ -406,9 +314,11 @@
 
 
 
+
+
     </script>
 
-
+    <script type="text/javascript" th:src="@{/public/js/plan/canvasFunction.js}"></script>
 </div> <!--레이아웃 닫기-->
 </html>
 

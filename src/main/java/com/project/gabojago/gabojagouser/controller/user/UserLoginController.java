@@ -1,7 +1,9 @@
 package com.project.gabojago.gabojagouser.controller.user;
 
 import com.project.gabojago.gabojagouser.dto.user.UserDto;
+import com.project.gabojago.gabojagouser.lib.AESEncryption;
 import com.project.gabojago.gabojagouser.service.user.UserService;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
@@ -29,10 +31,11 @@ public class UserLoginController {
   @PostMapping("/login.do")
   public String loginAction(
       UserDto user,
+      Integer autoLogin,
       HttpSession session,
       RedirectAttributes redirectAttributes,
       @SessionAttribute(required = false) String redirectPage,
-      HttpServletResponse resp) {
+      HttpServletResponse resp) throws Exception {
     UserDto loginUser=null;
     try {
       loginUser=userService.login(user);
@@ -40,6 +43,18 @@ public class UserLoginController {
       log.error(e.getMessage());
     }
     if(loginUser!=null) {
+      if(autoLogin!=null) {
+        String encrypIdValue= AESEncryption.encryptValue(loginUser.getUId());
+        String encrypPwValue= AESEncryption.encryptValue(loginUser.getPw());
+        Cookie loginId=new Cookie("loginId", encrypIdValue);
+        Cookie loginPw=new Cookie("loginPw", encrypPwValue);
+        loginId.setMaxAge(60*60*24*7);
+        loginPw.setMaxAge(60*60*24*7);
+        resp.addCookie(loginId);
+        resp.addCookie(loginPw);
+        loginId.setPath("/");
+        loginPw.setPath("/");
+      }
       redirectAttributes.addFlashAttribute("msg", "로그인 성공");
       session.setAttribute("loginUser", loginUser);
     } else {

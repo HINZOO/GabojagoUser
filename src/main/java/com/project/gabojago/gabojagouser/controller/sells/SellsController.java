@@ -50,9 +50,26 @@ public class SellsController {
             SellsDto sells=sellsService.detail(sId);
 //        List<SellsDto> sells;
 //        sells=sellsService.List();
-        model.addAttribute("s",sells);
+        model.addAttribute("sells",sells);
         return "/sells/detail";
     }
+    @GetMapping("/{sId}/modify.do")
+    public String modifyForm(Model model,
+            @PathVariable int sId
+    ){
+        SellsDto sell=sellsService.detail(sId);
+        System.out.println("sId = " + sId);
+        model.addAttribute("sell",sell);
+        return "/sells/modify";
+    }
+    @PostMapping("/modify.do")
+    public String modifyAction(@ModelAttribute SellsDto sell, @RequestBody List<SellsOptionDto> sellOption) {
+        System.out.println("sell = " + sell);
+        System.out.println("sellOption = " + sellOption);
+        return "redirect:/";
+    }
+
+
     @GetMapping("/register.do")
     public void insertForm(){
     }

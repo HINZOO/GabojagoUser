@@ -4,6 +4,15 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout}">
 <div layout:fragment="content">
+    <style>
+        #mbtiChk>a{
+            text-decoration: none;
+            color: #7c7cff;
+        }
+        #mbtiChk>a:hover{
+            color:black;
+        }
+    </style>
     <section id="commListContainer" class="row">
         <h2>가보자고(Community)</h2>
         <p class="text-end">
@@ -13,15 +22,23 @@
         <div class="col-11 my-2" th:each="c:${communities}">
             <div class="card" >
                 <div class="row no-gutters">
-                    <div class="col-4">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSdwgslP3IvAktgE1lSpdpN7WrKXzm4XSLcVuGtACLCLA&s"
-                                 alt="" class="card-img" />
+                    <div class="col-4" th:if="${c.imgs!=null && state.index==0}"th:each="img,state:${c.imgs}">
+                        <img th:src="@{'{path}'(path=${img.imgPath})}" class=" object-fit-contain" alt="게시글 이미지">
+                        <div class="card-img-overlay col-4">
+                            <p class="card-text text-dark text-end me-3">
+                                <i class="bi bi-heart fs-3"></i>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-4" th:if="${c.imgs==null}">
+                        <img th:src="@{'/public/img/comm/1.jpg'}" alt="대체">
                         <div class="card-img-overlay col-4">
                             <p class="card-text text-white text-end me-3">
                                 <i class="bi bi-heart fs-3"></i>
                             </p>
                         </div>
                     </div>
+
                     <div class="col-8">
                         <div class="card-body">
                             <h4 class="card-title" >
@@ -37,9 +54,32 @@
                             </p>
 
                         </div>
-                        <div class="text-end me-2 my-2">
-                            <a href="#" class="btn btn-primary btn-sm me-1">수정</a>
-                            <a th:href="@{'comm/{cId}/remove.do'(cId=${c.cId})}" class="btn btn-danger btn-sm">삭제</a>
+                        <div class="LastCont d-flex justify-content-between">
+                            <div class="card-body">
+                                <p id="mbtiChk">
+                                    <a href="#" class="" th:text="${c.istp==1}?'#ISTP':''" ></a>
+                                    <a href="#" class="" th:text="${c.isfj==1}?'#ISFJ':''" ></a>
+                                    <a href="#" class="" th:text="${c.isfp==1}?'#ISFP':''" ></a>
+                                    <a href="#" class="" th:text="${c.intj==1}?'#INTJ':''" ></a>
+                                    <a href="#" class="" th:text="${c.intp==1}?'#INTP':''" ></a>
+                                    <a href="#" class="" th:text="${c.infj==1}?'#INFJ':''" ></a>
+                                    <a href="#" class="" th:text="${c.infp==1}?'#INFP':''" ></a>
+                                    <a href="#" class="" th:text="${c.estj==1}?'#ESTJ':''" ></a>
+                                    <a href="#" class="" th:text="${c.estp==1}?'#ESTP':''" ></a>
+                                    <a href="#" class="" th:text="${c.esfj==1}?'#ESFJ':''" ></a>
+                                    <a href="#" class="" th:text="${c.esfp==1}?'#ESFP':''" ></a>
+                                    <a href="#" class="" th:text="${c.entj==1}?'#ENTJ':''" ></a>
+                                    <a href="#" class="" th:text="${c.entp==1}?'#ENTP':''" ></a>
+                                    <a href="#" class="" th:text="${c.enfj==1}?'#ENFJ':''" ></a>
+                                    <a href="#" class="" th:text="${c.istj==1}?'#ISTJ':''" ></a>
+                                    <a href="#" class="" th:text="${c.enfp==1}?'#ENFP':''" ></a>
+
+                                </p>
+                            </div>
+                            <div class="text-end me-2 my-2">
+                                <a th:href="@{'/comm/{cId}/modify.do'(cId=${c.cId})}" class="btn btn-primary btn-sm me-1">수정</a>
+                                <a th:href="@{'/comm/{cId}/remove.do'(cId=${c.cId})}" class="btn btn-danger btn-sm">삭제</a>
+                            </div>
                         </div>
                     </div>
                 </div>

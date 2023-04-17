@@ -4,23 +4,28 @@ import com.project.gabojago.gabojagouser.dto.user.UserDto;
 import com.project.gabojago.gabojagouser.mapper.user.UserMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserServiceImpl implements UserService {
 
   private UserMapper userMapper;
-
   public UserServiceImpl(UserMapper userMapper) {
     this.userMapper = userMapper;
   }
 
+  @Override
+  public List<UserDto> list() {
+    return this.userMapper.findAll();
+  }
   @Override
   public UserDto login(UserDto user) {
     return userMapper.findUserByUIdAndPw(user);
   }
 
   @Override
-  public UserDto detail(UserDto user) {
-    return null;
+  public UserDto detail(String user) {
+    return userMapper.findUserByUId(user);
   }
 
   @Override
@@ -30,7 +35,7 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public int modify(UserDto user) {
-    return 0;
+    return userMapper.updateOne(user);
   }
 
   @Override

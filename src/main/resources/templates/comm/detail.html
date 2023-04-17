@@ -4,21 +4,32 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout}">
 <div layout:fragment="content">
+<style>
+    #mbtiChk>a{
+        text-decoration: none;
+        color: #7c7cff;
+    }
+    #mbtiChk>a:hover{
+        color:black;
+    }
+</style>
     <div class="w-75 mx-auto my-4">
         <div class="card" >
             <div class="card-body d-flex justify-content-between align-items-center">
-                <div id="profile" class="col-1 me-1">
-                    <img class="img-thumbnail rounded-circle w-100 h-100" style="image-size:cover"
+                <div  class="col-1 me-1" >
+                    <a href="" class="profile">
+                        <img class="profile img-thumbnail rounded-circle w-100 h-100" style="image-size:cover"
                          src="https://taegon.kim/wp-content/uploads/2018/05/image-5.png">
+                    </a>
 <!--                         th:src="@{'{path}'(path=${c.user.imgPath})}">-->
                 </div>
                 <div class="col-2 text-center" >
-                    <strong th:text="${c.user.nkName}"></strong>
+                    <a href="#" th:text="${c.user.nkName}" class="profile"></a>
                     (@<span th:text="${c.user.uId}"></span>)
                 </div>
                 <h4 class="card-title col-8" th:text="${c.title}"></h4>
                 <div class="col-1">
-                    <a th:href="@{'/comm/{cId}/modify.do'(cId=${c.cId})}" class="btn btn-sm btn-outline-dark">수정</a>
+                    <a th:href="@{'/comm/{cId}/modify.do'(cId=${c.cId})}"  class="btn btn-sm btn-outline-dark">수정</a>
                 </div>
             </div>
             <p class="text-end text-muted me-2">
@@ -26,8 +37,24 @@
                 <small>수정일: <span th:text="${#dates.format(c.updateTime,'yyyy-MM-dd')}"></span></small>
                 <small><i class="bi bi-eye"></i>조</small>
             </p>
-            <img src="https://www.hdfcsales.com/blog/wp-content/uploads/2021/09/cancelling-a-trip-with-travel-insurance-policy-1-1.jpg"
-                 class="card-img-top h-25" alt="...">
+            <div class="card-body">
+                <div th:if="${c.imgs!=null}" th:id="'carousel'+${c.cId}" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item" th:each="img,state:${c.imgs}" th:classappend="${(state.first)?'active':''}">
+                            <img th:src="@{'{path}'(path=${img.imgPath})}" class="d-block w-100" alt="게시글 이미지">
+                        </div>
+                    </div>
+                    <button class="carousel-control-prev" type="button" th:data-bs-target="'#carousel'+${c.cId}" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" th:data-bs-target="'#carousel'+${c.cId}" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+            </div>
+
             <div class="card-body">
                 <h5 class="card-title" >일정들어가는곳</h5>
             </div>
@@ -42,21 +69,156 @@
                 </div>
 
             </div>
+
             <div class="card-body me-4 fs-4 text-center ">
-                <a  class="text-decoration-none text-muted" href="" >상세페이지</a>
+                <a  class="text-decoration-none text-muted" href="#contentPage" >상세페이지</a>
                 <span>|</span>
-                <a class="text-decoration-none text-muted" href="" >덧글</a>
+                <a class="text-decoration-none text-muted" href="#repliesPage" >덧글</a>
             </div>
-            <div class="card-body">
-                <p class="card-text" th:text="${c.content}">내용들어가는곳 </p>
+
+      <!--      <div class="card-body" id="contentPage">
+                <p class="card-text" th:utext="${c.content}"> </p>
             </div>
-            <div class="card-body">
-                <div>
-                    <a href="/comm/modify.do" class="card-link">수정</a>
-                    <a href="/comm/list.do" class="card-link">목록</a>
+-->
+
+            <!--답글 구현-->
+            <div class="card-body" id="repliesPage">
+                <h5>댓글</h5>
+                <div id="replyCont">
+                    <ul class="list-group border-0" >
+                        <li class="list-group-item border-0" th:each="r:${c.replies}">
+                            <!--댓글리스트 영역-->
+                            <th:block th:include="/comm/reply/detail"></th:block>
+                        </li>
+                        <!--일반댓글입력영역-->
+                        <li class="list-group-item border-0 bg-light " id="">
+                            <form name="replyInsertForm"  action="" method="post">
+                                <input type="hidden" name="uId" th:value="${c.getUId()}">
+                                <input type="hidden" name="cId" th:value="${c.cId}">
+                                <div class="d-flex">
+                                    <div class="col-3 p-0">
+                                        <input type="text" class="form-control" name="parentCrId"  >
+                                    </div>
+                                    <div class="col p-0">
+                                        <input type="text" class="form-control" name="content" placeholder="댓글내용">
+                                    </div>
+                                    <button class="btn btn-secondary">제출</button>
+                                </div>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!--😎 프로필 모달창 -->
+    <div id ="profileModal" class="modal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-center">
+                        프로필 정보
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="text-center p-0">
+                        <p><img class="profile img-thumbnail rounded-circle w-25 h-25" style="image-size:cover"
+                                src="https://taegon.kim/wp-content/uploads/2018/05/image-5.png"></p>
+                        <h5 th:text="${c.user.getNkName()}" class="mb-0"></h5>
+                        (<small  class="text-muted" th:text="${c.user.getUId()}"></small>)
+                        <p class="mt-1">
+                            <a class="btn btn-outline-success btn-sm me-2">팔로우</a>
+                            <a class="btn btn-outline-success btn-sm">쪽지</a>
+                        </p>
+                    </div>
+                    <hr>
+                    <div class="">
+                        <h5><span th:text="${c.user.nkName}"></span>님의 일정</h5>
+                        <p>일정들어가는곳</p>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
                 </div>
             </div>
         </div>
     </div>
+
+    <script>
+        const profileModal=new bootstrap.Modal(document.getElementById('profileModal',{}));
+        const replyContainer=document.getElementById("replyCont");
+        const replyInsertForm=document.forms["replyInsertForm"];
+        const modifyInsertForm=document.forms["modifyInsertForm"];
+        const profile=document.getElementsByClassName("profile");
+        modifyInsertForm.onsubmit=modifyReply;
+
+        //프로필 클릭시 프로필 모달창뜸
+        Array.from(profile).forEach((p)=>{
+            p.addEventListener("click",(e)=>{
+                e.preventDefault();
+             profileModal.show();
+        })});
+
+
+
+        async function registerReply(e){
+            e.preventDefault();
+            const data= new FormData(replyInsertForm);
+            let url="/comm/reply/handler.do"
+            const resp= await fetch(url,{method:"POST",body:data});
+            if(resp.status===200){
+                const json=await resp.json();
+                if(json.register>0){
+                    alert("등록성공!")
+                    await loadReplies(replyInsertForm.cId.value);
+                }
+            }else{
+                alert("등록실패"+resp.status);
+            }
+        }
+        async function loadReplies(cId){
+            let url=`/comm/reply/${cId}/list.do`
+            const resp=await fetch(url);
+            if(resp.status===200){
+                let text=await resp.text();
+                replyContainer.innerHTML=text;
+            }
+        }
+        replyInsertForm.onsubmit=registerReply;
+
+
+
+
+
+        async function modifyReply(e){//수정이 시작될떄 핸들러
+            let url="/comm/reply/handler.do"
+            const data=new FormData(modifyInsertForm);
+            const resp=await fetch(url,{method:"PUT",body:data});
+            if(resp.status===200){
+                const json=await resp.json();
+                if(json.modify>0){
+                    alert("수정성공!");
+                    loadModifyReply(modifyInsertForm.ccId.value);
+                }
+            }else{
+                alert("수정실패");
+            }
+        }
+        async function loadModifyReply(ccId){
+            let url=`/comm/reply/${ccId}/detail.do`
+            const resp=await fetch(url);
+            if(resp.status===200){
+                let text=await resp.text();
+                replyContainer.innerHTML=text;
+            }
+        }
+
+
+
+    </script>
 </div>
 </html>

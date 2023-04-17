@@ -1,5 +1,6 @@
 package com.project.gabojago.gabojagouser.mapper.sells;
 
+import com.project.gabojago.gabojagouser.dto.sells.SellImgsDto;
 import com.project.gabojago.gabojagouser.dto.sells.SellsDto;
 import org.apache.ibatis.annotations.Mapper;
 
