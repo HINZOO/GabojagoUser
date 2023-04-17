@@ -43,84 +43,98 @@
 
             <div class="col-md-8 mainSection">
 
-                <div class="row mainHeader" style="margin-top: 20px ">
-                    <div class="col-md-10">
+                <div class="row mainHeader">
+                    <div class="col-md-2">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-secondary btn-lg dropdown-toggle dayBtn py-0 border-0" data-bs-toggle="dropdown" aria-expanded="false">
+                                DAY 01
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">DAY 02</a></li>
+                                <li><a class="dropdown-item" href="#">DAY 03</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
                         <div class="btn-group btn-group-horizon btnLine" role="group">
+                            <!--이미지 삽입-->
+                            <button class="btn-group"  type="button" id="imgBtn">
+                                <i class="bi bi-image"></i>
+                                <input id="imgInput" type="file" style="display: none"/>
+                            </button>
                             <!--보관함-->
-                            <button class="btn-group btn-group-vertical"  type="button" id="loadBtn">
+                            <button class="btn-group"  type="button" id="loadBtn">
                                 <i class="bi bi-folder2-open"></i>
                             </button>
                             <!-- 지우기 -->
-                            <button class="btn-group btn-group-vertical"  type="button"  id="removeBtn">
+                            <button class="btn-group"  type="button"  id="removeBtn">
                                 <i class="bi bi-trash"></i>
                             </button>
                             <!--선택-->
-                            <button class="btn-group btn-group-vertical" type="button" id="selectorBtn">
+                            <button class="btn-group" type="button" id="selectorBtn">
                                 <i class="bi bi-hand-index"></i>
                             </button>
                             <!--이동-->
-                            <button class="btn-group btn-group-vertical" type="button"  id="moveBtn" style="background-color: #5d5d5d">
+                            <button class="btn-group" type="button"  id="moveBtn" style="background-color: #5d5d5d">
                                 <i class="bi bi-arrows-move"></i>
                             </button>
                             <!--펜-->
-                            <button class="btn-group btn-group-vertical"  type="button" id="penBtn">
+                            <button class="btn-group"  type="button" id="penBtn">
                                 <i class="bi bi-pencil"></i>
                             </button>
                             <!--직선-->
-                            <button class="btn-group btn-group-vertical"  type="button" id="lineBtn" >
+                            <button class="btn-group"  type="button" id="lineBtn" >
                                 <i class="bi bi-slash-lg"></i>
                             </button>
                             <!--박스 -->
-                            <button class="btn-group btn-group-vertical"  type="button"  id="rectBtn">
+                            <button class="btn-group"  type="button"  id="rectBtn">
                                 <i class="bi bi-square"></i>
                             </button>
                             <!--텍스트입력-->
-                            <button class="btn-group btn-group-vertical" type="button"  id="textBtn" style="background-color: #5d5d5d">
+                            <button class="btn-group" type="button"  id="textBtn" style="background-color: #5d5d5d">
                                 <i class="bi bi-fonts"></i>
                             </button>
                             <!--파레트-->
-                            <button class="btn-group btn-group-vertical"  type="button"   id="palateBtn" style="background-color: #5d5d5d">
+                            <button class="btn-group"  type="button"   id="palateBtn" style="background-color: #5d5d5d">
                                 <i class="bi bi-palette"></i>
                             </button>
                             <!--포스트잇-->
-                            <button class="btn-group btn-group-vertical"  type="button"  id="postBtn" style="background-color: #5d5d5d">
+                            <button class="btn-group"  type="button"  id="postBtn" style="background-color: #5d5d5d">
                                 <i class="bi bi-sticky"></i>
                             </button>
                             <!--스템프-->
-                            <button class="btn-group btn-group-vertical"  type="button" id="stampBtn" style="background-color: #5d5d5d">
+                            <button class="btn-group"  type="button" id="stampBtn" style="background-color: #5d5d5d">
                                 <i class="bi bi-star"></i>
                             </button>
                             <!--설정-->
-                            <button class="btn-group btn-group-vertical"  type="button"  id="settingBtn" style="background-color: #5d5d5d">
+                            <button class="btn-group"  type="button"  id="settingBtn" style="background-color: #5d5d5d">
                                 <i class="bi bi-gear"></i>
                             </button>
                             <!--플러스버튼-->
-                            <button class="btn-group btn-group-vertical"  type="button"  id="plusBtn">
+                            <button class="btn-group"  type="button"  id="plusBtn">
                                 <i class="bi bi-plus-circle"></i>
                             </button>
                             <!--마이너스버튼-->
-                            <button class="btn-group btn-group-vertical"  type="button"  id="minusBtn">
+                            <button class="btn-group"  type="button"  id="minusBtn">
                                 <i class="bi bi-dash-circle"></i>
                             </button>
-<!--                            <button class="btn-group btn-group-vertical red" ></button>-->
-<!--                            <button class="btn-group btn-group-vertical orange"></button>-->
-<!--                            <button class="btn-group btn-group-vertical yellow"></button>-->
-<!--                            <button class="btn-group btn-group-vertical green"></button>-->
-<!--                            <button class="btn-group btn-group-vertical blue"></button>-->
-<!--                            <button class="btn-group btn-group-vertical navy"></button>-->
-<!--                            <button class="btn-group btn-group-vertical purple"></button>-->
-<!--                            <button class="btn-group btn-group-vertical black"></button>-->
-<!--                            <button class="btn-group btn-group-vertical white"></button>-->
-<!--                            <button class="btn-group btn-group-vertical clear"></button>-->
+<!--                            <button class="btn-group red" ></button>-->
+<!--                            <button class="btn-group orange"></button>-->
+<!--                            <button class="btn-group yellow"></button>-->
+<!--                            <button class="btn-group green"></button>-->
+<!--                            <button class="btn-group blue"></button>-->
+<!--                            <button class="btn-group navy"></button>-->
+<!--                            <button class="btn-group purple"></button>-->
+<!--                            <button class="btn-group black"></button>-->
+<!--                            <button class="btn-group white"></button>-->
+<!--                            <button class="btn-group clear"></button>-->
 
                             </div><!--버튼그룹닫기-->
                         </div> <!--col 9-->
 
                     <div class="col-md-2 scheduleInputBox">
-                        <div class="dropdown scheduleInput">
-                            <button class="btn btn-secondary" id="newScheduleBtn">
-                                일정추가
-                            </button>
+                        <div id="newScheduleBtn">
+                            <i class="bi bi-plus-circle"></i>
                         </div>
                     </div>
                 </div>
@@ -143,7 +157,7 @@
                     </div>
                     <div class="col todoListBox">
                         <div class="todoListTitle sideTitle">CHECK_LIST</div>
-                        <div class="todoListContent sideContent">투두리 내용</div>
+                        <div class="todoListContent sideContent">체크리스트 내용</div>
                     </div>
 
                 </div>
@@ -167,25 +181,10 @@
                         <div class="row">
                             <div class="col-6">
                                 <div class="row">
-                                    <div class="col-12 mb-3">
-                                        <div class="form-floating">
-<!--                                            <input type="text" class="form-control" name="pId" th:value="${plan.getPId()}"  id="floatingId" placeholder="" hidden>-->
-                                            <input type="text" class="form-control" name="pId" value="1"  id="floatingId" placeholder="" hidden>
-                                            <label for="floatingId"></label>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 mb-3">
-                                        <div class="form-floating">
-                                            <input type="text" class="form-control" name="tId" value="" id="tId" placeholder="" hidden>
-                                            <label for="tId"></label>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 mb-3">
-                                        <div class="form-floating">
-                                            <input type="text" class="form-control" name="sId" value="" id="sId" placeholder="" hidden>
-                                            <label for="sId"></label>
-                                        </div>
-                                    </div>
+                                    <input type="text" class="form-control" name="pId" th:value="${plan.getPId()}"  id="floatingId" placeholder="" hidden>
+                                    <input type="text" class="form-control" name="tId" value="" id="tId" placeholder="" hidden>
+                                    <input type="text" class="form-control" name="sId" value="" id="sId" placeholder="" hidden>
+
                                     <div class="col-12 mb-3">
                                         <div class="form-floating">
                                             <input type="text" class="form-control" name="title" id="floatingTitle" placeholder="">
@@ -194,14 +193,20 @@
                                     </div>
                                     <div class="col-6 mb-3">
                                         <div class="form-floating">
-                                            <input type="text" class="form-control" name="info" id="info" placeholder="">
-                                            <label for="info">경유지</label>
+                                            <input type="time" class="form-control" name="sTime" id="sTime" placeholder="">
+                                            <label for="sTime">시작시간</label>
                                         </div>
                                     </div>
-                                    <div class="col-6">
+                                    <div class="col-6 mb-3">
                                         <div class="form-floating">
-                                            <input type="time" class="form-control" name="time" id="time" placeholder="">
-                                            <label for="time">시간</label>
+                                            <input type="time" class="form-control" name="eTime" id="eTime" placeholder="" value="">
+                                            <label for="eTime">끝시간</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 mb-3">
+                                        <div class="form-floating">
+                                            <input type="text" class="form-control" name="info" id="info" placeholder="">
+                                            <label for="info">경유지 & 메모</label>
                                         </div>
                                     </div>
                                 </div>
@@ -228,6 +233,18 @@
 
 
     <script th:inline="javascript">
+
+        document.getElementById("imgBtn").addEventListener("click",()=>{
+            let input = document.getElementById("imgInput")
+            input.click();
+            input.addEventListener("change",(e)=>{
+
+            console.log(input.files)
+            })
+        })
+
+
+
         let bb = document.getElementsByClassName("scheduleLeft")
         Array.from(bb).forEach((e)=>{
             e.addEventListener("click",()=>{
@@ -259,8 +276,9 @@
 
         // 새 스케쥴 등록 모달
         const newScheduleBtn = document.querySelector("#newScheduleBtn");
+        const newScheduleBtnM = new bootstrap.Modal(document.getElementById('staticBackdrop'),{});
         newScheduleBtn.addEventListener("click",()=>{
-            new bootstrap.Modal(document.getElementById('staticBackdrop'),{}).show();
+            newScheduleBtnM.show();
         });
 
         // 새 스케쥴 제출시
@@ -273,13 +291,16 @@
         async function registerSchedule(e){
             e.preventDefault();
             const data=new FormData(scheduleInsertForm);
+            let sTime = !data.get("sTime") ? "--:--" : data.get("sTime");
+            let eTime = !data.get("eTime") ? "--:--" : data.get("eTime");
+            data.append("time", sTime + " ~ " + eTime)
+
             let url="/plan/contents/insert.do"
             const resp=await fetch(url,{method:"POST",body:data});
             if(resp.status===200){
                 const json=await resp.json();
-                if(true){
-                    alert(JSON.stringify(json));
-                }
+                document.getElementById("accordionSection").insertAdjacentHTML("afterend",accordionInsert(json.conId,json.time,json.title,json.info))
+                newScheduleBtnM.hide();
             }else {
                 alert("등록 실패 status :"+resp.status);
             }
@@ -308,6 +329,34 @@
             }else {
                 alert("캔버스 생성 실패 status :"+resp.status);
             }
+        }
+
+        function accordionInsert(conId, time, title, info){
+            return `<div class="accordion-item" style="margin: 0px 20px">
+                        <h2 class="accordion-header">
+                          <button class="accordion-button collapsed scheduleBtn" type="button" data-bs-toggle="collapse"
+                           data-bs-target="#content_${conId}" aria-expanded="false" aria-controls="#content_${conId}">
+                              <div class="container scheduleContainer ">
+                                  <div class="row scheduleRow " >
+                                      <div class="col col-md-3 scheduleLeft ">
+                                          <span class="scheduleTime">${time}</span>
+                                      </div>
+                                      <p class="col col-md-9 scheduleCenter">
+                                          <span class="scheduleTitle">${title}</span>
+                                          <span class="scheduleContent">${info}</span>
+                                      </p>
+                                  </div>
+                              </div>
+                          </button>
+                        </h2>
+                        <div id="content_${conId}" class="accordion-collapse collapse " data-bs-parent="#accordionSection">
+                            <p class="scheduleSideBtn1 sbHover"><i class="bi bi-three-dots"></i></p>
+                            <p class="scheduleSideBtn2 sbHover"><i class="bi bi-trash3"></i></p>
+                            <div class="accordion-body">
+                                <p class="newCanvasBtn" onclick=newCanvasBtn(this.parentElement)><i class="bi bi-plus-circle"></i></p>
+                            </div>
+                        </div>
+                    </div>`;
         }
 
 
