@@ -1,0 +1,46 @@
+package com.project.gabojago.gabojagouser.service.my;
+
+import com.project.gabojago.gabojagouser.dto.my.MyUserQnaDto;
+import com.project.gabojago.gabojagouser.mapper.my.MyUserQnaMapper;
+import com.project.gabojago.gabojagouser.mapper.user.UserMapper;
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
+@Service
+@AllArgsConstructor
+
+public class MyUserQnaServiceImp implements MyUserQnaService {
+    private MyUserQnaMapper myUserQnaMapper;
+    private UserMapper userMapper;
+    @Override
+    public List<MyUserQnaDto> list() {
+        List<MyUserQnaDto> list=myUserQnaMapper.findAll();
+        return list;
+    }
+
+    @Override
+    public MyUserQnaDto detail(int qId) {
+        MyUserQnaDto detail=myUserQnaMapper.findByQId(qId);
+        return detail;
+    }
+    @Transactional
+    @Override
+    public int register(MyUserQnaDto myUserQna) {
+        return 0;
+    }
+
+    @Transactional
+    @Override
+    public int modify(MyUserQnaDto myUserQna) {
+        return 0;
+    }
+
+    @Override
+    public int remove(int qId) {
+        int remove=myUserQnaMapper.deleteOne(qId);
+        return remove;
+    }
+}
