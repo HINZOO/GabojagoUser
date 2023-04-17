@@ -1,5 +1,7 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <div class="header d-flex justify-content-between pb-1 border-0 ">
-    <!--     th:classappend="${(session.loginUser!=null && session.loginUser.uId==c.uId)?'border-bottom':''}">-->
+    <!--     th:classappend="${(session.loginUser!\=null && session.loginUser.uId==c.uId)?'border-bottom':''}">-->
     <div>
         @<strong th:text="${r.uId}"></strong>
         <small>•</small>
@@ -10,16 +12,50 @@
 </div>
 <div class="body p-1 row" >
     <div class="col">
-        <span th:text="${r.content}"></span>
+        <div th:id="defaultFromCont+${r.ccId}">
+            <span th:text="${r.content}"></span>
+            <span th:value="${r}"></span>
+        </div>
+        <div th:id="modifyFromCont+${r.ccId}" class="visually-hidden">
+            <form action="" name="modifyInsertForm" class="d-flex align-items-center">
+                <input type="text" th:value="${r.content}" class="input-group col">
+                <button class="btn btn-outline-success btn-sm col-1">등록</button>
+            </form>
+        </div>
+
+
     </div>
 </div>
-<div>
-    <a href="javascript:void(0)" class="me-2" >수정</a>
-    <a href="javascript:void(0)">댓글 달기</a>
+<div class="text-end">
+    <a href="javascript:void(0)" th:id="modifyHiddenBtn+${r.ccId}" class="me-2 text-decoration-none text-success" >수정하기</a>
+    <a href="javascript:void(0)" id="replyHiddenBtn" class="text-decoration-none text-primary">댓글 달기</a>
 </div>
-<!--<ul class="list-group">-->
-<!--    <li class="list-group-item" th:each="r:${r.replies}">-->
-<!--        <th:block th:include="/comm/reply/detail"></th:block>-->
-<!--    </li>-->
-<!--</ul>-->
-<!--😎이 주석을 해제하면 오류가 뜬다..-->
+
+    <ul class="list-group border-0">
+        <li class="list-group-item border-0 bg-light"  th:each="r:${r.replies}">
+            <th:block  th:include="/comm/reply/detail"></th:block>
+        </li>
+
+    </ul>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+
+    let modifyHiddenBtn[[${r.ccId}]]=document.getElementById("modifyHiddenBtn[[${r.ccId}]]");
+    let modifyFromCont[[${r.ccId}]]=document.getElementById("modifyFromCont[[${r.ccId}]]")
+    let defaultFromCont[[${r.ccId}]]=document.getElementById("defaultFromCont[[${r.ccId}]]")
+    modifyHiddenBtn[[${r.ccId}]].addEventListener("click",modifyFromPut)
+
+    function modifyFromPut (){
+        defaultFromCont[[${r.ccId}]].classList.toggle("visually-hidden")
+        modifyFromCont[[${r.ccId}]].classList.toggle("visually-hidden")
+    }
+    /*]]>*/
+
+
+
+</script>
+
+
+
+</html>
