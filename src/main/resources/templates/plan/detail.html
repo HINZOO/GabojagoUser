@@ -16,7 +16,7 @@
             <!--    사이드바 -->
             <div class="col-md-2" >
                 <div class="row row-cols-1 sideGrid">
-                    <div class="col titleBox">
+                    <div class="col titleBox p-0">
                         <span th:text="${plan.getTitle()}"/>
                     </div>
                     <div class="col calenderBox">
@@ -25,19 +25,25 @@
 
                     <div class="col infoBox">
                             <!--   <div class="infoImg" th:if="${plan.getImgPath()!=null}" th:style="'background-image:url(' +  + ');'"></div>-->
-                            <img class="infoImg" th:if="${plan.getImgPath()!=null}" th:src="${plan.getImgPath()}"></img>
-                            <img class="infoImg" th:if="${plan.getImgPath()==null}" src="/public/img/plan/planDefault.jpeg"></img>
+<!--                            <img class="infoImg" th:if="${plan.getImgPath()!=null}" th:src="${plan.getImgPath()}"></img>-->
+<!--                            <img class="infoImg" th:if="${plan.getImgPath()==null}" src="/public/img/plan/planDefault.jpeg"></img>-->
                             <div class="infoStatus" >
                                 <i class="bi bi-key"></i>
                                 <span th:text="${plan.getPlanStatus()}"/></div>
 
                             <div class="infoSchedule">🗓️ <span th:text="${plan.getPlanFrom()}"/> ~ <span th:text="${plan.getPlanTo()}"/></div>
 
-                        </div>
+                    </div>
+
+                    <div class="col memberBox">
+                        멤버
+                    </div>
+                    <div class="col checkListBox">
+                        체크리스트
+                    </div>
 
 
                 </div>
-
             </div> <!--좌측사이드닫기-->
 
 
@@ -48,7 +54,7 @@
                     <div class="col-md-2">
                         <div class="btn-group">
                             <button type="button" class="btn btn-secondary btn-lg dropdown-toggle dayBtn py-0 border-0" data-bs-toggle="dropdown" aria-expanded="false">
-                                DAY 01
+                                Day 01
                             </button>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="#">DAY 02</a></li>
@@ -152,15 +158,9 @@
 
             <div class="col-md-2">
                 <div class="row row-cols-1 sideGrid">
-                    <div class="col memberBox">
-                        <div class="memberTitle sideTitle">MEMBER</div>
-                        <div class="memberContent sideContent">              </div>
-                    </div>
-                    <div class="col todoListBox">
-                        <div class="todoListTitle sideTitle">CHECK_LIST</div>
-                        <div class="todoListContent sideContent">체크리스트 내용</div>
-                    </div>
+                  <div class="col addBox">
 
+                  </div>
                 </div>
             </div> <!--우측사이드 닫기-->
 
