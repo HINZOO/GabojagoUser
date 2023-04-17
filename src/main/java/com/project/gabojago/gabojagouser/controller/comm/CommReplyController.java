@@ -76,11 +76,9 @@ public class CommReplyController {
     @PutMapping("/handler.do")
     public @ResponseBody HandlerDto modify(
             @ModelAttribute CommReplyDto reply,
-            RedirectAttributes redirectAttributes,
             @SessionAttribute UserDto loginUser
     ){
         int modify=0;
-        String msg="";
         HandlerDto handlerDto=new HandlerDto();
         try{
             modify=commReplyService.modify(reply);
@@ -88,9 +86,7 @@ public class CommReplyController {
         }catch (Exception e){
             log.error(e.getMessage());
         }
-        if(modify>0) msg="수정성공!";
-        else msg="수정실패";
-        redirectAttributes.addFlashAttribute("msg",msg);
+
         return handlerDto;
     }
 }

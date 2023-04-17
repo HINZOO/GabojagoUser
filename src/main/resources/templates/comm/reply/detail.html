@@ -16,9 +16,10 @@
             <span th:text="${r.content}"></span>
             <span th:value="${r}"></span>
         </div>
-        <div th:id="modifyFromCont+${r.ccId}" class="visually-hidden">
-            <form action="" name="modifyInsertForm" class="d-flex align-items-center">
-                <input type="text" th:value="${r.content}" class="input-group col">
+        <div>
+            <form action="" onsubmit="event.preventDefault(); modifyReply(this);" th:name="'modifyInsertForm'+${r.ccId}" class="d-flex align-items-center visually-hidden">
+                <input type="text" name="content" th:value="${r.content}" class="input-group col">
+                <input type="hidden" name="ccId" th:value="${r.ccId}">
                 <button class="btn btn-outline-success btn-sm col-1">등록</button>
             </form>
         </div>
@@ -27,7 +28,7 @@
     </div>
 </div>
 <div class="text-end">
-    <a href="javascript:void(0)" th:id="modifyHiddenBtn+${r.ccId}" class="me-2 text-decoration-none text-success" >수정하기</a>
+    <a href="javascript:void(0)" th:onclick="modifyFromPut([[${r.ccId}]])" class="me-2 text-decoration-none text-success" >수정하기</a>
     <a href="javascript:void(0)" id="replyHiddenBtn" class="text-decoration-none text-primary">댓글 달기</a>
 </div>
 
@@ -40,20 +41,10 @@
 
 <script th:inline="javascript">
     /*<![CDATA[*/
-
-    let modifyHiddenBtn[[${r.ccId}]]=document.getElementById("modifyHiddenBtn[[${r.ccId}]]");
-    let modifyFromCont[[${r.ccId}]]=document.getElementById("modifyFromCont[[${r.ccId}]]")
-    let defaultFromCont[[${r.ccId}]]=document.getElementById("defaultFromCont[[${r.ccId}]]")
-    modifyHiddenBtn[[${r.ccId}]].addEventListener("click",modifyFromPut)
-
-    function modifyFromPut (){
-        defaultFromCont[[${r.ccId}]].classList.toggle("visually-hidden")
-        modifyFromCont[[${r.ccId}]].classList.toggle("visually-hidden")
+    function modifyFromPut (id){
+        document.forms['modifyInsertForm'+id].classList.toggle("visually-hidden")
     }
     /*]]>*/
-
-
-
 </script>
 
 

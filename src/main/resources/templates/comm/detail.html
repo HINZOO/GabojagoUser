@@ -76,37 +76,37 @@
                 <a class="text-decoration-none text-muted" href="#repliesPage" >덧글</a>
             </div>
 
-      <!--      <div class="card-body" id="contentPage">
-                <p class="card-text" th:utext="${c.content}"> </p>
+            <div class="card-body" id="contentPage">
+                <p th:utext="${c.content}"> </p>
             </div>
--->
 
             <!--답글 구현-->
             <div class="card-body" id="repliesPage">
                 <h5>댓글</h5>
-                <div id="replyCont">
-                    <ul class="list-group border-0" >
-                        <li class="list-group-item border-0" th:each="r:${c.replies}">
+                <div>
+                    <ul class="list-group border-0"  id="replyCont">
+                        <li class="list-group-item border-0" th:each="r:${c.replies}" >
                             <!--댓글리스트 영역-->
                             <th:block th:include="/comm/reply/detail"></th:block>
                         </li>
                         <!--일반댓글입력영역-->
-                        <li class="list-group-item border-0 bg-light " id="">
-                            <form name="replyInsertForm"  action="" method="post">
-                                <input type="hidden" name="uId" th:value="${c.getUId()}">
-                                <input type="hidden" name="cId" th:value="${c.cId}">
-                                <div class="d-flex">
-                                    <div class="col-3 p-0">
-                                        <input type="text" class="form-control" name="parentCrId"  >
-                                    </div>
-                                    <div class="col p-0">
-                                        <input type="text" class="form-control" name="content" placeholder="댓글내용">
-                                    </div>
-                                    <button class="btn btn-secondary">제출</button>
-                                </div>
-                            </form>
-                        </li>
+
                     </ul>
+                    <div class="list-group-item border-0 bg-light " id="">
+                        <form name="replyInsertForm"  action="" method="post">
+                            <input type="hidden" name="uId" th:value="${c.getUId()}">
+                            <input type="hidden" name="cId" th:value="${c.cId}">
+                            <div class="d-flex">
+                                <div class="col-3 p-0">
+                                    <input type="text" class="form-control" name="parentCrId"  >
+                                </div>
+                                <div class="col p-0">
+                                    <input type="text" class="form-control" name="content" placeholder="댓글내용">
+                                </div>
+                                <button class="btn btn-secondary">제출</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
 
             </div>
@@ -154,7 +154,7 @@
         const replyInsertForm=document.forms["replyInsertForm"];
         const modifyInsertForm=document.forms["modifyInsertForm"];
         const profile=document.getElementsByClassName("profile");
-        modifyInsertForm.onsubmit=modifyReply;
+        //modifyInsertForm.onsubmit=modifyReply;
 
         //프로필 클릭시 프로필 모달창뜸
         Array.from(profile).forEach((p)=>{
@@ -194,7 +194,7 @@
 
 
 
-        async function modifyReply(e){//수정이 시작될떄 핸들러
+        async function modifyReply(modifyInsertForm){//수정이 시작될떄 핸들러
             let url="/comm/reply/handler.do"
             const data=new FormData(modifyInsertForm);
             const resp=await fetch(url,{method:"PUT",body:data});
@@ -202,17 +202,19 @@
                 const json=await resp.json();
                 if(json.modify>0){
                     alert("수정성공!");
-                    loadModifyReply(modifyInsertForm.ccId.value);
+                    await loadReplies(replyInsertForm.cId.value);
+                }else{
+                    alert("수정실패!");
                 }
             }else{
-                alert("수정실패");
+                alert("수정통신실패");
             }
         }
         async function loadModifyReply(ccId){
             let url=`/comm/reply/${ccId}/detail.do`
             const resp=await fetch(url);
             if(resp.status===200){
-                let text=await resp.text();
+                let text=await resp.json();
                 replyContainer.innerHTML=text;
             }
         }
