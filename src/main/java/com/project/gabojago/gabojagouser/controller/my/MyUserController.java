@@ -22,5 +22,6 @@ public class MyUserController {
         model.addAttribute("user",loginUser);
         return "/my/user";
     }
+    
 }
 
