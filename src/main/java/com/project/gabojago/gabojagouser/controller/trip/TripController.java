@@ -186,7 +186,7 @@ public class TripController {
                     String[] contentTypes = img.getContentType().split("/");
                     if (contentTypes[0].equals("image")) {
                         String fileName = System.currentTimeMillis() + "_" + (int) (Math.random() * 10000) + "." + contentTypes[1];
-                        Path path = Paths.get(uploadPath + "/trip/" + fileName);
+                        Path path = Paths.get(staticPath + "/public/img/trip/" + fileName);
                         try {
                             img.transferTo(path);
                         } catch (IOException e) {
