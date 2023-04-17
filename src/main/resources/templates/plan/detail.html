@@ -43,8 +43,11 @@
 
             <div class="col-md-8 mainSection">
 
-                <div class="row mainHeader" style="margin-top: 20px ">
-                    <div class="col-md-10">
+                <div class="row mainHeader">
+                    <div class="col-md-2">
+                        day01
+                    </div>
+                    <div class="col-md-8">
                         <div class="btn-group btn-group-horizon btnLine" role="group">
                             <!--보관함-->
                             <button class="btn-group btn-group-vertical"  type="button" id="loadBtn">
@@ -117,16 +120,14 @@
                         </div> <!--col 9-->
 
                     <div class="col-md-2 scheduleInputBox">
-                        <div class="dropdown scheduleInput">
-                            <button class="btn btn-secondary" id="newScheduleBtn">
-                                일정추가
-                            </button>
+                        <div id="newScheduleBtn">
+                            <i class="bi bi-plus-circle"></i>
                         </div>
                     </div>
                 </div>
 
 
-                    <div class="accordion .accordion-flush" id="accordionSection">
+                    <div class="accordion .accordion-flush" id="accordionSection" style="padding: 0px 20px">
                         <div class="accordion-item" th:each="content:${plan.getContents()}">
                             <th:block th:include="/plan/contents"></th:block>
                         </div>
@@ -143,7 +144,7 @@
                     </div>
                     <div class="col todoListBox">
                         <div class="todoListTitle sideTitle">CHECK_LIST</div>
-                        <div class="todoListContent sideContent">투두리 내용</div>
+                        <div class="todoListContent sideContent">체크리스트 내용</div>
                     </div>
 
                 </div>
