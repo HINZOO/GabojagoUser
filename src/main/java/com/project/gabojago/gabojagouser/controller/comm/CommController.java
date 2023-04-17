@@ -36,9 +36,10 @@ public class CommController {
     }
 
     @GetMapping("/list.do")
-    public String list(Model model){
+    public String list(Model model,
+                       @SessionAttribute(required = false) UserDto loginUser){
         List<CommunityDto> communities;
-        communities=communityService.list();
+        communities=communityService.list(loginUser);
         model.addAttribute("communities",communities);
         return "/comm/list";
     }

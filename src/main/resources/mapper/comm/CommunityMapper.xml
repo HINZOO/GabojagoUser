@@ -37,7 +37,7 @@
                     column="c_id"
                     fetchType="lazy"/>
         <collection property="replies"
-                    select="com.project.gabojago.gabojagouser.mapper.comm.CommReplyMapper.findByCId"
+                    select="com.project.gabojago.gabojagouser.mapper.comm.CommReplyMapper.findByCIdAndParentCrIdIsNull"
                     column="c_id"
                     fetchType="lazy"/>
     </resultMap>
@@ -63,6 +63,6 @@
         SELECT * FROM communitys
     </select>
     <select id="findByCId" resultMap="CommMap">
-        SELECT * FROM  communitys where c_id=#{cId};
+        SELECT * FROM communitys WHERE c_id=#{cId};
     </select>
 </mapper>

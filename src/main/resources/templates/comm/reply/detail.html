@@ -17,9 +17,11 @@
             <span th:value="${r}"></span>
         </div>
         <div>
-            <form action="" onsubmit="event.preventDefault(); modifyReply(this);" th:name="'modifyInsertForm'+${r.ccId}" class="d-flex align-items-center visually-hidden">
-                <input type="text" name="content" th:value="${r.content}" class="input-group col">
+            <form action="" onsubmit="event.preventDefault(); modifyReply(this);"
+                  th:name="'modifyInsertForm'+${r.ccId}"
+                  class="d-flex align-items-center visually-hidden">
                 <input type="hidden" name="ccId" th:value="${r.ccId}">
+                <input type="text" name="content" th:value="${r.content}" class="input-group col">
                 <button class="btn btn-outline-success btn-sm col-1">등록</button>
             </form>
         </div>
@@ -36,14 +38,19 @@
        th:onclick="replyFromPut([[${r.ccId}]])"
        class="text-decoration-none text-primary">댓글 달기</a>
 </div>
+
 <!--대댓글등록폼-->
 <div>
     <form action=""
-          onsubmit="event.preventDefault(); registerReply(this);"
-          th:name="'replyInsertForm'+${r.ccId}"
-          class="visually-hidden">
+          method="POST"
+          onsubmit="event.preventDefault();registerReply(this);"
+          th:name="'replyReplyForm'+${r.ccId}"
+          class="visually-hidden d-flex align-items-center"
+          >
         <input type="text" name="content" class="input-group col">
         <input type="hidden" name="ccId" th:value="${r.ccId}">
+        <input type="hidden" name="parentCrId" th:value="${r.ccId}">
+        <input type="hidden" name="uId" th:value="${r.uId}">
         <button class="btn btn-outline-success btn-sm col-1">등록</button>
     </form>
 </div>
@@ -61,7 +68,7 @@
         document.forms['modifyInsertForm'+id].classList.toggle("visually-hidden")
     }
     function replyFromPut(id){
-        document.forms['replyInsertForm'+id].classList.toggle("visually-hidden")
+        document.forms['replyReplyForm'+id].classList.toggle("visually-hidden")
     }
 
     /*]]>*/

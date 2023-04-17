@@ -43,7 +43,7 @@ public class CommReplyController {
 
     }
 
-    @PostMapping("/handler.do")
+    @RequestMapping(value = "/handler.do", method = RequestMethod.POST)
     public @ResponseBody HandlerDto registerHandler(
             @ModelAttribute CommReplyDto reply,
             @SessionAttribute UserDto loginUser) {
@@ -52,6 +52,8 @@ public class CommReplyController {
         handlerDto.setRegister(register);
         return handlerDto;
     }
+
+
     @PostMapping("/insert.do")
     public String insertAction(
         @ModelAttribute CommReplyDto reply,

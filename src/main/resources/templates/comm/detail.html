@@ -85,7 +85,7 @@
                 <h5>댓글</h5>
                 <div>
                     <ul class="list-group border-0"  id="replyCont">
-                        <li class="list-group-item border-0" th:each="r:${c.replies}" >
+                        <li class="list-group-item border-0" th:each="r:${c.getReplies()}" >
                             <!--댓글리스트 영역-->
                             <th:block th:include="/comm/reply/detail"></th:block>
                         </li>
@@ -108,7 +108,6 @@
                         </form>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
@@ -150,10 +149,11 @@
 
     <script>
         const profileModal=new bootstrap.Modal(document.getElementById('profileModal',{}));
+        const profile=document.getElementsByClassName("profile");
         const replyContainer=document.getElementById("replyCont");
         const replyInsertForm=document.forms["replyInsertForm"];
         const modifyInsertForm=document.forms["modifyInsertForm"];
-        const profile=document.getElementsByClassName("profile");
+        const replyReplyForm=document.forms["replyReplyForm"];
         //modifyInsertForm.onsubmit=modifyReply;
 
         //프로필 클릭시 프로필 모달창뜸
@@ -168,7 +168,7 @@
         async function registerReply(e){
             e.preventDefault();
             const data= new FormData(replyInsertForm);
-            let url="/comm/reply/handler.do"
+            let url="/comm/reply/handler.do";
             const resp= await fetch(url,{method:"POST",body:data});
             if(resp.status===200){
                 const json=await resp.json();
@@ -188,9 +188,22 @@
                 replyContainer.innerHTML=text;
             }
         }
-        replyInsertForm.onsubmit=registerReply;
 
 
+        async function registerReply(replyInsertForm){
+            const data= new FormData(replyInsertForm);
+            let url="/comm/reply/handler.do";
+            const resp= await fetch(url,{method:"POST",body:data});
+            if(resp.status===200){
+                const json=await resp.json();
+                if(json.register>0){
+                    alert("등록성공!")
+                    await loadReplies(replyInsertForm.cId.value);
+                }
+            }else{
+                alert("등록실패"+resp.status);
+            }
+        }
 
 
 
@@ -219,20 +232,7 @@
             }
         }
 
-        async function replyReply(replyInsertForm){
-            const data= new FormData(replyInsertForm);
-            let url="/comm/reply/handler.do"
-            const resp= await fetch(url,{method:"POST",body:data});
-            if(resp.status===200){
-                const json=await resp.json();
-                if(json.register>0){
-                    alert("등록성공!")
-                    await loadReplies(replyInsertForm.cId.value);
-                }
-            }else{
-                alert("등록실패"+resp.status);
-            }
-        }
+
 
 
 

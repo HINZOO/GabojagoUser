@@ -13,4 +13,6 @@ public interface UserMapper {
   UserDto findUserByUId(String user);
   int insertOne(UserDto user);
   int updateOne(UserDto user);
+  int setLoginUserId(String uId);
+  int setLoginUserIdNull();
 }
