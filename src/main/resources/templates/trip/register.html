@@ -130,6 +130,8 @@
         function imgInputComponent(label = "이미지", name = "img") { // 🔥 label, name 넣는 이유?
             return `
                  <p class="input-group mt-2">
+
+                    <input type="radio" name="img_main" >
                     <label class="input-group-text">${label}</label>
                     <input class="form-control" type="file" name="${name}">
                     <button type="button" class="btn btn-danger" onclick="this.closest('.input-group').remove()">
