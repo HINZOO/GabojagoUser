@@ -1,5 +1,6 @@
 package com.project.gabojago.gabojagouser.service.sells;
 
+import com.project.gabojago.gabojagouser.dto.sells.SellImgsDto;
 import com.project.gabojago.gabojagouser.dto.sells.SellsDto;
 import com.project.gabojago.gabojagouser.dto.sells.SellsOptionDto;
 
@@ -12,6 +13,7 @@ public interface SellsService {
     List<SellsDto> findByCategory(String category);
     SellsDto detail(int sId);
     int optionRegister(SellsOptionDto sellsOption);
+    int imgRegister(SellImgsDto sellImgsDto);
     int register(SellsDto sells);
     int modify(SellsDto sells);
     int remove(int sId);
