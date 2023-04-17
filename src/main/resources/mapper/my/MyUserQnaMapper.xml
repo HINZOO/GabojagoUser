@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.project.gabojago.gabojagouser.mapper.my.MyUserQnaMapper">
+    <resultMap id="MyUserQnaMap" type="MyUserQnaDto">
+        <id property="qId" column="q_id"/>
+        <result property="uId" column="u_id"/>
+        <result property="title" column="title"/>
+        <result property="content" column="content"/>
+        <result property="filePath" column="file_path"/>
+        <result property="postPath" column="post_path"/>
+    </resultMap>
+    <insert id="insertOne" useGeneratedKeys="true" keyProperty="qId" parameterType="MyUserQnaDto">
+        INSERT INTO qnas (u_id, title, content, file_path, post_time) VALUE
+        (#{uId},#{title},#{content},#{filePath},#{postTime})
+    </insert>
+    <update id="updateOne">
+        UPDATE qnas SET u_id=#{uId},title=#{title},content=#{content},
+                        file_path=#{filePath},post_time=#{postTime}
+        WHERE q_id=#{qId}
+    </update>
+    <delete id="deleteOne">
+        DELETE  FROM qnas WHERE q_id=#{cId}
+    </delete>
+    <select id="findAll" resultType="com.project.gabojago.gabojagouser.dto.my.MyUserQnaDto">
+        SELECT * FROM qnas
+    </select>
+    <select id="findByQId" resultType="com.project.gabojago.gabojagouser.dto.my.MyUserQnaDto">
+        SELECT * FROM qnas WHERE q_id=#{qId}
+    </select>
+</mapper>

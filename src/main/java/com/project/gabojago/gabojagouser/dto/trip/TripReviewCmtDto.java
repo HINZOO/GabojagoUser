@@ -5,7 +5,7 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-public class TripReviewCommentDto {
+public class TripReviewCmtDto {
     private int trcId; // pk (auto_increment)
     private int trId; // fk trip_review.tr_id 참조
     private String uId; // fk user.u_id 참조

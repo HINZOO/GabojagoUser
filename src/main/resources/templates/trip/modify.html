@@ -95,6 +95,7 @@
             <label class="form-label">이미지 삭제</label>
             <div class="form-control">
                 <label th:each="img:${t.imgs}" class="w-25 delImgItem" style="">
+<!--                <label th:each="img:${t.imgs}" class="w-25 delImgItem" style="" th:if="${img.imgMain==0}">-->
                 <i class="bi bi-x"></i>
                     <input type="checkbox" class="delImgInput" name="delImgId" th:value="${img.tiId}">
                     <img th:src="@{'{path}'(path=${img.imgPath})}" class="img-thumbnail">
