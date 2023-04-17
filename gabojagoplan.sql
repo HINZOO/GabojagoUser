@@ -447,7 +447,7 @@ CREATE TABLE `comm_viewcounts` (
 
 
 #상품판매 (이미지 테이블)
-CREATE TABLE `sell-imgs` (
+CREATE TABLE `sell_imgs` (
                              `simg_id`	int unsigned AUTO_INCREMENT PRIMARY KEY COMMENT '판매이미지 아이디',
                              `s_id`	int unsigned NOT NULL COMMENT '판매글 아이디',
                              `img_path`	varchar(255) COMMENT'이미지 경로',
