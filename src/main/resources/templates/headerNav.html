@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="">
 <nav class="navbar navbar-expand-lg bg-body-tertiary bg-light">
     <div class="container-fluid">
         <a class="navbar-brand" href="/">GABOJAGO(LOGO)</a>
@@ -18,7 +18,6 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="/sells/list.do">상품판매</a>
-
                     </li>
                 </ul>
             </div>
@@ -29,9 +28,10 @@
                             마이페이지
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">마이페이지메뉴</a></li>
-                            <li><hr class="dropdown-divider"></li> <!--구분선-->
-                            <li><a class="dropdown-item" href="#">마이페이지메뉴</a></li>
+                            <li><a class="dropdown-item" href="/my/user.do">회원정보</a></li>
+                            <li><a class="dropdown-item" href="#">일정/커뮤니케이션</a></li>
+                            <li><a class="dropdown-item" href="#">고객센터</a></li>
+                            <li><a class="dropdown-item" href="#">나의활동</a></li>
                         </ul>
                     </li>
                     <th:block th:if="${session.loginUser==null}">
@@ -52,10 +52,7 @@
                     </th:block>
                 </ul>
             </div>
-       </div>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+        </div>
     </div>
 </nav>
 </html>

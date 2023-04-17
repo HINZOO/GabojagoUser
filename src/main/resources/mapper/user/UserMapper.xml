@@ -51,4 +51,7 @@
   <select id="findUserByUId" resultMap="UserMap">
     SELECT * FROM users WHERE u_id=#{uId}
   </select>
+    <select id="findAll" resultType="com.project.gabojago.gabojagouser.dto.user.UserDto">
+        SELECT * FROM users
+    </select>
 </mapper>

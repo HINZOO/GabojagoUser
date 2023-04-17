@@ -8,7 +8,8 @@ import java.util.List;
 @Mapper
 public interface CommReplyMapper {
     List<CommReplyDto> findAll();
-    List<CommReplyDto> findByCIdAndCcIdIsNull(int cId);
+    List<CommReplyDto> findByCId(int cId);
+    List<CommReplyDto> findByParentCrId(int ccId);
     CommReplyDto findByCcId(int ccId);
     int insertOne(CommReplyDto commComment);
     int updateOne(CommReplyDto commComment);

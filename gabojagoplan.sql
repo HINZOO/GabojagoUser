@@ -612,7 +612,6 @@ VALUES
     (1, '청소년', '8000', 30),
     (1, '소인', '5000', 10);
 
-
 #가보자고 더미
 INSERT INTO trips (u_id, title, area, address, phone, url_address, content,
                                 istj, istp, isfj, isfp, intj, intp, infj, infp, estj, estp, esfj,
