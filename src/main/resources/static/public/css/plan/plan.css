@@ -269,6 +269,7 @@ canvas{
 
 
 .mainHeader{
+    vertical-align: middle;
     width: 100%;
     height: 60px;
     background-color: rgb(161, 193, 255);
@@ -277,8 +278,18 @@ canvas{
     /*border-top: 3px solid gray;*/
     /*border-bottom: 3px solid gray;*/
     line-height: 30px;
+    padding-top: 10px;
     margin-top: 20px;
     margin-bottom: 20px;
+}
+
+.dayBtn{
+    margin-left: 20px;
+    border-radius: 10px;
+    font-size: 25px;
+    background-color: rgba(211, 211, 211, 0.66);
+    font-family: do hyeon;
+    color: whitesmoke;
 }
 
 .scheduleInputBox{
@@ -300,12 +311,13 @@ canvas{
 
 .mainSection{
     background-color: #fcfcfc;
-
 }
 
 
 
-
+#accordionSection{
+    padding: 0px 20px;
+}
 .scheduleContainer{
     margin: 0px;
     height: 100%;
@@ -328,7 +340,7 @@ canvas{
     border-left: 30px solid rgb(161, 193, 255);
     border-radius: 10px 0px 0px 10px;
     text-align: center;
-    font-size: 33px;
+    font-size: 26px;
     color: white;
     text-shadow: -1px 0 lightgrey, 1px 1px #adadad, 1px 2px #adadad, 0 -1px lightgrey;
 }
