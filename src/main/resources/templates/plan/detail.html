@@ -7,6 +7,7 @@
     <title>게시판 상세</title>
     <link th:href="@{/public/css/plan/plan.css}" rel="stylesheet" />
 
+
 </head>
 
 <div layout:fragment="content" class="container-fluid px-0">
@@ -41,9 +42,9 @@
 
 
 
-            <div class="col-md-8 mainSection">
+            <div class="col-md-8 mainSection px-0">
 
-                <div class="row mainHeader">
+                <div class="row mainHeader mx-0">
                     <div class="col-md-2">
                         <div class="btn-group">
                             <button type="button" class="btn btn-secondary btn-lg dropdown-toggle dayBtn py-0 border-0" data-bs-toggle="dropdown" aria-expanded="false">
@@ -233,27 +234,23 @@
 
 
     <script th:inline="javascript">
+        let activatedCanvas;
+        let canvasMap=new Map();
 
-        document.getElementById("imgBtn").addEventListener("click",()=>{
+
+
+        document.getElementById("imgBtn").addEventListener("mousedown",()=>{
+            console.log(canvasMap.get(1));
             let input = document.getElementById("imgInput")
-                console.log("왜 두 번 실행?")
-
             input.click();
             input.addEventListener("change",async (e)=>{
                 let data = new FormData()
                 data.append("img",input.files[0])
                 let url =`/plan/contents/imgHandler.do`
                 const resp = await fetch(url,{method:"POST",body:data});
-            })
+            },{once:true})
         })
 
-
-        let bb = document.getElementsByClassName("scheduleLeft")
-        Array.from(bb).forEach((e)=>{
-            e.addEventListener("click",()=>{
-                console.log("되나?")
-            })
-        })
 
         /*
         게시글을 로드 할 때 화면 초기화
@@ -268,6 +265,7 @@
             initArr.forEach((a)=>{
                let ele = document.querySelector(`#content_${a.conId}`).lastElementChild;
                 newCanvas(ele,a.conId,a.canPath);
+
             });
         });
 
@@ -275,7 +273,6 @@
         const URL="ws://localhost:7777/plan"
         let webSocket;
         webSocket=new WebSocket(URL);
-
 
         // 새 스케쥴 등록 모달
         const newScheduleBtn = document.querySelector("#newScheduleBtn");
@@ -288,9 +285,7 @@
         const scheduleInsertForm = document.getElementById("scheduleInsertForm");
         scheduleInsertForm.onsubmit=registerSchedule;
 
-
-
-        //새 스케쥴 생성시 @ResponseBody 요청 보내고 결과에 따라 콜랩스 생성...나중에
+        // 새 스케쥴 생성 요청시 ajax
         async function registerSchedule(e){
             e.preventDefault();
             const data=new FormData(scheduleInsertForm);
@@ -308,10 +303,26 @@
                 alert("등록 실패 status :"+resp.status);
             }
         }
+        // 스케쥴 수정.삭제 버튼
+        Array.from(document.getElementsByClassName("scheduleSideBtn2")).forEach((ele)=>{
+            let conId
+            ele.addEventListener("click",()=>{
+
+            })
+        })
+
+        // 화이트보드 삭제 버튼 클릭시
+        Array.from(document.getElementsByClassName("scheduleSideBtn2")).forEach((ele)=>{
+            let conId
+            ele.addEventListener("click",()=>{
+
+            })
+        })
 
 
 
 
+        // 캔버스 인스턴스 생성용
         function newCanvas(ele,conId,path=null){
             let w = document.querySelector(".accordion-item").clientWidth;
             let h = 500/1200*w+16; //16은 부트스트랩 아코디언바디에 설정된 상하 패딩값을 보정해준 것
@@ -320,8 +331,10 @@
             let canvas = newCanvas.canvas;
             ele.lastElementChild.style.display = "none"
             ele.append(canvas);
+            canvasMap.set(conId,newCanvas);
         }
 
+        // 생성된 스케쥴에 화이트보드를 추가 하는 경우
         async function newCanvasBtn(ele){
             let conId = ele.parentElement.getAttribute("id").split("_")[1]
             let url =`/plan/contents/canvasHandler.do`
@@ -361,9 +374,6 @@
                         </div>
                     </div>`;
         }
-
-
-
 
 
 

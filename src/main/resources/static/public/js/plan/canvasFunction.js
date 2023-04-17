@@ -1,5 +1,6 @@
 const box = document.querySelector(".accordion-header").clientWidth-40
 
+
 class CanvasCreate {
     id; canvas; ctx;
     layerArr = []; // 레이어 구현용 배열
@@ -25,6 +26,7 @@ class CanvasCreate {
         this.init()
     }
     init(){
+
         // 스타일 관련 초기 설정
         this.canvas.width = 1200;
         this.canvas.height = 500;
@@ -55,6 +57,9 @@ class CanvasCreate {
         return xy/this.pageSize/this.currentScale
     }
 
+    shout(){
+        console.log("??")
+    }
 
 
     // 캔버스 기본 배경
@@ -513,5 +518,5 @@ class CanvasCreate {
 
 
 
-
 };//클래스 닫기
+

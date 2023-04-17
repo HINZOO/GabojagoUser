@@ -274,17 +274,15 @@ canvas{
 
 
 .mainHeader{
-    width: 100%;
     height: 70px;
-    background-color: rgb(161, 193, 255);
+    background-color: rgb(109, 156, 255);
     border-radius: 20px 20px 0px 0px;
     border: 1px solid transparent;
-    /*border-top: 3px solid gray;*/
-    /*border-bottom: 3px solid gray;*/
     line-height: 35px;
     padding-top: 15px;
     margin-top: 20px;
-    margin-bottom: 20px;
+
+
 }
 
 .dayBtn{
@@ -293,7 +291,7 @@ canvas{
     font-size: 25px;
     background-color: rgba(211, 211, 211, 0.66);
     font-family: do hyeon;
-    color: whitesmoke;
+    color: white;
 }
 
 .scheduleInputBox{
@@ -322,7 +320,9 @@ canvas{
 
 
 #accordionSection{
-    padding: 0px 20px;
+    width: 100%;
+    border-top: 10px solid lightgrey ;
+    padding: 20px 20px;
 }
 .scheduleContainer{
     margin: 0px;
@@ -336,14 +336,16 @@ canvas{
 }
 .scheduleLeft{
     font-family: Russo One;
-    background-color: rgb(199, 220, 255);
+    /*background-color: rgb(199, 220, 255);*/
+    background-color: rgb(161, 193, 255);
     letter-spacing: 3px;
     height: 100%;
     line-height: 50px;
     /*font-weight: bold;*/
     font-weight: 400;
     border-right: 15px solid white;
-    border-left: 30px solid rgb(161, 193, 255);
+    /*border-left: 30px solid rgb(161, 193, 255);*/
+    border-left: 30px solid rgb(109, 156, 255);
     border-radius: 10px 0px 0px 10px;
     text-align: center;
     font-size: 26px;
@@ -356,7 +358,7 @@ canvas{
 .scheduleCenter{
 
     font-weight: bold;
-    border-left: 15px solid rgb(199, 220, 255);
+    border-left: 15px solid rgb(161, 193, 255);
     line-height: 50px;
     height: 100%;
     position: relative;
