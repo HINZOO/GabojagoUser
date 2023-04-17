@@ -4,10 +4,316 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{/layout}">
 <head>
-  <meta charset="UTF-8">
-  <title>여행정보 상세</title>
-</head>
-<body>
+    <meta charset="UTF-8">
+    <title>맞춤추천 리스트</title>
+    <script src=""></script>
+    <style>
+        .splide {
+            width: 800px;
+            height: 500px;
+        }
 
-</body>
+        .splide__slide {
+            padding: 1rem;
+        }
+
+        .splide__slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<div layout:fragment="content" class="container">
+    <script src="/public/js/splide.js"></script>
+    <h1 class="my-4">맞춤추천 상세</h1>
+
+
+    <!--    <div class="splide">-->
+    <!--        <div class="splide__track">-->
+    <!--            <ul class="splide__list">-->
+    <!--                <li class="splide__slide"><img src="image1.jpg"></li>-->
+    <!--                <li class="splide__slide"><img src="image2.jpg"></li>-->
+    <!--                <li class="splide__slide"><img src="image3.jpg"></li>-->
+    <!--            </ul>-->
+    <!--        </div>-->
+    <!--    </div>-->
+
+
+    <section id="tripCont">
+        <div class="row">
+            <div class="col-5">
+                <div class="card border-dark border-opacity-25">
+                    <div class="card-header p-3 bg-transparent border-dark border-opacity-25">
+                        <div class="d-flex justify-content-around">
+                            <p class="card-text d-flex flex-column align-items-center g-2 mb-0">
+                                <span class="bi bi-heart mb-1"></span>
+                                좋아요
+                                <span>156</span>
+                            </p>
+                            <p class="card-text d-flex flex-column align-items-center g-2 mb-0">
+                                <span class="bi bi-heart mb-1"></span>
+                                북마크
+                                <span>156</span>
+                            </p>
+                            <p class="card-text d-flex flex-column align-items-center g-2 mb-0">
+                                <span class="bi bi-heart mb-1"></span>
+                                리뷰
+                                <span>156</span>
+                            </p>
+                            <p class="card-text d-flex flex-column align-items-center g-2 mb-0">
+                                <span class="bi bi-heart mb-1"></span>
+                                방문
+                                <span>156</span>
+                            </p>
+                            <p class="card-text d-flex flex-column align-items-center g-2 mb-0">
+                                <span class="bi bi-heart mb-1"></span>
+                                조회수
+                                <span>156</span>
+                            </p>
+                        </div>
+                    </div> <!-- // 좋아요,북마크,리뷰,방문,조회수 -->
+
+                    <div class="card-body text-success">
+                        <h5 class="card-title">제주도에서 즐기는 봄꽃 여행</h5>
+                        <p class="card-text">
+                            <span>☆☆☆☆☆</span>
+                            <small>156</small>
+                        </p>
+                        <p class="card-text">
+                            #enfj#enfp#istj
+
+                            mbti / 해시태그
+                        </p>
+                        <h6>기본정보</h6>
+                        <p class="card-text">
+                            주소
+                            <span>서귀포</span>
+                        </p>
+                        <p class="card-text">
+                            연락처
+                            <span>01011112222</span>
+                        </p>
+                        <p class="card-text">
+                            홈페이지
+                            <span>https://www.visitjeju.net/kr/</span>
+                        </p>
+                        <p class="card-text">
+                            등록일 / 수정일
+                            <span></span>
+                        </p>
+
+                    </div> <!---->
+
+                    <div class="card-footer bg-transparent border-dark border-opacity-25">
+                        <label for="" class="form-label">소개글</label>
+                        <textarea name="" id="" rows="4" class="form-control" th:text="${t.content}"></textarea>
+                    </div>
+                </div>
+            </div> <!-- 게시글 상세 (왼쪽) -->
+
+            <div class="col-7">
+                <div class="card" style="border:none;">
+
+                    <!--<div class="card-header d-flex justify-content-between align-items-center">
+                        <strong th:text="${t.area}"></strong>
+                        <i class="bi bi-heart text-danger"></i>
+                    </div>-->
+
+                    <!-- imgs 가 null 이 아니면 보이기! null 이면 안보이기! -->
+                    <div th:id="'carousel'+${t.tId}" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            <div class="carousel-item rounded-top overflow-hidden" th:each="img,state : ${t.imgs}"
+                                 th:classappend="${state.first}?'active':''">
+                                <img th:if="${t.imgs!=null}" th:src="@{'{path}'(path=${img.imgPath})}"
+                                     class="d-block w-100" style="object-fit: contain">
+                            </div>
+                        </div>
+                        <button class="carousel-control-prev" type="button" th:data-bs-target="'#carousel'+${t.tId}"
+                                data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" th:data-bs-target="'#carousel'+${t.tId}"
+                                data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+                    <div class="pt-3">
+                        <p class="d-flex justify-content-between align-items-center">
+                            <span>
+                                여행가의 리뷰 <strong>52</strong>
+                            </span>
+                            <a class="btn btn-danger">리뷰 작성하기</a>
+                        </p>
+                        <hr>
+                        <p>
+                            <span>
+                                <i class="bi bi-record-circle text-danger"></i>
+                                좋아요순
+                            </span>
+                            <span>
+                                <i class="bi bi-circle text-dark text-opacity-25"></i>
+                                최신순
+                            </span>
+                        </p>
+                        <hr>
+                        <div>
+                            <div class="mb-3 d-flex justify-content-between align-items-center">
+                                <div class="d-flex align-items-center">
+                                    <img src="/public/img/trip/airplane.jpg"
+                                         class="me-2 d-inline-block border rounded-circle" style="width:30px; height: 30px;"
+                                         alt="">
+                                    <div>
+                                        가보자고잉
+                                        <!--<p class="mb-0">
+                                            <small>리뷰<span>17</span></small>
+                                            <small>팔로워<span>5</span></small>
+                                        </p>-->
+                                    </div>
+                                </div> <!-- 유저 프로필,닉네임,작성 리뷰개수,팔로워수 -->
+                                <div class="dropdown">
+                                    <a href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="bi bi-three-dots-vertical text-muted"></i>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <!-- 로그인 + 로그인유저와 게시글의 유저가 동일할때 보이기! -->
+                                        <li>
+                                            <!--                                        <li th:if="${session.loginUser!=null}">-->
+                                            <a class="dropdown-item text-muted" th:href="@{'/trip/{tId}/modify.do'(tId=${t.tId})}">수정폼</a>
+                                        </li>
+                                        <li><a class="dropdown-item text-muted" th:href="@{'/trip/{tId}/remove.do'(tId=${t.tId})}">삭제</a></li>
+                                        <li>
+                                            <a class="dropdown-item text-danger" href="#">
+                                            <i class="bi bi-bell-fill"></i>신고
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+
+                            <div>
+                                <div>
+                                    <p>협재해수욕장에서 바라본 노을은 완벽했어요♥️ 해가질무렵 💙 #여름 #바다 #제주 #여행</p>
+                                </div>
+                                <div>
+                                    <div class="row mb-2">
+                                        <div class="col">
+                                            <img class="img-fluid" src="/public/img/trip/jeju1.jpeg" alt="">
+                                        </div>
+                                        <div class="col">
+                                            <img class="img-fluid" src="/public/img/trip/jeju1.jpeg" alt="">
+                                        </div>
+                                        <div class="col">
+                                            <img class="img-fluid" src="/public/img/trip/jeju1.jpeg" alt="">
+                                        </div>
+                                        <div class="col">
+                                            <img class="img-fluid" src="/public/img/trip/jeju1.jpeg" alt="">
+                                        </div>
+                                        <div class="col">
+                                            <img class="img-fluid" src="/public/img/trip/jeju1.jpeg" alt="">
+                                        </div>
+                                    </div>
+                                    <!--  이미지 / 반복문-->
+                                    <div>
+                                        <p class="text-danger me-2 badge border rounded-5 border-danger border-opacity-50">
+                                            <i class="bi bi-hash"></i><span>여름</span>
+                                        </p>
+                                        <p class="text-danger me-2 badge border rounded-5 border-danger border-opacity-50">
+                                            <i class="bi bi-hash"></i><span>바다</span>
+                                        </p>
+                                        <p class="text-danger me-2 badge border rounded-5 border-danger border-opacity-50">
+                                            <i class="bi bi-hash"></i><span>제주</span>
+                                        </p>
+                                        <p class="text-danger me-2 badge border rounded-5 border-danger border-opacity-50">
+                                            <i class="bi bi-hash"></i><span>여행</span>
+                                        </p>
+                                    </div> <!-- 해시태그 반복문 -->
+                                </div>
+                                <p>
+                                    <span class="me-2">
+                                        작성일 :
+                                        <small th:text="${#dates.format(t.postTime,'yyy.MM.dd')}"></small>
+                                        <!-- date.format(데이트객체, 포맷) 으로 날짜 예쁘게 수정하기 -->
+                                    </span>
+                                    <span>☆☆☆☆☆</span>
+                                    <span>방문</span>
+                                </p>
+                                <p>
+                                    댓글작성폼 넣기
+                                    <a href="">좋아요</a>
+                                    <a href="">댓글쓰기</a>
+                                </p>
+
+                            </div>
+
+                        </div>
+                        <form action="">
+                            <div class="row align-items-center">
+                                <div class="col-3">
+                                    <input placeholder="부모댓글" type="text" readonly class="form-control">
+                                </div>
+                                <div class="col">
+                                    <input placeholder="댓글" type="text" class="form-control">
+                                </div>
+                                <button class="btn col-auto">
+                                    <i class="bi bi-send"></i>
+<!--                                    등록-->
+                                </button>
+                                <!-- input 태그로 버튼 모양내기 -->
+                                <label class="col-auto">
+                                    <i class="bi bi-image"></i>
+                                    <input class="d-none" type="file" name="img">
+                                </label>
+                            </div>
+
+
+
+                        </form>
+
+
+                        <!--                    <div class="card-body">
+                                                <div class="d-flex align-items-center">
+                                                    <p class="card-title fs-6 mb-0" th:text="${t.title}"></p>
+                                                </div>
+
+                                                <p class="card-text">
+                                                    <span></span>
+                                                    #enfj#enfp#istj
+                                                </p>
+
+                                                <div class="card-text d-flex justify-content-between">
+                                                    <p class="m-0">
+                                                        <span>☆☆☆☆☆</span>
+                                                        <small>156</small>
+                                                    </p>
+
+                                                    <div class="dropdown">
+                                                        <a href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                            <i class="bi bi-three-dots-vertical text-muted"></i>
+                                                        </a>
+                                                        <ul class="dropdown-menu">
+                                                            &lt;!&ndash; 로그인 + 로그인유저와 게시글의 유저가 동일할때 보이기! &ndash;&gt;
+                                                            <li th:if="${session.loginUser!=null}">
+                                                                <a class="dropdown-item" th:href="@{'/trip/{tId}/modify.do'(tId=${t.tId})}">수정폼</a>
+                                                            </li>
+                                                            <li><a class="dropdown-item" href="#">Another action</a></li>
+                                                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div> &lt;!&ndash; card-body &ndash;&gt;
+                                            -->
+
+                    </div>
+
+
+                </div>
+                <!-- 게시글 이미지, 리뷰,댓글 (오른쪽) -->
+            </div>
+    </section>
+
+</div>
 </html>
