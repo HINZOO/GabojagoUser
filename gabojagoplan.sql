@@ -638,7 +638,7 @@ INSERT INTO plans(p_id, u_id, title, info, plan_from, plan_to, img_path, plan_st
 INSERT INTO plan_contents (con_id, p_id, t_id, s_id, day_n, title, info, time, img_path) VALUES (1, 1, null, null, 1, '한라산', '그림판 로딩 테스트 → 그림판 데이터가 있는 경우', '06:00 ~ 12:00', null);
 INSERT INTO plan_contents (con_id, p_id, t_id, s_id, day_n,  title, info, time, img_path) VALUES (2, 1, null, null, 1, '툇마루 카페', '스케쥴은 추가 했지만 그림판을 아직 안 만든 경우', '14:00 ~ 19:00', null);
 INSERT INTO plan_contents (con_id, p_id, t_id, s_id, day_n,  title, info, time, img_path) VALUES (3, 1, null, null, 1, '몽돌해변', '그림판까지 만들었지만, 아무것도 안 그린 경우', '19:00 ~ 23:00', null);
-INSERT INTO plan_contents (con_id, p_id, t_id, s_id, day_n,  title, info, time, img_path) VALUES (4, 1, null, null, 2, '한라산 2회차', '일정이 달라지는 경우', '19:00 ~ 23:00', null);
+INSERT INTO plan_contents (con_id, p_id, t_id, s_id, day_n,  title, info, time, img_path) VALUES (4, 1, null, null, 2, '한라산 2회차', 'n일째 일정을 구분해서 출력해야함(아직)', '00:00 ~ 07:00', null);
 INSERT INTO plan_content_paths (path_id, con_id, can_path) VALUES (2, 3, null);
 INSERT INTO plan_content_paths (path_id, con_id, can_path)
 VALUES (1, 1, '[{"type":"pen","strokeStyle":"#ff0000","lineWidth":0.5,"scale":1,"moveTo":[76,54],"path":[[82,55],[92,55],[101,55],[111,56],[120,56],[124,56],[129,56],[130,57],[133,60],[137,62],[142,64],[144,65],[146,65]],"range":[[82,55],[146,65]]},
