@@ -60,6 +60,12 @@ public class CommunityServiceImpl implements CommunityService{
     @Transactional
     public int modify(CommunityDto community, int[] delImgIds) {
         int modify=communityMapper.updateOne(community);
+        if(community.getImgs()!=null){
+            for(CommImgDto img:community.getImgs()){
+                img.setCId(community.getCId());
+                modify+=commImgMapper.insertOne(img);
+            }
+        }
         if(delImgIds!=null){
             for(int ciId:delImgIds){
                 modify+=commImgMapper.deleteOne(ciId);

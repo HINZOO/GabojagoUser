@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<div class="header d-flex justify-content-between pb-1 border-0 ">
-    <!--     th:classappend="${(session.loginUser!\=null && session.loginUser.uId==c.uId)?'border-bottom':''}">-->
+<div class="header d-flex justify-content-between pb-1 border-0 "
+         th:classappend="${(session.loginUser!=null && session.loginUser.uId==c.uId)?'border-bottom':''}">
     <div>
         @<strong th:text="${r.uId}"></strong>
         <small>•</small>
@@ -28,8 +28,21 @@
     </div>
 </div>
 <div class="text-end">
-    <a href="javascript:void(0)" th:onclick="modifyFromPut([[${r.ccId}]])" class="me-2 text-decoration-none text-success" >수정하기</a>
-    <a href="javascript:void(0)" id="replyHiddenBtn" class="text-decoration-none text-primary">댓글 달기</a>
+    <a href="javascript:void(0)"
+       th:onclick="modifyFromPut([[${r.ccId}]])"
+       th:if="${session.loginUser!=null && session.loginUser.uId==c.uId}"
+       class="me-2 text-decoration-none text-success" >수정하기</a>
+    <a href="javascript:void(0)"
+       th:onclick="replyFromPut([[${r.ccId}]])"
+       class="text-decoration-none text-primary">댓글 달기</a>
+</div>s
+<!--대댓글등록폼-->
+<div>
+    <form action="" th:name="'replyInsertForm'+${r.ccId}" class="visually-hidden">
+        <input type="text" name="content" class="input-group col">
+        <input type="hidden" name="ccId" th:value="${r.ccId}">
+        <button class="btn btn-outline-success btn-sm col-1">등록</button>
+    </form>
 </div>
 
     <ul class="list-group border-0">
@@ -44,6 +57,10 @@
     function modifyFromPut (id){
         document.forms['modifyInsertForm'+id].classList.toggle("visually-hidden")
     }
+    function replyFromPut(id){
+        document.forms['replyInsertForm'+id].classList.toggle("visually-hidden")
+    }
+
     /*]]>*/
 </script>
 
