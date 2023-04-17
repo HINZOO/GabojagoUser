@@ -236,13 +236,16 @@
 
         document.getElementById("imgBtn").addEventListener("click",()=>{
             let input = document.getElementById("imgInput")
-            input.click();
-            input.addEventListener("change",(e)=>{
+                console.log("왜 두 번 실행?")
 
-            console.log(input.files)
+            input.click();
+            input.addEventListener("change",async (e)=>{
+                let data = new FormData()
+                data.append("img",input.files[0])
+                let url =`/plan/contents/imgHandler.do`
+                const resp = await fetch(url,{method:"POST",body:data});
             })
         })
-
 
 
         let bb = document.getElementsByClassName("scheduleLeft")

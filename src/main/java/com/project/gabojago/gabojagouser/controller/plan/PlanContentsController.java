@@ -44,7 +44,8 @@ public class PlanContentsController {
     }
 
     @PostMapping ("/imgHandler.do")
-    public @ResponseBody int imgInsert(@RequestBody String conId) throws IOException {
+    public @ResponseBody int imgInsert(MultipartFile img) throws IOException {
+        log.info("이미지"+img);
         return 1;
     }
 
