@@ -35,10 +35,13 @@
     <a href="javascript:void(0)"
        th:onclick="replyFromPut([[${r.ccId}]])"
        class="text-decoration-none text-primary">댓글 달기</a>
-</div>s
+</div>
 <!--대댓글등록폼-->
 <div>
-    <form action="" th:name="'replyInsertForm'+${r.ccId}" class="visually-hidden">
+    <form action=""
+          onsubmit="event.preventDefault(); registerReply(this);"
+          th:name="'replyInsertForm'+${r.ccId}"
+          class="visually-hidden">
         <input type="text" name="content" class="input-group col">
         <input type="hidden" name="ccId" th:value="${r.ccId}">
         <button class="btn btn-outline-success btn-sm col-1">등록</button>
