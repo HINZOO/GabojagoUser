@@ -131,7 +131,7 @@ CREATE TABLE `trip_review_hashtags` (
 CREATE TABLE `trip_imgs` (
                              `ti_id` int unsigned AUTO_INCREMENT PRIMARY KEY COMMENT '이미지 아이디',
                              `t_id`	int unsigned NOT NULL COMMENT '맞춤추천 아이디',
-                             `img_path`	varchar(255) COMMENT'이미지 경로',
+                             `img_path`	varchar(255) NOT NULL COMMENT'이미지 경로',
                              `img_main`	boolean	COMMENT '메인이미지'
 );
 #가보자고(북마크 테이블)
