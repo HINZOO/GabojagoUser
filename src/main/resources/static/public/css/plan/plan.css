@@ -145,21 +145,26 @@ canvas{
 
 
 .btnLine{
-    padding : 0px 10px 0px 10px;
-    background-color: rgba(227, 227, 227, 0.42);
+    box-sizing: border-box;
+    /*padding : 0px 10px 0px 10px;*/
+    /*background-color: rgb(190, 212, 255)*/
 }
 .btnLine i {
-    font-size: 20px;
+    font-size: 28px;
 }
 .btnLine button{
-    border: none;
-    margin-left: 5px !important;
-    padding: 5px;
-    border-radius: 8px;
-    color: #333333;
+    text-align: center;
+    width: 40px;
+    height: 40px;
+    border: 0px solid transparent;
+    margin-left: 3px !important;
+    background-color: lightgray;
+    border-radius: 5px;
+    color: #5b5b5b;
+
 }
 .btnLine button:hover{
-    background-color: rgba(211, 211, 211, 0.73);
+    background-color: rgba(176, 176, 176, 0.73);
 }
 
 
@@ -269,16 +274,15 @@ canvas{
 
 
 .mainHeader{
-    vertical-align: middle;
     width: 100%;
-    height: 60px;
+    height: 70px;
     background-color: rgb(161, 193, 255);
     border-radius: 20px 20px 0px 0px;
     border: 1px solid transparent;
     /*border-top: 3px solid gray;*/
     /*border-bottom: 3px solid gray;*/
-    line-height: 30px;
-    padding-top: 10px;
+    line-height: 35px;
+    padding-top: 15px;
     margin-top: 20px;
     margin-bottom: 20px;
 }
@@ -297,16 +301,18 @@ canvas{
 }
 
 #newScheduleBtn{
+    margin-right: 20px;
     float: right;
     text-align: center;
-    line-height: 45px;
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     padding: 0px;
     font-size: 40px;
-    color: white;
-    /*background-color: rgb(161, 193, 255);*/
+    color: whitesmoke;
     border-radius: 50%;
+}
+#newScheduleBtn:hover{
+    background-color: #595959;
 }
 
 .mainSection{

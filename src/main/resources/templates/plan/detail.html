@@ -57,72 +57,77 @@
                     </div>
                     <div class="col-md-8">
                         <div class="btn-group btn-group-horizon btnLine" role="group">
+                            <!--이미지 삽입-->
+                            <button class="btn-group"  type="button" id="imgBtn">
+                                <i class="bi bi-image"></i>
+                                <input id="imgInput" type="file" style="display: none"/>
+                            </button>
                             <!--보관함-->
-                            <button class="btn-group btn-group-vertical"  type="button" id="loadBtn">
+                            <button class="btn-group"  type="button" id="loadBtn">
                                 <i class="bi bi-folder2-open"></i>
                             </button>
                             <!-- 지우기 -->
-                            <button class="btn-group btn-group-vertical"  type="button"  id="removeBtn">
+                            <button class="btn-group"  type="button"  id="removeBtn">
                                 <i class="bi bi-trash"></i>
                             </button>
                             <!--선택-->
-                            <button class="btn-group btn-group-vertical" type="button" id="selectorBtn">
+                            <button class="btn-group" type="button" id="selectorBtn">
                                 <i class="bi bi-hand-index"></i>
                             </button>
                             <!--이동-->
-                            <button class="btn-group btn-group-vertical" type="button"  id="moveBtn" style="background-color: #5d5d5d">
+                            <button class="btn-group" type="button"  id="moveBtn" style="background-color: #5d5d5d">
                                 <i class="bi bi-arrows-move"></i>
                             </button>
                             <!--펜-->
-                            <button class="btn-group btn-group-vertical"  type="button" id="penBtn">
+                            <button class="btn-group"  type="button" id="penBtn">
                                 <i class="bi bi-pencil"></i>
                             </button>
                             <!--직선-->
-                            <button class="btn-group btn-group-vertical"  type="button" id="lineBtn" >
+                            <button class="btn-group"  type="button" id="lineBtn" >
                                 <i class="bi bi-slash-lg"></i>
                             </button>
                             <!--박스 -->
-                            <button class="btn-group btn-group-vertical"  type="button"  id="rectBtn">
+                            <button class="btn-group"  type="button"  id="rectBtn">
                                 <i class="bi bi-square"></i>
                             </button>
                             <!--텍스트입력-->
-                            <button class="btn-group btn-group-vertical" type="button"  id="textBtn" style="background-color: #5d5d5d">
+                            <button class="btn-group" type="button"  id="textBtn" style="background-color: #5d5d5d">
                                 <i class="bi bi-fonts"></i>
                             </button>
                             <!--파레트-->
-                            <button class="btn-group btn-group-vertical"  type="button"   id="palateBtn" style="background-color: #5d5d5d">
+                            <button class="btn-group"  type="button"   id="palateBtn" style="background-color: #5d5d5d">
                                 <i class="bi bi-palette"></i>
                             </button>
                             <!--포스트잇-->
-                            <button class="btn-group btn-group-vertical"  type="button"  id="postBtn" style="background-color: #5d5d5d">
+                            <button class="btn-group"  type="button"  id="postBtn" style="background-color: #5d5d5d">
                                 <i class="bi bi-sticky"></i>
                             </button>
                             <!--스템프-->
-                            <button class="btn-group btn-group-vertical"  type="button" id="stampBtn" style="background-color: #5d5d5d">
+                            <button class="btn-group"  type="button" id="stampBtn" style="background-color: #5d5d5d">
                                 <i class="bi bi-star"></i>
                             </button>
                             <!--설정-->
-                            <button class="btn-group btn-group-vertical"  type="button"  id="settingBtn" style="background-color: #5d5d5d">
+                            <button class="btn-group"  type="button"  id="settingBtn" style="background-color: #5d5d5d">
                                 <i class="bi bi-gear"></i>
                             </button>
                             <!--플러스버튼-->
-                            <button class="btn-group btn-group-vertical"  type="button"  id="plusBtn">
+                            <button class="btn-group"  type="button"  id="plusBtn">
                                 <i class="bi bi-plus-circle"></i>
                             </button>
                             <!--마이너스버튼-->
-                            <button class="btn-group btn-group-vertical"  type="button"  id="minusBtn">
+                            <button class="btn-group"  type="button"  id="minusBtn">
                                 <i class="bi bi-dash-circle"></i>
                             </button>
-<!--                            <button class="btn-group btn-group-vertical red" ></button>-->
-<!--                            <button class="btn-group btn-group-vertical orange"></button>-->
-<!--                            <button class="btn-group btn-group-vertical yellow"></button>-->
-<!--                            <button class="btn-group btn-group-vertical green"></button>-->
-<!--                            <button class="btn-group btn-group-vertical blue"></button>-->
-<!--                            <button class="btn-group btn-group-vertical navy"></button>-->
-<!--                            <button class="btn-group btn-group-vertical purple"></button>-->
-<!--                            <button class="btn-group btn-group-vertical black"></button>-->
-<!--                            <button class="btn-group btn-group-vertical white"></button>-->
-<!--                            <button class="btn-group btn-group-vertical clear"></button>-->
+<!--                            <button class="btn-group red" ></button>-->
+<!--                            <button class="btn-group orange"></button>-->
+<!--                            <button class="btn-group yellow"></button>-->
+<!--                            <button class="btn-group green"></button>-->
+<!--                            <button class="btn-group blue"></button>-->
+<!--                            <button class="btn-group navy"></button>-->
+<!--                            <button class="btn-group purple"></button>-->
+<!--                            <button class="btn-group black"></button>-->
+<!--                            <button class="btn-group white"></button>-->
+<!--                            <button class="btn-group clear"></button>-->
 
                             </div><!--버튼그룹닫기-->
                         </div> <!--col 9-->
@@ -228,6 +233,18 @@
 
 
     <script th:inline="javascript">
+
+        document.getElementById("imgBtn").addEventListener("click",()=>{
+            let input = document.getElementById("imgInput")
+            input.click();
+            input.addEventListener("change",(e)=>{
+
+            console.log(input.files)
+            })
+        })
+
+
+
         let bb = document.getElementsByClassName("scheduleLeft")
         Array.from(bb).forEach((e)=>{
             e.addEventListener("click",()=>{

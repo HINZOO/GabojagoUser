@@ -43,4 +43,9 @@ public class PlanContentsController {
         return planContentPathsService.register(Integer.parseInt(conId));
     }
 
+    @PostMapping ("/imgHandler.do")
+    public @ResponseBody int imgInsert(@RequestBody String conId) throws IOException {
+        return 1;
+    }
+
 }
