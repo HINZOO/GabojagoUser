@@ -9,10 +9,12 @@
     <title>여행지 등록</title>
 </head>
 <div layout:fragment="content">
-    <form enctype="multipart/form-data" action="./register.do" method="post" style="width: 500px; margin: 0 auto;">
+    <script src="/public/js/tripInsert.js" defer></script>
+    <form name="tripInsertFrom" enctype="multipart/form-data" action="./register.do" method="post" style="width: 500px; margin: 0 auto;">
         <h1 class="my-4">여행지 등록</h1>
         <p class="form-floating">
-            <input readonly type="text" id="" name="uId" th:value="${session.loginUser.uId}" class="form-control" placeholder="??">
+            <input readonly type="text" id="" name="uId" value="user01" class="form-control" placeholder="??">
+<!--            <input readonly type="text" id="" name="uId" th:value="${session.loginUser.uId}" class="form-control" placeholder="??">-->
             <label for="">아이디(글쓴이)</label>
         </p>
 
@@ -61,7 +63,8 @@
         </p>
 
         <p class="form-floating">
-            <input type="text" name="phone" value="" class="form-control" placeholder="??">
+            <!-- 로그인한 파트너의 연락처 -->
+            <input type="text" name="phone" value="0212345677" class="form-control" placeholder="??">
             <label>연락처</label>
         </p>
 

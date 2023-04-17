@@ -39,23 +39,23 @@
 
         <p class="form-floating">
             <select name="area" id="area" class="form-select">
-                <option value="서울" th:selected="${#strings.equals(t.category,'서울')}">서울</option>
-                <option value="인천" th:selected="${#strings.equals(t.category,'인천')}">인천</option>
-                <option value="대전" th:selected="${#strings.equals(t.category,'대전')}">대전</option>
-                <option value="광주" th:selected="${#strings.equals(t.category,'광주')}">광주</option>
-                <option value="대구" th:selected="${#strings.equals(t.category,'대구')}">대구</option>
-                <option value="울산" th:selected="${#strings.equals(t.category,'울산')}">울산</option>
-                <option value="부산" th:selected="${#strings.equals(t.category,'부산')}">부산</option>
-                <option value="세종" th:selected="${#strings.equals(t.category,'세종')}">세종</option>
-                <option value="경기" th:selected="${#strings.equals(t.category,'경기')}">경기</option>
-                <option value="강원" th:selected="${#strings.equals(t.category,'강원')}">강원</option>
-                <option value="충북" th:selected="${#strings.equals(t.category,'충북')}">충북</option>
-                <option value="충남" th:selected="${#strings.equals(t.category,'충남')}">충남</option>
-                <option value="전북" th:selected="${#strings.equals(t.category,'전북')}">전북</option>
-                <option value="전남" th:selected="${#strings.equals(t.category,'전남')}">전남</option>
-                <option value="경북" th:selected="${#strings.equals(t.category,'경북')}">경북</option>
-                <option value="경남" th:selected="${#strings.equals(t.category,'경남')}">경남</option>
-                <option value="제주" th:selected="${#strings.equals(t.category,'제주')}">제주</option>
+                <option value="서울" th:selected="${#strings.equals(t.area,'서울')}">서울</option>
+                <option value="인천" th:selected="${#strings.equals(t.area,'인천')}">인천</option>
+                <option value="대전" th:selected="${#strings.equals(t.area,'대전')}">대전</option>
+                <option value="광주" th:selected="${#strings.equals(t.area,'광주')}">광주</option>
+                <option value="대구" th:selected="${#strings.equals(t.area,'대구')}">대구</option>
+                <option value="울산" th:selected="${#strings.equals(t.area,'울산')}">울산</option>
+                <option value="부산" th:selected="${#strings.equals(t.area,'부산')}">부산</option>
+                <option value="세종" th:selected="${#strings.equals(t.area,'세종')}">세종</option>
+                <option value="경기" th:selected="${#strings.equals(t.area,'경기')}">경기</option>
+                <option value="강원" th:selected="${#strings.equals(t.area,'강원')}">강원</option>
+                <option value="충북" th:selected="${#strings.equals(t.area,'충북')}">충북</option>
+                <option value="충남" th:selected="${#strings.equals(t.area,'충남')}">충남</option>
+                <option value="전북" th:selected="${#strings.equals(t.area,'전북')}">전북</option>
+                <option value="전남" th:selected="${#strings.equals(t.area,'전남')}">전남</option>
+                <option value="경북" th:selected="${#strings.equals(t.area,'경북')}">경북</option>
+                <option value="경남" th:selected="${#strings.equals(t.area,'경남')}">경남</option>
+                <option value="제주" th:selected="${#strings.equals(t.area,'제주')}">제주</option>
             </select>
             <label for="area">지역</label>
         </p>
@@ -115,23 +115,23 @@
         <div>
             <p class="d-flex justify-content-around">
                 <label><input type="checkbox" name="istj" th:checked="${t.istj}"> istj</label>
-                <label><input type="checkbox" name="istp"> istp</label>
-                <label><input type="checkbox" name="isfj"> isfj</label>
-                <label><input type="checkbox" name="isfp"> isfp</label>
-                <label><input type="checkbox" name="intj"> intj</label>
-                <label><input type="checkbox" name="intp"> intp</label>
-                <label><input type="checkbox" name="infj"> infj</label>
-                <label><input type="checkbox" name="infp"> infp</label>
+                <label><input type="checkbox" name="istp" th:checked="${t.istp}"> istp</label>
+                <label><input type="checkbox" name="isfj" th:checked="${t.isfj}"> isfj</label>
+                <label><input type="checkbox" name="isfp" th:checked="${t.isfp}"> isfp</label>
+                <label><input type="checkbox" name="intj" th:checked="${t.intj}"> intj</label>
+                <label><input type="checkbox" name="intp" th:checked="${t.intp}"> intp</label>
+                <label><input type="checkbox" name="infj" th:checked="${t.infj}"> infj</label>
+                <label><input type="checkbox" name="infp" th:checked="${t.infp}"> infp</label>
             </p>
             <p class="d-flex justify-content-around">
-                <label><input type="checkbox" name="estj"> estj</label>
-                <label><input type="checkbox" name="estp"> estp</label>
-                <label><input type="checkbox" name="esfj"> esfj</label>
-                <label><input type="checkbox" name="esfp"> esfp</label>
-                <label><input type="checkbox" name="entj"> entj</label>
-                <label><input type="checkbox" name="entp"> entp</label>
-                <label><input type="checkbox" name="enfj"> enfj</label>
-                <label><input type="checkbox" name="enfp"> enfp</label>
+                <label><input type="checkbox" name="estj" th:checked="${t.estj}"> estj</label>
+                <label><input type="checkbox" name="estp" th:checked="${t.estp}"> estp</label>
+                <label><input type="checkbox" name="esfj" th:checked="${t.esfj}"> esfj</label>
+                <label><input type="checkbox" name="esfp" th:checked="${t.esfp}"> esfp</label>
+                <label><input type="checkbox" name="entj" th:checked="${t.entj}"> entj</label>
+                <label><input type="checkbox" name="entp" th:checked="${t.entp}"> entp</label>
+                <label><input type="checkbox" name="enfj" th:checked="${t.enfj}"> enfj</label>
+                <label><input type="checkbox" name="enfp" th:checked="${t.enfp}"> enfp</label>
             </p>
         </div>
 

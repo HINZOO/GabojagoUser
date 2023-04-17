@@ -17,6 +17,11 @@ public class TripServiceImp implements TripService {
     private TripImgMapper tripImgMapper;
 
     @Override
+    public TripDto phoneCheck(String phone) throws Exception {
+        return tripMapper.findByPhone(phone);
+    }
+
+    @Override
     public List<TripImgDto> imgList(int[] tiId) { // 이미지 리스트
         List<TripImgDto> imgList=null;
         if(tiId!=null){
@@ -57,6 +62,12 @@ public class TripServiceImp implements TripService {
     @Override
     public int modify(TripDto trip, int[] delImgIds) {
         int modify=tripMapper.updateOne(trip);
+        if(trip.getImgs()!=null){
+            for(TripImgDto img : trip.getImgs()){
+                img.setTId(trip.getTId());
+                modify+=tripImgMapper.insertOne(img);
+            }
+        }
         if(delImgIds!=null){
             for(int tiId : delImgIds){
                 modify+=tripImgMapper.deleteOne(tiId);

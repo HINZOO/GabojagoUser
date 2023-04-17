@@ -10,6 +10,7 @@ public interface TripService {
     List<TripImgDto> imgList(int []tiId);
     TripDto detail(int tId);
     int register(TripDto trip);
+    TripDto phoneCheck(String phone) throws Exception; // 게시글 등록시 핸드폰 체크
     int modify(TripDto trip, int[] delImgIds);
     int remove(int tId);
 

@@ -10,7 +10,8 @@
 </head>
 <div layout:fragment="content" class="container">
     <h1 class="my-4">맞춤추천 리스트</h1>
-        <div class="text-end" th:if="${session.loginUser!=null}">
+<!--        <div class="text-end" th:if="${session.loginUser!=null}">-->
+        <div class="text-end">
             <a class="btn btn-primary" href="/trip/register.do" role="button">여행지 등록</a>
         </div>
     <section id="tripListCont" class="row row-cols-lg-4 row-cols-1 g-6">
@@ -23,11 +24,11 @@
 
                     <!-- 게시글 이미지 + 내용 클릭시 상세보기 이동 -->
                     <a class="text-dark text-decoration-none" th:href="@{'/trip/{tId}/detail.do'(tId=${t.tId})}">
-                        <!-- imgs 가 null 이 아니면 보이기! null 이면 안보이기! -->
+                        <!-- imgs 가 null 이 아니면 보이기! null 이면 안보이기! // id 는 유일한 값을 주기 위해서 tId 를 붙임 -->
                         <div th:if="${t.imgs!=null}" th:id="'carousel'+${t.tId}" class="carousel slide" data-bs-ride="carousel">
                             <div class="carousel-inner">
                                 <div class="carousel-item" th:each="img,state : ${t.imgs}" th:classappend="${state.first}?'active':''">
-                                    <img th:src="@{'{path}'(path=${img.imgPath})}" class="d-block w-100" style="width: 100%; height: 150px; object-fit: contain" alt="...">
+                                    <img th:src="@{'{path}'(path=${img.imgPath})}" class="d-block w-100" style="object-fit: contain"  alt="...">
                                 </div>
                             </div>
                             <button class="carousel-control-prev" type="button" th:data-bs-target="'#carousel'+${t.tId}" data-bs-slide="prev">
@@ -55,20 +56,7 @@
                                     <span>☆☆☆☆☆</span>
                                     <small>156</small>
                                 </p>
-
-                                <div class="dropdown">
-                                    <a href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="bi bi-three-dots-vertical text-muted"></i>
-                                    </a>
-                                    <ul class="dropdown-menu">
-                                        <!-- 로그인 + 로그인유저와 게시글의 유저가 동일할때 보이기! -->
-                                        <li th:if="${session.loginUser!=null}">
-                                            <a class="dropdown-item" th:href="@{'/trip/{tId}/modify.do'(tId=${t.tId})}">수정폼</a>
-                                        </li>
-                                        <li><a class="dropdown-item" href="#">Another action</a></li>
-                                        <li><a class="dropdown-item" href="#">Something else here</a></li>
-                                    </ul>
-                                </div>
+                                <th:block th:include="/trip/dropdownMenu.html"></th:block>
                             </div>
                         </div> <!-- card-body -->
                     </a>

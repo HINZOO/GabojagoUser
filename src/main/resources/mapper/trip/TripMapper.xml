@@ -49,8 +49,8 @@
              #{istj}, #{istp}, #{isfj}, #{isfp}, #{intj}, #{intp}, #{infj},
              #{infp}, #{estj}, #{estp}, #{esfj}, #{esfp}, #{entj}, #{entp}, #{enfj}, #{enfp},
              #{category})
-        # mbti 가 true 일때만 업데이트, false 일때는 0
     </insert>
+<!--        # mbti 가 true 일때만 업데이트, false 일때는 0-->
     <update id="updateOne" parameterType="TripDto">
         UPDATE trips
         SET title=#{title},
@@ -86,5 +86,8 @@
     </select>
     <select id="findByTId" resultMap="TripMap">
         SELECT * FROM trips WHERE t_id=#{tId}
+    </select>
+    <select id="findByPhone" resultType="TripDto">
+        SELECT * FROM trips WHERE phone=#{phone}
     </select>
 </mapper>
