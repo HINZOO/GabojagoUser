@@ -261,8 +261,9 @@ CREATE TABLE `plan_contents` (
                                  `p_id`	int unsigned NOT NULL COMMENT '같이가자플랜 아이디',
                                  `t_id`	int unsigned  COMMENT '맞춤추천 아이디',
                                  `s_id` int unsigned  COMMENT '판매글 아이디',
-                                 `title`	varchar(255) NOT NULL COMMENT '개별스케줄 제목',
-                                 `info`	varchar(255)  COMMENT '부가정보',
+                                 `day_n` tinyint(4) unsigned COMMENT '몇일째의 스케쥴인지',
+                                 `title` varchar(255) NOT NULL COMMENT '개별스케줄 제목',
+                                 `info`	varchar(255)  COMMENT '경유지, 메모 정보',
                                  `time`	varchar(255)  COMMENT '시작 - 끝',
                                  `img_path`	varchar(255) COMMENT'이미지 경로',
                                  FOREIGN KEY (p_id) REFERENCES plans (p_id) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -613,7 +614,7 @@ VALUES
 
 
 #가보자고 더미
-INSERT INTO gabojagoPlan.trips (u_id, title, area, address, phone, url_address, content,
+INSERT INTO trips (u_id, title, area, address, phone, url_address, content,
                                 istj, istp, isfj, isfp, intj, intp, infj, infp, estj, estp, esfj,
                                 esfp, entj, entp, enfj, enfp, category)
 VALUES
@@ -626,19 +627,20 @@ VALUES
 
 
 #플래너더미
-INSERT INTO plans(u_id, title, info, plan_from, plan_to, img_path, plan_status, review) VALUES('USER01', '취업 기원 제주도여행', '취업 좀 하자 제발', '2023-04-01', '2023-04-03', '/public/img/plan/p1Sample.jpg', 'PUBLIC', false);
-INSERT INTO plans(u_id, title, info, plan_from, plan_to, img_path, plan_status, review) VALUES('USER01', '강원도 삼척 행', '강원도 다녀오기', '2022-03-11', '2022-03-15', '/public/img/plan/p2Sample.jpg', 'PUBLIC', true);
-INSERT INTO plans(u_id, title, info, plan_from, plan_to, img_path, plan_status, review) VALUES('USER02', '놀러가자', '언제놀러가지', '2023-05-01', '2023-05-03', '/public/img/plan/p1Sample.jpg', 'PUBLIC', false);
-INSERT INTO plans(u_id, title, info, plan_from, plan_to, img_path, plan_status, review) VALUES('USER04', '제주도 한 달 살기', '나의 워라벨을 위함', '2023-02-01', '2023-03-03', '/public/img/plan/p1Sample.jpg', 'PUBLIC', false);
-INSERT INTO plans(u_id, title, info, plan_from, plan_to, img_path, plan_status, review) VALUES('USER05', '경주에서 수학여행 즐기기', '어른이되어 도전하는 수학여행', '2023-06-01', '2023-06-03', '/public/img/plan/p1Sample.jpg', 'PUBLIC', false);
+INSERT INTO plans(p_id, u_id, title, info, plan_from, plan_to, img_path, plan_status, review) VALUES(1, 'USER01', '취업 기원 제주도여행', '취업 좀 하자 제발', '2023-04-01', '2023-04-03', '/public/img/plan/p1Sample.jpg', 'PUBLIC', false);
+INSERT INTO plans(p_id, u_id, title, info, plan_from, plan_to, img_path, plan_status, review) VALUES(2, 'USER01', '강원도 삼척 행', '강원도 다녀오기', '2022-03-11', '2022-03-15', '/public/img/plan/p2Sample.jpg', 'PUBLIC', true);
+INSERT INTO plans(p_id, u_id, title, info, plan_from, plan_to, img_path, plan_status, review) VALUES(3, 'USER02', '놀러가자', '언제놀러가지', '2023-05-01', '2023-05-03', '/public/img/plan/p1Sample.jpg', 'PUBLIC', false);
+INSERT INTO plans(p_id, u_id, title, info, plan_from, plan_to, img_path, plan_status, review) VALUES(4, 'USER04', '제주도 한 달 살기', '나의 워라벨을 위함', '2023-02-01', '2023-03-03', '/public/img/plan/p1Sample.jpg', 'PUBLIC', false);
+INSERT INTO plans(p_id, u_id, title, info, plan_from, plan_to, img_path, plan_status, review) VALUES(5, 'USER05', '경주에서 수학여행 즐기기', '어른이되어 도전하는 수학여행', '2023-06-01', '2023-06-03', '/public/img/plan/p1Sample.jpg', 'PUBLIC', false);
 
 #플래너 그림판 로딩 테스트용 더미(User01로 접속하면 나옴)
 
-INSERT INTO gabojagoplan.plan_contents (con_id, p_id, t_id, s_id, title, info, time, img_path) VALUES (1, 1, null, null, '한라산', '그림판 로딩 테스트 → 그림판 데이터가 있는 경우', '06:00 ~ 12:00', null);
-INSERT INTO gabojagoplan.plan_contents (con_id, p_id, t_id, s_id, title, info, time, img_path) VALUES (2, 1, null, null, '툇마루 카페', '스케쥴은 추가 했지만 그림판을 아직 안 만든 경우', '14:00 ~ 19:00', null);
-INSERT INTO gabojagoplan.plan_contents (con_id, p_id, t_id, s_id, title, info, time, img_path) VALUES (3, 1, null, null, '몽돌해변', '그림판까지 만들었지만, 아무것도 안 그린 경우', '19:00 ~ 23:00', null);
-INSERT INTO gabojagoplan.plan_content_paths (path_id, con_id, can_path) VALUES (2, 3, null);
-INSERT INTO gabojagoplan.plan_content_paths (path_id, con_id, can_path)
+INSERT INTO plan_contents (con_id, p_id, t_id, s_id, day_n, title, info, time, img_path) VALUES (1, 1, null, null, 1, '한라산', '그림판 로딩 테스트 → 그림판 데이터가 있는 경우', '06:00 ~ 12:00', null);
+INSERT INTO plan_contents (con_id, p_id, t_id, s_id, day_n,  title, info, time, img_path) VALUES (2, 1, null, null, 1, '툇마루 카페', '스케쥴은 추가 했지만 그림판을 아직 안 만든 경우', '14:00 ~ 19:00', null);
+INSERT INTO plan_contents (con_id, p_id, t_id, s_id, day_n,  title, info, time, img_path) VALUES (3, 1, null, null, 1, '몽돌해변', '그림판까지 만들었지만, 아무것도 안 그린 경우', '19:00 ~ 23:00', null);
+INSERT INTO plan_contents (con_id, p_id, t_id, s_id, day_n,  title, info, time, img_path) VALUES (4, 1, null, null, 2, '한라산 2회차', '일정이 달라지는 경우', '19:00 ~ 23:00', null);
+INSERT INTO plan_content_paths (path_id, con_id, can_path) VALUES (2, 3, null);
+INSERT INTO plan_content_paths (path_id, con_id, can_path)
 VALUES (1, 1, '[{"type":"pen","strokeStyle":"#ff0000","lineWidth":0.5,"scale":1,"moveTo":[76,54],"path":[[82,55],[92,55],[101,55],[111,56],[120,56],[124,56],[129,56],[130,57],[133,60],[137,62],[142,64],[144,65],[146,65]],"range":[[82,55],[146,65]]},
 {"type":"pen","strokeStyle":"#ff0000","lineWidth":0.5,"scale":1,"moveTo":[64,93],"path":[[70,92],[80,91],[89,90],[97,90],[101,90],[106,90],[108,90],[111,90],[112,90],[113,90],[114,90],[116,90],[117,90],[120,90],[124,91],[128,91],[130,91],[131,91],[133,91],[137,92],[139,92],[141,92],[142,92]],"range":[[70,90],[142,92]]},
 {"type":"pen","strokeStyle":"#ff0000","lineWidth":0.5,"scale":1,"moveTo":[142,65],"path":[[140,67],[139,71],[136,76],[133,82],[129,86],[127,87]],"range":[[127,67],[140,87]]},
