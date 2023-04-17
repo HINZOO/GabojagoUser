@@ -68,7 +68,7 @@ public class CommController {
             @RequestParam(value ="img",required = false) MultipartFile[] imgs
             ) throws IOException {
         String redirectPage = "redirect:/comm/register.do";
-        System.out.println("commBoard = " + commBoard);
+        //System.out.println("commBoard = " + commBoard);
         //if(!loginUser.getUId().equals(commBoard.getCId())) return redirectPage;
         List<CommImgDto> commImgs = null;
         if (imgs != null) {
@@ -86,6 +86,7 @@ public class CommController {
                     }
                 }
             }
+        }
             commBoard.setImgs(commImgs);
             int register = 0;
             try {
@@ -103,7 +104,7 @@ public class CommController {
                     }
                 }
             }
-        }
+
             return redirectPage;
     }
 
@@ -127,10 +128,28 @@ public class CommController {
             @ModelAttribute CommunityDto commBoard,
             @RequestParam(value="delImgId",required = false) int[] delImgIds,
             @RequestParam(value="img",required = false) MultipartFile[] imgs
-    ){
+    ) throws IOException {
+
         String redirectPage="redirect:/comm/"+commBoard.getCId()+"/modify.do";
         List<CommImgDto> imgDtos=null;
         int modify=0;
+        if(imgs!=null){
+            imgDtos=new ArrayList<>();
+            for(MultipartFile img:imgs){
+                if(!img.isEmpty()){
+                    String[] contentTypes=img.getContentType().split("/");
+                    if(contentTypes[0].equals("image")){
+                        String fileName=System.currentTimeMillis()+"_"+(int)(Math.random()*10000)+"."+contentTypes[1];
+                        Path path = Paths.get(staticPath + "/public/img/comm/" + fileName);
+                        img.transferTo(path);
+                        CommImgDto imgDto=new CommImgDto();
+                        imgDto.setImgPath("/public/img/comm/"+fileName);//서버배포경로
+                        imgDtos.add(imgDto);
+                    }
+                }
+            }
+        }
+       commBoard.setImgs(imgDtos);
         try{
             if(delImgIds!=null) imgDtos=communityService.imgList(delImgIds);
             modify=communityService.modify(commBoard,delImgIds);
@@ -146,6 +165,7 @@ public class CommController {
             }
             redirectPage="redirect:/comm/list.do";
         }
+
         return redirectPage;
 
     }
