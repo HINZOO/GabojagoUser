@@ -263,7 +263,8 @@
             [/];
             initArr.forEach((a)=>{
                let ele = document.querySelector(`#content_${a.conId}`).lastElementChild;
-                newCanvas(ele,a.conId,a.canPath);
+                // console.log(a.pathId)
+                newCanvas(ele,a.pathId,a.canPath);
 
             });
         });
@@ -296,7 +297,7 @@
             const resp=await fetch(url,{method:"POST",body:data});
             if(resp.status===200){
                 const json=await resp.json();
-                document.getElementById("accordionSection").insertAdjacentHTML("afterend",accordionInsert(json.conId,json.time,json.title,json.info))
+                document.getElementById("accordionSection").insertAdjacentHTML("beforeend",accordionInsert(json.conId,json.time,json.title,json.info))
                 newScheduleBtnM.hide();
             }else {
                 alert("등록 실패 status :"+resp.status);
@@ -310,44 +311,59 @@
             })
         })
 
-        // 화이트보드 삭제 버튼 클릭시
-        Array.from(document.getElementsByClassName("scheduleSideBtn2")).forEach((ele)=>{
-            let conId
-            ele.addEventListener("click",()=>{
-
-            })
-        })
 
 
-
-
-        // 캔버스 인스턴스 생성용
-        function newCanvas(ele,conId,path=null){
-            let w = document.querySelector(".accordion-item").clientWidth;
-            let h = 500/1200*w+16; //16은 부트스트랩 아코디언바디에 설정된 상하 패딩값을 보정해준 것
-            ele.style.height = h +"px";
-            let newCanvas = new CanvasCreate(conId, path);
-            let canvas = newCanvas.canvas;
-            ele.lastElementChild.style.display = "none"
-            ele.append(canvas);
-            canvasMap.set(conId,newCanvas);
-        }
-
-        // 생성된 스케쥴에 화이트보드를 추가 하는 경우
-        async function newCanvasBtn(ele){
+        // 화이트보드를 추가 하는 경우
+        async function newCanvasReg(ele){
             let conId = ele.parentElement.getAttribute("id").split("_")[1]
+            let data = new FormData();
+            data.set("conId",conId)
             let url =`/plan/contents/canvasHandler.do`
-            const resp = await fetch(url,{method:"POST",body:conId});
+            const resp = await fetch(url,{method:"POST",body:data});
             const result = await resp.json();
-            if(resp.status===200 && result===1){
-                newCanvas(ele, conId);
+
+            if(resp.status===200){
+                newCanvas(ele, result.pathId);
             }else {
                 alert("캔버스 생성 실패 status :"+resp.status);
             }
         }
 
+        // 화이트보드 삭제하는 경우
+        async function newCanvasDel(ele){
+            let body = ele.nextElementSibling;
+            let [btn, canvas] = body.children;
+            let pathId = canvas.getAttribute("id")
+            let url =`/plan/contents/canvasHandler.do`
+            const resp = await fetch(url,{method:"DELETE",body:pathId});
+            const result = await resp.json();
+            if(resp.status===200){
+                canvas.remove();
+                btn.style.display="block"
+                body.style.height="130px"
+            }else {
+                alert("캔버스 삭제 실패 status :"+resp.status);
+            }
+        }
+
+
+        // 캔버스 인스턴스 생성용
+        function newCanvas(ele,pathId,path=null){
+            let w = document.querySelector(".accordion-item").clientWidth;
+            let h = 500/1200*w+16; //16은 부트스트랩 아코디언바디에 설정된 상하 패딩값을 보정해준 것
+            ele.style.height = h +"px";
+            let newCanvas = new CanvasCreate(pathId, path);
+            let canvas = newCanvas.canvas;
+            canvas.setAttribute("id",pathId)
+            ele.lastElementChild.style.display = "none"
+            ele.append(canvas);
+            canvasMap.set(pathId,newCanvas);
+        }
+
+
+
         function accordionInsert(conId, time, title, info){
-            return `<div class="accordion-item" style="margin: 0px 20px">
+            return `<div class="accordion-item">
                         <h2 class="accordion-header">
                           <button class="accordion-button collapsed scheduleBtn" type="button" data-bs-toggle="collapse"
                            data-bs-target="#content_${conId}" aria-expanded="false" aria-controls="#content_${conId}">
@@ -366,9 +382,9 @@
                         </h2>
                         <div id="content_${conId}" class="accordion-collapse collapse " data-bs-parent="#accordionSection">
                             <p class="scheduleSideBtn1 sbHover"><i class="bi bi-three-dots"></i></p>
-                            <p class="scheduleSideBtn2 sbHover"><i class="bi bi-trash3"></i></p>
+                            <p class="scheduleSideBtn2 sbHover" onclick=newCanvasDel(this)><i class="bi bi-trash3"></i></p>
                             <div class="accordion-body">
-                                <p class="newCanvasBtn" onclick=newCanvasBtn(this.parentElement)><i class="bi bi-plus-circle"></i></p>
+                                <p class="newCanvasBtn" onclick=newCanvasReg(this.parentElement)><i class="bi bi-plus-circle"></i></p>
                             </div>
                         </div>
                     </div>`;

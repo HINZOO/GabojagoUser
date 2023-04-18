@@ -22,23 +22,32 @@ import java.util.List;
 @Log4j2
 public class PlanController {
     private PlanService planService;
-    @GetMapping("/list.do")
-    public String list(Model model){
-        String uId = "USER01";
-        List<PlanDto> plans = planService.list(uId);
-        model.addAttribute("plans", plans);
-        return "/plan/list";
-    }
-
-        //오토로그인 생기면 쓰기
 //    @GetMapping("/list.do")
-//    public String list(@SessionAttribute(required = false) UserDto loginUser,
-//            Model model){
-//        String uId = loginUser.getUId();
+//    public String list(Model model){
+//
 //        List<PlanDto> plans = planService.list(uId);
 //        model.addAttribute("plans", plans);
 //        return "/plan/list";
 //    }
+
+
+    @GetMapping("/list.do")
+    public String list(
+            @SessionAttribute(required = false) UserDto loginUser,
+            Model model)
+    {
+        if (loginUser!=null){
+            List<PlanDto> plans = planService.list(loginUser.getUId());
+            model.addAttribute("plans", plans);
+            return "/plan/list";
+        } else {
+            //오토로그인 안돼서 임시로 해둠
+            String uId = "USER01";
+            List<PlanDto> plans = planService.list(uId);
+            model.addAttribute("plans", plans);
+            return "/plan/list";
+        }
+    }
 
     @PostMapping("/insert.do")
     public String insert(PlanDto planDto){ // 새 플랜 등록
@@ -50,7 +59,7 @@ public class PlanController {
     public String detail(@PathVariable int pId, Model model) throws ParseException { // 플랜 detail 보기
         PlanDto plan = planService.detail(pId);
 
-        // 여행 기간이 여러 날인 경우 분리해서 보여주기 위함
+        // 여행 기간이 여러 날인 경우 분리해서 렌더링 하기 위함
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         Date date1 = format.parse(plan.getPlanFrom());
         Date date2 = format.parse(plan.getPlanTo());
