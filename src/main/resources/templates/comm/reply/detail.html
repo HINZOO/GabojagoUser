@@ -34,8 +34,8 @@
        th:onclick="modifyFromPut([[${r.ccId}]])"
        th:if="${session.loginUser!=null && session.loginUser.uId==r.uId}"
        class="me-2 text-decoration-none text-success" >수정</a>
-    <a href="javascript:void(0)"
-       th:onclick="removeReply([[${r.ccId}]])"
+    <a href="javascript:void(0)" type="button"
+       th:onclick="removeReply([[${r.ccId}]]);"
        th:if="${session.loginUser!=null && session.loginUser.uId==r.uId}"
        class="me-2 text-decoration-none text-danger" >삭제</a>
     <a href="javascript:void(0)"

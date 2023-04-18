@@ -1,4 +1,4 @@
-package com.project.gabojago.gabojagouser.controller.comm;
+package com.project.gabojago.gabojagouser.dto.comm;
 
 import lombok.Data;
 

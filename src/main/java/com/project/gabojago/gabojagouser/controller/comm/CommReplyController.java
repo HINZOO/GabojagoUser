@@ -67,13 +67,14 @@ public class CommReplyController {
         return handlerDto;
     }
 
-    @DeleteMapping("/handler.do?{ccId}")
+    @DeleteMapping("/handler.do")
     public @ResponseBody HandlerDto remove(
-            CommReplyDto reply,
+            @RequestParam int ccId,
             @SessionAttribute UserDto loginUser
     ){
+
         HandlerDto handlerDto=new HandlerDto();
-        int remove=commReplyService.remove(reply.getCcId());
+        int remove=commReplyService.remove(ccId);
         handlerDto.setHandler(remove);
         return handlerDto;
     }

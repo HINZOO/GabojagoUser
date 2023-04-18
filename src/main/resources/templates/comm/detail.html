@@ -24,12 +24,12 @@
 <!--                         th:src="@{'{path}'(path=${c.user.imgPath})}">-->
                 </div>
                 <div class="col-2 text-center" >
-                    <a href="#" th:text="${c.user.nkName}" class="profile"></a>
+                    <a href="#" th:text="${c.user.nkName}" class="profile"></a><br>
                     (@<span th:text="${c.user.uId}"></span>)
                 </div>
                 <h4 class="card-title col-8" th:text="${c.title}"></h4>
-                <div class="col-1">
-                    <a th:href="@{'/comm/{cId}/modify.do'(cId=${c.cId})}"  class="btn btn-sm btn-outline-dark">수정</a>
+                <div class="col-2 d-flex">
+                    <a th:href="@{'/comm/{cId}/modify.do'(cId=${c.cId})}"  class="btn btn-sm btn-outline-dark me-1">수정</a>
                     <a th:href="@{'/comm/{cId}/remove.do'(cId=${c.cId})}"  class="btn btn-sm btn-outline-danger">삭제</a>
                 </div>
             </div>
@@ -156,7 +156,6 @@
         const profile=document.getElementsByClassName("profile");
         const replyContainer=document.getElementById("replyCont");
         const replyInsertForm=document.forms["replyInsertForm"];
-        const modifyInsertForm=document.forms["modifyInsertForm"];
         const replyReplyForm=document.forms["replyReplyForm"];
         //modifyInsertForm.onsubmit=modifyReply;
         //프로필 클릭시 프로필 모달창뜸
@@ -184,10 +183,9 @@
             const resp= await fetch(url,{method:"POST",body:data});
             if(resp.status===200){
                 const json=await resp.json();
-                if(json.register>0){
+                if(json.handler>0){
                     alert("등록성공!")
-                    await loadReplies(replyInsertForm.cId.value);
-                }
+                    await loadReplies(replyInsertForm.cId.value);                }
             }else{
                 alert("등록실패"+resp.status);
             }
@@ -195,35 +193,36 @@
 
 
 
-        async function modifyReply(modifyInsertForm){//수정이 시작될떄 핸들러
+        async function modifyReply(modifyForm){//수정이 시작될떄 핸들러
             let url="/comm/reply/handler.do"
-            const data=new FormData(modifyInsertForm);
+            const data=new FormData(modifyForm);
             const resp=await fetch(url,{method:"PUT",body:data});
             if(resp.status===200){
                 const json=await resp.json();
-                if(json.modify>0){
+                if(json.handler>0) {
                     alert("수정성공!");
                     await loadReplies(replyInsertForm.cId.value);
-                }else{
-                    alert("수정실패!");
                 }
             }else{
                 alert("수정통신실패");
             }
         }
+
         async function removeReply(replyNum) {
             let check = confirm("삭제하시겠습니까?");
-            let url = "/reply/handler.do";
+            let url = "/comm/reply/handler.do";
+            const data=new FormData();
+            data.set("ccId",replyNum);
             if (check) {
-                const resp = await fetch(url +"?ccId="+replyNum, {method: "DELETE"})
+                const resp = await fetch(url, {method:"DELETE",body:data})
                 if (resp.status === 200) {
                     const json = await resp.json();
-                    if (json.remove > 0) {
+                    if(json.handler>0){
                         alert("삭제 성공");
-                        loadReplies(replyInsertForm.cId.value);
-                    }
-                } else {
-                    alert("삭제 실패 status: " + resp.status)
+                        await loadReplies(replyInsertForm.cId.value);
+                  }
+                }else{
+                    alert("삭제 통신 실패 status: " + resp.status)
                 }
             }
         }
