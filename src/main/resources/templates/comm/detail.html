@@ -24,12 +24,13 @@
 <!--                         th:src="@{'{path}'(path=${c.user.imgPath})}">-->
                 </div>
                 <div class="col-2 text-center" >
-                    <a href="#" th:text="${c.user.nkName}" class="profile"></a>
+                    <a href="#" th:text="${c.user.nkName}" class="profile"></a><br>
                     (@<span th:text="${c.user.uId}"></span>)
                 </div>
                 <h4 class="card-title col-8" th:text="${c.title}"></h4>
-                <div class="col-1">
-                    <a th:href="@{'/comm/{cId}/modify.do'(cId=${c.cId})}"  class="btn btn-sm btn-outline-dark">수정</a>
+                <div class="col-2 d-flex">
+                    <a th:href="@{'/comm/{cId}/modify.do'(cId=${c.cId})}"  class="btn btn-sm btn-outline-dark me-1">수정</a>
+                    <a th:href="@{'/comm/{cId}/remove.do'(cId=${c.cId})}"  class="btn btn-sm btn-outline-danger">삭제</a>
                 </div>
             </div>
             <p class="text-end text-muted me-2">
@@ -85,7 +86,7 @@
                 <h5>댓글</h5>
                 <div>
                     <ul class="list-group border-0"  id="replyCont">
-                        <li class="list-group-item border-0" th:each="r:${c.replies}" >
+                        <li class="list-group-item border-0" th:each="r:${c.getReplies()}" >
                             <!--댓글리스트 영역-->
                             <th:block th:include="/comm/reply/detail"></th:block>
                         </li>
@@ -93,12 +94,15 @@
 
                     </ul>
                     <div class="list-group-item border-0 bg-light " id="">
-                        <form name="replyInsertForm"  action="" method="post">
+                        <form name="replyInsertForm"  action="" method="post"
+                              onsubmit="event.preventDefault();registerReply(this);"
+                        >
                             <input type="hidden" name="uId" th:value="${c.getUId()}">
                             <input type="hidden" name="cId" th:value="${c.cId}">
                             <div class="d-flex">
                                 <div class="col-3 p-0">
-                                    <input type="text" class="form-control" name="parentCrId"  >
+                                    <input type="hidden" class="form-control" name="parentCrId"  >
+                                    <input type="text" class="form-control" name="nkName" th:value="${(session.loginUser==null)?'':session.loginUser.nkName}"  >
                                 </div>
                                 <div class="col p-0">
                                     <input type="text" class="form-control" name="content" placeholder="댓글내용">
@@ -108,7 +112,6 @@
                         </form>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
@@ -150,12 +153,11 @@
 
     <script>
         const profileModal=new bootstrap.Modal(document.getElementById('profileModal',{}));
+        const profile=document.getElementsByClassName("profile");
         const replyContainer=document.getElementById("replyCont");
         const replyInsertForm=document.forms["replyInsertForm"];
-        const modifyInsertForm=document.forms["modifyInsertForm"];
-        const profile=document.getElementsByClassName("profile");
+        const replyReplyForm=document.forms["replyReplyForm"];
         //modifyInsertForm.onsubmit=modifyReply;
-
         //프로필 클릭시 프로필 모달창뜸
         Array.from(profile).forEach((p)=>{
             p.addEventListener("click",(e)=>{
@@ -165,21 +167,6 @@
 
 
 
-        async function registerReply(e){
-            e.preventDefault();
-            const data= new FormData(replyInsertForm);
-            let url="/comm/reply/handler.do"
-            const resp= await fetch(url,{method:"POST",body:data});
-            if(resp.status===200){
-                const json=await resp.json();
-                if(json.register>0){
-                    alert("등록성공!")
-                    await loadReplies(replyInsertForm.cId.value);
-                }
-            }else{
-                alert("등록실패"+resp.status);
-            }
-        }
         async function loadReplies(cId){
             let url=`/comm/reply/${cId}/list.do`
             const resp=await fetch(url);
@@ -188,37 +175,57 @@
                 replyContainer.innerHTML=text;
             }
         }
-        replyInsertForm.onsubmit=registerReply;
+
+
+        async function registerReply(replyInsertForm){
+            const data= new FormData(replyInsertForm);
+            let url="/comm/reply/handler.do";
+            const resp= await fetch(url,{method:"POST",body:data});
+            if(resp.status===200){
+                const json=await resp.json();
+                if(json.handler>0){
+                    alert("등록성공!")
+                    await loadReplies(replyInsertForm.cId.value);                }
+            }else{
+                alert("등록실패"+resp.status);
+            }
+        }
 
 
 
-
-
-        async function modifyReply(modifyInsertForm){//수정이 시작될떄 핸들러
+        async function modifyReply(modifyForm){//수정이 시작될떄 핸들러
             let url="/comm/reply/handler.do"
-            const data=new FormData(modifyInsertForm);
+            const data=new FormData(modifyForm);
             const resp=await fetch(url,{method:"PUT",body:data});
             if(resp.status===200){
                 const json=await resp.json();
-                if(json.modify>0){
+                if(json.handler>0) {
                     alert("수정성공!");
                     await loadReplies(replyInsertForm.cId.value);
-                }else{
-                    alert("수정실패!");
                 }
             }else{
                 alert("수정통신실패");
             }
         }
-        async function loadModifyReply(ccId){
-            let url=`/comm/reply/${ccId}/detail.do`
-            const resp=await fetch(url);
-            if(resp.status===200){
-                let text=await resp.json();
-                replyContainer.innerHTML=text;
+
+        async function removeReply(replyNum) {
+            let check = confirm("삭제하시겠습니까?");
+            let url = "/comm/reply/handler.do";
+            const data=new FormData();
+            data.set("ccId",replyNum);
+            if (check) {
+                const resp = await fetch(url, {method:"DELETE",body:data})
+                if (resp.status === 200) {
+                    const json = await resp.json();
+                    if(json.handler>0){
+                        alert("삭제 성공");
+                        await loadReplies(replyInsertForm.cId.value);
+                  }
+                }else{
+                    alert("삭제 통신 실패 status: " + resp.status)
+                }
             }
         }
-
 
 
     </script>

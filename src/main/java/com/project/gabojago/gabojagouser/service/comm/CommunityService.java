@@ -2,12 +2,13 @@ package com.project.gabojago.gabojagouser.service.comm;
 
 import com.project.gabojago.gabojagouser.dto.comm.CommImgDto;
 import com.project.gabojago.gabojagouser.dto.comm.CommunityDto;
+import com.project.gabojago.gabojagouser.dto.user.UserDto;
 
 import java.util.List;
 
 public interface CommunityService {
     //리스트 //상세 //등록 //수정 //삭제
-    List<CommunityDto> list();
+    List<CommunityDto> list(UserDto loginUser);
     List<CommImgDto> imgList(int[] ciId);
     CommunityDto detail(int cId);
     int register(CommunityDto community);

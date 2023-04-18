@@ -4,14 +4,12 @@ import com.project.gabojago.gabojagouser.dto.comm.CommImgDto;
 import com.project.gabojago.gabojagouser.dto.comm.CommunityDto;
 import com.project.gabojago.gabojagouser.dto.user.UserDto;
 import com.project.gabojago.gabojagouser.service.comm.CommunityService;
-import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.File;
@@ -19,9 +17,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 @RequestMapping("/comm")
@@ -36,9 +32,10 @@ public class CommController {
     }
 
     @GetMapping("/list.do")
-    public String list(Model model){
+    public String list(Model model,
+                       @SessionAttribute(required = false) UserDto loginUser){
         List<CommunityDto> communities;
-        communities=communityService.list();
+        communities=communityService.list(loginUser);
         model.addAttribute("communities",communities);
         return "/comm/list";
     }
@@ -178,6 +175,8 @@ public class CommController {
         CommunityDto board=null;
 
         int del=communityService.remove(cId);
+        String msg="게시글을 삭제하였습니다.";
+        redirectAttributes.addFlashAttribute("msg",msg);
         return redirectPage;
     }
 }

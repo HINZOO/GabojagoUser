@@ -9,6 +9,7 @@ import java.util.List;
 @Data
 @JsonIgnoreProperties({"handler"})
 public class CommReplyDto {
+    @JsonProperty("ccId")
     private int ccId;//PK
     @JsonProperty("cId")
     private int cId;//community c_id//FK

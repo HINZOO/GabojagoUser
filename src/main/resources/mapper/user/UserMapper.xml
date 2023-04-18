@@ -45,6 +45,12 @@
     business_id=#{businessId}
     WHERE u_id=#{uId}
   </update>
+    <update id="setLoginUserId">
+      SET @loginUserId=#{uId}
+    </update>
+  <update id="setLoginUserIdNull">
+    SET @loginUserId=NULL;
+  </update>
   <select id="findUserByUIdAndPw" resultMap="UserMap">
     SELECT * FROM users WHERE u_id=#{uId} AND pw=#{pw}
   </select>
