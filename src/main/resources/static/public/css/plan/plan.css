@@ -143,32 +143,6 @@ canvas{
 }
 
 
-
-.btnLine{
-    box-sizing: border-box;
-    /*padding : 0px 10px 0px 10px;*/
-    /*background-color: rgb(190, 212, 255)*/
-}
-.btnLine i {
-    font-size: 28px;
-}
-.btnLine button{
-    text-align: center;
-    width: 40px;
-    height: 40px;
-    border: 0px solid transparent;
-    margin-left: 3px !important;
-    background-color: lightgray;
-    border-radius: 5px;
-    color: #5b5b5b;
-
-}
-.btnLine button:hover{
-    background-color: rgba(176, 176, 176, 0.73);
-}
-
-
-
 .accordion-item{
 
 
@@ -200,7 +174,6 @@ canvas{
 .accordion-item{
     margin-bottom: 10px !important;
     background-color: transparent;
-    border-radius: 20px !important;
 }
 .accordion-button{
     background-color: rgba(135, 178, 235, 0.11);
@@ -209,34 +182,39 @@ canvas{
     padding-right: 10px;
 }
 
+.mainSection{
+    min-height: 95vh;
+}
+.mainHeader{
+    width: 100%;
+    height: 40vh;
+}
+.mainHeader>div{
+    width: 100%;
+    height: 10vh;
+}
+.mainHeaderImg{
+    z-index: -999;
+    position: absolute;
+    width: 67.5vw;
+    height: 40vh;
+    opacity: 0.8
+}
 
 
-.sideGrid{
-    padding: 0px 30px;
-}
-.sideGrid> div{
-    border-radius: 15px;
-    margin-top: 20px;
-}
-
-.sideContent{
-    margin-top: 5px;
-    min-height: 50px;
-    border-radius: 10px;
-    background-color: rgba(214, 230, 255, 0.58);
-    padding: 2px 0px 2px 5px;
-}
 .titleBox{
-    /*background-color: rgb(109, 156, 255);*/
+    padding-left: 50px;
     font-family: do hyeon;
-    /*border-left: 20px solid rgb(161, 193, 255);*/
-    text-align: center;
-    font-size: 40px;
-    color: #575757;
-    /*color: white;*/
-    font-weight: bold;
-
+    font-size: 15px;
+    color: white;
 }
+.headerTitle{
+    font-size: 40px;
+    color: white;
+    font-weight: bold;
+}
+
+
 .calenderBox {
     background-color : rgba(214, 230, 255, 0.58);
     width: 100%;
@@ -245,53 +223,56 @@ canvas{
     margin: 0 auto;
 }
 
-.memberBox, .checkListBox, .infoBox, .addBox{
-    color: white;
-    background-color : rgba(214, 230, 255, 0.58);
-    min-height: 80px;
-}
-.dBox>div{
-    font-size: 20px;
-    color: white;
-    line-height: 50px;
-    text-align: center;
-    border-radius: 10px;
-    width: 7vw;
-    background-color : rgba(214, 230, 255, 0.58);
-    min-height: 50px;
-}
-.dBox{
-    justify-content: space-between;
-    display: flex;
-}
-
 
 .addBox{
     width: 100%;
     height: 90vh;
 }
 
-.mainHeader{
-    height: 70px;
-    background-color: rgb(109, 156, 255);
+
+
+.scheduleHeader{
+    height: 50px;
+    background-color: whitesmoke;
     border-radius: 20px 20px 0px 0px;
     border: 1px solid transparent;
-    line-height: 35px;
-    padding-top: 15px;
-    margin-top: 20px;
-
-
+    line-height: 25px;
+    padding-top: 10px;
+    margin-top: -10px;
 }
 
 .dayBtn{
     font-family: Russo One;
     letter-spacing: 2px;
-    margin-left: 20px;
+    margin-left: 15px;
     border-radius: 10px;
-    font-size: 25px;
+    font-size: 15px;
     background-color: rgba(211, 211, 211, 0.66);
     color: white;
     text-shadow: -1px 0 lightgrey, 1px 1px gray, 1px 2px gray, 0 -1px lightgrey;
+}
+
+
+.btnLine{
+    box-sizing: border-box;
+
+}
+.btnLine i {
+    font-size: 20px;
+}
+.btnLine button{
+    text-align: center;
+    width: 30px;
+    height: 30px;
+    border: 0px solid transparent;
+    margin-left: 3px !important;
+    background-color: lightgray;
+    border-radius: 5px;
+    color: #5b5b5b;
+
+}
+.btnLine button:hover{
+    background-color: rgba(176, 176, 176, 0.73);
 }
 
 .scheduleInputBox{
@@ -302,10 +283,10 @@ canvas{
     margin-right: 20px;
     float: right;
     text-align: center;
-    width: 40px;
-    height: 40px;
+    width: 30px;
+    height: 30px;
     padding: 0px;
-    font-size: 40px;
+    font-size: 30px;
     color: white;
     border-radius: 50%;
     text-shadow: -1px 0 lightgrey, 1px 1px gray, 1px 2px gray, 0 -1px lightgrey;
@@ -315,10 +296,6 @@ canvas{
 
 }
 
-.mainSection{
-    min-height: 95vh;
-    background-color: #fafaff;
-}
 
 
 
@@ -349,7 +326,7 @@ canvas{
     border-left: 30px solid rgb(109, 156, 255);
     border-radius: 10px 0px 0px 10px;
     text-align: center;
-    font-size: 26px;
+    font-size: 20px;
     color: white;
     text-shadow: -1px 0 lightgrey, 1px 1px #adadad, 1px 2px #adadad, 0 -1px lightgrey;
 }
@@ -385,7 +362,7 @@ canvas{
     font-weight: bold;
     color: #8c8c8c;
     /*text-shadow: -1px 0 lightgrey, 0 1px lightgrey, 1px 0 lightgrey, 0 -1px lightgrey;*/
-    font-size: 23px;
+    font-size: 18px;
     padding-left: 25px;
 }
 .scheduleTitle{
@@ -394,7 +371,7 @@ canvas{
     /*text-shadow: -1px 0 transparent, 1px 1px lightgrey, 1px 2px lightgrey, 0 -1px transparent;*/
     color: #5b5b5b;
     font-weight: bolder;
-    font-size: 32px;
+    font-size: 25px;
     padding: 0px 5px;
 }
 .scheduleSideBtn1, .scheduleSideBtn2 {

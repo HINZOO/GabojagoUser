@@ -14,43 +14,29 @@
         <div class="row">
 
             <!--    사이드바 -->
-            <div class="col-md-2" >
-                <div class="row row-cols-1 sideGrid">
-                    <div class="col titleBox p-0">
-                        <span th:text="${plan.getTitle()}"/>
-                    </div>
-                    <div class="col dBox p-0">
-                        <div th:text="${plan.getPlanFrom()}" class="pFrom"/>
-                        <div th:text="${plan.getPlanTo()}" class="pTO"/>
-                    </div>
-                    <div class="col calenderBox">
-                        <th:block th:include="/plan/calender"></th:block>
-                    </div>
-
-                    <div class="col infoBox">
-                            <div class="infoStatus" >
-                                <i class="bi bi-key"></i>
-                                <span th:text="${plan.getPlanStatus()}"/></div>
-                            <div class="infoSchedule">🗓️  ~ </div>
-                    </div>
-
-
-                    <div class="col memberBox">
-                        멤버
-                    </div>
-                    <div class="col checkListBox">
-                        체크리스트
-                    </div>
-
-
-                </div>
-            </div> <!--좌측사이드닫기-->
-
-
+            <div class="col-md-2" ></div>
 
             <div class="col-md-8 mainSection px-0">
+                <div class="row mainHeader px-0 ">
+                    <img class="mainHeaderImg mx-0 px-0" src="/public/img/plan/planSample2.jpg">
+                    <div class="col-6"></div>
+                    <div class="col-6"></div>
 
-                <div class="row mainHeader mx-0">
+                    <div class="col-6 titleBox">
+                        <p class="headerTitle" th:text="${plan.getTitle()}"/>
+                        <span class="headerFrom" th:text="${plan.getPlanFrom()}"/> ~ <span class="headerTo" th:text="${plan.getPlanTo()}"/>
+                        <p class="headerStatus" th:text="${plan.getPlanStatus()}"/>
+                    </div>
+                    <div class="col-6">
+
+                    </div>
+                </div>
+
+
+<!--                    <th:block th:include="/plan/calender"></th:block>-->
+                <div class="row">
+                    <div class="col-12 scheduleHeader">
+                    <div class="row">
                     <div class="col-md-2">
                         <div class="btn-group">
                             <button type="button" class="btn btn-secondary btn-lg dropdown-toggle dayBtn py-0 border-0" data-bs-toggle="dropdown" aria-expanded="false">
@@ -143,7 +129,10 @@
                             <i class="bi bi-plus-circle"></i>
                         </div>
                     </div>
-                </div>
+                    </div> <!--내부로우 수정필요-->
+
+                </div> <!--스케쥴헤더-->
+
 
 
                     <div class="accordion .accordion-flush" id="accordionSection">
@@ -154,14 +143,15 @@
 
             </div> <!--메인섹션닫기-->
 
+            <div class="col-md-2" ></div>
 
-            <div class="col-md-2">
-                <div class="row row-cols-1 sideGrid">
-                  <div class="col addBox">
+<!--            <div class="col-md-2">-->
+<!--                <div class="row row-cols-1 sideGrid">-->
+<!--                  <div class="col addBox">-->
 
-                  </div>
-                </div>
-            </div> <!--우측사이드 닫기-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--            </div> &lt;!&ndash;우측사이드 닫기&ndash;&gt;-->
 
 
 

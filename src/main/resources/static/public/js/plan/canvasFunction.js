@@ -534,8 +534,8 @@ class CanvasCreate {
             let button = document.getElementById(content);
             button.style.background = content;
             button.style.color = "white";
-            button.style.width = "40px";
-            button.style.height = "40px";
+            button.style.width = "30px";
+            button.style.height = "30px";
             button.style.borderRadius = "5px";
             button.style.boxShadow = "1px 1px 5px grey";
 
