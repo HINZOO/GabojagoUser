@@ -19,15 +19,23 @@
             <div class="col-md-8 mainSection px-0">
                 <div class="row mainHeader px-0 ">
                     <img class="mainHeaderImg mx-0 px-0" src="/public/img/plan/planSample2.jpg">
-                    <div class="col-6"></div>
-                    <div class="col-6"></div>
-
                     <div class="col-6 titleBox">
                         <p class="headerTitle" th:text="${plan.getTitle()}"/>
                         <span class="headerFrom" th:text="${plan.getPlanFrom()}"/> ~ <span class="headerTo" th:text="${plan.getPlanTo()}"/>
                         <p class="headerStatus" th:text="${plan.getPlanStatus()}"/>
                     </div>
-                    <div class="col-6">
+                    <div class="col-6 rightBox">
+                        <div class="toDoListBox">
+                            <div class="tdlTitle">
+                                <span>CHECKLIST</span>
+                                <span><span class="tdlPBtn">+</span>　<span class="tdlMBtn">-</span></span>
+                            </div>
+
+                            <div class="tdlContent">
+                                <input type="checkbox" class="tdlCBtn">
+                                체크리스트 들어갈 부분
+                            </div>
+                        </div>
 
                     </div>
                 </div>
@@ -356,16 +364,13 @@
                         <h2 class="accordion-header">
                           <button class="accordion-button collapsed scheduleBtn" type="button" data-bs-toggle="collapse"
                            data-bs-target="#content_${conId}" aria-expanded="false" aria-controls="#content_${conId}">
-                              <div class="container scheduleContainer ">
-                                  <div class="row scheduleRow " >
-                                      <div class="col col-md-3 scheduleLeft ">
-                                          <span class="scheduleTime">${time}</span>
-                                      </div>
-                                      <p class="col col-md-9 scheduleCenter">
-                                          <span class="scheduleTitle">${title}</span>
-                                          <span class="scheduleContent">${info}</span>
-                                      </p>
-                                  </div>
+                             <div class="scheduleTime">${time}</div>
+                              <div class="scheduleLeft"><br><i class="bi bi-three-dots-vertical"></i></div>
+                              <div class="scheduleContainer">
+                                  <p class="scheduleCenter">
+                                      <span class="scheduleTitle">${title}</span>
+                                      <span class="scheduleContent">${info}</span>
+                                  </p>
                               </div>
                           </button>
                         </h2>
