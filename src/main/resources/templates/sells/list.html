@@ -11,9 +11,32 @@
         <div class="row align-items-end">
             <div class="col-md-6">
                 <form class="d-flex" role="search" id="searchForm">
-                    <input class="form-control me-2" type="search" placeholder="제목을 입력해 주세요" aria-label="Search"id="searchInput">
+                    <input class="form-control me-2" type="search" placeholder="제목을 입력해 주세요" aria-label="Search" id="searchInput">
                     <button class="btn btn-outline-success" type="submit" id="searchBtn">Search</button>
                 </form>
+
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                        <li class="page-item">
+                            <a class="page-link"
+                               th:href="@{''(pageNum=${page.prePage})}"
+                               th:classappend="${page.isHasPreviousPage ? '':'disabled'}"><i class="bi bi-arrow-left"></i></a>
+                        </li>
+                        <li class="page-item" th:each="p:${page.navigatepageNums}">
+                            <a class="page-link"
+                               th:href="@{''(pageNum=${p},pageSize=6)}"
+                               th:text="${p}"
+                               th:classappend="${p==page.pageNum ? 'active' : ''}">
+
+                            </a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link"
+                               th:href="@{''(pageNum=${page.nextPage})}"
+                               th:classappend="${page.isHasNextPage ? '':'disabled'}"><i class="bi bi-arrow-right"></i></a>
+                        </li>
+                    </ul>
+                </nav>
             </div>
             <div class="col-md-6 text-end">
                 <a href="/sells/register.do" class="btn btn-primary">게시글 작성</a>
