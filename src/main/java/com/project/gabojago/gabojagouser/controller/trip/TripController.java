@@ -84,14 +84,16 @@ public class TripController {
     @PostMapping("/modify.do")
     public String modifyAction(
             @ModelAttribute TripDto trip,
-            @RequestParam MultipartFile mainImg, // 메인이미지 파라미터
+            @RequestParam (required = false)MultipartFile mainImg, // 메인이미지 파라미터
             @RequestParam(name="img", required = false) List<MultipartFile> imgs,
             @RequestParam(value="delImgId", required = false) int[] delImgIds,
             RedirectAttributes redirectAttributes
     ) {
         String redirectPage = "redirect:/trip/" + trip.getTId() + "/modify.do";
         String msg="";
-        imgs.add(mainImg);
+        if(imgs==null){
+            imgs=new ArrayList<>();
+        }
 
         // 제목 입력 여부 확인
         if (trip.getTitle() == null || trip.getTitle().equals("")) {
@@ -119,7 +121,6 @@ public class TripController {
                         if(i==imgs.size()-1)imgDto.setImgMain(true);
                         imgDto.setImgPath("/public/img/trip/" + fileName);
                         imgDtos.add(imgDto);
-
 //                        if (imgDtos != null && imgDtos.size() > 0) {
 //                            imgDtos.get(0).setImgMain(true);지
 //                        }
@@ -128,6 +129,7 @@ public class TripController {
             }
 
         }
+
         trip.setImgs(imgDtos);
         int modify = 0;
         msg="등록실패";
