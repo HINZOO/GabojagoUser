@@ -26,6 +26,7 @@ dependencies {
 	implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:3.2.0'
     implementation 'org.springframework.boot:spring-boot-starter-websocket'
 	implementation 'org.webjars.npm:splidejs__splide:4.1.4'
+	implementation 'com.github.pagehelper:pagehelper-spring-boot-starter:1.4.6'
 	compileOnly 'org.projectlombok:lombok'
 
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'

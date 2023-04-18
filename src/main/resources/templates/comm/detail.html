@@ -30,6 +30,7 @@
                 <h4 class="card-title col-8" th:text="${c.title}"></h4>
                 <div class="col-1">
                     <a th:href="@{'/comm/{cId}/modify.do'(cId=${c.cId})}"  class="btn btn-sm btn-outline-dark">수정</a>
+                    <a th:href="@{'/comm/{cId}/remove.do'(cId=${c.cId})}"  class="btn btn-sm btn-outline-danger">삭제</a>
                 </div>
             </div>
             <p class="text-end text-muted me-2">
@@ -100,7 +101,8 @@
                             <input type="hidden" name="cId" th:value="${c.cId}">
                             <div class="d-flex">
                                 <div class="col-3 p-0">
-                                    <input type="text" class="form-control" name="parentCrId"  >
+                                    <input type="hidden" class="form-control" name="parentCrId"  >
+                                    <input type="text" class="form-control" name="nkName" th:value="${(session.loginUser==null)?'':session.loginUser.nkName}"  >
                                 </div>
                                 <div class="col p-0">
                                     <input type="text" class="form-control" name="content" placeholder="댓글내용">
@@ -209,7 +211,22 @@
                 alert("수정통신실패");
             }
         }
-
+        async function removeReply(replyNum) {
+            let check = confirm("삭제하시겠습니까?");
+            let url = "/reply/handler.do";
+            if (check) {
+                const resp = await fetch(url +"?ccId="+replyNum, {method: "DELETE"})
+                if (resp.status === 200) {
+                    const json = await resp.json();
+                    if (json.remove > 0) {
+                        alert("삭제 성공");
+                        loadReplies(replyInsertForm.cId.value);
+                    }
+                } else {
+                    alert("삭제 실패 status: " + resp.status)
+                }
+            }
+        }
 
 
     </script>
