@@ -12,13 +12,13 @@
         <result property="parentCrId" column="parent_cr_id"/>
         <collection
                 property="replies"
-                select="findByCcId"
+                select="findByParentCrId"
                 column="cc_id"
                 fetchType="lazy"
         />
     </resultMap>
     <insert id="insertOne" useGeneratedKeys="true" keyProperty="ccId" parameterType="commReplyDto">
-        INSERT INTO comm_comment (c_id, u_id, content, parent_cr_id)VALUES(#{cId},#{uId},#{content},#{parentCrId})
+        INSERT INTO comm_comment (c_id, u_id, content, parent_cr_id) VALUES(#{cId},#{uId},#{content},#{parentCrId})
     </insert>
     <update id="updateOne" parameterType="commReplyDto">
         UPDATE comm_comment SET content=#{content} WHERE cc_id=#{ccId}
@@ -26,16 +26,15 @@
     <delete id="deleteOne">
         DELETE FROM comm_comment WHERE cc_id=#{ccId}
     </delete>
-    <select id="findAll" resultMap="CommReplyMap">
-        SELECT * FROM comm_comment
-    </select>
-    <select id="findByCcId" resultMap="CommReplyMap">
-        SELECT * FROM comm_comment WHERE parent_cr_id=#{ccId}
-    </select>
-    <select id="findByCId" resultMap="CommReplyMap">
-        SELECT * FROM comm_comment WHERE c_id=#{cId} AND parent_cr_id IS NULL;
+    <select id="findByCIdAndParentCrIdIsNull" resultMap="CommReplyMap">
+        SELECT * FROM comm_comment  WHERE parent_cr_id IS NULL AND c_id=#{cId}
     </select>
     <select id="findByParentCrId" resultMap="CommReplyMap">
-        SELECT * FROM comm_comment WHERE parent_cr_id=#{parentCrId}
+        SELECT * FROM comm_comment WHERE parent_cr_id=#{ccId}
     </select>
+
+    <select id="findByCcId" resultMap="CommReplyMap">
+        SELECT * FROM comm_coment WHERE cc_id=#{ccId};
+    </select>
+
 </mapper>

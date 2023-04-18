@@ -97,14 +97,13 @@
 
         </form>
         <script>
-            const registerForm=document.forms["registerForm"];
-            registerForm.onsubmit=function (e){
-                e.preventDefault();
-                let markupStr = $('#summernote').summernote('code');
-                registerForm.content.value=markupStr;
-                registerForm.submit();      }
+            const imgAddBtn=document.getElementById('imgAddBtn');
+            const imgCont=document.getElementById('imgCont');
+            imgAddBtn.addEventListener("click",(e)=>{
+                imgCont.insertAdjacentHTML("beforeend", imgInputComponent())
+            });
 
-            function imgInputComponent(label="이미지",name="img"){
+            function imgInputComponent(label="이미지",name="img"){//이 이름과 resgister의 img 이름이 넘어감.
                 return `<p class="input-group mt-2">
               <label class="input-group-text">${label}</label>
               <input class="form-control" type="file" name="${name}" >
@@ -113,6 +112,15 @@
               </button>
               </p>`;
             }
+
+            const registerForm=document.forms["registerForm"];
+                registerForm.onsubmit=function (e){
+                e.preventDefault();
+                let markupStr = $('#summernote').summernote('code');
+                registerForm.content.value=markupStr;
+                registerForm.submit();      }
+
+
         </script>
     </div>
 

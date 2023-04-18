@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<div class="header d-flex justify-content-between pb-1 border-0 ">
-    <!--     th:classappend="${(session.loginUser!\=null && session.loginUser.uId==c.uId)?'border-bottom':''}">-->
+<div class="header d-flex justify-content-between pb-1 border-0 "
+         th:classappend="${(session.loginUser!=null && session.loginUser.uId==r.uId)?'border-bottom':''}">
     <div>
         @<strong th:text="${r.uId}"></strong>
         <small>•</small>
@@ -16,9 +16,12 @@
             <span th:text="${r.content}"></span>
             <span th:value="${r}"></span>
         </div>
-        <div th:id="modifyFromCont+${r.ccId}" class="visually-hidden">
-            <form action="" name="modifyInsertForm" class="d-flex align-items-center">
-                <input type="text" th:value="${r.content}" class="input-group col">
+        <div>
+            <form action="" onsubmit="event.preventDefault(); modifyReply(this);"
+                  th:name="'modifyInsertForm'+${r.ccId}"
+                  class="d-flex align-items-center visually-hidden">
+                <input type="hidden" name="ccId" th:value="${r.ccId}">
+                <input type="text" name="content" th:value="${r.content}" class="input-group col">
                 <button class="btn btn-outline-success btn-sm col-1">등록</button>
             </form>
         </div>
@@ -27,8 +30,33 @@
     </div>
 </div>
 <div class="text-end">
-    <a href="javascript:void(0)" th:id="modifyHiddenBtn+${r.ccId}" class="me-2 text-decoration-none text-success" >수정하기</a>
-    <a href="javascript:void(0)" id="replyHiddenBtn" class="text-decoration-none text-primary">댓글 달기</a>
+    <a href="javascript:void(0)"
+       th:onclick="modifyFromPut([[${r.ccId}]])"
+       th:if="${session.loginUser!=null && session.loginUser.uId==r.uId}"
+       class="me-2 text-decoration-none text-success" >수정</a>
+    <a href="javascript:void(0)" type="button"
+       th:onclick="removeReply([[${r.ccId}]]);"
+       th:if="${session.loginUser!=null && session.loginUser.uId==r.uId}"
+       class="me-2 text-decoration-none text-danger" >삭제</a>
+    <a href="javascript:void(0)"
+       th:onclick="replyFromPut([[${r.ccId}]])"
+       class="text-decoration-none text-primary">댓글</a>
+</div>
+
+<!--대댓글등록폼-->
+<div>
+    <form action=""
+          method="POST"
+          onsubmit="event.preventDefault();registerReply(this);"
+          th:name="'replyReplyForm'+${r.ccId}"
+          class="visually-hidden d-flex align-items-center"
+          >
+        <input type="text" name="content" class="input-group col">
+        <input type="hidden" name="cId" th:value="${r.cId}">
+        <input type="hidden" name="parentCrId" th:value="${r.ccId}">
+        <input type="hidden" name="uId" th:value="${r.uId}">
+        <button class="btn btn-outline-success btn-sm col-1">등록</button>
+    </form>
 </div>
 
     <ul class="list-group border-0">
@@ -40,20 +68,14 @@
 
 <script th:inline="javascript">
     /*<![CDATA[*/
-
-    let modifyHiddenBtn[[${r.ccId}]]=document.getElementById("modifyHiddenBtn[[${r.ccId}]]");
-    let modifyFromCont[[${r.ccId}]]=document.getElementById("modifyFromCont[[${r.ccId}]]")
-    let defaultFromCont[[${r.ccId}]]=document.getElementById("defaultFromCont[[${r.ccId}]]")
-    modifyHiddenBtn[[${r.ccId}]].addEventListener("click",modifyFromPut)
-
-    function modifyFromPut (){
-        defaultFromCont[[${r.ccId}]].classList.toggle("visually-hidden")
-        modifyFromCont[[${r.ccId}]].classList.toggle("visually-hidden")
+    function modifyFromPut (id){
+        document.forms['modifyInsertForm'+id].classList.toggle("visually-hidden")
     }
+    function replyFromPut(id){
+        document.forms['replyReplyForm'+id].classList.toggle("visually-hidden")
+    }
+
     /*]]>*/
-
-
-
 </script>
 
 
