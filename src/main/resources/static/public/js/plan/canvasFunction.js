@@ -37,6 +37,7 @@ class CanvasCreate {
         this.ctx.setLineDash([0,0])
         this.ctx.save();
 
+
         // 레이어 데이터가 있는 경우 로딩
         this.layerLoad();
         this.currentCanvas.src = this.canvas.toDataURL();
@@ -46,6 +47,7 @@ class CanvasCreate {
         this.pageLiner(this.canvas.width,this.canvas.height)
         this.toolActivation()
 
+        this.colorBtn();
 
     }
 
@@ -470,6 +472,7 @@ class CanvasCreate {
     //사이드바 각 버튼에 기능부여
     toolActivation(){
         const tools = ["stamp","pen","line","selector","rect","text","palate","post"];
+        const colors = ["red","orange","yellow","green","blue","navy", "purple","black","white"];
 
         tools.forEach((tool)=>{
             document.getElementById(tool+"Btn").addEventListener("click",()=>{
@@ -478,6 +481,12 @@ class CanvasCreate {
                     this.activatedTool=tool;
                     this[tool+"Tool"]();
                 }
+            })
+        });
+        colors.forEach((color)=>{
+            document.getElementById(color).addEventListener("click",()=>{
+                this.ctx.strokeStyle = color;
+                this.ctx.fillStyle = color;
             })
         });
 
@@ -514,8 +523,24 @@ class CanvasCreate {
                 this.currentCanvas.src = this.canvas.toDataURL()
             }
         })
-    };
 
+
+    }; // 툴박스
+
+
+    colorBtn(){
+        let buttons = ["red","orange","yellow","green","blue","navy", "purple","black","white"];
+        buttons.forEach((content) => {
+            let button = document.getElementById(content);
+            button.style.background = content;
+            button.style.color = "white";
+            button.style.width = "40px";
+            button.style.height = "40px";
+            button.style.borderRadius = "5px";
+            button.style.boxShadow = "1px 1px 5px grey";
+
+        });
+    }
 
 
 };//클래스 닫기
