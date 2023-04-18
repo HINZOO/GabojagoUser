@@ -29,7 +29,8 @@ public class MyUserQnaServiceImp implements MyUserQnaService {
     @Transactional
     @Override
     public int register(MyUserQnaDto myUserQna) {
-        return 0;
+        int register=myUserQnaMapper.insertOne(myUserQna);
+        return register;
     }
 
     @Transactional
