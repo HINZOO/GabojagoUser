@@ -10,8 +10,12 @@ import org.springframework.stereotype.Service;
 public class PlanContentPathsImp implements PlanContentPathsService {
     private PlanContentPathsMapper planContentPathsMapper;
     @Override
-    public int register(int conId) {
+    public int register(PlanContentPathsDto pathsDto) {
+        return planContentPathsMapper.insert(pathsDto);
+    }
 
-        return planContentPathsMapper.insert(conId);
+    @Override
+    public int delete(int pathId) {
+        return planContentPathsMapper.deleteOne(pathId);
     }
 }

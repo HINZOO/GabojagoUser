@@ -18,11 +18,13 @@
 
 
 
-    <insert id="insertOne" useGeneratedKeys="true" keyProperty="conId"  parameterType="PlanContentsDto">
+    <insert id="insertOne" useGeneratedKeys="true" keyProperty="conId"   parameterType="PlanContentsDto">
         INSERT INTO plan_contents (p_id, t_id, s_id, title, info, time) value (#{pId}, #{tId}, #{sId}, #{title}, #{info}, #{time})
     </insert>
     <update id="updateOne"></update>
-    <delete id="deleteOne"></delete>
+    <delete id="deleteOne">
+            DELETE FROM plan_contents WHERE con_id=#{conId}
+    </delete>
     <select id="findAll" resultType="com.project.gabojago.gabojagouser.dto.plan.PlanContentsDto"></select>
     <select id="findByPId" resultMap="planContentsMap">
         SELECT * FROM plan_contents WHERE p_id=#{pId}

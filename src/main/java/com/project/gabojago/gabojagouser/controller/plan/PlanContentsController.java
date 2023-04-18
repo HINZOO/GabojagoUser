@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -29,22 +30,40 @@ public class PlanContentsController {
 
     @Data
     class CanvasHandlerDto{
-
+        private int register;
+        private int modify;
+        private int remove;
     }
 
     @PostMapping("/insert.do")
-    public @ResponseBody PlanContentsDto insert(@ModelAttribute PlanContentsDto content) throws IOException {
+    public @ResponseBody PlanContentsDto insert(
+            @ModelAttribute PlanContentsDto content) throws IOException
+    {
             int register = planContentsService.register(content);
             return content;
-        }
+    }
 
     @PostMapping ("/canvasHandler.do")
-    public @ResponseBody int canInsert(@RequestBody String conId) throws IOException {
-        return planContentPathsService.register(Integer.parseInt(conId));
+    public @ResponseBody PlanContentPathsDto register(
+            @ModelAttribute PlanContentPathsDto path) throws IOException
+    {
+        planContentPathsService.register(path);
+        return path;
+    }
+
+    // 캔버스 삭제시
+    @DeleteMapping ("/canvasHandler.do")
+    public @ResponseBody int delete(
+            @RequestBody String pathId) throws IOException
+    {
+        int delete = planContentPathsService.delete(Integer.parseInt(pathId));
+
+        return delete;
     }
 
     @PostMapping ("/imgHandler.do")
-    public @ResponseBody int imgInsert(@RequestBody String conId) throws IOException {
+    public @ResponseBody int imgInsert(MultipartFile img) throws IOException {
+        log.info("이미지"+img);
         return 1;
     }
 
