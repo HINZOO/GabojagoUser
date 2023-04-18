@@ -218,20 +218,7 @@ canvas{
     border-radius: 15px;
     margin-top: 20px;
 }
-/*.sideTitle{*/
-/*    margin-left: 2px;*/
-/*    height: 30px;*/
-/*    width: min-content;*/
-/*    border-top: 1px solid rgba(229, 229, 229, 0.5);*/
-/*    border-bottom: 3px solid lightgrey;*/
-/*    border-left: 15px solid rgb(161, 193, 255);*/
-/*    border-right: 1px solid lightgrey;*/
-/*    border-radius: 5px;*/
-/*    padding: 0px 15px 3px 8px;*/
-/*    line-height: 25px;*/
-/*    font-size: 18px;*/
-/*    color: #5d5d5d;*/
-/*}*/
+
 .sideContent{
     margin-top: 5px;
     min-height: 50px;
@@ -263,6 +250,21 @@ canvas{
     background-color : rgba(214, 230, 255, 0.58);
     min-height: 80px;
 }
+.dBox>div{
+    font-size: 20px;
+    color: white;
+    line-height: 50px;
+    text-align: center;
+    border-radius: 10px;
+    width: 7vw;
+    background-color : rgba(214, 230, 255, 0.58);
+    min-height: 50px;
+}
+.dBox{
+    justify-content: space-between;
+    display: flex;
+}
+
 
 .addBox{
     width: 100%;

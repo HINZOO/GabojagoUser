@@ -19,21 +19,21 @@
                     <div class="col titleBox p-0">
                         <span th:text="${plan.getTitle()}"/>
                     </div>
+                    <div class="col dBox p-0">
+                        <div th:text="${plan.getPlanFrom()}" class="pFrom"/>
+                        <div th:text="${plan.getPlanTo()}" class="pTO"/>
+                    </div>
                     <div class="col calenderBox">
                         <th:block th:include="/plan/calender"></th:block>
                     </div>
 
                     <div class="col infoBox">
-                            <!--   <div class="infoImg" th:if="${plan.getImgPath()!=null}" th:style="'background-image:url(' +  + ');'"></div>-->
-<!--                            <img class="infoImg" th:if="${plan.getImgPath()!=null}" th:src="${plan.getImgPath()}"></img>-->
-<!--                            <img class="infoImg" th:if="${plan.getImgPath()==null}" src="/public/img/plan/planDefault.jpeg"></img>-->
                             <div class="infoStatus" >
                                 <i class="bi bi-key"></i>
                                 <span th:text="${plan.getPlanStatus()}"/></div>
-
-                            <div class="infoSchedule">🗓️ <span th:text="${plan.getPlanFrom()}"/> ~ <span th:text="${plan.getPlanTo()}"/></div>
-
+                            <div class="infoSchedule">🗓️  ~ </div>
                     </div>
+
 
                     <div class="col memberBox">
                         멤버
@@ -237,7 +237,6 @@
         let canvasMap=new Map();
 
 
-
         document.getElementById("imgBtn").addEventListener("mousedown",()=>{
             console.log(canvasMap.get(1));
             let input = document.getElementById("imgInput")
@@ -274,18 +273,17 @@
         let webSocket;
         webSocket=new WebSocket(URL);
 
-        // 새 스케쥴 등록 모달
+
+        // 새 스케쥴 생성하는 경우
         const newScheduleBtn = document.querySelector("#newScheduleBtn");
         const newScheduleBtnM = new bootstrap.Modal(document.getElementById('staticBackdrop'),{});
         newScheduleBtn.addEventListener("click",()=>{
             newScheduleBtnM.show();
         });
 
-        // 새 스케쥴 제출시
         const scheduleInsertForm = document.getElementById("scheduleInsertForm");
         scheduleInsertForm.onsubmit=registerSchedule;
 
-        // 새 스케쥴 생성 요청시 ajax
         async function registerSchedule(e){
             e.preventDefault();
             const data=new FormData(scheduleInsertForm);
@@ -303,6 +301,7 @@
                 alert("등록 실패 status :"+resp.status);
             }
         }
+
         // 스케쥴 수정.삭제 버튼
         Array.from(document.getElementsByClassName("scheduleSideBtn2")).forEach((ele)=>{
             let conId
@@ -337,7 +336,7 @@
             let url =`/plan/contents/canvasHandler.do`
             const resp = await fetch(url,{method:"DELETE",body:pathId});
             const result = await resp.json();
-            if(resp.status===200){
+            if(resp.status===200 && result===1){
                 canvas.remove();
                 btn.style.display="block"
                 body.style.height="130px"
