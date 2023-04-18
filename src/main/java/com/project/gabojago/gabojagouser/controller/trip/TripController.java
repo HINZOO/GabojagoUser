@@ -84,12 +84,15 @@ public class TripController {
     @PostMapping("/modify.do")
     public String modifyAction(
             @ModelAttribute TripDto trip,
-            @RequestParam(name="img", required = false) MultipartFile [] imgs,
+            @RequestParam MultipartFile mainImg, // 메인이미지 파라미터
+            @RequestParam(name="img", required = false) List<MultipartFile> imgs,
             @RequestParam(value="delImgId", required = false) int[] delImgIds,
             RedirectAttributes redirectAttributes
     ) {
         String redirectPage = "redirect:/trip/" + trip.getTId() + "/modify.do";
         String msg="";
+        imgs.add(mainImg);
+
         // 제목 입력 여부 확인
         if (trip.getTitle() == null || trip.getTitle().equals("")) {
             msg = "제목을 입력하세요.";
@@ -100,23 +103,30 @@ public class TripController {
         List<TripImgDto> imgDtos = null;
         if(imgs!=null){
             imgDtos=new ArrayList<>();
-            for(MultipartFile img : imgs){
-                if(!img.isEmpty()){
-                    String[] contentTypes=img.getContentType().split("/");
-                    if(contentTypes[0].equals("image")){
-                        String fileName=System.currentTimeMillis()+"_"+(int)(Math.random()*10000)+"."+contentTypes[1];
-                        Path path=Paths.get(uploadPath+"/trip/"+fileName);
+            for (int i=0; i<imgs.size(); i++) {
+                MultipartFile img=imgs.get(i);
+                if (!img.isEmpty()) {
+                    String[] contentTypes = img.getContentType().split("/");
+                    if (contentTypes[0].equals("image")) {
+                        String fileName = System.currentTimeMillis() + "_" + (int) (Math.random() * 10000) + "." + contentTypes[1];
+                        Path path = Paths.get(staticPath + "/public/img/trip/" + fileName);
                         try {
                             img.transferTo(path);
                         } catch (IOException e) {
                             log.error(e.getMessage());
                         }
-                        TripImgDto imgDto=new TripImgDto();
-                        imgDto.setImgPath("/public/img/trip/"+fileName);
+                        TripImgDto imgDto = new TripImgDto();
+                        if(i==imgs.size()-1)imgDto.setImgMain(true);
+                        imgDto.setImgPath("/public/img/trip/" + fileName);
                         imgDtos.add(imgDto);
+
+//                        if (imgDtos != null && imgDtos.size() > 0) {
+//                            imgDtos.get(0).setImgMain(true);지
+//                        }
                     }
                 }
             }
+
         }
         trip.setImgs(imgDtos);
         int modify = 0;
@@ -166,11 +176,12 @@ public class TripController {
 //            @SessionAttribute UserDto loginUser, // 글쓴이와 로그인한 사람 같은지 확인예정
             @ModelAttribute TripDto trip,
             RedirectAttributes redirectAttributes,
-            @RequestParam(name = "img", required = false) MultipartFile[] imgs) { // required=false : 파라미터 img 없어도 에러발생안하도록!
+            @RequestParam MultipartFile mainImg, // 메인이미지 파라미터
+            @RequestParam(name = "img", required = false) List<MultipartFile> imgs) { // required=false : 파라미터 img 없어도 에러발생안하도록!
         String redirectPage = "redirect:/trip/register.do";
 //        if(!loginUser.getUId().equals(trip.getUId())) return redirectPage; // 다르면 다시 등록페이지로 이동
         String msg="";
-
+        imgs.add(mainImg);
         // 제목 입력 여부 확인
         if (trip.getTitle() == null || trip.getTitle().equals("")) {
             msg = "제목을 입력하세요.";
@@ -181,7 +192,8 @@ public class TripController {
         List<TripImgDto> imgDtos=null;
         if (imgs != null) {
             imgDtos = new ArrayList<>();
-            for (MultipartFile img : imgs) {
+            for (int i=0; i<imgs.size(); i++) {
+                MultipartFile img=imgs.get(i);
                 if (!img.isEmpty()) {
                     String[] contentTypes = img.getContentType().split("/");
                     if (contentTypes[0].equals("image")) {
@@ -193,12 +205,13 @@ public class TripController {
                             log.error(e.getMessage());
                         }
                         TripImgDto imgDto = new TripImgDto();
+                        if(i==imgs.size()-1)imgDto.setImgMain(true);
                         imgDto.setImgPath("/public/img/trip/" + fileName);
                         imgDtos.add(imgDto);
 
-                        if (imgDtos != null && imgDtos.size() > 0) {
-                            imgDtos.get(0).setImgMain(true);
-                        }
+//                        if (imgDtos != null && imgDtos.size() > 0) {
+//                            imgDtos.get(0).setImgMain(true);지
+//                        }
                     }
                 }
             }
