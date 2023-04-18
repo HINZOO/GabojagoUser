@@ -33,10 +33,13 @@
     <a href="javascript:void(0)"
        th:onclick="modifyFromPut([[${r.ccId}]])"
        th:if="${session.loginUser!=null && session.loginUser.uId==c.uId}"
-       class="me-2 text-decoration-none text-success" >수정하기</a>
+       class="me-2 text-decoration-none text-success" >수정</a>
+    <a href="javascript:void(0)"
+       th:if="${session.loginUser!=null && session.loginUser.uId==c.uId}"
+       class="me-2 text-decoration-none text-danger" >삭제</a>
     <a href="javascript:void(0)"
        th:onclick="replyFromPut([[${r.ccId}]])"
-       class="text-decoration-none text-primary">댓글 달기</a>
+       class="text-decoration-none text-primary">댓글</a>
 </div>
 
 <!--대댓글등록폼-->
@@ -48,7 +51,7 @@
           class="visually-hidden d-flex align-items-center"
           >
         <input type="text" name="content" class="input-group col">
-        <input type="hidden" name="ccId" th:value="${r.ccId}">
+        <input type="hidden" name="cId" th:value="${r.cId}">
         <input type="hidden" name="parentCrId" th:value="${r.ccId}">
         <input type="hidden" name="uId" th:value="${r.uId}">
         <button class="btn btn-outline-success btn-sm col-1">등록</button>

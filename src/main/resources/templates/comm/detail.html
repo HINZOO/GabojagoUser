@@ -93,7 +93,9 @@
 
                     </ul>
                     <div class="list-group-item border-0 bg-light " id="">
-                        <form name="replyInsertForm"  action="" method="post">
+                        <form name="replyInsertForm"  action="" method="post"
+                              onsubmit="event.preventDefault();registerReply(this);"
+                        >
                             <input type="hidden" name="uId" th:value="${c.getUId()}">
                             <input type="hidden" name="cId" th:value="${c.cId}">
                             <div class="d-flex">
@@ -155,7 +157,6 @@
         const modifyInsertForm=document.forms["modifyInsertForm"];
         const replyReplyForm=document.forms["replyReplyForm"];
         //modifyInsertForm.onsubmit=modifyReply;
-
         //프로필 클릭시 프로필 모달창뜸
         Array.from(profile).forEach((p)=>{
             p.addEventListener("click",(e)=>{
@@ -165,21 +166,6 @@
 
 
 
-        async function registerReply(e){
-            e.preventDefault();
-            const data= new FormData(replyInsertForm);
-            let url="/comm/reply/handler.do";
-            const resp= await fetch(url,{method:"POST",body:data});
-            if(resp.status===200){
-                const json=await resp.json();
-                if(json.register>0){
-                    alert("등록성공!")
-                    await loadReplies(replyInsertForm.cId.value);
-                }
-            }else{
-                alert("등록실패"+resp.status);
-            }
-        }
         async function loadReplies(cId){
             let url=`/comm/reply/${cId}/list.do`
             const resp=await fetch(url);
@@ -223,16 +209,6 @@
                 alert("수정통신실패");
             }
         }
-        async function loadModifyReply(ccId){
-            let url=`/comm/reply/${ccId}/detail.do`
-            const resp=await fetch(url);
-            if(resp.status===200){
-                let text=await resp.json();
-                replyContainer.innerHTML=text;
-            }
-        }
-
-
 
 
 

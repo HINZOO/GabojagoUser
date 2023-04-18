@@ -43,7 +43,7 @@ public class CommReplyController {
 
     }
 
-    @RequestMapping(value = "/handler.do", method = RequestMethod.POST)
+    @PostMapping(value = "/handler.do")
     public @ResponseBody HandlerDto registerHandler(
             @ModelAttribute CommReplyDto reply,
             @SessionAttribute UserDto loginUser) {
