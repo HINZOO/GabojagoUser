@@ -1,5 +1,7 @@
 package com.project.gabojago.gabojagouser.controller.sells;
+import com.github.pagehelper.PageInfo;
 import com.project.gabojago.gabojagouser.dto.sells.SellImgsDto;
+import com.project.gabojago.gabojagouser.dto.sells.SellPageDto;
 import com.project.gabojago.gabojagouser.dto.sells.SellsDto;
 import com.project.gabojago.gabojagouser.dto.sells.SellsOptionDto;
 import com.project.gabojago.gabojagouser.dto.user.UserDto;
@@ -35,25 +37,30 @@ public class SellsController {
     private String uploadPath;
     @RequestMapping("/{title}/search.do")
     public String searchSells(@PathVariable String title,
-                              Model model
+                              Model model,
+                              @ModelAttribute SellPageDto pageDto
                               ){
         List<SellsDto> sells;
         sells=sellsService.findByTitle(title);
+        PageInfo<SellsDto> pageSells=new PageInfo<>(sells);
+        model.addAttribute("page",pageSells);
         model.addAttribute("sells",sells);
         return "/sells/list";
     }
     @GetMapping("list.do")
-    public String list(
-            Model model,
-                       @RequestParam(name = "category", required = false) String category){
+    public String list(Model model,
+                       @RequestParam(name = "category", required = false) String category,
+                       @ModelAttribute SellPageDto pageDto){
         List<SellsDto> sells;
         if(category==null){
-           sells=sellsService.List();
+           sells=sellsService.List(pageDto);
         }else {
          sells=sellsService.findByCategory(category);
         }
 //        System.out.println("sells = " + sells);
-        model.addAttribute("sells",sells);
+        PageInfo<SellsDto> pageSells=new PageInfo<>(sells);
+            model.addAttribute("page",pageSells);
+            model.addAttribute("sells",sells);
         return "/sells/list";
 
     }
@@ -132,6 +139,12 @@ public class SellsController {
 //        }
 //
 //        return "/sells/register";
+    }
+    @GetMapping("/{sId}/remove.do")
+    public String removeAction(@PathVariable int sId){
+        String redirecPath="redirect:/sells/"+sId+"/modify.do";
+        sellsService.remove(sId);
+        return "redirect:/sells/list.do";
     }
 
 }
