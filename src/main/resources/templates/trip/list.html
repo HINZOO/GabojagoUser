@@ -26,11 +26,14 @@
                     <a class="text-dark text-decoration-none" th:href="@{'/trip/{tId}/detail.do'(tId=${t.tId})}">
                         <!-- imgs 가 null 이 아니면 보이기! null 이면 안보이기! // id 는 유일한 값을 주기 위해서 tId 를 붙임 -->
                         <div th:if="${t.imgs!=null}" th:id="'carousel'+${t.tId}" class="carousel slide" data-bs-ride="carousel">
+
                             <div class="carousel-inner">
-                                <div class="carousel-item" th:each="img,state : ${t.imgs}" th:classappend="${state.first}?'active':''">
+                                <div class="carousel-item" th:each="img,state : ${t.imgs}" th:classappend="${img.imgMain}?'active':''"> <!-- main 이미지를 active 로 맨앞에 위치하기 -->
+<!--                                <div class="carousel-item" th:each="img,state : ${t.imgs}" th:classappend="${state.first}?'active':''">-->
                                     <img th:src="@{'{path}'(path=${img.imgPath})}" class="d-block w-100" style="object-fit: contain"  alt="...">
                                 </div>
                             </div>
+
                             <button class="carousel-control-prev" type="button" th:data-bs-target="'#carousel'+${t.tId}" data-bs-slide="prev">
                                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                                 <span class="visually-hidden">Previous</span>
