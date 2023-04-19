@@ -69,4 +69,9 @@ public class PlanController {
         model.addAttribute("period", gap);
         return "/plan/detail";
     }
+
+    @PostMapping("/tdlHandler.do")
+    public @ResponseBody String tdlInset(){
+
+    }
 }

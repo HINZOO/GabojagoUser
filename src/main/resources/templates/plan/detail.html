@@ -37,8 +37,8 @@
                                     <input type="checkbox" id="tdlCheck">
                                     <label class="tdlCheckLabel p-0" for="tdlCheck"></label>
                                     <input type="text" class="tdlInput" placeholder="">
-<!--                                    <i class="bi bi-check-circle tdlSubmit"></i>-->
-                                    <span><span class="tdlMBtn tdlSubmit">-</span></span>
+                                    <i class="bi bi-check-circle tdlSubmit" onclick=tdlReg(this)></i>
+                                    <span style="display: none"><span class="tdlMBtn tdlDelete">-</span></span>
                                 </form>
                             </div>
                         </div>
@@ -347,6 +347,26 @@
             }else {
                 alert("캔버스 삭제 실패 status :"+resp.status);
             }
+        }
+
+        // 체크리스트 등록 하는 경우
+        async function tdlReg(ele){
+            const data = new FormData(ele.parentElement)
+            console.log(ele.parentElement)
+            console.log(ele.previousElementSibling)
+            console.log(ele.nextElementSibling)
+
+            let url ='/plan/tdlHandler.do'
+            const resp = await fetch(url,{method:"POST",body:data});
+            // const result = await resp.json();
+            // if(resp.status===200 && result===1){
+            //     canvas.remove();
+            //     btn.style.display="block"
+            //     body.style.height="130px"
+            // }else {
+            //     alert("캔버스 삭제 실패 status :"+resp.status);
+            // }
+
         }
 
 
