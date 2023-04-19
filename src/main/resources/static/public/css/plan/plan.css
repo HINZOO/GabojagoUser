@@ -28,6 +28,10 @@ body{
     -ms-use-select: all;
     user-select: all;
 }
+.textCancel{
+    text-decoration: line-through red;
+    text-decoration-thickness: 3px;
+}
 a:link { color: black; text-decoration: none;}
 a:visited { color: black; text-decoration: none;}
 a:hover { color: black; text-decoration: none;}
@@ -175,8 +179,8 @@ canvas{
 .mainHeaderImg{
     z-index: -999;
     position: absolute;
-    width: 67.5vw;
-    height: 40vh;
+    width: 67.3vw;
+    height: 45vh;
     opacity: 0.8
 }
 
@@ -184,10 +188,16 @@ canvas{
 .titleBox{
 
     padding-top: 20vh;
-    padding-left: 50px;
+    padding-left: 80px;
     font-family: do hyeon;
     font-size: 15px;
     color: white;
+}
+.titleInnerBox{
+    width:400px;
+    padding: 10px 30px;
+    border-radius: 15px;
+    /*background-color: rgba(0, 0, 0, 0.3);*/
 }
 .rightBox{
     text-align: right;
@@ -242,7 +252,7 @@ canvas{
 .tdlform input{
     color: white;
 }
-#tdlCheck{
+.tdlCheck{
 
     display: none;
 }
@@ -257,7 +267,7 @@ canvas{
     margin-left: 5px;
 }
 
-#tdlCheck:checked + label{
+.tdlCheck:checked + label{
     background-color: #c7c7c7;
     margin-left: 5px;
 }
@@ -303,7 +313,7 @@ canvas{
     border: 1px solid transparent;
     line-height: 25px;
     padding-top: 10px;
-    margin-top: -10px;
+    margin-top: -20px;
 }
 
 .dayBtn{

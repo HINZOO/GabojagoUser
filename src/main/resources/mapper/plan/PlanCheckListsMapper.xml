@@ -16,6 +16,8 @@
     <delete id="deleteOne">
         DELETE FROM plan_check_lists WHERE cl_id=#{clId}
     </delete>
-    <select id="findByPId" resultMap="planCheckListsMap"></select>
+    <select id="findByPId" resultMap="planCheckListsMap">
+        SELECT * FROM plan_check_lists WHERE p_id=#{pId}
+    </select>
 
 </mapper>

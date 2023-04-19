@@ -20,9 +20,11 @@
                 <div class="row mainHeader px-0 ">
                     <img class="mainHeaderImg mx-0 px-0" src="/public/img/plan/planSample2.jpg">
                     <div class="col-6 titleBox">
-                        <p class="headerTitle" th:text="${plan.getTitle()}"/>
-                        <span class="headerFrom" th:text="${plan.getPlanFrom()}"/> ~ <span class="headerTo" th:text="${plan.getPlanTo()}"/>
-                        <p class="headerStatus" th:text="${plan.getPlanStatus()}"/>
+                        <div class="titleInnerBox">
+                            <p class="headerTitle" th:text="${plan.getTitle()}"/>
+                            <span class="headerFrom" th:text="${plan.getPlanFrom()}"/> ~ <span class="headerTo" th:text="${plan.getPlanTo()}"/>
+                            <p class="headerStatus" th:text="${plan.getPlanStatus()}"/>
+                        </div>
                     </div>
                     <div class="col-6 rightBox">
                         <div class="toDoListBox">
@@ -32,22 +34,26 @@
                             </div>
 
                             <div class="tdlContent">
+                                <th:block th:each="checkList:${plan.getCheckLists()}">
+<!--                                    <span th:text="${checkList}"></span>-->
                                 <form class="tdlform px-0">
+                                    <input name="clId" th:value="${checkList.getClId()}" style="display: none">
                                     <input name="pId" th:value="${plan.getPId()}" style="display: none" readonly>
-                                    <input type="checkbox" id="tdlCheck" name="planStatus" onclick=tdlModi(this)>
-                                    <label class="tdlCheckLabel p-0" for="tdlCheck"></label>
-                                    <input type="text" class="tdlInput" placeholder="" name="content">
-                                    <i class="bi bi-check-circle tdlSubmit" onclick=tdlReg(this)></i>
-                                    <span style="display: none" onclick="tdlDel(this)"><span class="tdlMBtn tdlDelete">-</span></span>
+                                    <input type="checkbox" class="tdlCheck" name="checkStatus" th:value="${checkList.getCheckStatus()}" th:id="'tdlCheck_'+${checkList.getClId()}"  onclick=tdlModify(this) th:if="${checkList.getCheckStatus()=='CHECKED'}" checked>
+                                    <input type="checkbox" class="tdlCheck" name="checkStatus" th:value="${checkList.getCheckStatus()}" th:id="'tdlCheck_'+${checkList.getClId()}"  onclick=tdlModify(this) th:if="${checkList.getCheckStatus()=='UNCHECKED'}">
+                                    <label class="tdlCheckLabel p-0" th:for="'tdlCheck_'+${checkList.getClId()}"></label>
+                                    <input type="text" class="tdlInput" th:classappend="${checkList.getCheckStatus()} == 'CHECKED' ? 'textCancel'" th:value="${checkList.getContent()}" name="content">
+                                    <i class="bi bi-check-circle tdlSubmit" onclick=talRegistry(this) style="display: none"></i>
+                                    <span onclick=tdlDelete(this)><span class="tdlMBtn tdlDelete">-</span></span>
                                 </form>
+                                </th:block>
                             </div>
                         </div>
 
                     </div>
                 </div>
 
-
-<!--                    <th:block th:include="/plan/calender"></th:block>-->
+                >
                 <div class="row">
                     <div class="col-12 scheduleHeader">
                     <div class="row">
@@ -351,55 +357,67 @@
 
         // 체크리스트 폼 생성 하는 경우
         function tdlInsert(pId){
+            let num = Math.floor(Math.random() * 101);
             let tdlCon = document.querySelector(".tdlContent")
             tdlCon.insertAdjacentHTML("beforeend",
                 `<form class="tdlform px-0">
+                    <input name="clId" style="display: none" disabled>
                     <input name="pId" value="${pId}" style="display: none" readOnly>
-                        <input type="checkbox" id="tdlCheck" name="planStatus">
-                            <label class="tdlCheckLabel p-0" For="tdlCheck"></label>
-                            <input type="text" class="tdlInput" placeholder="" name="content">
-                                <i class="bi bi-check-circle tdlSubmit" onClick=tdlReg(this)></i>
-                            <span style="display: none" onclick="tdlDel(this)"><span class="tdlMBtn tdlDelete">-</span></span>
+                    <input type="checkbox" class="tdlCheck" value="UNCHECKED" id="tdlCheck+${num}" name="checkStatus" onclick=tdlModify(this)>
+                    <label class="tdlCheckLabel p-0" For="tdlCheck+${num}"></label>
+                    <input type="text" class="tdlInput" placeholder="" name="content">
+                    <i class="bi bi-check-circle tdlSubmit" onClick=talRegistry(this)></i>
+                    <span style="display: none" onclick="tdlDelete(this)"><span class="tdlMBtn tdlDelete">-</span></span>
                 </form>`
             )
         }
 
         // 체크리스트 등록 하는 경우
-        async function tdlReg(ele){
-            const data = new FormData(ele.parentElement)
-            // console.log(ele.parentElement)
-            // console.log(ele.previousElementSibling)
-            // console.log(ele.nextElementSibling)
-
+        async function talRegistry(ele){
+            const form = ele.parentElement;
+            const data = new FormData(form)
+            data.set("checkStatus",ele.parentElement["checkStatus"].getAttribute("value"))
             let url ='/plan/tdlHandler.do'
             const resp = await fetch(url,{method:"POST",body:data});
             const result = await resp.json();
-            if(resp.status===200 && result>=1){
+            if(resp.status===200){
                 ele.style.display="none";
+                form["clId"].setAttribute("value",result.clId);
+                form["clId"].disabled=false;
                 ele.previousElementSibling.readOnly=true;
-                ele.previousElementSibling.previousElementSibling.setAttribute("id","cL_"+result)
                 ele.nextElementSibling.style.display="inline";
-                ele.nextElementSibling.setAttribute("id","cL_"+result)
             }else {
+                form.remove();
                 alert("체크리스트 등록 실패 status :"+resp.status);
             }
         }
         // 체크리스트 상태 수정 하는 경우
-        async function tdlModi(ele){
+        async function tdlModify(ele){
+            const form = ele.parentElement;
+            const data = new FormData(form)
+            data.set("checkStatus",ele.getAttribute("value"))
             let url ='/plan/tdlHandler.do'
-            const resp = await fetch(url,{method:"PUT",body:ele.getAttribute("id").split("_")[1]});
+            const resp = await fetch(url,{method:"PUT",body:data});
             const result = await resp.json();
-            if(resp.status===200 && result===1){
-                console.log(result)
+            console.log(result)
+            if(resp.status===200){
+                ele.setAttribute("value",result.checkStatus);
+                if(result.checkStatus==="CHECKED"){
+                    ele.checked=true;
+                    form["content"].classList.add("textCancel")
+                } else if (result.checkStatus==="UNCHECKED") {
+                    ele.checked=false;
+                    form["content"].classList.remove("textCancel")
+                }
             }else {
-                alert("체크리스트 삭제 실패 status :"+resp.status);
+                alert("체크리스트 수정 실패 status :"+resp.status);
             }
         }
 
         // 체크리스트 삭제 하는 경우
-        async function tdlDel(ele){
+        async function tdlDelete(ele){
             let url ='/plan/tdlHandler.do'
-            const resp = await fetch(url,{method:"DELETE",body:ele.getAttribute("id").split("_")[1]});
+            const resp = await fetch(url,{method:"DELETE",body:ele.parentElement["clId"].getAttribute("value")});
             const result = await resp.json();
             if(resp.status===200 && result===1){
                 ele.parentElement.remove();
@@ -421,8 +439,6 @@
             ele.append(canvas);
             canvasMap.set(pathId,newCanvas);
         }
-
-
 
         function accordionInsert(conId, time, title, info){
             return `<div class="accordion-item">

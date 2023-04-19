@@ -17,6 +17,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 @RequestMapping("/plan")
@@ -25,14 +26,6 @@ import java.util.List;
 public class PlanController {
     private PlanService planService;
     private PlanCheckListsService planCheckListsService;
-//    @GetMapping("/list.do")
-//    public String list(Model model){
-//
-//        List<PlanDto> plans = planService.list(uId);
-//        model.addAttribute("plans", plans);
-//        return "/plan/list";
-//    }
-
 
     @GetMapping("/list.do")
     public String list(
@@ -74,13 +67,11 @@ public class PlanController {
     }
 
     @PostMapping("/tdlHandler.do")
-    public @ResponseBody int tdlInset(
+    public @ResponseBody PlanCheckListsDto tdlInset(
             PlanCheckListsDto planCheckListsDto)
     {
-        int reg = planCheckListsService.register(planCheckListsDto);
-        int clId = 0;
-        if(reg>0) clId = planCheckListsDto.getClId();
-        return clId;
+        int register = planCheckListsService.register(planCheckListsDto);
+        return planCheckListsDto;
     }
     @DeleteMapping("/tdlHandler.do")
     public @ResponseBody int tdlDelete(
@@ -88,10 +79,19 @@ public class PlanController {
     {
         return planCheckListsService.remove(Integer.parseInt(clId));
     }
-    @DeleteMapping("/tdlHandler.do")
-    public @ResponseBody int tdlModify(
-            PlanCheckListsDto planCheckListsDto)
+    @PutMapping("/tdlHandler.do")
+    public @ResponseBody PlanCheckListsDto tdlModify(
+            PlanCheckListsDto dto)
     {
-        return planCheckListsService.modify(planCheckListsDto);
+        log.info("체크테스트1"+dto);
+        if(Objects.equals(dto.getCheckStatus(), "UNCHECKED")) {
+            dto.setCheckStatus("CHECKED");
+        }
+        else if (Objects.equals(dto.getCheckStatus(), "CHECKED")) {
+            dto.setCheckStatus("UNCHECKED");
+        }
+        log.info("체크테스트2"+dto);
+        planCheckListsService.modify(dto);
+        return dto;
     }
 }
