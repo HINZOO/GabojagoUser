@@ -86,13 +86,16 @@ public class TripController {
             @ModelAttribute TripDto trip,
             @RequestParam (required = false)MultipartFile mainImg, // 메인이미지 파라미터
             @RequestParam(name="img", required = false) List<MultipartFile> imgs,
-            @RequestParam(value="delImgId", required = false) int[] delImgIds,
+            @RequestParam(value="delImgId", required = false) List<Integer> delImgIds,
+            @RequestParam(required = false) int delMainImgId,
             RedirectAttributes redirectAttributes
     ) {
         String redirectPage = "redirect:/trip/" + trip.getTId() + "/modify.do";
         String msg="";
-        if(imgs==null){
+        if(imgs==null && !mainImg.isEmpty()){
             imgs=new ArrayList<>();
+            delImgIds.add(delMainImgId);
+            imgs.add(mainImg);
         }
 
         // 제목 입력 여부 확인
@@ -101,7 +104,6 @@ public class TripController {
             redirectAttributes.addFlashAttribute("msg",msg);
             return redirectPage;
         }
-
         List<TripImgDto> imgDtos = null;
         if(imgs!=null){
             imgDtos=new ArrayList<>();
@@ -127,15 +129,13 @@ public class TripController {
                     }
                 }
             }
-
         }
-
         trip.setImgs(imgDtos);
         int modify = 0;
         msg="등록실패";
         try {
             if (delImgIds != null) imgDtos = tripService.imgList(delImgIds); // 삭제할 이미지아이디가 있으면 => 수정
-            modify = tripService.modify(trip, delImgIds); // db 에서 삭제
+            modify =  tripService.modify(trip, delImgIds); // db 에서 삭제
         } catch (Exception e) {
             log.error(e.getMessage());
             msg+="에러:"+e.getMessage();

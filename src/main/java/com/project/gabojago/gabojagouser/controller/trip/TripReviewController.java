@@ -38,8 +38,8 @@ public class TripReviewController {
             @RequestParam(name="img", required = false) List<MultipartFile> imgs
             ){
         log.info(review);
-
         HandlerDto handlerDto=new HandlerDto();
+//        if(!imgs.isEmpty())
 
 //        List<>
 //

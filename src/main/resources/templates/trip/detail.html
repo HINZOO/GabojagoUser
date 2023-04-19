@@ -168,17 +168,21 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
+                                        <p class="form-floating">
+                                            <input type="text" name="uId" readonly class="form-control" placeholder="글쓴이">
+                                            <label>글쓴이</label>
+                                        </p>
                                         <p>
                                             평가 <span>☆☆☆☆☆</span>
                                         </p>
-                                        <p>
 
+                                        <p>
                                             방문 <span> <i class="bi bi-record-circle text-danger"></i></span>
                                             방문전 <span>  <i class="bi bi-circle text-dark text-opacity-25"></i></span>
                                         </p>
 
                                         <p class="form-floating">
-                                            <input type="text" name="uId" readonly class="form-control" placeholder="글쓴이">
+                                            <input type="text" name="title" th:value="${t.title}" readonly class="form-control" placeholder="글쓴이">
                                             <label>장소이름</label>
                                         </p>
 
@@ -377,8 +381,12 @@
     <script> // 리뷰등록 모달창 이미지 버튼
         const imgAddBtn = document.getElementById("imgAddBtn");
         const imgCont = document.getElementById("imgCont");
+        let imgAddBtnCount=0;
         imgAddBtn.addEventListener("click", (e) => {
-            imgCont.insertAdjacentHTML("beforeend", imgInputComponent());
+            if(imgAddBtnCount<5){
+                imgCont.insertAdjacentHTML("beforeend", imgInputComponent());
+                imgAddBtnCount++;
+            }
         });
         function imgInputComponent(label = "이미지", name = "img") { // 🔥 label, name 넣는 이유?
             return `
