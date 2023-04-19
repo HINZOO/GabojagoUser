@@ -28,17 +28,17 @@
                         <div class="toDoListBox">
                             <div class="tdlTitle">
                                 <span>CHECKLIST</span>
-                                <span><span class="tdlPBtn" style="margin-right: 5px">+</span></span>
-
+                                <span><span class="tdlPBtn" th:onclick="'tdlInsert('+${plan.getPId()}+')'" style="margin-right: 5px">+</span></span>
                             </div>
 
                             <div class="tdlContent">
                                 <form class="tdlform px-0">
-                                    <input type="checkbox" id="tdlCheck">
+                                    <input name="pId" th:value="${plan.getPId()}" style="display: none" readonly>
+                                    <input type="checkbox" id="tdlCheck" name="planStatus" onclick=tdlModi(this)>
                                     <label class="tdlCheckLabel p-0" for="tdlCheck"></label>
-                                    <input type="text" class="tdlInput" placeholder="">
+                                    <input type="text" class="tdlInput" placeholder="" name="content">
                                     <i class="bi bi-check-circle tdlSubmit" onclick=tdlReg(this)></i>
-                                    <span style="display: none"><span class="tdlMBtn tdlDelete">-</span></span>
+                                    <span style="display: none" onclick="tdlDel(this)"><span class="tdlMBtn tdlDelete">-</span></span>
                                 </form>
                             </div>
                         </div>
@@ -349,24 +349,63 @@
             }
         }
 
+        // 체크리스트 폼 생성 하는 경우
+        function tdlInsert(pId){
+            let tdlCon = document.querySelector(".tdlContent")
+            tdlCon.insertAdjacentHTML("beforeend",
+                `<form class="tdlform px-0">
+                    <input name="pId" value="${pId}" style="display: none" readOnly>
+                        <input type="checkbox" id="tdlCheck" name="planStatus">
+                            <label class="tdlCheckLabel p-0" For="tdlCheck"></label>
+                            <input type="text" class="tdlInput" placeholder="" name="content">
+                                <i class="bi bi-check-circle tdlSubmit" onClick=tdlReg(this)></i>
+                            <span style="display: none" onclick="tdlDel(this)"><span class="tdlMBtn tdlDelete">-</span></span>
+                </form>`
+            )
+        }
+
         // 체크리스트 등록 하는 경우
         async function tdlReg(ele){
             const data = new FormData(ele.parentElement)
-            console.log(ele.parentElement)
-            console.log(ele.previousElementSibling)
-            console.log(ele.nextElementSibling)
+            // console.log(ele.parentElement)
+            // console.log(ele.previousElementSibling)
+            // console.log(ele.nextElementSibling)
 
             let url ='/plan/tdlHandler.do'
             const resp = await fetch(url,{method:"POST",body:data});
-            // const result = await resp.json();
-            // if(resp.status===200 && result===1){
-            //     canvas.remove();
-            //     btn.style.display="block"
-            //     body.style.height="130px"
-            // }else {
-            //     alert("캔버스 삭제 실패 status :"+resp.status);
-            // }
+            const result = await resp.json();
+            if(resp.status===200 && result>=1){
+                ele.style.display="none";
+                ele.previousElementSibling.readOnly=true;
+                ele.previousElementSibling.previousElementSibling.setAttribute("id","cL_"+result)
+                ele.nextElementSibling.style.display="inline";
+                ele.nextElementSibling.setAttribute("id","cL_"+result)
+            }else {
+                alert("체크리스트 등록 실패 status :"+resp.status);
+            }
+        }
+        // 체크리스트 상태 수정 하는 경우
+        async function tdlModi(ele){
+            let url ='/plan/tdlHandler.do'
+            const resp = await fetch(url,{method:"PUT",body:ele.getAttribute("id").split("_")[1]});
+            const result = await resp.json();
+            if(resp.status===200 && result===1){
+                console.log(result)
+            }else {
+                alert("체크리스트 삭제 실패 status :"+resp.status);
+            }
+        }
 
+        // 체크리스트 삭제 하는 경우
+        async function tdlDel(ele){
+            let url ='/plan/tdlHandler.do'
+            const resp = await fetch(url,{method:"DELETE",body:ele.getAttribute("id").split("_")[1]});
+            const result = await resp.json();
+            if(resp.status===200 && result===1){
+                ele.parentElement.remove();
+            }else {
+                alert("체크리스트 삭제 실패 status :"+resp.status);
+            }
         }
 
 

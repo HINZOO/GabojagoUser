@@ -1,8 +1,10 @@
 package com.project.gabojago.gabojagouser.controller.plan;
 
+import com.project.gabojago.gabojagouser.dto.plan.PlanCheckListsDto;
 import com.project.gabojago.gabojagouser.dto.plan.PlanDto;
 import com.project.gabojago.gabojagouser.dto.user.UserDto;
 import com.project.gabojago.gabojagouser.mapper.plan.PlanMapper;
+import com.project.gabojago.gabojagouser.service.plan.PlanCheckListsService;
 import com.project.gabojago.gabojagouser.service.plan.PlanService;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -22,6 +24,7 @@ import java.util.List;
 @Log4j2
 public class PlanController {
     private PlanService planService;
+    private PlanCheckListsService planCheckListsService;
 //    @GetMapping("/list.do")
 //    public String list(Model model){
 //
@@ -71,7 +74,24 @@ public class PlanController {
     }
 
     @PostMapping("/tdlHandler.do")
-    public @ResponseBody String tdlInset(){
-
+    public @ResponseBody int tdlInset(
+            PlanCheckListsDto planCheckListsDto)
+    {
+        int reg = planCheckListsService.register(planCheckListsDto);
+        int clId = 0;
+        if(reg>0) clId = planCheckListsDto.getClId();
+        return clId;
+    }
+    @DeleteMapping("/tdlHandler.do")
+    public @ResponseBody int tdlDelete(
+            @RequestBody String clId)
+    {
+        return planCheckListsService.remove(Integer.parseInt(clId));
+    }
+    @DeleteMapping("/tdlHandler.do")
+    public @ResponseBody int tdlModify(
+            PlanCheckListsDto planCheckListsDto)
+    {
+        return planCheckListsService.modify(planCheckListsDto);
     }
 }
