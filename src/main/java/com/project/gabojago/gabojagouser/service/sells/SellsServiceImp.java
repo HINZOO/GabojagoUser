@@ -11,6 +11,7 @@ import com.project.gabojago.gabojagouser.mapper.sells.SellsOptionMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -39,6 +40,19 @@ public class SellsServiceImp implements SellsService{
     }
 
     @Override
+    public List<SellImgsDto> imgList(int[] simgId) {
+        List<SellImgsDto> imgList=null;
+        if(simgId!=null){
+            imgList=new ArrayList<>();
+            for (int id : simgId){
+                SellImgsDto imgsDto=sellImgsMapper.findBySimgId(id);
+                imgList.add(imgsDto);
+            }
+        }
+        return imgList;
+    }
+
+    @Override
     public SellsDto detail(int sId) {
         return this.sellsMapper.findBySId(sId);
     }
@@ -59,8 +73,20 @@ public class SellsServiceImp implements SellsService{
     }
 
     @Override
-    public int modify(SellsDto sells) {
-        return this.sellsMapper.updateOne(sells);
+    public int modify(SellsDto sells, int[] delImgIds, int[] delOptionIds) {
+        int modify=sellsMapper.updateOne(sells);
+        if (delImgIds!=null){
+            for (int simgId: delImgIds){
+                modify+=sellImgsMapper.deleteOne(simgId);
+            }
+        }
+        if (delOptionIds!=null){
+            for (int oId: delOptionIds ){
+                modify+=sellsOptionMapper.deleteOne(oId);
+            }
+        }
+
+        return modify;
     }
 
     @Override
