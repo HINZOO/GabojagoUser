@@ -4,14 +4,12 @@ import com.project.gabojago.gabojagouser.dto.comm.CommImgDto;
 import com.project.gabojago.gabojagouser.dto.comm.CommunityDto;
 import com.project.gabojago.gabojagouser.dto.user.UserDto;
 import com.project.gabojago.gabojagouser.service.comm.CommunityService;
-import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.File;
@@ -19,9 +17,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 @RequestMapping("/comm")
@@ -36,9 +32,10 @@ public class CommController {
     }
 
     @GetMapping("/list.do")
-    public String list(Model model){
+    public String list(Model model,
+                       @SessionAttribute(required = false) UserDto loginUser){
         List<CommunityDto> communities;
-        communities=communityService.list();
+        communities=communityService.list(loginUser);
         model.addAttribute("communities",communities);
         return "/comm/list";
     }
@@ -57,7 +54,7 @@ public class CommController {
         if(loginUser==null){
             String msg="로그인한 사용자만 이용할 수 있습니다.";
             redirectAttributes.addFlashAttribute("msg",msg);
-            return "redirect:/comm/list.do";
+            return "redirect:/user/login.do";
         }
         return "/comm/register";
     }
@@ -68,7 +65,7 @@ public class CommController {
             @RequestParam(value ="img",required = false) MultipartFile[] imgs
             ) throws IOException {
         String redirectPage = "redirect:/comm/register.do";
-        System.out.println("commBoard = " + commBoard);
+        //System.out.println("commBoard = " + commBoard);
         //if(!loginUser.getUId().equals(commBoard.getCId())) return redirectPage;
         List<CommImgDto> commImgs = null;
         if (imgs != null) {
@@ -86,6 +83,7 @@ public class CommController {
                     }
                 }
             }
+        }
             commBoard.setImgs(commImgs);
             int register = 0;
             try {
@@ -103,14 +101,20 @@ public class CommController {
                     }
                 }
             }
-        }
+
             return redirectPage;
     }
 
     @GetMapping("/{cId}/modify.do")
     public String modifyForm(Model model,
                              @PathVariable int cId,
-                             @SessionAttribute UserDto loginUser){
+                             @SessionAttribute UserDto loginUser,
+                             RedirectAttributes redirectAttributes){
+        if(loginUser==null){
+            String msg="로그인한 사용자만 이용할 수 있습니다.";
+            redirectAttributes.addFlashAttribute("msg",msg);
+            return "redirect:/user/login.do";
+        }
         CommunityDto comm= communityService.detail(cId);
         model.addAttribute("c",comm);
         return "/comm/modify";
@@ -121,10 +125,28 @@ public class CommController {
             @ModelAttribute CommunityDto commBoard,
             @RequestParam(value="delImgId",required = false) int[] delImgIds,
             @RequestParam(value="img",required = false) MultipartFile[] imgs
-    ){
+    ) throws IOException {
+
         String redirectPage="redirect:/comm/"+commBoard.getCId()+"/modify.do";
         List<CommImgDto> imgDtos=null;
         int modify=0;
+        if(imgs!=null){
+            imgDtos=new ArrayList<>();
+            for(MultipartFile img:imgs){
+                if(!img.isEmpty()){
+                    String[] contentTypes=img.getContentType().split("/");
+                    if(contentTypes[0].equals("image")){
+                        String fileName=System.currentTimeMillis()+"_"+(int)(Math.random()*10000)+"."+contentTypes[1];
+                        Path path = Paths.get(staticPath + "/public/img/comm/" + fileName);
+                        img.transferTo(path);
+                        CommImgDto imgDto=new CommImgDto();
+                        imgDto.setImgPath("/public/img/comm/"+fileName);//서버배포경로
+                        imgDtos.add(imgDto);
+                    }
+                }
+            }
+        }
+       commBoard.setImgs(imgDtos);
         try{
             if(delImgIds!=null) imgDtos=communityService.imgList(delImgIds);
             modify=communityService.modify(commBoard,delImgIds);
@@ -140,6 +162,7 @@ public class CommController {
             }
             redirectPage="redirect:/comm/list.do";
         }
+
         return redirectPage;
 
     }
@@ -152,6 +175,8 @@ public class CommController {
         CommunityDto board=null;
 
         int del=communityService.remove(cId);
+        String msg="게시글을 삭제하였습니다.";
+        redirectAttributes.addFlashAttribute("msg",msg);
         return redirectPage;
     }
 }

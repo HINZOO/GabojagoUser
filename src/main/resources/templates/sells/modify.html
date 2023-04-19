@@ -4,23 +4,20 @@
       layout:decorate="~{/layout}">
 <head>
   <meta charset="UTF-8">
-  <title>판매글 작성</title>
+  <title>판매글 수정</title>
 </head>
 <div layout:fragment="content">
   <form enctype="multipart/form-data" name="registerForm" action="/sells/modify.do" method="post" style="width: 500px;margin: 0 auto;">
-  <h1 class="my-4">게시글 등록</h1>
+  <h1 class="my-4">게시글 수정</h1>
   <p class="form-floating">
-    <input type="hidden" name="sId" th:value="${sell.getSId()}">
-    <input id="uIdInput" type="text" name="uId" value="user01" readonly class="form-control" placeholder="??"> <!-- th:value="${session.loginUser.uId}"-->
+    <input type="hidden" th:value="${sell.sId}" name="sId">
+    <input id="uIdInput" type="text" name="uId" th:value="${sell.getUId()}" readonly class="form-control" placeholder="??"> <!-- th:value="${session.loginUser.uId}"-->
     <label class="">아이디(글쓴이)</label>
   </p>
-<!--    <th:block th:each="img :${sell.getSellImgs()}">-->
-<!--      <span th:src="${img.imgPath}"></span>-->
-<!--    </th:block>-->
     <p id="imgDelCont">
     <h4>이미지 삭제 (체크)</h4>
-    <label th:each="img,state:${sell.getSellImgs()}" class="w-25 delImgItem">
-      <input type="checkbox" class="delImgInput" name="delImgId" th:value="${img.getSId()}">
+    <label th:each="img:${sell.getSellImgs()}" class="w-25 delImgItem">
+      <input type="checkbox" class="delImgInput" name="delImgId" th:value="${img.getSimgId()}">
       <img th:src="@{'{path}'(path=${img.imgPath})}" class="img-thumbnail">
     </label>
     </p>
@@ -67,26 +64,21 @@
       </select>
       <label class="">카테고리</label>
     </p>
-  <p class="form-floating">
-    <input id="titleInput" type="text" name="title" value="" class="form-control" placeholder="??">
-    <label class="" th:text="${sell.title}">글 제목</label>
+  <p >
+    <label  for="titleInput" class="form-label" >글 제목</label>
+    <input id="titleInput" name="title" th:value="${sell.title}" class="form-control" >
   </p>
   <p>
     <label for="contentInput" class="form-label">글 내용</label>
     <textarea id="contentInput" name="content" rows="4" class="form-control" placeholder="" th:text="${sell.content}"></textarea>
   </p>
-    <th:block th:each="option:${sell.getSellOption()}">
-    <div class="card mb-3">
-      <div class="card-body d-flex justify-content-between align-items-center">
-        <div>
-          <input type="hidden" th:value="${option.getOId()}">
-          <p class="card-text mb-0"><strong>옵션:</strong> <span th:text="${option.name}"></span></p>
-          <p class="card-text"><strong>가격:</strong> <span th:text="${option.price}"></span></p>
-        </div>
-        <button type="button" class="btn-close" aria-label="Close" onclick="remove()"></button>
-      </div>
-      </div>
-    </th:block>
+
+    <label th:each="option:${sell.getSellOption()}" class="d-flex justify-content-between">
+      <input type="checkbox" name="delOption" th:value="${option.getOId()}" >
+      <h4 class="card-text mb-0"><strong>옵션:</strong> <span th:text="${option.name}"></span></h4>
+      <h4 class="card-text"><strong>가격:</strong> <span th:text="${option.price}"></span></h4>
+    </label>
+
     <p id="optionCnt">
       <button id="optionAddBtn" class="btn btn-light w-100" type="button">
         옵션추가
@@ -95,14 +87,11 @@
     </p>
   <p class="text-end">
     <button type="reset" class="btn btn-warning">초기화</button>
-    <button type="submit" class="btn btn-primary">수정</button>
+    <a th:href="@{'/sells/{sId}/remove.do'(sId=${sell.sId})}" class="btn btn-danger">삭제</a>
+    <button type="submit" class="btn btn-primary">등록</button>
   </p>
 </form>
 <script>
-  function remove(){
-    const card=document.querySelector(".card");
-    card.remove();
-  }
   const imgAddBtn=document.getElementById("imgAddBtn");
   const imgCont=document.getElementById("imgCont");
   imgAddBtn.addEventListener("click",(e)=>{
@@ -134,6 +123,7 @@
   </button>
 </div>`;
   }
+
 </script>
 </div>>
 </html>

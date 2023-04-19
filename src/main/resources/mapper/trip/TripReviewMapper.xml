@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.project.gabojago.gabojagouser.mapper.trip.TripReviewMapper">
+    <resultMap id="TripReviewMap" type="TripReviewDto">
+        <id column="t_id" property="tId"/>
+        <result column="u_id" property="uId"/>
+        <result column="content" property="content"/>
+        <result column="visit" property="visit"/>
+        <result column="post_time" property="postTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="grade" property="grade"/>
+        <collection property="imgs"
+                    select="com.project.gabojago.gabojagouser.mapper.trip.TripReivewImgMapper.findByTrId"
+                    column="tr_id"
+                    fetchType="lazy"/>
+
+    </resultMap>
+    <insert id="insertOne" useGeneratedKeys="true" keyProperty="trId" parameterType="TripReviewDto">
+        INSERT trip_reviews (content, visit, grade)
+        VALUE (#{content}, #{visit}, #{grade})
+    </insert>
+    <update id="updateOne">
+        UPDATE trip_reviews SET content=#{content}, visit=#{visit}, grade=#{grade} WHERE tr_id=#{trId}
+    </update>
+    <delete id="deleteOne">
+
+    </delete>
+    <select id="findAll" resultType="com.project.gabojago.gabojagouser.dto.trip.TripReviewDto">
+
+    </select>
+</mapper>

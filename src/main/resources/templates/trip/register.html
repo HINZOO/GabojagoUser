@@ -7,10 +7,25 @@
 <head>
     <meta charset="UTF-8">
     <title>여행지 등록</title>
+    <style>
+        .radioBtn + div {
+
+        }
+
+        .radioBtn:checked + label  {
+            background-color: yellow;
+        }
+    </style>
 </head>
 <div layout:fragment="content">
-    <form enctype="multipart/form-data" action="./register.do" method="post" style="width: 500px; margin: 0 auto;">
+    <script src="/public/js/tripInsert.js" defer></script>
+    <form name="tripInsertFrom" enctype="multipart/form-data" action="./register.do" method="post" style="width: 500px; margin: 0 auto;">
         <h1 class="my-4">여행지 등록</h1>
+        <p class="form-floating">
+            <input readonly type="text" id="" name="uId" value="user01" class="form-control" placeholder="??">
+<!--            <input readonly type="text" id="" name="uId" th:value="${session.loginUser.uId}" class="form-control" placeholder="??">-->
+            <label for="">아이디(글쓴이)</label>
+        </p>
 
         <p class="form-floating">
             <select name="category" id="category" class="form-select">
@@ -57,7 +72,8 @@
         </p>
 
         <p class="form-floating">
-            <input type="text" name="phone" value="" class="form-control" placeholder="??">
+            <!-- 로그인한 파트너의 연락처 -->
+            <input type="text" name="phone" value="0212345677" class="form-control" placeholder="??">
             <label>연락처</label>
         </p>
 
@@ -74,6 +90,10 @@
         <p class="form-floating">
             <input type="text" name="tagId" value="" class="form-control" placeholder="??">
             <label>해시태그 입력</label>
+        </p>
+
+        <p>
+            <input class="form-control" type="file" name="mainImg">
         </p>
 
         <p id="imgCont">
@@ -116,15 +136,20 @@
     <script>
         const imgAddBtn = document.getElementById("imgAddBtn");
         const imgCont = document.getElementById("imgCont");
+        let imgAddBtnCount = 0;
         imgAddBtn.addEventListener("click", (e) => {
-            imgCont.insertAdjacentHTML("beforeend", imgInputComponent());
+            if(imgAddBtnCount<5){
+                imgCont.insertAdjacentHTML("beforeend", imgInputComponent());
+                imgAddBtnCount++;
+            }
         });
 
         function imgInputComponent(label = "이미지", name = "img") { // 🔥 label, name 넣는 이유?
             return `
                  <p class="input-group mt-2">
-                    <label class="input-group-text">${label}</label>
+                    <label class="input-group-text click">${label}</label>
                     <input class="form-control" type="file" name="${name}">
+
                     <button type="button" class="btn btn-danger" onclick="this.closest('.input-group').remove()">
                         <i class="bi bi-x-lg"></i>
                     </button>
@@ -132,6 +157,12 @@
             `
 
         }
+
+
+        // document.querySelector('.click').addEventListener('click', function() {
+        //     const radioBtn = document.querySelector('.radioBtn');
+        //     radioBtn.checked = true;
+        // });
 
     </script>
 </div>

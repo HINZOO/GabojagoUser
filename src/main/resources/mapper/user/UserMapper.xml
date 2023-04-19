@@ -45,10 +45,19 @@
     business_id=#{businessId}
     WHERE u_id=#{uId}
   </update>
+    <update id="setLoginUserId">
+      SET @loginUserId=#{uId}
+    </update>
+  <update id="setLoginUserIdNull">
+    SET @loginUserId=NULL;
+  </update>
   <select id="findUserByUIdAndPw" resultMap="UserMap">
     SELECT * FROM users WHERE u_id=#{uId} AND pw=#{pw}
   </select>
   <select id="findUserByUId" resultMap="UserMap">
     SELECT * FROM users WHERE u_id=#{uId}
   </select>
+    <select id="findAll" resultType="com.project.gabojago.gabojagouser.dto.user.UserDto">
+        SELECT * FROM users
+    </select>
 </mapper>

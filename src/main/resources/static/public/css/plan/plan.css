@@ -1,8 +1,26 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Do+Hyeon&family=DynaPuff:wght@400;600&family=Noto+Sans+KR:wght@400;500;700&family=Russo+One&display=swap');
+
+
+
+
 @font-face {
     font-family: 'TheJamsil5Bold';
     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/TheJamsil5Bold.woff2') format('woff2');
     font-weight: 700;
     font-style: normal;
+}
+body{
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-use-select: none;
+    user-select: none;
+}
+.draggable{
+    -webkit-user-select: all;
+    -moz-user-select: all;
+    -ms-use-select: all;
+    user-select: all;
 }
 a:link { color: black; text-decoration: none;}
 a:visited { color: black; text-decoration: none;}
@@ -127,241 +145,297 @@ body{
     padding: 0;
 }
 
-.subCanvas{
-    position: absolute;
-    width: calc(100% - 40px);
-}
-
 canvas{
+    /*border-radius: 0px 20px;*/
     position: relative;
     width: 100%;
 
 
 }
 
-.dayHeader{
-    height: 50px;
-    /*background-color: rgba(186, 228, 246, 0.24);*/
-    /*border-radius: 30px;*/
-    border-top: 3px solid lightgrey;
-    border-bottom: 2px solid lightgrey;
 
+
+.mainSection{
+    min-height: 95vh;
+}
+.mainHeader{
+    width: 100%;
+    height: 40vh;
+}
+.mainHeader>div{
+    width: 50%;
+    height: 40vh;
+}
+.mainHeaderImg{
+    z-index: -999;
+    position: absolute;
+    width: 67.5vw;
+    height: 40vh;
+    opacity: 0.8
+}
+
+
+.titleBox{
+
+    padding-top: 20vh;
+    padding-left: 50px;
+    font-family: do hyeon;
+    font-size: 15px;
+    color: white;
+}
+.rightBox{
+    text-align: right;
+    padding-top: 5vh;
+    padding-rightt: 50px;
+
+}
+.toDoListBox{
+    background-color: rgba(0, 0, 0, 0.2);
+    text-align: left;
+    display: inline-block;
+    font-family: Russo one;
+    color: white;
+    padding: 10px 10px;
+    /*border: 3px solid white;*/
+    border-radius: 15px;
+    width: 250px;
+    height: 30vh;
+}
+
+.tdlTitle{
+
+    border-bottom: 2px solid rgba(255, 255, 255, 0.61);
+    display: flex;
+    justify-content: space-between;
+}
+.tdlPBtn, .tdlMBtn{
+    cursor: pointer;
+    border-radius: 50%;
+    padding: 0px 5px;
+
+}
+.tdlPBtn:hover, .tdlMBtn:hover{
+    color: #3b3b3b;
+    background-color: white;
+
+}
+.tdlContent{
+
+    padding: 8px 5px;
+    color: white;
+}
+.tdlCBtn{
+    border: 1px solid transparent;
+    border-radius: 50% !important;
+}
+
+
+
+.headerTitle{
+    font-size: 40px;
+    color: white;
     font-weight: bold;
-    text-align: center;
-    margin-bottom: 20px;
-    line-height: 50px;
 }
-.dayHeaderMain{
-    font-size: 30px;
-    line-height: 40px;
-    color: #5b5b5b;
+
+
+
+
+.addBox{
+    width: 100%;
+    height: 90vh;
 }
-.dayHeaderSide{
-    line-height: 40px;
-    font-size: 30px;
-    color: rgba(111, 118, 152, 0.51);
+
+
+
+.scheduleHeader{
+    height: 50px;
+    background-color: whitesmoke;
+    border-radius: 20px 20px 0px 0px;
+    border: 1px solid transparent;
+    line-height: 25px;
+    padding-top: 10px;
+    margin-top: -10px;
 }
-.dayTitle{
-    font-weight: bolder;
-    color: #232323;
-    text-align: center;
+
+.dayBtn{
+    font-family: Russo One;
+    letter-spacing: 2px;
+    margin-left: 15px;
+    border-radius: 10px;
+    font-size: 15px;
+    background-color: rgba(211, 211, 211, 0.66);
+    color: white;
+    text-shadow: -1px 0 lightgrey, 1px 1px gray, 1px 2px gray, 0 -1px lightgrey;
 }
+
 
 .btnLine{
-    padding : 0px 10px 0px 10px;
-    background-color: rgba(227, 227, 227, 0.42);
-    margin-bottom: 8px;
-    /*border-left: 5px solid #9d9d9d;*/
-    /*border-right: 5px solid #9d9d9d;*/
+    box-sizing: border-box;
+
 }
 .btnLine i {
     font-size: 20px;
 }
 .btnLine button{
-    border: none;
-    margin-left: 5px !important;
-    padding: 5px;
-    border-radius: 8px;
-    color: #333333;
+    text-align: center;
+    width: 30px;
+    height: 30px;
+    border: 0px solid transparent;
+    margin-left: 3px !important;
+    background-color: lightgray;
+    border-radius: 5px;
+    color: #5b5b5b;
+
 }
 .btnLine button:hover{
-    /*border: 1px solid gray;*/
-    background-color: rgba(211, 211, 211, 0.73);
+    background-color: rgba(176, 176, 176, 0.73);
+}
+
+.scheduleInputBox{
+    text-align: right;
+}
+
+#newScheduleBtn{
+    margin-right: 20px;
+    float: right;
+    text-align: center;
+    width: 30px;
+    height: 30px;
+    padding: 0px;
+    font-size: 30px;
+    color: white;
+    border-radius: 50%;
+    text-shadow: -1px 0 lightgrey, 1px 1px gray, 1px 2px gray, 0 -1px lightgrey;
+}
+#newScheduleBtn:hover{
+    background-color: #595959;
+
 }
 
 
 
-.accordion-item{
 
 
-}
 .accordion-body{
-    position: relative;
+    border: none !important;
     overflow: hidden! important;
     height: 130px;
 }
-.accordion-body .innerText{
+.accordion-body .newCanvasBtn{
     font-weight: bold;
-    font-size: 30px;
+    font-size: 60px;
     text-align: center;
     color: lightgrey;
 }
-.accordion-body .innerText:hover{
+.accordion-body .newCanvasBtn:hover{
     color: #7c7cff;
 }
 
 .accordion-header, .accordion-button {
-    border-radius: 10px !important;
-    height: 60px;
+    border-radius: 15px !important;
+    height: 40px;
 }
-.accordion-header{
-    font-size: 0px;
-}
+
 .accordion-button{
-    padding: 0px;
+    padding: 0px 20px 0px 20px;
 }
 .accordion-item{
-    margin-bottom: 10px !important;
+    border: 1px solid transparent;
+    margin-bottom: 15px;
     background-color: transparent;
-    border-radius: 20px !important;
 }
-.accordion-button{
-    border: 1px solid lightgrey;
-    box-shadow: 0px 0px 5px 5px rgba(135, 206, 250, 0.04);
-    background-color: rgb(207, 240, 255);
-}
-.scheduleInputBox{
-    text-align: right;
-}
-.rightGrid, .leftGrid{
-    padding: 0px 10px;
-}
-.rightGrid> div{
-    padding: 8px;
-    /*background-color: rgba(232, 232, 232, 0.27);*/
-    border: 1px solid lightgrey;
 
-    /*height: 25vh;*/
-    margin-top: 20px;
-    border-radius: 8px;
-    font-weight: bold;
-}
-.sideTitle{
-    margin-left: 2px;
-    height: 30px;
-    width: min-content;
-    border-top: 1px solid rgba(229, 229, 229, 0.5);
-    border-bottom: 3px solid lightgrey;
-    border-left: 15px solid rgba(234, 214, 255, 0.83);
-    border-right: 1px solid lightgrey;
-    border-radius: 5px;
-    padding: 0px 15px 3px 8px;
-    line-height: 25px;
-    font-size: 18px;
-    font-weight: bold;
-    color: #5d5d5d;
-}
-.sideContent{
-    margin-top: 5px;
-    min-height: 50px;
-    border: 1px solid lightgrey;
-    padding: 2px 0px 2px 5px;
-}
-.calenderBox{
-    height: 25vh;
-}
-.infoBox{
 
-}
-.infoImg{
-    border-radius: 10px 10px 0px 0px;
+
+
+#accordionSection{
     width: 100%;
-    height: 150px;
-    background-size: cover;
-    opacity: 0.8;
+    min-height: 50vh;
+    background-color: #fdfdfd;
+    border-top: 10px solid lightgrey ;
+    padding: 20px 50px 0px 50px;
 }
 
-.mainSection{
-    padding: 0px 30px;
+.scheduleLeft{
+    width: 20px;
+    height: 20px;
+    background-color: rgb(161, 193, 255);
+    border-radius: 50%;
+    padding-top: 5px;
+    color: lightgrey;
+    text-align: center;
 
 }
-
-.scheduleBtn{
-    padding: 0px 15px 0px 0px;
+.scheduleTime{
+    margin-right: 15px;
+    text-align: center;
+    min-width: 150px;
+    letter-spacing: 3px;
+    font-weight: 400;
+    color: #6c6c6c;
+    /*text-shadow: -1px 0 lightgrey, 1px 1px gray, 1px 2px gray, 0 -1px lightgrey;*/
+    font-family: Russo One;
+    font-size: 14px;
 }
 .scheduleContainer{
+    padding-left: 15px;
     margin: 0px;
     height: 100%;
 }
-.scheduleRow{
-    height: 100%;
-}
-.scheduleLeft, .scheduleTitle, .scheduleContent, .scheduleRight{
-
-}
-.scheduleLeft{
-    background-color: rgb(199, 220, 255);
-    box-sizing: border-box;
-    height: 100%;
-    line-height: 55px;
-    font-weight: bold;
-    border-right: 15px solid snow;
-    border-left: 30px solid rgb(161, 193, 255);
-    border-radius: 10px 0px 0px 10px;
-    text-align: left;
-    font-size: 25px;
-    color: white;
-    text-shadow: -1px 0 lightgrey, 1px 1px gray, 1px 2px gray, 0 -1px lightgrey;
-}
-.scheduleLeft:hover {
-    border-left-color: rgba(108, 108, 108, 0.69);
-}
 .scheduleCenter{
+    line-height: 40px;
     height: 100%;
-    position: relative;
     overflow: hidden !important;
 }
-.scheduleCenterInner{
-    line-height: 60px;
-}
-
-.scheduleCenter::before{
-    position: absolute;
-    content: "";
-    /*background-image: url("./sample.png");*/
-    top: 0px;
-    left: 0px;
-    right: 0px;
-    bottom: 0px;
-    opacity: 0.10;
-    height: 100%;
-
-}
 
 
-.scheduleRight{
-    text-align: center;
-}
+/*.scheduleCenter::before{*/
+/*    position: absolute;*/
+/*    content: "";*/
+/*    !*background-image: url("./sample.png");*!*/
+/*    top: 0px;*/
+/*    left: 0px;*/
+/*    right: 0px;*/
+/*    bottom: 0px;*/
+/*    opacity: 0.10;*/
+/*    height: 100%;*/
+
+/*}*/
+
+
 
 .scheduleContent{
 
     font-weight: bold;
-    /*color: #737373;*/
     color: #8c8c8c;
     /*text-shadow: -1px 0 lightgrey, 0 1px lightgrey, 1px 0 lightgrey, 0 -1px lightgrey;*/
-    font-size: 20px;
+    font-size: 15px;
     padding-left: 25px;
 }
 .scheduleTitle{
-    /*text-shadow: -1px 0 transparent, 1px 1px #8eabe3, 1px 2px #8eabe3, 0 -1px transparent;*/
-    color: #565656;
+    /*font-family: "Noto sans KR";*/
+    font-family: do hyeon;
+    letter-spacing: 1px;
+    color: #5b5b5b;
     font-weight: bolder;
-    font-size: 25px;
-    border-radius: 20px;
-    padding-left: 10px;
+    font-size: 20px;
+    padding: 0px 5px;
 }
-/*.scheduleTitleText{*/
-/*  padding: 3px 15px;*/
-/*  border-radius: 10px;*/
-/*  !*background-color: rgba(0, 0, 255, 0.07);*!*/
-/*}*/
+.scheduleSideBtn1, .scheduleSideBtn2 {
+
+    border: 1px solid lightgray;
+    border-radius: 10px;
+    padding: 3px 10px;
+    font-size: 25px;
+    float: right;
+    margin-right: -50px;
+}
+.scheduleSideBtn2{
+    margin-top: 50px;
+}
+
+.sbHover:hover{
+    background-color: whitesmoke;
+}
+
+

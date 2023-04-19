@@ -3,9 +3,13 @@ package com.project.gabojago.gabojagouser.mapper.plan;
 
 
 import com.project.gabojago.gabojagouser.dto.plan.PlanContentPathsDto;
+import com.project.gabojago.gabojagouser.dto.plan.PlanContentsDto;
+import org.apache.ibatis.annotations.Mapper;
 
-import java.util.List;
-
+@Mapper
 public interface PlanContentPathsMapper {
-    PlanContentPathsDto findByConId(int conId);
+
+    int insert(PlanContentPathsDto conId);
+//    int updateOne(PlanContentPathsDto planContentPathsDto);
+    int deleteOne(int pathId);
 }

@@ -4,8 +4,34 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout}">
 <div layout:fragment="content">
+    <style>
+        #mbtiChk>a{
+            text-decoration: none;
+            color: #7c7cff;
+        }
+        #mbtiChk>a:hover{
+            color:black;
+        }
+    </style>
     <section id="commListContainer" class="row">
         <h2>가보자고(Community)</h2>
+
+        <!--검색창-->
+        <form class="d-flex w-50 my-2" role="search">
+            <div class="input-group">
+                <label class="input-group-text bi bi-filter-square"></label>
+                <select name="order" class="form-control">
+                    <option value="title">제목</option>
+                    <option value="content">내용</option>
+                    <option value="u_id">아이디</option>
+                    <option value="nkName">글쓴이</option>
+                    <!--  <option th:selected="(${#strings.equals(param.order,'b_id')})" value="b_id">글번호</option>-->
+                </select>
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit"><i class="bi bi-search"></i></button>
+            </div>
+        </form>
+
         <p class="text-end">
             <a class="btn btn-outline-success me-5" href="/comm/register.do">글쓰기</a>
         </p>
@@ -14,13 +40,21 @@
             <div class="card" >
                 <div class="row no-gutters">
                     <div class="col-4" th:if="${c.imgs!=null && state.index==0}"th:each="img,state:${c.imgs}">
-                        <img th:src="@{'{path}'(path=${img.imgPath})}" alt="게시글 이미지">
-                        <div class="card-img-overlay col-4">
-                            <p class="card-text text-white text-end me-3">
-                                <i class="bi bi-heart fs-3"></i>
+                        <img th:src="@{'{path}'(path=${img.imgPath})}" class="col img-thumbnail w-100" alt="게시글 이미지">
+                        <div class="card-img-overlay object-fit-contain col-4 ">
+                            <p class="card-text text-dark text-end me-3">
+                                <a href=""><i class="bi bi-heart text-danger me- fs-3" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="좋아요"></i></a>
                             </p>
                         </div>
                     </div>
+<!--                    <div class="col-4" th:if="${c.imgs==null}">-->
+<!--                        <img th:src="@{'/public/img/comm/1.jpg'}" alt="대체">-->
+<!--                        <div class="card-img-overlay col-4">-->
+<!--                            <p class="card-text text-white text-end me-3">-->
+<!--                                <i class="bi bi-heart fs-3"></i>-->
+<!--                            </p>-->
+<!--                        </div>-->
+<!--                    </div>-->
 
                     <div class="col-8">
                         <div class="card-body">
@@ -37,9 +71,33 @@
                             </p>
 
                         </div>
-                        <div class="text-end me-2 my-2">
-                            <a th:href="@{'/comm/{cId}/modify.do'(cId=${c.cId})}" class="btn btn-primary btn-sm me-1">수정</a>
-                            <a th:href="@{'/comm/{cId}/remove.do'(cId=${c.cId})}" class="btn btn-danger btn-sm">삭제</a>
+                        <div class="LastCont d-flex justify-content-between">
+                            <div class="card-body">
+                                <p id="mbtiChk">
+                                    <a href="#" class="" th:text="${c.istp==1}?'#ISTP':''" ></a>
+                                    <a href="#" class="" th:text="${c.isfj==1}?'#ISFJ':''" ></a>
+                                    <a href="#" class="" th:text="${c.isfp==1}?'#ISFP':''" ></a>
+                                    <a href="#" class="" th:text="${c.intj==1}?'#INTJ':''" ></a>
+                                    <a href="#" class="" th:text="${c.intp==1}?'#INTP':''" ></a>
+                                    <a href="#" class="" th:text="${c.infj==1}?'#INFJ':''" ></a>
+                                    <a href="#" class="" th:text="${c.infp==1}?'#INFP':''" ></a>
+                                    <a href="#" class="" th:text="${c.estj==1}?'#ESTJ':''" ></a>
+                                    <a href="#" class="" th:text="${c.estp==1}?'#ESTP':''" ></a>
+                                    <a href="#" class="" th:text="${c.esfj==1}?'#ESFJ':''" ></a>
+                                    <a href="#" class="" th:text="${c.esfp==1}?'#ESFP':''" ></a>
+                                    <a href="#" class="" th:text="${c.entj==1}?'#ENTJ':''" ></a>
+                                    <a href="#" class="" th:text="${c.entp==1}?'#ENTP':''" ></a>
+                                    <a href="#" class="" th:text="${c.enfj==1}?'#ENFJ':''" ></a>
+                                    <a href="#" class="" th:text="${c.istj==1}?'#ISTJ':''" ></a>
+                                    <a href="#" class="" th:text="${c.enfp==1}?'#ENFP':''" ></a>
+                                </p>
+                            </div>
+                            <div class="text-end me-2 my-2 ">
+                                <a th:if="${session.loginUser!=null && session.loginUser.uId==c.uId}"
+                                   th:href="@{'/comm/{cId}/modify.do'(cId=${c.cId})}" class="btn btn-primary btn-sm me-1">수정</a>
+                                <a th:if="${session.loginUser!=null && session.loginUser.uId==c.uId}"
+                                   th:href="@{'/comm/{cId}/remove.do'(cId=${c.cId})}" class="btn btn-danger btn-sm">삭제</a>
+                            </div>
                         </div>
                     </div>
                 </div>
