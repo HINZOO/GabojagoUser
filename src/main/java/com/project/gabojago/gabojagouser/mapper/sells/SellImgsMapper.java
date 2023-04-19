@@ -11,6 +11,8 @@ public interface SellImgsMapper {
 
     List<SellImgsDto> findBySId(int sId);
 
+    SellImgsDto findBySimgId(int simgId);
+
     int insertOne(SellImgsDto sellImgs);
     int deleteOne(int simgId);
 

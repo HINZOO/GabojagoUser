@@ -15,4 +15,7 @@
     <select id="findBySId" resultMap="SellImgsMap">
         SELECT * FROM sell_imgs WHERE s_id=#{sId}
     </select>
+    <select id="findBySimgId" resultMap="SellImgsMap">
+        SELECT * FROM sell_imgs WHERE simg_id=#{simgId}
+    </select>
 </mapper>
