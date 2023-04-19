@@ -14,43 +14,37 @@
         <div class="row">
 
             <!--    사이드바 -->
-            <div class="col-md-2" >
-                <div class="row row-cols-1 sideGrid">
-                    <div class="col titleBox p-0">
-                        <span th:text="${plan.getTitle()}"/>
-                    </div>
-                    <div class="col calenderBox">
-                        <th:block th:include="/plan/calender"></th:block>
-                    </div>
-
-                    <div class="col infoBox">
-                            <!--   <div class="infoImg" th:if="${plan.getImgPath()!=null}" th:style="'background-image:url(' +  + ');'"></div>-->
-<!--                            <img class="infoImg" th:if="${plan.getImgPath()!=null}" th:src="${plan.getImgPath()}"></img>-->
-<!--                            <img class="infoImg" th:if="${plan.getImgPath()==null}" src="/public/img/plan/planDefault.jpeg"></img>-->
-                            <div class="infoStatus" >
-                                <i class="bi bi-key"></i>
-                                <span th:text="${plan.getPlanStatus()}"/></div>
-
-                            <div class="infoSchedule">🗓️ <span th:text="${plan.getPlanFrom()}"/> ~ <span th:text="${plan.getPlanTo()}"/></div>
-
-                    </div>
-
-                    <div class="col memberBox">
-                        멤버
-                    </div>
-                    <div class="col checkListBox">
-                        체크리스트
-                    </div>
-
-
-                </div>
-            </div> <!--좌측사이드닫기-->
-
-
+            <div class="col-md-2" ></div>
 
             <div class="col-md-8 mainSection px-0">
+                <div class="row mainHeader px-0 ">
+                    <img class="mainHeaderImg mx-0 px-0" src="/public/img/plan/planSample2.jpg">
+                    <div class="col-6 titleBox">
+                        <p class="headerTitle" th:text="${plan.getTitle()}"/>
+                        <span class="headerFrom" th:text="${plan.getPlanFrom()}"/> ~ <span class="headerTo" th:text="${plan.getPlanTo()}"/>
+                        <p class="headerStatus" th:text="${plan.getPlanStatus()}"/>
+                    </div>
+                    <div class="col-6 rightBox">
+                        <div class="toDoListBox">
+                            <div class="tdlTitle">
+                                <span>CHECKLIST</span>
+                                <span><span class="tdlPBtn">+</span>　<span class="tdlMBtn">-</span></span>
+                            </div>
 
-                <div class="row mainHeader mx-0">
+                            <div class="tdlContent">
+                                <input type="checkbox" class="tdlCBtn">
+                                체크리스트 들어갈 부분
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+<!--                    <th:block th:include="/plan/calender"></th:block>-->
+                <div class="row">
+                    <div class="col-12 scheduleHeader">
+                    <div class="row">
                     <div class="col-md-2">
                         <div class="btn-group">
                             <button type="button" class="btn btn-secondary btn-lg dropdown-toggle dayBtn py-0 border-0" data-bs-toggle="dropdown" aria-expanded="false">
@@ -143,7 +137,10 @@
                             <i class="bi bi-plus-circle"></i>
                         </div>
                     </div>
-                </div>
+                    </div> <!--내부로우 수정필요-->
+
+                </div> <!--스케쥴헤더-->
+
 
 
                     <div class="accordion .accordion-flush" id="accordionSection">
@@ -154,14 +151,15 @@
 
             </div> <!--메인섹션닫기-->
 
+            <div class="col-md-2" ></div>
 
-            <div class="col-md-2">
-                <div class="row row-cols-1 sideGrid">
-                  <div class="col addBox">
+<!--            <div class="col-md-2">-->
+<!--                <div class="row row-cols-1 sideGrid">-->
+<!--                  <div class="col addBox">-->
 
-                  </div>
-                </div>
-            </div> <!--우측사이드 닫기-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--            </div> &lt;!&ndash;우측사이드 닫기&ndash;&gt;-->
 
 
 
@@ -237,7 +235,6 @@
         let canvasMap=new Map();
 
 
-
         document.getElementById("imgBtn").addEventListener("mousedown",()=>{
             console.log(canvasMap.get(1));
             let input = document.getElementById("imgInput")
@@ -274,18 +271,17 @@
         let webSocket;
         webSocket=new WebSocket(URL);
 
-        // 새 스케쥴 등록 모달
+
+        // 새 스케쥴 생성하는 경우
         const newScheduleBtn = document.querySelector("#newScheduleBtn");
         const newScheduleBtnM = new bootstrap.Modal(document.getElementById('staticBackdrop'),{});
         newScheduleBtn.addEventListener("click",()=>{
             newScheduleBtnM.show();
         });
 
-        // 새 스케쥴 제출시
         const scheduleInsertForm = document.getElementById("scheduleInsertForm");
         scheduleInsertForm.onsubmit=registerSchedule;
 
-        // 새 스케쥴 생성 요청시 ajax
         async function registerSchedule(e){
             e.preventDefault();
             const data=new FormData(scheduleInsertForm);
@@ -303,6 +299,7 @@
                 alert("등록 실패 status :"+resp.status);
             }
         }
+
         // 스케쥴 수정.삭제 버튼
         Array.from(document.getElementsByClassName("scheduleSideBtn2")).forEach((ele)=>{
             let conId
@@ -337,7 +334,7 @@
             let url =`/plan/contents/canvasHandler.do`
             const resp = await fetch(url,{method:"DELETE",body:pathId});
             const result = await resp.json();
-            if(resp.status===200){
+            if(resp.status===200 && result===1){
                 canvas.remove();
                 btn.style.display="block"
                 body.style.height="130px"
@@ -367,16 +364,13 @@
                         <h2 class="accordion-header">
                           <button class="accordion-button collapsed scheduleBtn" type="button" data-bs-toggle="collapse"
                            data-bs-target="#content_${conId}" aria-expanded="false" aria-controls="#content_${conId}">
-                              <div class="container scheduleContainer ">
-                                  <div class="row scheduleRow " >
-                                      <div class="col col-md-3 scheduleLeft ">
-                                          <span class="scheduleTime">${time}</span>
-                                      </div>
-                                      <p class="col col-md-9 scheduleCenter">
-                                          <span class="scheduleTitle">${title}</span>
-                                          <span class="scheduleContent">${info}</span>
-                                      </p>
-                                  </div>
+                             <div class="scheduleTime">${time}</div>
+                              <div class="scheduleLeft"><br><i class="bi bi-three-dots-vertical"></i></div>
+                              <div class="scheduleContainer">
+                                  <p class="scheduleCenter">
+                                      <span class="scheduleTitle">${title}</span>
+                                      <span class="scheduleContent">${info}</span>
+                                  </p>
                               </div>
                           </button>
                         </h2>

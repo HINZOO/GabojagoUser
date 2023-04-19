@@ -1,16 +1,13 @@
         <h2 class="accordion-header">
           <button class="accordion-button collapsed scheduleBtn" type="button" data-bs-toggle="collapse" th:data-bs-target="'#content_'+${content.getConId()}"
                   aria-expanded="false" th:aria-controls="'#content_'+${content.getConId()}">
-              <div class="container scheduleContainer ">
-                  <div class="row scheduleRow " >
-                      <div class="col col-md-3 scheduleLeft ">
-                          <span class="scheduleTime" th:text="${content.getTime()}"></span>
-                      </div>
-                      <p class="col col-md-9 scheduleCenter">
-                          <span class="scheduleTitle" th:text="${content.getTitle()}"></span>
-                          <span class="scheduleContent" th:text="${content.getInfo()}"></span>
-                      </p>
-                  </div>
+              <div class="scheduleTime" th:text="${content.getTime()}"/>
+              <div class="scheduleLeft"><br><i class="bi bi-three-dots-vertical"></i></div>
+              <div class="scheduleContainer">
+                  <p class="scheduleCenter">
+                      <span class="scheduleTitle" th:text="${content.getTitle()}"></span>
+                      <span class="scheduleContent" th:text="${content.getInfo()}"></span>
+                  </p>
               </div>
           </button>
       </h2>
