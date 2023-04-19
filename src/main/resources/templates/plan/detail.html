@@ -28,12 +28,18 @@
                         <div class="toDoListBox">
                             <div class="tdlTitle">
                                 <span>CHECKLIST</span>
-                                <span><span class="tdlPBtn">+</span>　<span class="tdlMBtn">-</span></span>
+                                <span><span class="tdlPBtn" style="margin-right: 5px">+</span></span>
+
                             </div>
 
                             <div class="tdlContent">
-                                <input type="checkbox" class="tdlCBtn">
-                                체크리스트 들어갈 부분
+                                <form class="tdlform px-0">
+                                    <input type="checkbox" id="tdlCheck">
+                                    <label class="tdlCheckLabel p-0" for="tdlCheck"></label>
+                                    <input type="text" class="tdlInput" placeholder="">
+<!--                                    <i class="bi bi-check-circle tdlSubmit"></i>-->
+                                    <span><span class="tdlMBtn tdlSubmit">-</span></span>
+                                </form>
                             </div>
                         </div>
 

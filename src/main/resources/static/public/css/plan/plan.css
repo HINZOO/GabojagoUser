@@ -221,12 +221,51 @@ canvas{
 }
 .tdlContent{
 
-    padding: 8px 5px;
+    padding: 8px 0px;
     color: white;
 }
-.tdlCBtn{
-    border: 1px solid transparent;
-    border-radius: 50% !important;
+.tdlform{
+    height: 25px;
+    justify-content: space-between;
+    display: flex;
+    padding: 0px 5px;
+    border: 1px solid white;
+    border-radius: 8px;
+}
+.tdlform input{
+    color: white;
+}
+#tdlCheck{
+
+    display: none;
+}
+.tdlCheckLabel{
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 4px;
+    width: 15px;
+    height: 15px;
+    border: 2px solid white;
+    border-radius: 50%;
+    margin-left: 5px;
+}
+
+#tdlCheck:checked + label{
+    background-color: #c7c7c7;
+    margin-left: 5px;
+}
+
+
+.tdlInput{
+    outline: none;
+    color: white;
+    width: 170px;
+    border: none;
+    background-color: transparent;
+}
+
+.tdlSubmit{
+    margin-right: 5px;
 }
 
 
