@@ -7,12 +7,12 @@ import java.util.List;
 public interface TripService {
     // 맞춤추천 서비스 : 리스트, 상세, 등록, 수정, 삭제
     List<TripDto> list();
-    List<TripImgDto> imgList(int []tiId);
+    List<TripImgDto> imgList(List<Integer> tiId);
     TripDto detail(int tId);
     int register(TripDto trip);
     TripDto phoneCheck(String phone) throws Exception; // 게시글 등록시 핸드폰 체크
-    int modify(TripDto trip, int[] delImgIds);
-    int remove(int tId);
+    int modify(TripDto trip, List<Integer> delImgIds);
+    int remove(int tId, List<TripImgDto> imgDtos);
 
 
 }

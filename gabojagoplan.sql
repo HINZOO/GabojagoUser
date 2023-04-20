@@ -132,7 +132,10 @@ CREATE TABLE `trip_imgs` (
                              `ti_id` int unsigned AUTO_INCREMENT PRIMARY KEY COMMENT '이미지 아이디',
                              `t_id`	int unsigned NOT NULL COMMENT '맞춤추천 아이디',
                              `img_path`	varchar(255) NOT NULL COMMENT'이미지 경로',
-                             `img_main`	boolean	COMMENT '메인이미지'
+                             `img_main`	boolean	COMMENT '메인이미지',
+                              FOREIGN KEY (t_id) REFERENCES trips (t_id) ON DELETE CASCADE ON UPDATE CASCADE
+
+
 );
 #가보자고(북마크 테이블)
 #제약조건 추가 1개만북마크 가능하게
@@ -656,3 +659,18 @@ VALUES
     ('user05', '인천에서 즐기는 봄꽃 여행', '인천', '강화도', '01014312222', 'https://www.visitjeju.net/kr/','인천의 아름다운 벚꽃을 감상하며 봄을 느껴보세요.', 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, '힐링'),
     ('user06', '부산에서 즐기는 봄꽃 여행', '부산', '목포', '01055115322', 'https://www.visitjeju.net/kr/','부산의 아름다운 벚꽃을 감상하며 봄을 느껴보세요.', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, '힐링');
 
+INSERT INTO trip_imgs (t_id, img_path, img_main)
+
+VALUES
+    (1, '/public/img/trip/1681874098138_9606.jpeg', 0),
+    (1, '/public/img/trip/1681919983348_5750.jpeg', 1),
+    (2, '/public/img/trip/1681874098138_9606.jpeg', 0),
+    (2, '/public/img/trip/1681903838888_2292.jpeg', 1),
+    (3, '/public/img/trip/1681874098138_9606.jpeg', 0),
+    (3, '/public/img/trip/1681920887716_6975.jpeg', 1),
+    (4, '/public/img/trip/1681874098138_9606.jpeg', 0),
+    (4, '/public/img/trip/1681920915756_7364.jpeg', 1),
+    (5, '/public/img/trip/1681874098138_9606.jpeg', 0),
+    (5, '/public/img/trip/1681920956987_5938.jpeg', 1),
+    (6, '/public/img/trip/1681874098138_9606.jpeg', 0),
+    (6, '/public/img/trip/1681920967721_9464.jpeg', 1);
