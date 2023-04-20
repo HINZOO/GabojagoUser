@@ -40,4 +40,6 @@ public class TripDto {
 
     private List<TripImgDto> imgs;
 
+    private List<TripReviewDto> reviews; // 리뷰 // 1:N // trip 게시글 : reviews
+
 }
