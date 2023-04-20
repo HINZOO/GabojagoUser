@@ -64,12 +64,11 @@
     <delete id="deleteOne">
         DELETE FROM communitys WHERE c_id=#{cId}
     </delete>
-    <select id="findAll" resultMap="CommMap">
-        SELECT *
-        <if test="#{loginUserId!=null}">
-            ,(SELECT * FROM comm_likes WHERE c_id=communitys.c_id AND u_id=#{loginUserId}) login_user_like_status
+    <select id="findAll" resultMap="CommMap" parameterType="CommPageDto">
+        SELECT * FROM communitys
+        <if test="searchField!=null and searchValue!=null">
+            WHERE ${searchField} LIKE CONCAT('%',#{searchValue},'%')
         </if>
-        FROM communitys
     </select>
     <select id="findByCId" resultMap="CommMap">
         SELECT * FROM communitys WHERE c_id=#{cId};

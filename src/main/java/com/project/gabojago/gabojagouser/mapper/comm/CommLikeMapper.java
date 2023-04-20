@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Param;
 @Mapper
 public interface CommLikeMapper {
     CommLikeDto findByCIdAndUId(@Param("cId")int cId, @Param("uId")String uId);
-    String findByCIdAndUIdIsLoginUserId(@Param("cId")int cId);//로그인한 유저가 좋아요 한 내역
+    int findByCIdAndUIdIsLoginUserId(@Param("cId")int cId);//로그인한 유저가 좋아요 한 내역
 
     LikeStatusCntDto countStatusByCId(int cId);
     LikeStatusCntDto countStatusByUId(String uId);

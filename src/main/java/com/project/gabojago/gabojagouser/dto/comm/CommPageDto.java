@@ -4,32 +4,31 @@ import lombok.Data;
 
 @Data
 public class CommPageDto {
-    private  int pageNum=1;
-    private int pageSize=5;
-
+    private int pageNum=1;
+    private int pagsSize=5;
     enum CommsType{
-        c_id,u_id,title,view_count,content,post_time,area,
-        istj,istp,isfj,isfp,intj, infp, estj ,estp, esfj, esfp ,entj ,entp,enfp
+        c_id,u_id,post_time,update_time,title,view_count,content,nkName,area,
+        istj,istp,isfj,isfp,intj,intp,infj,infp,
+        estj,estp,esfj,sefp,entj,entp,enfj,enfp
     }
-    enum DirecType{
+    enum DirectType{
         DESC,ASC
     }
 
-    private  CommsType order = CommsType.post_time;
-    private DirecType direct=DirecType.DESC;
+    private CommsType order=CommsType.post_time;
+    private DirectType direct=DirectType.DESC;
 
     private CommsType searchField;
     private String searchValue;
     private String orderBy;
 
-    public String getOrderBy(){
-        if(this.order!=null&& this.direct!=null){
+    public String getOrderBy() {
+        if(this.order!=null && this.direct!=null) {
             return this.order+" "+this.direct;
-        } else if (this.order!=null) {
-            this.direct=DirecType.ASC;
+        }else if (this.order!=null){
+            this.direct=DirectType.ASC;
             return this.order+" "+this.direct;
         }
-        return CommsType.post_time+" "+DirecType.DESC;
+        return CommsType.post_time+" " +DirectType.DESC;
     }
-
 }

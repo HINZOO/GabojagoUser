@@ -4,10 +4,10 @@
     <resultMap id="LikeStatusCntMap" type="LikeStatusCntDto">
         <result property="like" column="like"/>
         <result property="id" column="c_id"/>
-
-        <association property="status"
+        <association property="like"
                      select="findByCIdAndUIdIsLoginUserId"
-                     column="c_id" />
+                     column="c_id"
+                        fetchType="eager"/>
     </resultMap>
     <resultMap id="CommLikeMap" type="CommLikeDto" >
         <id property="clId" column="cl_id"/>
@@ -30,7 +30,7 @@
     <select id="findByCIdAndUId" resultMap="CommLikeMap">
         SELECT COUNT(*) FROM comm_likes WHERE c_id=#{cId} AND u_id=#{uId}
     </select>
-    <select id="findByCIdAndUIdIsLoginUserId" resultType="String">
+    <select id="findByCIdAndUIdIsLoginUserId" resultType="int">
         SELECT COUNT(*) FROM comm_likes WHERE c_id=#{cId} AND u_id=@loginUserId
     </select>
 </mapper>

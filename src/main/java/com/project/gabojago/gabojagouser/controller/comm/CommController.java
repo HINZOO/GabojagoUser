@@ -1,6 +1,8 @@
 package com.project.gabojago.gabojagouser.controller.comm;
 
+import com.github.pagehelper.PageInfo;
 import com.project.gabojago.gabojagouser.dto.comm.CommImgDto;
+import com.project.gabojago.gabojagouser.dto.comm.CommPageDto;
 import com.project.gabojago.gabojagouser.dto.comm.CommunityDto;
 import com.project.gabojago.gabojagouser.dto.user.UserDto;
 import com.project.gabojago.gabojagouser.service.comm.CommunityService;
@@ -33,9 +35,12 @@ public class CommController {
 
     @GetMapping("/list.do")
     public String list(Model model,
-                       @SessionAttribute(required = false) UserDto loginUser){
+                       @SessionAttribute(required = false) UserDto loginUser,
+                       CommPageDto pageDto){
         List<CommunityDto> communities;
-        communities=communityService.list(loginUser);
+        communities=communityService.list(loginUser,pageDto);
+        PageInfo<CommunityDto> pageComms=new PageInfo<>(communities);
+        model.addAttribute("page",pageComms);
         model.addAttribute("communities",communities);
         return "/comm/list";
     }

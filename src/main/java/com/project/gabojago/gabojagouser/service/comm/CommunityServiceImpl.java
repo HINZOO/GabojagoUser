@@ -1,6 +1,8 @@
 package com.project.gabojago.gabojagouser.service.comm;
 
+import com.github.pagehelper.PageHelper;
 import com.project.gabojago.gabojagouser.dto.comm.CommImgDto;
+import com.project.gabojago.gabojagouser.dto.comm.CommPageDto;
 import com.project.gabojago.gabojagouser.dto.comm.CommunityDto;
 import com.project.gabojago.gabojagouser.dto.user.UserDto;
 import com.project.gabojago.gabojagouser.mapper.comm.CommImgMapper;
@@ -20,9 +22,10 @@ public class CommunityServiceImpl implements CommunityService{
     private UserMapper userMapper;
     //유저맵퍼..
     @Override
-    public List<CommunityDto> list(UserDto loginUser) {
+    public List<CommunityDto> list(UserDto loginUser, CommPageDto pageDto) {
         if(loginUser!=null) userMapper.setLoginUserId(loginUser.getUId());
-        List<CommunityDto> list=communityMapper.findAll();
+        PageHelper.startPage(pageDto.getPageNum(),pageDto.getPagsSize(),pageDto.getOrderBy());
+        List<CommunityDto> list=communityMapper.findAll(pageDto);
         if(loginUser!=null)userMapper.setLoginUserIdNull();
         return list;
     }
