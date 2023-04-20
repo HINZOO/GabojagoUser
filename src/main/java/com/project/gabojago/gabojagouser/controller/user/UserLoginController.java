@@ -43,25 +43,29 @@ public class UserLoginController {
       log.error(e.getMessage());
     }
     if(loginUser!=null) {
-      if(autoLogin!=null) {
-        System.out.println("autoLogin = " + autoLogin);
-        String encrypIdValue= AESEncryption.encryptValue(loginUser.getUId());
-        String encrypPwValue= AESEncryption.encryptValue(loginUser.getPw());
-        Cookie loginId=new Cookie("loginId", encrypIdValue);
-        Cookie loginPw=new Cookie("loginPw", encrypPwValue);
-        loginId.setMaxAge(60*60*24*7);
-        loginPw.setMaxAge(60*60*24*7);
+      if(autoLogin!=null && autoLogin==1) {
+        String encrypIdValue = AESEncryption.encryptValue(loginUser.getUId());
+        String encrypPwValue = AESEncryption.encryptValue(loginUser.getPw());
+        Cookie loginId = new Cookie("loginId", encrypIdValue);
+        Cookie loginPw = new Cookie("loginPw", encrypPwValue);
+        loginId.setMaxAge(60 * 60 * 24 * 7);
+        loginPw.setMaxAge(60 * 60 * 24 * 7);
         loginId.setPath("/");
         loginPw.setPath("/");
         resp.addCookie(loginId);
         resp.addCookie(loginPw);
+        redirectAttributes.addFlashAttribute("msg", "자동로그인 성공");
       }
       redirectAttributes.addFlashAttribute("msg", "로그인 성공");
       session.setAttribute("loginUser", loginUser);
+      if(redirectPage!=null) {
+        session.removeAttribute("redirectPage");
+        return "redirect:" + redirectPage;
+      }
+      return "redirect:/";
     } else {
       redirectAttributes.addFlashAttribute("msg", "로그인 실패: 아이디나 패스워드를 확인하세요");
       return "redirect:/user/login.do";
     }
-    return "redirect:/";
   }
 }

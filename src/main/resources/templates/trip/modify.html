@@ -91,11 +91,11 @@
         </p>
 
         <p>
-            <label for="">메인이미지 삭제</label>
+            <label for="">메인이미지 변경</label>
             <div class="form-control">
                 <label th:each="img:${t.imgs}" class="w-25 delImgItem" th:if="${img.imgMain==true}">
-                    <i class="bi bi-x"></i>
-                    <input type="checkbox" class="delImgInput" name="delMainImgId" th:value="${img.tiId}">
+<!--                    <i class="bi bi-x"></i>-->
+                    <input type="hidden" class="delImgInput" name="delMainImgId" th:value="${img.tiId}">
                     <img th:src="@{'{path}'(path=${img.imgPath})}" class="img-thumbnail">
                 </label>
             </div>
@@ -156,8 +156,12 @@
     <script>
         const imgAddBtn = document.getElementById("imgAddBtn");
         const imgCont = document.getElementById("imgCont");
+        let imgAddBtnCount=0;
         imgAddBtn.addEventListener("click", (e) => {
-            imgCont.insertAdjacentHTML("beforeend", imgInputComponent());
+            if(imgAddBtnCount<5){
+                imgCont.insertAdjacentHTML("beforeend", imgInputComponent());
+                imgAddBtnCount++;
+            }
         });
 
         function imgInputComponent(label = "이미지", name = "img") {

@@ -28,8 +28,6 @@
     <script src="/public/js/splideTest.js"></script>
     <h1 class="my-4">맞춤추천 상세</h1>
 
-
-
 <!--    <div class="splide">-->
 <!--        <div class="splide__track">-->
 <!--            <ul class="splide__list">-->
@@ -125,7 +123,7 @@
                     <div th:id="'carousel'+${t.tId}" class="carousel slide" data-bs-ride="carousel">
                         <div class="carousel-inner">
                             <div class="carousel-item rounded-top overflow-hidden" th:each="img,state : ${t.imgs}"
-                                 th:classappend="${state.first}?'active':''">
+                                 th:classappend="${img.imgMain}?'active':''">
                                 <img th:if="${t.imgs!=null}" th:src="@{'{path}'(path=${img.imgPath})}"
                                      class="d-block w-100" style="object-fit: contain">
                             </div>
@@ -151,15 +149,12 @@
                             <a href="javascript:void(0)" th:onclick="reviewRegistModal.show()">
                                 리뷰 작성하기
                             </a>
-<!--                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="reviewRegistModal">-->
-<!--                                리뷰 작성하기-->
-<!--                            </button>-->
-
-                            <!-- Modal -->
+                        </p>
+                        <!-- 리뷰작성하기 Modal -->
                         <div class="modal fade" id="reviewRegistModal" tabindex="-1">
                             <div class="modal-dialog">
-                                <form class="modal-content" name="reviewRegistForm" method="post" enctype="multipart/form-data">
-                                    <input type="hidden" name="tId">
+                                <form enctype="multipart/form-data" name="reviewRegisterForm" method="post" class="modal-content" >
+                                    <input type="hidden" name="tId" th:value="${t.tId}">
                                     <input type="hidden" name="trId">
                                     <input type="hidden" name="imgPath">
 
@@ -170,29 +165,27 @@
                                     <div class="modal-body">
                                         <p class="form-floating">
                                             <input type="text" name="uId" readonly class="form-control" placeholder="글쓴이">
+                                            <!-- 로그인한 유저만 보이기 -->
+<!--                                            <input th:value="${session.loginUser.uId}" type="text" name="uId" readonly class="form-control" placeholder="글쓴이">-->
                                             <label>글쓴이</label>
                                         </p>
                                         <p>
                                             평가 <span>☆☆☆☆☆</span>
                                         </p>
-
                                         <p>
                                             방문 <span> <i class="bi bi-record-circle text-danger"></i></span>
                                             방문전 <span>  <i class="bi bi-circle text-dark text-opacity-25"></i></span>
                                         </p>
-
                                         <p class="form-floating">
                                             <input type="text" name="title" th:value="${t.title}" readonly class="form-control" placeholder="글쓴이">
                                             <label>장소이름</label>
                                         </p>
-
                                         <p id="imgCont">
                                             <button id="imgAddBtn" class="btn btn-danger w-100" type="button">
                                                 이미지
                                                 <i class="bi bi-plus-square"></i>
                                             </button>
                                         </p>
-
                                         <!--                                        <p>-->
 <!--                                            <input type="file" name="img" class="form-control"> &lt;!&ndash; 수정하는 이미지 &ndash;&gt;-->
 <!--                                        </p>-->
@@ -200,7 +193,6 @@
                                             <input type="text" name="content" class="form-control" placeholder="내용">
                                             <label>내용</label>
                                         </p>
-
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">취소</button>
@@ -221,7 +213,9 @@
                             </span>
                         </p>
                         <hr>
-                        <div>
+
+
+                        <div id="reviewCont">
                             <div class="mb-3 d-flex justify-content-between align-items-center">
                                 <div class="d-flex align-items-center">
                                     <img src="/public/img/trip/airplane.jpg"
@@ -254,8 +248,6 @@
                                     </ul>
                                 </div>
                             </div>
-
-
                             <div>
                                 <div>
                                     <p>협재해수욕장에서 바라본 노을은 완벽했어요♥️ 해가질무렵 💙 #여름 #바다 #제주 #여행</p>
@@ -308,10 +300,10 @@
                                     <a href="">좋아요</a>
                                     <a href="">댓글쓰기</a>
                                 </p>
-
                             </div>
-
                         </div>
+
+
                         <form action="">
                             <div class="row align-items-center">
                                 <div class="col-3">
@@ -403,24 +395,30 @@
     </script>
     <script th:inline="javascript">
         const reviewRegistModal = new bootstrap.Modal(document.getElementById("reviewRegistModal"), {}); // {} 이게 뭐지?
-        const reviewRegistForm = document.forms["reviewRegistForm"];
-        reviewRegistForm.onsubmit=registReview;
+        const reviewRegisterForm = document.forms["reviewRegisterForm"];
+        const replyCont=document.getElementById("reviewCont");
+        reviewRegisterForm.onsubmit=registerReview;
 
+        // async function loadReviews(tId){
+        //     let url=`/review/${tId}/list.do`
+        //     const resp=await fetch(url);
+        //     if(resp.status==200){
+        //         let text=await resp.text();
+        //         replyCont.innerHTML=text;
+        //     }
+        // }
 
-
-        async function registReview(e){
+        async function registerReview(e){
             e.preventDefault();
-            const data=new FormData(reviewRegistForm);
+            const data=new FormData(reviewRegisterForm);
             let url="/review/handler.do"
             const resp=await fetch(url,{method:"POST", body:data});
             if(resp.status==200){
                 const json=await resp.json(); // 응답객체 json 객체로 파싱
                 if(json.register>0){
                     alert("등록성공");
-                    // 새로고침
-                    // await load
+                    await loadReplies(reviewRegisterForm.tId.value);
                 }
-                reviewRegistModal.show();
                 console.log(json);
             } else {
                 alert("등록실패 status: " + resp.status);

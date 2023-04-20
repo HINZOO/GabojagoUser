@@ -39,7 +39,7 @@ public class TripController {
     @GetMapping("/{tId}/remove.do") // db 정보 삭제 + 이미지 실제 삭제
     public String removeAction(
             @PathVariable int tId,
-//            @SessionAttribute UserDto loginUser
+            @SessionAttribute UserDto loginUser,
         RedirectAttributes redirectAttributes
     ){
         String redirectPage="redirect:/trip/list.do";
@@ -50,10 +50,11 @@ public class TripController {
         try{
             trip=tripService.detail(tId);
             imgDtos=trip.getImgs();
-            remove=tripService.remove(tId);
+            remove=tripService.remove(tId,imgDtos);
         }catch (Exception e){
             log.error(e);
         }
+
 
         if(remove>0){
             if(imgDtos!=null){
@@ -73,9 +74,11 @@ public class TripController {
     @GetMapping("/{tId}/modify.do")
     public String modifyForm(
             Model model,
-            @PathVariable int tId
-//            @SessionAttribute UserDto loginUser
+            @PathVariable int tId,
+            @SessionAttribute UserDto loginUser
     ) {
+        log.info(staticPath);
+        System.out.println("staticPath = " + staticPath);
         TripDto trip = tripService.detail(tId);
         model.addAttribute("t", trip);
         return "/trip/modify";
@@ -92,10 +95,13 @@ public class TripController {
     ) {
         String redirectPage = "redirect:/trip/" + trip.getTId() + "/modify.do";
         String msg="";
-        if(imgs==null && !mainImg.isEmpty()){
+        if(imgs==null && !mainImg.isEmpty()){ // imgs 가 null 이고 메인이미지가 있을때
             imgs=new ArrayList<>();
-            delImgIds.add(delMainImgId);
             imgs.add(mainImg);
+            if(delImgIds==null) {
+                delImgIds=new ArrayList<>();
+                delImgIds.add(delMainImgId);
+            }
         }
 
         // 제목 입력 여부 확인
@@ -160,7 +166,9 @@ public class TripController {
 
 
     @GetMapping("/{tId}/detail.do")
-    public String detail(Model model, @PathVariable int tId) {
+    public String detail(Model model,
+                         @PathVariable int tId,
+                         @SessionAttribute(required = false) UserDto loginUser) {
         TripDto trip = tripService.detail(tId);
         model.addAttribute("t", trip);
         return "/trip/detail";
@@ -169,13 +177,13 @@ public class TripController {
 
     @GetMapping("/register.do")
     public void registerForm(
-//            @SessionAttribute UserDto loginUser
+            @SessionAttribute UserDto loginUser
     ) {
     }
 
     @PostMapping("/register.do")
     public String registerAction(
-//            @SessionAttribute UserDto loginUser, // 글쓴이와 로그인한 사람 같은지 확인예정
+            @SessionAttribute UserDto loginUser, // 글쓴이와 로그인한 사람 같은지 확인예정
             @ModelAttribute TripDto trip,
             RedirectAttributes redirectAttributes,
             @RequestParam MultipartFile mainImg, // 메인이미지 파라미터
@@ -186,7 +194,7 @@ public class TripController {
         imgs.add(mainImg);
         // 제목 입력 여부 확인
         if (trip.getTitle() == null || trip.getTitle().equals("")) {
-            msg = "제목을 입력하세요.";
+            msg = "여행지명을 입력하세요.";
             redirectAttributes.addFlashAttribute("msg",msg);
             return redirectPage;
         }
@@ -251,8 +259,8 @@ public class TripController {
 
 
     @GetMapping("/list.do")
-    public String list(Model model
-//                       @SessionAttribute(required = false) UserDto loginUser
+    public String list(Model model,
+                       @SessionAttribute(required = false) UserDto loginUser
     ) {
         List<TripDto> trips;
         trips = tripService.list();
