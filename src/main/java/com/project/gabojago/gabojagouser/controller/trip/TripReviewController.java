@@ -1,14 +1,20 @@
 package com.project.gabojago.gabojagouser.controller.trip;
 
+import com.project.gabojago.gabojagouser.dto.trip.TripImgDto;
 import com.project.gabojago.gabojagouser.dto.trip.TripReviewDto;
+import com.project.gabojago.gabojagouser.dto.user.UserDto;
 import com.project.gabojago.gabojagouser.service.trip.TripReviewService;
+import lombok.Data;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -26,7 +32,14 @@ public class TripReviewController {
 //
 //    }
 
-    class HandlerDto {
+    @Value("${static.path}")
+    private String staticPath;
+
+
+//    @GetMapping()
+
+    @Data
+    class HandlerDto { // 리뷰 작성,수정,삭제
         private int register;
         private int modify;
         private int remove;
@@ -35,25 +48,31 @@ public class TripReviewController {
     @PostMapping("/handler.do")
     public HandlerDto registerHandler(
             @ModelAttribute TripReviewDto review,
+//            @SessionAttribute UserDto loginUser
             @RequestParam(name="img", required = false) List<MultipartFile> imgs
-            ){
+            ) throws IOException {
+
         log.info(review);
+        System.out.println("review = " + review);
         HandlerDto handlerDto=new HandlerDto();
-//        if(!imgs.isEmpty())
 
-//        List<>
-//
-//        if(!imgs.isEmpty()){
-//            String[] contentsTypes = img.getContentType().split("/");
-//            if (contentsTypes[0].equals("image")) {
-//                String fileName = System.currentTimeMillis() + "_" + (int) (Math.random() * 10000) + "." + contentsTypes[1];
-//                Path path = Paths.get(imgUploadPath + "/reply/" + fileName);
-//                img.transferTo(path); // fetch 에서 resp.status 200 일때만 처리하기 때문에 그냥오류가 발생하면 500
-//                reply.setImgPath("/public/img/reply/" + fileName);
-//            }
-//        }
-
-
+        List<TripImgDto> imgDtos=null;
+        if(imgs!=null && !imgs.isEmpty()){
+            imgDtos=new ArrayList<>();
+            for(MultipartFile img : imgs){
+                String[] contentTypes=img.getContentType().split("/");
+                if(contentTypes[0].equals("image")){
+                    String fileName=System.currentTimeMillis()+"_"+(int)(Math.random()*100000)+"."+contentTypes[1];
+                    Path path = Paths.get(staticPath + "/public/img/trip/" + fileName);
+                    img.transferTo(path);
+                    TripImgDto imgDto=new TripImgDto();
+                    imgDto.setImgPath("/public/img/trip"+fileName);
+                    imgDtos.add(imgDto);
+                }
+            }
+        }
+        int register=tripReviewService.register(review);
+        handlerDto.setRegister(register);
         return handlerDto;
     }
 

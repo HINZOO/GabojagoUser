@@ -12,7 +12,7 @@ public interface TripService {
     int register(TripDto trip);
     TripDto phoneCheck(String phone) throws Exception; // 게시글 등록시 핸드폰 체크
     int modify(TripDto trip, List<Integer> delImgIds);
-    int remove(int tId);
+    int remove(int tId, List<TripImgDto> imgDtos);
 
 
 }
