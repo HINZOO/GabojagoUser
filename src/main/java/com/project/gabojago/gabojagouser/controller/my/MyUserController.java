@@ -26,31 +26,6 @@ public class MyUserController {
         model.addAttribute("user",loginUser);
         return "/my/user";
     }
-    @GetMapping("/{uId}/serviceList.do")
-    private String serviceList(Model model,
-                               @ModelAttribute MyUserQnaDto myUserQna,
-                               @SessionAttribute UserDto loginUser,
-                               @PathVariable String uId){
-
-        List<MyUserQnaDto> list= myUserQnaService.list();
-        model.addAttribute("qnaList",list);
-        return "/my/serviceList";
-    }
-    @GetMapping ("/service.do")
-    private String serviceForm(Model model,
-                               @SessionAttribute(required = false) UserDto loginUser,
-                               RedirectAttributes redirectAttributes) {
-        if (loginUser == null) {
-            String msg = "로그인한 사용자만 이용할 수 있습니다.";
-            redirectAttributes.addFlashAttribute("msg", msg);
-            return "redirect:/user/login.do";
-        }
-        return "/my/service";
-    }
-
-
-
-
 }
 
 
