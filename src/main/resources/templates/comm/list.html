@@ -30,7 +30,7 @@
                 <label class="input-group-text bi bi-filter-square"></label>
                 <select name="order" class="form-control">
                     <option value=" ">정렬기준</option>
-                    <option th:selected="(${#strings.equals(param.order,'c_id')})" value="b_id">글번호</option>
+                    <option th:selected="(${#strings.equals(param.order,'c_id')})" value="c_id">글번호</option>
                     <option th:selected="(${#strings.equals(param.order,'u_id')})" value="u_id">글쓴이</option>
                     <option th:selected="(${#strings.equals(param.order,'post_time')})" value="post_time">작성일</option>
                     <option th:selected="(${#strings.equals(param.order,'update_time')})" value="update_time">수정일</option>
@@ -45,7 +45,7 @@
                 <button class="btn btn-primary">정렬</button>
                 <select name="searchField" class="form-control">
                     <option th:selected="(${#strings.equals(param.searchField,'c_id')})" value="c_id">글번호</option>
-                    <option th:selected="(${#strings.equals(param.searchField,'u_id')})" value="c_id">아이디</option>
+                    <option th:selected="(${#strings.equals(param.searchField,'u_id')})" value="u_id">아이디</option>
                     <option th:selected="(${#strings.equals(param.searchField,'title')})" value="title">제목</option>
                     <option th:selected="(${#strings.equals(param.searchField,'content')})" value="content">내용</option>
                 </select>
