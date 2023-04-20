@@ -90,12 +90,25 @@
             <label>해시태그 입력</label>
         </p>
 
+        <p>
+            <label for="">메인이미지 삭제</label>
+            <div class="form-control">
+                <label th:each="img:${t.imgs}" class="w-25 delImgItem" th:if="${img.imgMain==true}">
+                    <i class="bi bi-x"></i>
+                    <input type="checkbox" class="delImgInput" name="delMainImgId" th:value="${img.tiId}">
+                    <img th:src="@{'{path}'(path=${img.imgPath})}" class="img-thumbnail">
+                </label>
+            </div>
+            <input type="file" name="mainImg" class="form-control"> <!-- 수정하는 이미지 -->
+        </p>
+
+
         <!-- 이미지 삭제 -->
         <p class="mb-0">
             <label class="form-label">이미지 삭제</label>
             <div class="form-control">
-                <label th:each="img:${t.imgs}" class="w-25 delImgItem" style="">
-                <i class="bi bi-x"></i>
+                <label th:each="img:${t.imgs}" class="w-25 delImgItem" style="" th:if="${img.imgMain==false}">
+                    <i class="bi bi-x"></i>
                     <input type="checkbox" class="delImgInput" name="delImgId" th:value="${img.tiId}">
                     <img th:src="@{'{path}'(path=${img.imgPath})}" class="img-thumbnail">
                 </label>

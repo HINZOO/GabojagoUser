@@ -1,5 +1,6 @@
 const box = document.querySelector(".accordion-header").clientWidth-40
 
+
 class CanvasCreate {
     id; canvas; ctx;
     layerArr = []; // 레이어 구현용 배열
@@ -25,6 +26,7 @@ class CanvasCreate {
         this.init()
     }
     init(){
+
         // 스타일 관련 초기 설정
         this.canvas.width = 1200;
         this.canvas.height = 500;
@@ -35,6 +37,7 @@ class CanvasCreate {
         this.ctx.setLineDash([0,0])
         this.ctx.save();
 
+
         // 레이어 데이터가 있는 경우 로딩
         this.layerLoad();
         this.currentCanvas.src = this.canvas.toDataURL();
@@ -44,6 +47,7 @@ class CanvasCreate {
         this.pageLiner(this.canvas.width,this.canvas.height)
         this.toolActivation()
 
+        this.colorBtn();
 
     }
 
@@ -55,6 +59,9 @@ class CanvasCreate {
         return xy/this.pageSize/this.currentScale
     }
 
+    shout(){
+        console.log("??")
+    }
 
 
     // 캔버스 기본 배경
@@ -465,6 +472,7 @@ class CanvasCreate {
     //사이드바 각 버튼에 기능부여
     toolActivation(){
         const tools = ["stamp","pen","line","selector","rect","text","palate","post"];
+        const colors = ["red","orange","yellow","green","blue","navy", "purple","black","white"];
 
         tools.forEach((tool)=>{
             document.getElementById(tool+"Btn").addEventListener("click",()=>{
@@ -473,6 +481,12 @@ class CanvasCreate {
                     this.activatedTool=tool;
                     this[tool+"Tool"]();
                 }
+            })
+        });
+        colors.forEach((color)=>{
+            document.getElementById(color).addEventListener("click",()=>{
+                this.ctx.strokeStyle = color;
+                this.ctx.fillStyle = color;
             })
         });
 
@@ -509,9 +523,25 @@ class CanvasCreate {
                 this.currentCanvas.src = this.canvas.toDataURL()
             }
         })
-    };
 
 
+    }; // 툴박스
+
+
+    colorBtn(){
+        let buttons = ["red","orange","yellow","green","blue","navy", "purple","black","white"];
+        buttons.forEach((content) => {
+            let button = document.getElementById(content);
+            button.style.background = content;
+            button.style.color = "white";
+            button.style.width = "30px";
+            button.style.height = "30px";
+            button.style.borderRadius = "5px";
+            button.style.boxShadow = "1px 1px 5px grey";
+
+        });
+    }
 
 
 };//클래스 닫기
+

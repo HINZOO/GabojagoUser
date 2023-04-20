@@ -1,7 +1,6 @@
 
-/*@import url('https://fonts.googleapis.com/css2?family=Anton&family=Do+Hyeon&family=DynaPuff:wght@400;600&display=swap');*/
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Do+Hyeon&family=DynaPuff:wght@400;600&family=Noto+Sans+KR:wght@400;500;700&family=Russo+One&display=swap');
 
-@import url('https://fonts.googleapis.com/css2?family=Anton&family=Do+Hyeon&family=DynaPuff:wght@400;600&family=Russo+One&display=swap');
 
 
 
@@ -11,7 +10,28 @@
     font-weight: 700;
     font-style: normal;
 }
-
+body{
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-use-select: none;
+    user-select: none;
+}
+.unDraggable{
+    -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-use-select: none !important;
+    user-select: none !important;
+}
+.draggable{
+    -webkit-user-select: all;
+    -moz-user-select: all;
+    -ms-use-select: all;
+    user-select: all;
+}
+.textCancel{
+    text-decoration: line-through red;
+    text-decoration-thickness: 3px;
+}
 a:link { color: black; text-decoration: none;}
 a:visited { color: black; text-decoration: none;}
 a:hover { color: black; text-decoration: none;}
@@ -143,48 +163,220 @@ canvas{
 
 }
 
+
+
+.mainSection{
+    min-height: 95vh;
+}
 .mainHeader{
-    height: 60px;
-    /*background-color: rgba(186, 228, 246, 0.24);*/
-    border-radius: 30px;
-    border: 1px solid #a1a1a1;
-    /*border-top: 3px solid gray;*/
-    /*border-bottom: 3px solid gray;*/
-    line-height: 30px;
-    margin-bottom: 20px;
+    width: 100%;
+    height: 40vh;
+}
+.mainHeader>div{
+    width: 50%;
+    height: 40vh;
+}
+.mainHeaderImg{
+    z-index: -999;
+    position: absolute;
+    width: 67.3vw;
+    height: 45vh;
+    opacity: 0.8
 }
 
+
+.titleBox{
+
+    padding-top: 20vh;
+    padding-left: 80px;
+    font-family: do hyeon;
+    font-size: 15px;
+    color: white;
+}
+.titleInnerBox{
+    width:400px;
+    padding: 10px 30px;
+    border-radius: 15px;
+    /*background-color: rgba(0, 0, 0, 0.3);*/
+}
+.rightBox{
+    text-align: right;
+    padding-top: 5vh;
+    padding-rightt: 50px;
+
+}
+.toDoListBox{
+    background-color: rgba(0, 0, 0, 0.3);
+    text-align: left;
+    display: inline-block;
+    font-family: Russo one;
+    color: white;
+    padding: 10px 10px;
+    /*border: 3px solid white;*/
+    border-radius: 15px;
+    width: 250px;
+    height: 30vh;
+}
+
+.tdlTitle{
+
+    border-bottom: 2px solid rgba(255, 255, 255, 0.61);
+    display: flex;
+    justify-content: space-between;
+}
+.tdlPBtn, .tdlMBtn {
+    cursor: pointer;
+    border-radius: 50%;
+    padding: 0px 5px;
+
+}
+.tdlPBtn:hover, .tdlMBtn:hover {
+    color: #3b3b3b;
+    background-color: white;
+
+}
+.tdlContent{
+
+    padding: 8px 0px;
+    color: white;
+}
+.tdlform{
+    height: 25px;
+    justify-content: space-between;
+    display: flex;
+    padding: 0px 5px;
+    border: 1px solid rgba(255, 255, 255, 0.58);
+    border-radius: 8px;
+    margin-bottom: 5px;
+}
+.tdlform input{
+    color: white;
+}
+.tdlCheck{
+
+    display: none;
+}
+.tdlCheckLabel{
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 4px;
+    width: 15px;
+    height: 15px;
+    border: 2px solid white;
+    border-radius: 50%;
+    margin-left: 5px;
+}
+
+.tdlCheck:checked + label{
+    background-color: #c7c7c7;
+    margin-left: 5px;
+}
+
+.tdlInput{
+    outline: none;
+    color: white;
+    width: 170px;
+    border: none;
+    background-color: transparent;
+}
+.tdlSubmit, .tdlDelete{
+    margin-right: 5px;
+}
+.tdlSubmit:hover{
+    cursor: pointer;
+    color: blue;
+}
+
+
+
+
+.headerTitle{
+    font-size: 40px;
+    color: white;
+    font-weight: bold;
+}
+
+
+
+
+.addBox{
+    width: 100%;
+    height: 90vh;
+}
+
+
+
+.scheduleHeader{
+    height: 50px;
+    background-color: whitesmoke;
+    border-radius: 20px 20px 0px 0px;
+    border: 1px solid transparent;
+    line-height: 25px;
+    padding-top: 10px;
+    margin-top: -20px;
+}
+
+.dayBtn{
+    font-family: Russo One;
+    letter-spacing: 2px;
+    margin-left: 15px;
+    border-radius: 10px;
+    font-size: 15px;
+    background-color: rgba(211, 211, 211, 0.66);
+    color: white;
+    text-shadow: -1px 0 lightgrey, 1px 1px gray, 1px 2px gray, 0 -1px lightgrey;
+}
+
+
 .btnLine{
-    padding : 0px 10px 0px 10px;
-    background-color: rgba(227, 227, 227, 0.42);
-    margin-bottom: 8px;
-    /*border-left: 5px solid #9d9d9d;*/
-    /*border-right: 5px solid #9d9d9d;*/
+    box-sizing: border-box;
+
 }
 .btnLine i {
     font-size: 20px;
 }
 .btnLine button{
-    border: none;
-    margin-left: 5px !important;
-    padding: 5px;
-    border-radius: 8px;
-    color: #333333;
+    text-align: center;
+    width: 30px;
+    height: 30px;
+    border: 0px solid transparent;
+    margin-left: 3px !important;
+    background-color: lightgray;
+    border-radius: 5px;
+    color: #5b5b5b;
+
 }
 .btnLine button:hover{
-    /*border: 1px solid gray;*/
-    background-color: rgba(211, 211, 211, 0.73);
+    background-color: rgba(176, 176, 176, 0.73);
+}
+
+.scheduleInputBox{
+    text-align: right;
+}
+
+#newScheduleBtn{
+    margin-right: 20px;
+    float: right;
+    text-align: center;
+    width: 30px;
+    height: 30px;
+    padding: 0px;
+    font-size: 30px;
+    color: white;
+    border-radius: 50%;
+    text-shadow: -1px 0 lightgrey, 1px 1px gray, 1px 2px gray, 0 -1px lightgrey;
+}
+#newScheduleBtn:hover{
+    background-color: #595959;
+
 }
 
 
 
-.accordion-item{
 
 
-}
 .accordion-body{
-
-    position: relative;
+    border: none !important;
     overflow: hidden! important;
     height: 130px;
 }
@@ -199,147 +391,75 @@ canvas{
 }
 
 .accordion-header, .accordion-button {
-    border-radius: 10px !important;
-    height: 50px;
+    border-radius: 15px !important;
+    height: 40px;
 }
-.accordion-header{
-    font-size: 0px;
-}
+
 .accordion-button{
-    padding: 0px;
+    padding: 0px 20px 0px 20px;
 }
 .accordion-item{
-    margin-bottom: 10px !important;
+    border: 1px solid transparent;
+    margin-bottom: 15px;
     background-color: transparent;
-    border-radius: 20px !important;
-}
-.accordion-button{
-    background-color: #fafafa;
-    border-top: 1px solid lightgray;
-    border-bottom: 2px solid lightgray;
-}
-.scheduleInputBox{
-    text-align: right;
 }
 
 
-.sideGrid{
-    padding: 0px 30px;
+
+
+#accordionSection{
+    width: 100%;
+    min-height: 50vh;
+    background-color: #fdfdfd;
+    border-top: 10px solid lightgrey ;
+    padding: 20px 50px 0px 50px;
 }
-.sideGrid> div{
-    padding: 8px;
-    border: 2px solid lightgrey;
-    margin-top: 20px;
-    border-radius: 10px;
-    font-weight: bold;
-}
-.sideTitle{
-    margin-left: 2px;
-    height: 30px;
-    width: min-content;
-    border-top: 1px solid rgba(229, 229, 229, 0.5);
-    border-bottom: 3px solid lightgrey;
-    border-left: 15px solid rgba(234, 214, 255, 0.83);
-    border-right: 1px solid lightgrey;
-    border-radius: 5px;
-    padding: 0px 15px 3px 8px;
-    line-height: 25px;
-    font-size: 18px;
-    font-weight: bold;
-    color: #5d5d5d;
-}
-.sideContent{
-    margin-top: 5px;
-    min-height: 50px;
-    border: 1px solid lightgrey;
-    padding: 2px 0px 2px 5px;
-}
-.titleBox{
+
+.scheduleLeft{
+    width: 20px;
+    height: 20px;
+    background-color: rgb(161, 193, 255);
+    border-radius: 50%;
+    padding-top: 5px;
+    color: lightgrey;
     text-align: center;
-    font-size: 25px;
-    font-weight: bold;
 
 }
-.calenderBox {
-    background-color : white;
-    width: 100%;
-    margin: 0px;
-    padding: 20px;
-    margin: 0 auto;
-}
-
-.infoBox{
-
-}
-.infoImg{
-    border-radius: 5px;
-    width: 100%;
-
-    background-size: cover;
-    opacity: 0.8;
-}
-
-.mainSection{
-    padding: 0px 20px;
-
-}
-
-.scheduleBtn{
-    padding: 0px 15px 0px 0px;
-
+.scheduleTime{
+    margin-right: 15px;
+    text-align: center;
+    min-width: 150px;
+    letter-spacing: 3px;
+    font-weight: 400;
+    color: #6c6c6c;
+    /*text-shadow: -1px 0 lightgrey, 1px 1px gray, 1px 2px gray, 0 -1px lightgrey;*/
+    font-family: Russo One;
+    font-size: 14px;
 }
 .scheduleContainer{
+    padding-left: 15px;
     margin: 0px;
     height: 100%;
 }
-.scheduleRow{
-    height: 100%;
-}
-.scheduleLeft, .scheduleTitle, .scheduleContent, .scheduleRight{
-
-}
-.scheduleLeft{
-    font-family: Russo One;
-    background-color: rgb(199, 220, 255);
-    letter-spacing: 3px;
-    height: 100%;
-    line-height: 50px;
-    /*font-weight: bold;*/
-    font-weight: 400;
-    border-right: 15px solid white;
-    border-left: 30px solid rgb(161, 193, 255);
-    border-radius: 10px 0px 0px 10px;
-    text-align: center;
-    font-size: 33px;
-    color: white;
-    text-shadow: -1px 0 lightgrey, 1px 1px #adadad, 1px 2px #adadad, 0 -1px lightgrey;
-}
-.scheduleLeft:hover {
-    border-left-color: rgba(108, 108, 108, 0.69);
-}
 .scheduleCenter{
-
-    font-weight: bold;
-    border-left: 15px solid rgb(199, 220, 255);
-    line-height: 50px;
+    line-height: 40px;
     height: 100%;
-    position: relative;
     overflow: hidden !important;
 }
 
 
-.scheduleCenter::before{
-    position: absolute;
-    content: "";
-    /*background-image: url("./sample.png");*/
-    top: 0px;
-    left: 0px;
-    right: 0px;
-    bottom: 0px;
-    opacity: 0.10;
-    height: 100%;
+/*.scheduleCenter::before{*/
+/*    position: absolute;*/
+/*    content: "";*/
+/*    !*background-image: url("./sample.png");*!*/
+/*    top: 0px;*/
+/*    left: 0px;*/
+/*    right: 0px;*/
+/*    bottom: 0px;*/
+/*    opacity: 0.10;*/
+/*    height: 100%;*/
 
-}
+/*}*/
 
 
 
@@ -348,15 +468,16 @@ canvas{
     font-weight: bold;
     color: #8c8c8c;
     /*text-shadow: -1px 0 lightgrey, 0 1px lightgrey, 1px 0 lightgrey, 0 -1px lightgrey;*/
-    font-size: 20px;
+    font-size: 15px;
     padding-left: 25px;
 }
 .scheduleTitle{
-
-    text-shadow: -1px 0 transparent, 1px 1px lightgrey, 1px 2px lightgrey, 0 -1px transparent;
-    color: #595959;
+    /*font-family: "Noto sans KR";*/
+    font-family: do hyeon;
+    letter-spacing: 1px;
+    color: #5b5b5b;
     font-weight: bolder;
-    font-size: 25px;
+    font-size: 20px;
     padding: 0px 5px;
 }
 .scheduleSideBtn1, .scheduleSideBtn2 {

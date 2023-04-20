@@ -1,5 +1,6 @@
 package com.project.gabojago.gabojagouser.mapper.sells;
 
+import com.project.gabojago.gabojagouser.dto.sells.SellPageDto;
 import com.project.gabojago.gabojagouser.dto.sells.SellsDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,7 +8,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 class SellsMapperTest {
 
@@ -15,7 +15,8 @@ class SellsMapperTest {
     private SellsMapper sellsMapper;
     @Test
     void findAll() {
-        List<SellsDto> findAll=sellsMapper.findAll();
+        SellPageDto pageDto=new SellPageDto();
+        List<SellsDto> findAll=sellsMapper.findAll(pageDto);
         System.out.println("findAll = " + findAll);
     }
 
@@ -61,7 +62,8 @@ class SellsMapperTest {
 
     @Test
     void findByCategory() {
-        List<SellsDto> sellsCategory=sellsMapper.findByCategory("레저");
+        SellPageDto pageDto=new SellPageDto();
+        List<SellsDto> sellsCategory=sellsMapper.findByCategory("레저", pageDto);
         System.out.println("sellsCategory = " + sellsCategory);
     }
 }

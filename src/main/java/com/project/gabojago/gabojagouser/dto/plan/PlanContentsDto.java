@@ -1,9 +1,12 @@
 package com.project.gabojago.gabojagouser.dto.plan;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 @Data
 public class PlanContentsDto {
+
     private int conId; // PK
     private int pId; // FK 플랜 아이디
     private Integer tId; // FK 정보페이지 아이디
@@ -12,6 +15,7 @@ public class PlanContentsDto {
     private String info; // 부가정보
     private String time; // 시간정보
     private String imgPath; // 내보내기용 이미지 경로
+
     private PlanContentPathsDto path;
 
 }

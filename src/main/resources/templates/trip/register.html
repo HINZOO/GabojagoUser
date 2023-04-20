@@ -7,6 +7,15 @@
 <head>
     <meta charset="UTF-8">
     <title>여행지 등록</title>
+    <style>
+        .radioBtn + div {
+
+        }
+
+        .radioBtn:checked + label  {
+            background-color: yellow;
+        }
+    </style>
 </head>
 <div layout:fragment="content">
     <script src="/public/js/tripInsert.js" defer></script>
@@ -83,6 +92,10 @@
             <label>해시태그 입력</label>
         </p>
 
+        <p>
+            <input class="form-control" type="file" name="mainImg">
+        </p>
+
         <p id="imgCont">
             <button id="imgAddBtn" class="btn btn-danger w-100" type="button">
                 이미지
@@ -123,15 +136,20 @@
     <script>
         const imgAddBtn = document.getElementById("imgAddBtn");
         const imgCont = document.getElementById("imgCont");
+        let imgAddBtnCount = 0;
         imgAddBtn.addEventListener("click", (e) => {
-            imgCont.insertAdjacentHTML("beforeend", imgInputComponent());
+            if(imgAddBtnCount<5){
+                imgCont.insertAdjacentHTML("beforeend", imgInputComponent());
+                imgAddBtnCount++;
+            }
         });
 
         function imgInputComponent(label = "이미지", name = "img") { // 🔥 label, name 넣는 이유?
             return `
                  <p class="input-group mt-2">
-                    <label class="input-group-text">${label}</label>
+                    <label class="input-group-text click">${label}</label>
                     <input class="form-control" type="file" name="${name}">
+
                     <button type="button" class="btn btn-danger" onclick="this.closest('.input-group').remove()">
                         <i class="bi bi-x-lg"></i>
                     </button>
@@ -139,6 +157,12 @@
             `
 
         }
+
+
+        // document.querySelector('.click').addEventListener('click', function() {
+        //     const radioBtn = document.querySelector('.radioBtn');
+        //     radioBtn.checked = true;
+        // });
 
     </script>
 </div>

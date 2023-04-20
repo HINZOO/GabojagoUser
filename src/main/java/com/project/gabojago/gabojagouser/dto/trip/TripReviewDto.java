@@ -3,6 +3,7 @@ package com.project.gabojago.gabojagouser.dto.trip;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 public class TripReviewDto {
@@ -14,5 +15,6 @@ public class TripReviewDto {
     private Date postTime; // default(기본값) CURRENT_TIMESTAMP(현재시간 등록)
     private Date updateTime; // 🔥default on update CURRENT_TIMESTAMP
     private int grade;
+    private List<TripReviewImgDto> imgs;
 
 }

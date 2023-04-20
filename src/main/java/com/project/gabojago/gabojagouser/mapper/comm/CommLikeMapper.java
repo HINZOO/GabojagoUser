@@ -1,5 +1,4 @@
 package com.project.gabojago.gabojagouser.mapper.comm;
-
 import com.project.gabojago.gabojagouser.dto.comm.CommLikeDto;
 import com.project.gabojago.gabojagouser.dto.comm.LikeStatusCntDto;
 import org.apache.ibatis.annotations.Mapper;

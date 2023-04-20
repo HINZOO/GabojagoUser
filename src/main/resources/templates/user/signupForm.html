@@ -5,7 +5,7 @@
   <title>회원가입 폼</title>
 </head>
 <div layout:fragment="content">
-  <form name="signup" action="./signup.do" method="post" style="width: 500px;margin: 0 auto;">
+  <form name="signup" action="./signup.do" enctype="multipart/form-data" method="post" style="width: 500px;margin: 0 auto;">
     <h1 class="my-4">회원가입</h1>
     <p class="form-floating">
       <input id="uIdInput" type="text" name="uId" value="" class="form-control" placeholder="??">
@@ -72,13 +72,11 @@
       </select>
       <label>MBTI</label>
     </p>
-    <p class="input-group">
-      <input type="file" name="imgPath" value="" class="form-control" placeholder="??">
-      <label class="input-group-text">프로필</label>
-    </p>
-    <p class="form-floating">
-      <input type="date" name="postTime" value="" class="form-control" placeholder="??">
-      <label>가입일</label>
+    <p id="imgCont">
+      <button id="imgAddBtn" class="btn btn-secondary" type="button" >
+        프로필 사진
+        <i class="bi bi-plus-square"></i>
+      </button>
     </p>
     <p class="form-floating">
       <select name="permission" class="form-control">
@@ -112,6 +110,22 @@
         alert('사용 가능한 아이디입니다.');
       }
     });
+
+  const imgAddBtn=document.getElementById('imgAddBtn');
+  const imgCont=document.getElementById('imgCont');
+  imgAddBtn.addEventListener("click",(e)=>{
+    imgCont.insertAdjacentHTML("beforeend", imgInputComponent())
+  });
+
+  function imgInputComponent(label="이미지",name="img"){
+    return `<p class="input-group w-75 mt-2">
+              <label class="input-group-text">${label}</label>
+              <input class="form-control"  type="file" name="${name}">
+              <button type="button" class="btn btn-danger" onclick="this.closest('.input-group').remove()">
+                <i class="bi bi-x-lg"></i>
+              </button>
+              </p>`;
+  }
   </script>
 </div>
 </html>

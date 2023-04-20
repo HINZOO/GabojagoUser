@@ -44,16 +44,17 @@ public class UserLoginController {
     }
     if(loginUser!=null) {
       if(autoLogin!=null) {
+        System.out.println("autoLogin = " + autoLogin);
         String encrypIdValue= AESEncryption.encryptValue(loginUser.getUId());
         String encrypPwValue= AESEncryption.encryptValue(loginUser.getPw());
         Cookie loginId=new Cookie("loginId", encrypIdValue);
         Cookie loginPw=new Cookie("loginPw", encrypPwValue);
         loginId.setMaxAge(60*60*24*7);
         loginPw.setMaxAge(60*60*24*7);
-        resp.addCookie(loginId);
-        resp.addCookie(loginPw);
         loginId.setPath("/");
         loginPw.setPath("/");
+        resp.addCookie(loginId);
+        resp.addCookie(loginPw);
       }
       redirectAttributes.addFlashAttribute("msg", "로그인 성공");
       session.setAttribute("loginUser", loginUser);

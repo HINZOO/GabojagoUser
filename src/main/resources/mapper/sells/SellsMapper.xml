@@ -30,14 +30,14 @@
     <delete id="deleteOne">
     DELETE FROM sells where s_id=#{sId}
     </delete>
-    <select id="findAll" resultMap="sellsMap">
-        SELECT * FROM sells  ORDER BY s_id DESC
+    <select id="findAll" resultMap="sellsMap" parameterType="SellPageDto">
+        SELECT * FROM sells
     </select>
     <select id="findBySId" resultMap="sellsMap">
         SELECT * FROM sells WHERE s_id=#{sId};
     </select>
     <select id="findByCategory" parameterType="String" resultMap="sellsMap">
-        SELECT * FROM sells WHERE category=#{category}
+        SELECT * FROM sells WHERE category=#{param1}
     </select>
     <select id="findByTitle" resultMap="sellsMap">
         SELECT * FROM sells WHERE title like CONCAT('%', #{title}, '%');

@@ -17,8 +17,11 @@
                     select="com.project.gabojago.gabojagouser.mapper.plan.PlanContentsMapper.findByPId"
                     column="p_id"
                     fetchType="lazy"/>
+        <collection property="checkLists"
+                    select="com.project.gabojago.gabojagouser.mapper.plan.PlanCheckListsMapper.findByPId"
+                    column="p_id"
+                    fetchType="lazy"/>
     </resultMap>
-
     <insert id="insertOne" useGeneratedKeys="true" keyProperty="pId"  parameterType="PlanDto">
         INSERT INTO plans (u_id, title, info, plan_from, plan_to, img_path, plan_status) VALUE (#{uId}, #{title}, #{info}, #{planFrom}, #{planTo}, #{imgPath}, #{planStatus})
     </insert>
