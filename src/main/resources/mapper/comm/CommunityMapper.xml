@@ -32,6 +32,10 @@
                      select="com.project.gabojago.gabojagouser.mapper.user.UserMapper.findUserByUId"
                      column="u_id"
                      fetchType="lazy"/>
+        <association property="likes"
+                     select="com.project.gabojago.gabojagouser.mapper.comm.CommLikeMapper.countStatusByCId"
+                     column="c_id"
+                     fetchType="eager"/>
         <collection property="imgs"
                     select="com.project.gabojago.gabojagouser.mapper.comm.CommImgMapper.findByCId"
                     column="c_id"
@@ -40,6 +44,7 @@
                     select="com.project.gabojago.gabojagouser.mapper.comm.CommReplyMapper.findByCIdAndParentCrIdIsNull"
                     column="c_id"
                     fetchType="lazy"/>
+
     </resultMap>
 
     <insert id="insertOne" parameterType="communityDto" useGeneratedKeys="true" keyProperty="cId">
@@ -60,7 +65,11 @@
         DELETE FROM communitys WHERE c_id=#{cId}
     </delete>
     <select id="findAll" resultMap="CommMap">
-        SELECT * FROM communitys
+        SELECT *
+        <if test="#{loginUserId!=null}">
+            ,(SELECT * FROM comm_likes WHERE c_id=communitys.c_id AND u_id=#{loginUserId}) login_user_like_status
+        </if>
+        FROM communitys
     </select>
     <select id="findByCId" resultMap="CommMap">
         SELECT * FROM communitys WHERE c_id=#{cId};

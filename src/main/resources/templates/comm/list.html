@@ -42,9 +42,8 @@
                     <div class="col-4" th:if="${c.imgs!=null && state.index==0}"th:each="img,state:${c.imgs}">
                         <img th:src="@{'{path}'(path=${img.imgPath})}" class="col img-thumbnail w-100" alt="게시글 이미지">
                         <div class="card-img-overlay object-fit-contain col-4 ">
-                            <p class="card-text text-dark text-end me-3">
-                                <a href=""><i class="bi bi-heart text-danger me- fs-3" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="좋아요"></i></a>
-                            </p>
+                            <th:block th:if="${session.loginUser!=null}" th:with="likes=${c.likes},id=${c.cId}" th:include="/comm/loginLikes"> </th:block>
+                            <th:block th:unless="${session.loginUser!=null}" th:with="likes=${c.likes},id=${cId}" th:include="/comm/likes"> </th:block>
                         </div>
                     </div>
 <!--                    <div class="col-4" th:if="${c.imgs==null}">-->
