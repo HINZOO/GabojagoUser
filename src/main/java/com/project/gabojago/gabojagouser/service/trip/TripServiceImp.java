@@ -22,7 +22,7 @@ public class TripServiceImp implements TripService {
     }
 
     @Override
-    public List<TripImgDto> imgList(int[] tiId) { // 이미지 리스트
+    public List<TripImgDto> imgList(List<Integer> tiId) { // 이미지 리스트
         List<TripImgDto> imgList=null;
         if(tiId!=null){
             imgList=new ArrayList<>();
@@ -60,7 +60,7 @@ public class TripServiceImp implements TripService {
     }
 
     @Override
-    public int modify(TripDto trip, int[] delImgIds) {
+    public int modify(TripDto trip, List<Integer> delImgIds) {
         int modify=tripMapper.updateOne(trip);
         if(trip.getImgs()!=null){
             for(TripImgDto img : trip.getImgs()){
@@ -79,7 +79,7 @@ public class TripServiceImp implements TripService {
 
 
     @Override
-    public int remove(int tId) {
+    public int remove(int tId, List<TripImgDto> imgDtos) {
         int remove=tripMapper.deleteOne(tId);
         return remove;
     }

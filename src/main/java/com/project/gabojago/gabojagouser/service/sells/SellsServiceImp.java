@@ -8,6 +8,7 @@ import com.project.gabojago.gabojagouser.dto.sells.SellsOptionDto;
 import com.project.gabojago.gabojagouser.mapper.sells.SellImgsMapper;
 import com.project.gabojago.gabojagouser.mapper.sells.SellsMapper;
 import com.project.gabojago.gabojagouser.mapper.sells.SellsOptionMapper;
+import com.project.gabojago.gabojagouser.mapper.user.UserMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,7 @@ public class SellsServiceImp implements SellsService{
     private SellsMapper sellsMapper;
     private SellsOptionMapper sellsOptionMapper;
     private SellImgsMapper sellImgsMapper;
+    private UserMapper userMapper;
     @Override
     public List<SellsDto> List(SellPageDto pageDto) {
         PageHelper.startPage(pageDto.getPageNum(),pageDto.getPageSize(),pageDto.getOrder());
@@ -29,13 +31,15 @@ public class SellsServiceImp implements SellsService{
 
     @Override
     public List<SellsDto> findByTitle(String title) {
+
         List<SellsDto> TitleList=sellsMapper.findByTitle(title);
         return TitleList;
     }
 
     @Override
-    public List<SellsDto> findByCategory(String category) {
-        List<SellsDto> categoryList=sellsMapper.findByCategory(category);
+    public List<SellsDto> findByCategory(String category, SellPageDto pageDto) {
+        PageHelper.startPage(pageDto.getPageNum(),pageDto.getPageSize(),pageDto.getOrder());
+        List<SellsDto> categoryList=sellsMapper.findByCategory(category,pageDto);
         return categoryList;
     }
 

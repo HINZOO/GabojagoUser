@@ -37,7 +37,7 @@
         SELECT * FROM sells WHERE s_id=#{sId};
     </select>
     <select id="findByCategory" parameterType="String" resultMap="sellsMap">
-        SELECT * FROM sells WHERE category=#{category}
+        SELECT * FROM sells WHERE category=#{param1}
     </select>
     <select id="findByTitle" resultMap="sellsMap">
         SELECT * FROM sells WHERE title like CONCAT('%', #{title}, '%');

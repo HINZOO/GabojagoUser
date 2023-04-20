@@ -9,13 +9,11 @@
 <div layout:fragment="content">
     <div class="container">
         <div class="row align-items-end">
-
             <div class="col-md-6">
                 <form class="d-flex" role="search" id="searchForm">
                     <input class="form-control me-2" type="search" placeholder="제목을 입력해 주세요" aria-label="Search" id="searchInput">
                     <button class="btn btn-outline-success" type="submit" id="searchBtn">Search</button>
                 </form>
-
                 <nav aria-label="Page navigation example">
                     <ul class="pagination">
                         <li class="page-item">
@@ -25,7 +23,7 @@
                         </li>
                         <li class="page-item" th:each="p:${page.navigatepageNums}">
                             <a class="page-link"
-                               th:href="@{''(pageNum=${p},pageSize=6)}"
+                               th:href="@{''(pageNum=${p},pageSize=${6})}"
                                th:text="${p}"
                                th:classappend="${p==page.pageNum ? 'active' : ''}">
 
@@ -39,7 +37,7 @@
                     </ul>
                 </nav>
             </div>
-            <div class="col-md-6 text-end">
+            <div th:if="${session.loginUser!=null && session.loginUser.getPermission()=='PARTNER'}" class="col-md-6 text-end">
                 <a href="/sells/register.do" class="btn btn-primary">게시글 작성</a>
             </div>
         </div>
@@ -50,11 +48,11 @@
             <div >
                 <ul class="list-group">
                     <li class="list-group-item"><a href="/sells/list.do" class="category-link" >전체</a></li>
-                    <li class="list-group-item"><a href="/sells/list.do?category=워터">워터파크</a></li>
-                    <li class="list-group-item"><a href="/sells/list.do?category=테마">테마파크</a></li>
-                    <li class="list-group-item"><a href="/sells/list.do?category=키즈" >키즈</a></li>
-                    <li class="list-group-item"><a href="/sells/list.do?category=레저" >레저</a></li>
-                    <li class="list-group-item"><a href="/sells/list.do?category=박물관">박물관</a></li>
+                    <li class="list-group-item"><a th:href="@{'/sells/{category}/list.do'(category='워터')}">워터파크</a></li>
+                    <li class="list-group-item"><a th:href="@{'/sells/{category}/list.do'(category='테마')}">테마파크</a></li>
+                    <li class="list-group-item"><a th:href="@{'/sells/{category}/list.do'(category='키즈')}">키즈</a></li>
+                    <li class="list-group-item"><a th:href="@{'/sells/{category}/list.do'(category='레저')}">레저</a></li>
+                    <li class="list-group-item"><a th:href="@{'/sells/{category}/list.do'(category='박물관')}">박물관</a></li>
                 </ul>
             </div>
         </div>
@@ -113,6 +111,7 @@
             alert("검색어를 입력하세요");
         }
     });
+
 </script>
     </div>
 </html>
