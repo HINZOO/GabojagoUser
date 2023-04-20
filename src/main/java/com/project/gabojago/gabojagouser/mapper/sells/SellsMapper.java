@@ -11,7 +11,7 @@ import java.util.List;
 public interface SellsMapper {
     //com.github.pagehelper.Page   : list + page 정보 (list의 자식)
     Page<SellsDto> findAll(SellPageDto pageDto);
-    List<SellsDto> findByCategory(String category);
+    List<SellsDto> findByCategory(String category, SellPageDto pageDto);
     List<SellsDto> findByTitle(String title);
 
     SellsDto findBySId(int sId);

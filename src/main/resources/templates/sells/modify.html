@@ -5,8 +5,13 @@
 <head>
   <meta charset="UTF-8">
   <title>판매글 수정</title>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
+
+
+
 <div layout:fragment="content">
+
   <form enctype="multipart/form-data" name="registerForm" action="/sells/modify.do" method="post" style="width: 500px;margin: 0 auto;">
   <h1 class="my-4">게시글 수정</h1>
   <p class="form-floating">
@@ -14,6 +19,7 @@
     <input id="uIdInput" type="text" name="uId" th:value="${sell.getUId()}" readonly class="form-control" placeholder="??"> <!-- th:value="${session.loginUser.uId}"-->
     <label class="">아이디(글쓴이)</label>
   </p>
+
     <p id="imgDelCont">
     <h4>이미지 삭제 (체크)</h4>
     <label th:each="img:${sell.getSellImgs()}" class="w-25 delImgItem">
@@ -29,8 +35,8 @@
   </p>
     <p class="form-floating">
       <select name="area" class="form-select">
-        <option th:value="${sell.getArea()}" th:text="${sell.getArea()}"> </option>
-        <option value="">지역 카테고리 선택</option>
+        <option th:value="${sell.getArea()}" th:text="${sell.getArea()}+'(현재선택)'"></option>
+        <option value="">지역 카테고리 수정 ↓</option>
         <option value="서울">서울</option>
         <option value="인천">인천</option>
         <option value="대전">대전</option>
@@ -54,8 +60,8 @@
 
     <p class="form-floating">
       <select name="category" class="form-select">
-        <option th:value="${sell.getCategory()}" th:text="${sell.getCategory()}"></option>
-        <option value="">카테고리 선택</option>
+        <option th:value="${sell.getCategory()}" th:text="${sell.getCategory()}+'(현재선택)'"></option>
+        <option value="">카테고리 수정 ↓</option>
         <option value="워터">워터</option>
         <option value="테마">테마</option>
         <option value="박물관">박물관</option>
@@ -87,11 +93,38 @@
     </p>
   <p class="text-end">
     <button type="reset" class="btn btn-warning">초기화</button>
-    <a th:href="@{'/sells/{sId}/remove.do'(sId=${sell.sId})}" class="btn btn-danger">삭제</a>
+    <a onclick="removeBtn()"  class="btn btn-danger">삭제</a>
+    <input hidden="hidden" id="sId" th:value="${sell.getSId()}">
+    <script>
+
+    </script>
     <button type="submit" class="btn btn-primary">등록</button>
+
   </p>
+
 </form>
 <script>
+  function removeBtn() {
+    swal({
+      title: "정말 삭제 하시겠습니까?",
+      text: "다시 되돌릴 수 없습니다. 신중하세요",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+            .then((willDelete) => {
+              if (willDelete) {
+                // 확인 버튼 클릭 시 실행할 코드
+                const sIdElement = document.getElementById("sId");
+                const sId = sIdElement ? sIdElement.value : '';
+                window.location.href = `/sells/${sId}/remove.do`;
+              } else {
+                // 취소 버튼 클릭 시 실행할 코드
+                console.log("취소되었습니다.");
+              }
+            });
+  }
+
   const imgAddBtn=document.getElementById("imgAddBtn");
   const imgCont=document.getElementById("imgCont");
   imgAddBtn.addEventListener("click",(e)=>{

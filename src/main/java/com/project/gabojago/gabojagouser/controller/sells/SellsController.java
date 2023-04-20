@@ -4,6 +4,7 @@ import com.project.gabojago.gabojagouser.dto.sells.SellImgsDto;
 import com.project.gabojago.gabojagouser.dto.sells.SellPageDto;
 import com.project.gabojago.gabojagouser.dto.sells.SellsDto;
 import com.project.gabojago.gabojagouser.dto.sells.SellsOptionDto;
+import com.project.gabojago.gabojagouser.dto.user.UserDto;
 import com.project.gabojago.gabojagouser.service.sells.SellsService;
 
 import lombok.extern.log4j.Log4j2;
@@ -36,11 +37,19 @@ public class SellsController {
     private String uploadPath;
     @Value("${static.path}")
     private String staticPath;
+
+    @GetMapping("gggg.do")
+    public void list(){
+
+    };
     @RequestMapping("/{title}/search.do")
     public String searchSells(@PathVariable String title,
                               Model model,
                               @ModelAttribute SellPageDto pageDto
                               ){
+
+
+
         List<SellsDto> sells;
         sells=sellsService.findByTitle(title);
         PageInfo<SellsDto> pageSells=new PageInfo<>(sells);
@@ -48,16 +57,24 @@ public class SellsController {
         model.addAttribute("sells",sells);
         return "/sells/list";
     }
+    @GetMapping("/{category}/list.do")
+    public String categoryList(@PathVariable String category,
+                               Model model,
+                               @ModelAttribute SellPageDto pageDto){
+        List<SellsDto> sells;
+        sells=sellsService.findByCategory(category,pageDto);
+        PageInfo<SellsDto> pageSells=new PageInfo<>(sells);
+        model.addAttribute("page",pageSells);
+        model.addAttribute("sells",sells);
+        return "/sells/list";
+    }
     @GetMapping("list.do")
     public String list(Model model,
-                       @RequestParam(name = "category", required = false) String category,
                        @ModelAttribute SellPageDto pageDto){
         List<SellsDto> sells;
-        if(category==null){
+
            sells=sellsService.List(pageDto);
-        }else {
-         sells=sellsService.findByCategory(category);
-        }
+
 //        System.out.println("sells = " + sells);
         PageInfo<SellsDto> pageSells=new PageInfo<>(sells);
             model.addAttribute("page",pageSells);
@@ -90,14 +107,12 @@ public class SellsController {
                                @RequestParam(value="price",required = false) int[] price,
                                RedirectAttributes redirectAttributes
                                ) {
-        String redirectPath="redirect:/sells/"+sell.getSId()+"/modify.do";
+        String redirectPage="redirect:/sells/"+sell.getSId()+"/modify.do";
         List<SellImgsDto> imgsDtos=null;
         int modify=0;
         String msg="";
-
-
-
         try {
+
             if(delImgIds!=null)imgsDtos=sellsService.imgList(delImgIds);
             //삭제 전에 이미지 파일 경로를 받아옴
             modify=sellsService.modify(sell,delImgIds,delOptionIds);
@@ -142,9 +157,9 @@ public class SellsController {
                 }
             }
             redirectAttributes.addFlashAttribute("msg","수정성공");
-            redirectPath="redirect:/sells/list.do";
+            redirectPage="redirect:/sells/list.do";
         }
-        return redirectPath;
+        return redirectPage;
     }
 
 
@@ -157,12 +172,23 @@ public class SellsController {
                                  @ModelAttribute SellsOptionDto sellsOptionDto,
                                  @RequestParam(value = "img",required = false)MultipartFile [] imgs,
                                  @RequestParam(value="name",required = false) String[] name,
-                                 @RequestParam(value="price",required = false) int[] price) throws IOException {
+                                 @RequestParam(value="price",required = false) int[] price,
+                                 RedirectAttributes redirectAttributes) throws IOException {
 
-        String redirectPage="redirect:/sells/list.do";
-        sellsService.register(sell);
-             List<SellImgsDto> imgsDtos=null;
-        if (imgs!=null){
+        String redirectPage="redirect:/sells/register.do";
+        String msg="";
+
+
+        if(name == null || price == null) { // 옵션 없으면
+            msg = "옵션은 최소 1개이상 추가해 주세요";
+            redirectAttributes.addFlashAttribute("msg", msg);
+            return redirectPage;
+        }else if (imgs==null){ // imgs 가 null 이면 msg
+            msg="이미지를 등록해 주세요.";
+            redirectAttributes.addFlashAttribute("msg",msg);
+            return redirectPage;
+        }else {
+            sellsService.register(sell);
             for(MultipartFile img : imgs){
                 if(!img.isEmpty()) {
                     String[] contentTypes = img.getContentType().split("/"); // text/xml application/json image/png
@@ -180,26 +206,17 @@ public class SellsController {
         }
 
             // 옵션 등록
-            if (name!=null && price!=null) {
+        for (int i = 0; i < name.length; i++) {
+            SellsOptionDto sellsOption = new SellsOptionDto();
+            sellsOption.setSId(sell.getSId());
+            sellsOption.setName(name[i]);
+            sellsOption.setPrice(price[i]);
+            System.out.println("sellsOption = " + sellsOption);
+            sellsService.optionRegister(sellsOption);
+        }
 
-                for (int i = 0; i < name.length; i++) {
-                    SellsOptionDto sellsOption = new SellsOptionDto();
-                    sellsOption.setSId(sell.getSId());
-                    sellsOption.setName(name[i]);
-                    sellsOption.setPrice(price[i]);
-                    System.out.println("sellsOption = " + sellsOption);
-                    sellsService.optionRegister(sellsOption);
-                }
-            }
            return redirectPage="redirect:/sells/list.do";
 
-//        try {
-//            // 판매글 등록
-//        }catch (Exception e){
-//            log.error(e.getMessage());
-//        }
-//
-//        return "/sells/register";
     }
     @GetMapping("/{sId}/remove.do")
     public String removeAction(@PathVariable int sId){
