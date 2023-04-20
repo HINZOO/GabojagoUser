@@ -1,5 +1,6 @@
 package com.project.gabojago.gabojagouser.dto.trip;
 
+import com.project.gabojago.gabojagouser.dto.user.UserDto;
 import lombok.Data;
 
 import java.util.Date;
@@ -16,5 +17,7 @@ public class TripReviewDto {
     private Date updateTime; // 🔥default on update CURRENT_TIMESTAMP
     private int grade;
     private List<TripReviewImgDto> imgs;
+
+    private UserDto user; // 리뷰 : 유저 = N : 1
 
 }

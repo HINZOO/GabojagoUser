@@ -30,9 +30,10 @@ class TripMapperTest {
     @Test
     @Order(2)
     void findByTId() {
-        TripDto findTrip=tripMapper.findByTId(trip.getTId());
-        System.out.println("trip = " + trip);
+//        TripDto findTrip=tripMapper.findByTId(trip.getTId());
+        TripDto findTrip=tripMapper.findByTId(1);
         assertNotNull(findTrip);
+        System.out.println("findTrip = " + findTrip);
     }
 
     @Test

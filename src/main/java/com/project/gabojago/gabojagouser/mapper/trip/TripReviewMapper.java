@@ -8,8 +8,8 @@ import java.util.List;
 @Mapper
 public interface TripReviewMapper {
     // 여행정보(맞춤추천) 리뷰 _ 리스트, 등록, 수정, 삭제
-//    List<TripReviewDto> findAll();
 
+    List<TripReviewDto> findByTId(int tId);// 리뷰 리스트
     TripReviewDto findByTrId(int trId);
 
     int insertOne(TripReviewDto tripReview);

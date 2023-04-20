@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.project.gabojago.gabojagouser.mapper.trip.TripLikeMapper">
+    <insert id="insertOne"></insert>
+    <update id="updateOne"></update>
+    <delete id="deleteOne"></delete>
+    <select id="findByTIdAndUId" resultType="com.project.gabojago.gabojagouser.dto.trip.TripLikeDto"></select>
+    <select id="findByTIdAndUIdIsLoginUserId" resultType="java.lang.String"></select>
+    <select id="countStatusByTId" resultType="com.project.gabojago.gabojagouser.dto.trip.TripLikeDto"></select>
+    <select id="countStatusByUId" resultType="com.project.gabojago.gabojagouser.dto.trip.TripLikeDto"></select>
+</mapper>

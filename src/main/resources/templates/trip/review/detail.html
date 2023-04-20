@@ -1,10 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
 
-</body>
+<div class="mb-3 d-flex justify-content-between align-items-center">
+    <!--    <div>-->
+    <!--        <th:block th:include="/user/profile.html"></th:block>-->
+    <!--    </div>-->
+
+    <div class="d-flex align-items-center">
+        <div>
+            <img th:src="@{'{path}'(path=${})}" alt="">
+            @<strong th:text="${r.uId}"></strong>
+        </div>
+        <!--        th:each="img,state : ${t.imgs}"-->
+        <!--        th:classappend="${img.imgMain}?'active':''">-->
+        <!--        <img th:if="${t.imgs!=null}" th:src="@{'{path}'(path=${img.imgPath}-->
+        <!--        -->
+        <!--        <img src="/public/img/trip/airplane.jpg" class="me-2 d-inline-block border rounded-circle" style="width:30px; height: 30px;" alt="">-->
+        <!--        <th:block th:each="img:${r.imgs}" th:text="${r}"></th:block>-->
+    </div>
+
+</div>
+
+<div>
+    <div>
+        <span th:text="${r.content}"></span>
+    </div>
+    <div class="row">
+        <div class="col" th:each="img:${r.imgs}">
+            <img class="img-thumbnail w-100" style="max-height: 100px; object-fit: cover"
+                 th:src="@{'{path}'(path=${img.imgPath})}" alt="">
+        </div>
+    </div>
+    <small th:text="${#dates.format(r.updateTime,'yyyy-MM-dd')}"></small>
+
+    <div>
+        <div>
+            <p class="text-danger me-2 badge border rounded-5 border-danger border-opacity-50">
+                <i class="bi bi-hash"></i><span>여름</span>
+            </p>
+            <p class="text-danger me-2 badge border rounded-5 border-danger border-opacity-50">
+                <i class="bi bi-hash"></i><span>바다</span>
+            </p>
+            <p class="text-danger me-2 badge border rounded-5 border-danger border-opacity-50">
+                <i class="bi bi-hash"></i><span>제주</span>
+            </p>
+            <p class="text-danger me-2 badge border rounded-5 border-danger border-opacity-50">
+                <i class="bi bi-hash"></i><span>여행</span>
+            </p>
+        </div> <!-- 해시태그 반복문 -->
+    </div>
+    <p>
+        <span class="me-2">
+            작성일 :
+            <small th:text="${#dates.format(t.postTime,'yyy.MM.dd')}"></small>
+            <!-- date.format(데이트객체, 포맷) 으로 날짜 예쁘게 수정하기 -->
+        </span>
+        <span>☆☆☆☆☆</span>
+        <span>방문</span>
+    </p>
+    <p>
+        댓글작성폼 넣기
+        <a href="">좋아요</a>
+        <a href="">댓글쓰기</a>
+    </p>
+</div>
+
 </html>

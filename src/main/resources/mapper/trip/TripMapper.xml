@@ -31,6 +31,10 @@
         <result column="category" property="category"/>
 
         <!-- 조인) 리뷰, 좋아요한 유저, 이미지, 북마크, 좋아요, 조회수 -->
+        <collection property="reviews"
+                    select="com.project.gabojago.gabojagouser.mapper.trip.TripReviewMapper.findByTId"
+                    column="t_id"
+                    fetchType="lazy"/>
 
         <!-- 🍉property Dto 필드명 -->
         <collection property="imgs"
