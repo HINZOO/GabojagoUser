@@ -62,7 +62,8 @@ class SellsMapperTest {
 
     @Test
     void findByCategory() {
-        List<SellsDto> sellsCategory=sellsMapper.findByCategory("레저");
+        SellPageDto pageDto=new SellPageDto();
+        List<SellsDto> sellsCategory=sellsMapper.findByCategory("레저", pageDto);
         System.out.println("sellsCategory = " + sellsCategory);
     }
 }
