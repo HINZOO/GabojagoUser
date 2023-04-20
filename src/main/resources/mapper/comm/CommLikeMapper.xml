@@ -22,15 +22,15 @@
         DELETE FROM comm_likes WHERE u_id=#{uId} AND c_id=#{cId}
     </delete>
     <select id="countStatusByCId" resultMap="LikeStatusCntMap">
-        SELECT COUNT(*) FROM comm_likes WHERE c_id#{cId}
+        SELECT COUNT(*) FROM comm_likes WHERE c_id=#{cId}
     </select>
     <select id="countStatusByUId" resultMap="LikeStatusCntMap">
-        SELECT COUNT(*) FROM comm_likes WHERE u_id#{uId}
+        SELECT COUNT(*) ,c_id FROM comm_likes WHERE u_id=#{uId}
     </select>
     <select id="findByCIdAndUId" resultMap="CommLikeMap">
-        SELECT COUNT(*) FROM comm_likes WHERE c_id#{cId} AND u_id=#{uId}
+        SELECT COUNT(*) FROM comm_likes WHERE c_id=#{cId} AND u_id=#{uId}
     </select>
     <select id="findByCIdAndUIdIsLoginUserId" resultType="String">
-        SELECT COUNT(*) FROM comm_likes WHERE c_id#{cId} AND u_id=@loginUserId
+        SELECT COUNT(*) FROM comm_likes WHERE c_id=#{cId} AND u_id=@loginUserId
     </select>
 </mapper>

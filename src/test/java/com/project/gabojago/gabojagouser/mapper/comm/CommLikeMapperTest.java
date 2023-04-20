@@ -25,7 +25,7 @@ class CommLikeMapperTest {
 
     @Test
     void countStatusByUId() {
-    LikeStatusCntDto contUId=commLikeMapper.countStatusByUId("USER01");
+    LikeStatusCntDto contUId=commLikeMapper.countStatusByUId("user01");
     System.out.println("contUId = " + contUId);
     }
 
