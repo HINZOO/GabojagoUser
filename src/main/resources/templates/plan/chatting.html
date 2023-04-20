@@ -1,23 +1,21 @@
 <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 
-<div class="offcanvas offcanvas-end" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
+<div class="offcanvas offcanvas-end" style="background-color: rgb(234,247,255)" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
   <div class="offcanvas-header">
-    <h5 class="offcanvas-title" id="offcanvasScrollingLabel">채팅방ㅋㅋ</h5>
+    <h6 class="offcanvas-title" id="offcanvasScrollingLabel"></h6>
     <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
   </div>
-  <div class="offcanvas-body">
-    <div class="container">
-        <div id="msgArea" class="col"></div>
-        <div class="col">
-          <div class="input-group mb-3">
-            <input type="text" id="msg" class="form-control">
-            <div class="input-group-append">
-              <button class="btn btn-outline-secondary" type="button" id="button-send">전송</button>
-            </div>
+  <div class="chatBody container px-0">
+      <div id="msgBox"></div>
+      <div class="col">
+        <div class="input-group mb-3">
+          <input type="text" id="msg" class="form-control">
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="button" id="button-send">전송</button>
           </div>
         </div>
-    </div>
+      </div>
   </div>
 </div>
 
@@ -25,42 +23,40 @@
 <script th:inline="javascript">
 
   let title = [[${plan.getTitle()}]];
-  let roomId = [[${plan.getPId()}]];
-  let username = "test1"
+  let roomId = [[${plan.getPId()}]];;
+  let username = [[${session.loginUser.nkName}]] || "anonymous"
 
   console.log(title + ", " + roomId + ", " + username);
 
-
+  // socketJs가 stomp를 갖고있다
   let sockJs = new SockJS("/stomp/chat");
-  //1. SockJS를 내부에 들고있는 stomp를 내어줌
   let stomp = Stomp.over(sockJs);
 
-
-  //2. connection이 맺어지면 실행
+  // stomp.connect로 접속하고 구독 상태를 유지
   stomp.connect({}, function (){
-    console.log("----------STOMP 연결 성공----------")
-
-    //4. subscribe(path, callback)으로 메세지를 받을 수 있음
+    // subscribe(path, callback) => path 경로로 메세지가 들어오면 콜백 함수를 실행
     stomp.subscribe("/sub/chat/room/" + roomId, function (chat) {
       let content = JSON.parse(chat.body);
-
       let writer = content.writer;
       let system = content.system;
       let str = '';
-
-      if(writer === username && !system){
-        str = "<div class='col-6'>";
-        str += "<div class='alert alert-secondary'>";
+      if(system){
+        str += "<div class='chatSystem'>";
+        str += "<b>" + "SYSTEM" + " : " + content.message + "</b>";
+        str += "</div>";
+        document.querySelector("#msgBox").insertAdjacentHTML('beforeend',str);
+      }
+      else if(writer === username ){
+        str += "<div class='chatMy'>";
         str += "<b>" + writer + " : " + content.message + "</b>";
-        str += "</div></div>";
-        document.querySelector("#msgArea").insertAdjacentHTML('beforeend',str);
+        str += "</div>";
+        document.querySelector("#msgBox").insertAdjacentHTML('beforeend',str);
       }
       else{
-        str = "<div class='col-6'>";
-        str += "<div class='alert alert-warning'>";
+        str += "<div class='chatOrder'>";
         str += "<b>" + writer + " : " + content.message + "</b>";
-        str += "</div></div>";
-        document.querySelector("#msgArea").insertAdjacentHTML('beforeend',str)
+        str += "</div>";
+        document.querySelector("#msgBox").insertAdjacentHTML('beforeend',str)
       }
     });
 
@@ -69,7 +65,7 @@
     stomp.send('/pub/chat/enter', {}, JSON.stringify({roomId: roomId, writer: username, system : true}))
   });
 
-  document.querySelector("#button-send").addEventListener("click", function(e){
+    document.querySelector("#button-send").addEventListener("click", function(e){
     let msg = document.getElementById("msg");
 
     console.log(username + ":" + msg.value);

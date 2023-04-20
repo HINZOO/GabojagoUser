@@ -510,4 +510,36 @@ canvas{
 .offcanvas{
     width: 15.8vw !important;
 }
+.chatBody{
+    height: 95vh;
+}
+#msgBox{
+    padding: 10px;
+    height: 90%;
+    background-color: white;
+    border-radius: 20px;
+}
+.chatSystem{
+    padding: 10px 0px;
+    color: gray;
+    text-align: center;
+    font-size: 12px;
+}
+.chatMy{
+    width: 100%;
+    /*float: right;*/
+    margin: 8px 8px;
+    padding: 0px 5px;
+    color: black;
+    text-align: right;
+    font-size: 12px;
+}
+.chatOrder{
+    width: 100%;
+    /*float: left;*/
+    margin: 8px 8px;
+    color: black;
+    text-align: left;
+    font-size: 12px;
+}
 
