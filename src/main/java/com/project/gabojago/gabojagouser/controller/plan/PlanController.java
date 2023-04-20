@@ -1,8 +1,10 @@
 package com.project.gabojago.gabojagouser.controller.plan;
 
+import com.project.gabojago.gabojagouser.dto.plan.PlanCheckListsDto;
 import com.project.gabojago.gabojagouser.dto.plan.PlanDto;
 import com.project.gabojago.gabojagouser.dto.user.UserDto;
 import com.project.gabojago.gabojagouser.mapper.plan.PlanMapper;
+import com.project.gabojago.gabojagouser.service.plan.PlanCheckListsService;
 import com.project.gabojago.gabojagouser.service.plan.PlanService;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -15,6 +17,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 @RequestMapping("/plan")
@@ -22,14 +25,7 @@ import java.util.List;
 @Log4j2
 public class PlanController {
     private PlanService planService;
-//    @GetMapping("/list.do")
-//    public String list(Model model){
-//
-//        List<PlanDto> plans = planService.list(uId);
-//        model.addAttribute("plans", plans);
-//        return "/plan/list";
-//    }
-
+    private PlanCheckListsService planCheckListsService;
 
     @GetMapping("/list.do")
     public String list(
@@ -68,5 +64,34 @@ public class PlanController {
         model.addAttribute("plan", plan);
         model.addAttribute("period", gap);
         return "/plan/detail";
+    }
+
+    @PostMapping("/tdlHandler.do")
+    public @ResponseBody PlanCheckListsDto tdlInset(
+            PlanCheckListsDto planCheckListsDto)
+    {
+        int register = planCheckListsService.register(planCheckListsDto);
+        return planCheckListsDto;
+    }
+    @DeleteMapping("/tdlHandler.do")
+    public @ResponseBody int tdlDelete(
+            @RequestBody String clId)
+    {
+        return planCheckListsService.remove(Integer.parseInt(clId));
+    }
+    @PutMapping("/tdlHandler.do")
+    public @ResponseBody PlanCheckListsDto tdlModify(
+            PlanCheckListsDto dto)
+    {
+        log.info("체크테스트1"+dto);
+        if(Objects.equals(dto.getCheckStatus(), "UNCHECKED")) {
+            dto.setCheckStatus("CHECKED");
+        }
+        else if (Objects.equals(dto.getCheckStatus(), "CHECKED")) {
+            dto.setCheckStatus("UNCHECKED");
+        }
+        log.info("체크테스트2"+dto);
+        planCheckListsService.modify(dto);
+        return dto;
     }
 }

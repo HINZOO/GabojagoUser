@@ -16,11 +16,21 @@ body{
     -ms-use-select: none;
     user-select: none;
 }
+.unDraggable{
+    -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-use-select: none !important;
+    user-select: none !important;
+}
 .draggable{
     -webkit-user-select: all;
     -moz-user-select: all;
     -ms-use-select: all;
     user-select: all;
+}
+.textCancel{
+    text-decoration: line-through red;
+    text-decoration-thickness: 3px;
 }
 a:link { color: black; text-decoration: none;}
 a:visited { color: black; text-decoration: none;}
@@ -169,8 +179,8 @@ canvas{
 .mainHeaderImg{
     z-index: -999;
     position: absolute;
-    width: 67.5vw;
-    height: 40vh;
+    width: 67.3vw;
+    height: 45vh;
     opacity: 0.8
 }
 
@@ -178,10 +188,16 @@ canvas{
 .titleBox{
 
     padding-top: 20vh;
-    padding-left: 50px;
+    padding-left: 80px;
     font-family: do hyeon;
     font-size: 15px;
     color: white;
+}
+.titleInnerBox{
+    width:400px;
+    padding: 10px 30px;
+    border-radius: 15px;
+    /*background-color: rgba(0, 0, 0, 0.3);*/
 }
 .rightBox{
     text-align: right;
@@ -190,7 +206,7 @@ canvas{
 
 }
 .toDoListBox{
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: rgba(0, 0, 0, 0.3);
     text-align: left;
     display: inline-block;
     font-family: Russo one;
@@ -208,26 +224,69 @@ canvas{
     display: flex;
     justify-content: space-between;
 }
-.tdlPBtn, .tdlMBtn{
+.tdlPBtn, .tdlMBtn {
     cursor: pointer;
     border-radius: 50%;
     padding: 0px 5px;
 
 }
-.tdlPBtn:hover, .tdlMBtn:hover{
+.tdlPBtn:hover, .tdlMBtn:hover {
     color: #3b3b3b;
     background-color: white;
 
 }
 .tdlContent{
 
-    padding: 8px 5px;
+    padding: 8px 0px;
     color: white;
 }
-.tdlCBtn{
-    border: 1px solid transparent;
-    border-radius: 50% !important;
+.tdlform{
+    height: 25px;
+    justify-content: space-between;
+    display: flex;
+    padding: 0px 5px;
+    border: 1px solid rgba(255, 255, 255, 0.58);
+    border-radius: 8px;
+    margin-bottom: 5px;
 }
+.tdlform input{
+    color: white;
+}
+.tdlCheck{
+
+    display: none;
+}
+.tdlCheckLabel{
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 4px;
+    width: 15px;
+    height: 15px;
+    border: 2px solid white;
+    border-radius: 50%;
+    margin-left: 5px;
+}
+
+.tdlCheck:checked + label{
+    background-color: #c7c7c7;
+    margin-left: 5px;
+}
+
+.tdlInput{
+    outline: none;
+    color: white;
+    width: 170px;
+    border: none;
+    background-color: transparent;
+}
+.tdlSubmit, .tdlDelete{
+    margin-right: 5px;
+}
+.tdlSubmit:hover{
+    cursor: pointer;
+    color: blue;
+}
+
 
 
 
@@ -254,7 +313,7 @@ canvas{
     border: 1px solid transparent;
     line-height: 25px;
     padding-top: 10px;
-    margin-top: -10px;
+    margin-top: -20px;
 }
 
 .dayBtn{
