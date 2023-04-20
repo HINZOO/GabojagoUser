@@ -2,7 +2,7 @@
     <div class="text-center">
         <ul class="menu" style="list-style: none">
             <li><h5 class="">나의정보</h5></li>
-            <li><a class=""  th:href="@{'/user/{uId}/detail.do'(uId=${user.uId})}">정보수정</a></li>
+            <li><a class=""  th:href="@{'/user/{loginUser}/detail.do'(uId=${session.loginUser})}">정보수정</a></li>
             <li><a class="" href="#">비밀번호 변경</a></li>
             <li><a class="" href="#">회원탈퇴</a></li>
         </ul>
@@ -16,7 +16,7 @@
             <li><h5 class="">나의 구매|마일리지</h5></li>
             <li><a class="" href="#">구매목록|환불</a></li>
             <li><a class="" href="#">마일리지</a></li>
-            <li><a class="" href="#">장바구니</a></li>
+            <li><a class="" th:href="@{'/cart/list.do'}">장바구니</a></li>
         </ul>
         <ul class="menu" style="list-style: none">
             <li><h5 class="">고객센터</h5></li>

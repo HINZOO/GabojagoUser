@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>장바구니</title>
+
+</head>
+<div layout:fragment="content">
+    <div class="container">
+        <main role="main" class="container">
+            <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+                <h1 class="display-4">장바구니</h1>
+            </div>
+            <div class="card-deck mb-3 text-center">
+                <!-- 장바구니 항목 -->
+                <div class="card mb-4 box-shadow" th:each="c:${list}">
+                    <div class="card-header">
+                        <h4 class="my-0 font-weight-normal">상품 정보</h4>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-unstyled mt-3 mb-4">
+                            <li><b>카트 ID:</b><span th:text="${c.cartId}"></span> </li>
+                            <li><b>유저 ID:</b> <span th:text="${c.getUId()}"></span></li>
+                            <li><b>상품 ID:</b><span th:text="${c.getSId()}"></span></li>
+                        </ul>
+                        <!-- 장바구니 취소 버튼 -->
+                        <button th:onclick="remove([[${c.cartId}]])" type="button" class="btn btn-danger">장바구니 취소</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script>
+        async function remove(cartId){
+            let url=`/cart/${cartId}/remove.do`;
+            const resp=await fetch(url,{method:"DELETE"});
+            const result = await resp.text(); // 서버에서 반환한 int 값을 문자열로 변환하여 저장
+                alert(result);
+            if (result === "1") {
+                alert("삭제되었습니다.");
+            } else {
+                alert("삭제에 실패하였습니다.");
+            }
+        }
+    </script>
+</div>
+</html>
