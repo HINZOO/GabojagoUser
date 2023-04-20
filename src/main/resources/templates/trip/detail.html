@@ -207,8 +207,8 @@
                             </div>
                         </div>
                         <hr>
-                        <div>
-                            <p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <p class="mb-0">
                                 <span>
                                     <i class="bi bi-record-circle text-danger"></i>
                                     좋아요순
@@ -223,101 +223,12 @@
                             </button>
                         </div>
                         <hr>
-
-
                         <div id="reviewCont">
                             <ul class="list-group">
-<!--                                <li class="list-group-item" th:each="${}"></li>-->
+                                <li class="list-group-item" th:each="r:${t.reviews}">
+                                    <th:block th:include="/trip/review/detail.html"></th:block>
+                                </li>
                             </ul>
-
-                            <div class="mb-3 d-flex justify-content-between align-items-center">
-                                <div class="d-flex align-items-center">
-                                    <img src="/public/img/trip/airplane.jpg"
-                                         class="me-2 d-inline-block border rounded-circle"
-                                         style="width:30px; height: 30px;"
-                                         alt="">
-                                    <div>
-                                        가보자고잉
-                                        <!--<p class="mb-0">
-                                            <small>리뷰<span>17</span></small>
-                                            <small>팔로워<span>5</span></small>
-                                        </p>-->
-                                    </div>
-                                </div> <!-- 유저 프로필,닉네임,작성 리뷰개수,팔로워수 -->
-                                <div class="dropdown">
-                                    <a href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="bi bi-three-dots-vertical text-muted"></i>
-                                    </a>
-                                    <ul class="dropdown-menu">
-                                        <!-- 로그인 + 로그인유저와 게시글의 유저가 동일할때 보이기! -->
-                                        <li>
-                                            <!--                                        <li th:if="${session.loginUser!=null}">-->
-                                            <a class="dropdown-item text-muted"
-                                               th:href="@{'/trip/{tId}/modify.do'(tId=${t.tId})}">수정폼</a>
-                                        </li>
-                                        <li><a class="dropdown-item text-muted"
-                                               th:href="@{'/trip/{tId}/remove.do'(tId=${t.tId})}">삭제</a></li>
-                                        <li>
-                                            <a class="dropdown-item text-danger" href="#">
-                                                <i class="bi bi-bell-fill"></i>신고
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div>
-                                <div>
-                                    <p>협재해수욕장에서 바라본 노을은 완벽했어요♥️ 해가질무렵 💙 #여름 #바다 #제주 #여행</p>
-                                </div>
-                                <div>
-                                    <div class="row mb-2">
-                                        <div class="col">
-                                            <img class="img-fluid" src="/public/img/trip/jeju1.jpeg" alt="">
-                                        </div>
-                                        <div class="col">
-                                            <img class="img-fluid" src="/public/img/trip/jeju1.jpeg" alt="">
-                                        </div>
-                                        <div class="col">
-                                            <img class="img-fluid" src="/public/img/trip/jeju1.jpeg" alt="">
-                                        </div>
-                                        <div class="col">
-                                            <img class="img-fluid" src="/public/img/trip/jeju1.jpeg" alt="">
-                                        </div>
-                                        <div class="col">
-                                            <img class="img-fluid" src="/public/img/trip/jeju1.jpeg" alt="">
-                                        </div>
-                                    </div>
-                                    <!--  이미지 / 반복문-->
-                                    <div>
-                                        <p class="text-danger me-2 badge border rounded-5 border-danger border-opacity-50">
-                                            <i class="bi bi-hash"></i><span>여름</span>
-                                        </p>
-                                        <p class="text-danger me-2 badge border rounded-5 border-danger border-opacity-50">
-                                            <i class="bi bi-hash"></i><span>바다</span>
-                                        </p>
-                                        <p class="text-danger me-2 badge border rounded-5 border-danger border-opacity-50">
-                                            <i class="bi bi-hash"></i><span>제주</span>
-                                        </p>
-                                        <p class="text-danger me-2 badge border rounded-5 border-danger border-opacity-50">
-                                            <i class="bi bi-hash"></i><span>여행</span>
-                                        </p>
-                                    </div> <!-- 해시태그 반복문 -->
-                                </div>
-                                <p>
-                                    <span class="me-2">
-                                        작성일 :
-                                        <small th:text="${#dates.format(t.postTime,'yyy.MM.dd')}"></small>
-                                        <!-- date.format(데이트객체, 포맷) 으로 날짜 예쁘게 수정하기 -->
-                                    </span>
-                                    <span>☆☆☆☆☆</span>
-                                    <span>방문</span>
-                                </p>
-                                <p>
-                                    댓글작성폼 넣기
-                                    <a href="">좋아요</a>
-                                    <a href="">댓글쓰기</a>
-                                </p>
-                            </div>
                         </div> <!-- // reviewCont -->
 
 
@@ -418,6 +329,15 @@
         const reviewRegisterForm = document.forms["reviewRegisterForm"];
         const reviewCont = document.getElementById("reviewCont");
         reviewRegisterForm.onsubmit = registerReview;
+
+        // async function loadRegistReview(trId){
+        //     let url=`/review/${trId}/detail.do`;
+        //     const resp=await fetch(url);
+        //     if(resp.status==200){
+        //         const json=await resp.json();
+        //
+        //     }
+        // }
 
         async function loadReviews(tId){
             let url=`/review/${tId}/list.do`

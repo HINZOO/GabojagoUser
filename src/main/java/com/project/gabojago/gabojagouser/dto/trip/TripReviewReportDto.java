@@ -1,7 +1,10 @@
 package com.project.gabojago.gabojagouser.dto.trip;
 
+import lombok.Data;
+
 import java.util.Date;
 
+@Data
 public class TripReviewReportDto {
     private int trrId; // pk (auto_increment)
     private int trId; // fk trip_review.tr_id 참조
