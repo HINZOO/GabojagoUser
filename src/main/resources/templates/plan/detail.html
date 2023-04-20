@@ -6,8 +6,6 @@
 <head>
     <title>게시판 상세</title>
     <link th:href="@{/public/css/plan/plan.css}" rel="stylesheet" />
-
-
 </head>
 
 <div layout:fragment="content" class="container-fluid px-0">
@@ -239,8 +237,9 @@
             </div>
         </div>
     </div>
-
-
+            <!--      채팅방      -->
+            <i class="bi bi-chat-dots-fill chatBtn" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling"></i>
+            <th:block th:include="/plan/chatting"></th:block>
 
     <script th:inline="javascript">
         let activatedCanvas;
@@ -277,11 +276,6 @@
 
             });
         });
-
-        // 웹소켓용
-        const URL="ws://localhost:7777/plan"
-        let webSocket;
-        webSocket=new WebSocket(URL);
 
 
         // 새 스케쥴 생성하는 경우

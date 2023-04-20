@@ -497,4 +497,17 @@ canvas{
     background-color: whitesmoke;
 }
 
+.chatBtn{
+    width: 60px;
+    height: 60px;
+    position: fixed;
+    right: 50px;
+    bottom: 50px;
+    cursor: pointer;
+    font-size: 50px;
+    transform: scaleX(-1);
+}
+.offcanvas{
+    width: 15.8vw !important;
+}
 
