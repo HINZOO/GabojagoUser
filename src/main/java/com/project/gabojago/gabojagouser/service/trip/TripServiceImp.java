@@ -79,7 +79,7 @@ public class TripServiceImp implements TripService {
 
 
     @Override
-    public int remove(int tId) {
+    public int remove(int tId, List<TripImgDto> imgDtos) {
         int remove=tripMapper.deleteOne(tId);
         return remove;
     }

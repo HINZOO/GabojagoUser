@@ -23,9 +23,10 @@
         UPDATE trip_reviews SET content=#{content}, visit=#{visit}, grade=#{grade} WHERE tr_id=#{trId}
     </update>
     <delete id="deleteOne">
-
+        DELETE FROM trip_reviews WHERE tr_id=#{trId}
     </delete>
-    <select id="findAll" resultType="com.project.gabojago.gabojagouser.dto.trip.TripReviewDto">
 
+    <select id="findByTrId" resultMap="TripReviewMap">
+        SELECT * FROM trip_reviews WHERE tr_id=#{trId}
     </select>
 </mapper>
