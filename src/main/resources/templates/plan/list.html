@@ -37,7 +37,10 @@
                                     <div class="card-header" style="width: 100%">
                                         <p class="cardSchedule text-start"><span th:text="${plan.getPlanFrom()}"/> ~ <span th:text="${plan.getPlanTo()}"/></p>
                                     </div>
-                                    <div class="cardImg" style="background-image:url('/public/img/plan/planSample.jpg');">
+                                    <div class="cardImg" th:if="${plan.getImgPath()==null}" style="background-image:url('/public/img/plan/planSample.jpg');">
+                                        <p class="cardTitle" th:text="${plan.getTitle()}"></p>
+                                    </div>
+                                    <div class="cardImg" th:if="${plan.getImgPath()!=null}" th:style="'background-image:url(\''+${plan.getImgPath()}+'\');'">
                                         <p class="cardTitle" th:text="${plan.getTitle()}"></p>
                                     </div>
                                     <div class="card-body">
@@ -79,11 +82,11 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <form  method="post" action="./insert.do">
+                            <form  method="post" action="./insert.do" enctype="multipart/form-data">
                                 <div class="row">
                                     <div class="col-6">
                                         <div class="form-floating">
-                                            <input type="file" class="form-control" name="tempImg" id="floatingImg" placeholder="">
+                                            <input type="file" class="form-control" name="img" id="floatingImg" placeholder="">
                                             <label for="floatingImg">대표이미지</label>
                                         </div>
                                     </div>
