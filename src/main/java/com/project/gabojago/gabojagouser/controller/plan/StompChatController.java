@@ -9,11 +9,18 @@ import org.springframework.stereotype.Controller;
 @RequiredArgsConstructor
 public class StompChatController {
 
-    private final SimpMessagingTemplate template; //특정 Broker로 메세지를 전달
+    private final SimpMessagingTemplate template;
 
-    //Client가 SEND할 수 있는 경로
-    //stompConfig에서 설정한 applicationDestinationPrefixes와 @MessageMapping 경로가 병합됨
-    //"/pub/chat/enter"
+    /*
+     STOMPConfig에서 설정한 prefix 이후에 들어가는 경로... ex) /pub/chat/enter"
+     각각의 send / subscribe를 구분해서 처리해주기 위한 식별 기준,
+     컨트롤러에서 요청 경로별로 맵핑 하는거랑 비슷한 이치임.
+
+     SimpMessagingTemplate : SimpMessageSendingOperation의 개선. @SendTo 필요 없음(??) -> 찾아봐야할듯
+     소켓에서는 @PathVariable을 대체하는 @DestinationVariable 사용
+     template.convertAndSend() : 경로, payload 두 개의 변수를 갖는다
+     */
+
     @MessageMapping(value = "/chat/enter")
     public void enter(MessageDto message){
         message.setMessage(message.getWriter() + "님이 채팅방에 참여하였습니다.");
@@ -24,17 +31,6 @@ public class StompChatController {
     public void message(MessageDto message){
         template.convertAndSend("/sub/chat/room/" + message.getRoomId(), message);
     }
-
-
-        //public class PlanChatingController {
-        //    private SimpMessageSendingOperations sendingOperations;
-        //    //구독하는 url 상세하게 만드는 객체
-        //    @MessageMapping("/send")
-        //    //@SendTo("/sub/{roomNo}/receive")
-        //    public void chatRoomBroker(ChatMessageDto chatMsgDto){
-        //        sendingOperations.convertAndSend("/sub/"+chatMsgDto.getRoomId()+"/receive",chatMsgDto);
-        //    }
-        //}
 }
 
 
