@@ -7,7 +7,7 @@
         <association property="like"
                      select="findByCIdAndUIdIsLoginUserId"
                      column="c_id"
-                        fetchType="eager"/>
+                     fetchType="eager"/>
     </resultMap>
     <resultMap id="CommLikeMap" type="CommLikeDto" >
         <id property="clId" column="cl_id"/>
