@@ -3,14 +3,18 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{/layout}">
-<head>
-  <title>문의글 상세</title>
-</head>
-<p></p>
-<div layout:fragment="content">
-  <h5 class="my-4">문의글 상세</h5>
-  <section id="boardCont" class="">
 
+< layout:fragment="content">
+  <section id="boardCont" class="">
+    <div class="row">
+      <h5 class="card-title" th:text="${q.title}"></h5>
+      <p class="card-text" th:text="${q.content}"></p>
+      <div class="d-flex my-2">
+        <div class="me-2">
+          작성일 : <small th:text="${#dates.format(q.postTime,'yyyy-MM-dd')}"></small>
+        </div>
+      </div>
+    </div>
   </section>
-</div>
 </html>
+
