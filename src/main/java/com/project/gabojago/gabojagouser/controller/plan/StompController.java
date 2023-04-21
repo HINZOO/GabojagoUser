@@ -7,7 +7,7 @@ import org.springframework.stereotype.Controller;
 
 @Controller
 @RequiredArgsConstructor
-public class StompChatController {
+public class StompController {
 
     private final SimpMessagingTemplate template;
 
@@ -21,15 +21,15 @@ public class StompChatController {
      template.convertAndSend() : 경로, payload 두 개의 변수를 갖는다
      */
 
-    @MessageMapping(value = "/chat/enter")
+    @MessageMapping(value = "/plan/enter")
     public void enter(MessageDto message){
         message.setMessage(message.getWriter() + "님이 채팅방에 참여하였습니다.");
-        template.convertAndSend("/sub/chat/room/" + message.getRoomId(), message);
+        template.convertAndSend("/sub/plan/room/" + message.getRoomId(), message);
     }
 
-    @MessageMapping(value = "/chat/message")
+    @MessageMapping(value = "/plan/message")
     public void message(MessageDto message){
-        template.convertAndSend("/sub/chat/room/" + message.getRoomId(), message);
+        template.convertAndSend("/sub/plan/room/" + message.getRoomId(), message);
     }
 }
 
