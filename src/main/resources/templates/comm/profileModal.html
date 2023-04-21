@@ -1,0 +1,33 @@
+<div id ="profileModal" class="modal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-center">
+          프로필 정보
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="text-center p-0">
+          <p><img class="profile img-thumbnail rounded-circle w-25 h-25" style="image-size:cover"
+                  src="https://taegon.kim/wp-content/uploads/2018/05/image-5.png"></p>
+          <h5 th:text="${c.user.getNkName()}" class="mb-0"></h5>
+          (<small  class="text-muted" th:text="${c.user.getUId()}"></small>)
+          <p class="mt-1">
+            <a class="btn btn-outline-success btn-sm me-2">팔로우</a>
+            <a class="btn btn-outline-success btn-sm">쪽지</a>
+          </p>
+        </div>
+        <hr>
+        <div class="">
+          <h5><span th:text="${c.user.nkName}"></span>님의 일정</h5>
+          <p>일정들어가는곳</p>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+      </div>
+    </div>
+  </div>
+</div>

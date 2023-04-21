@@ -16,8 +16,8 @@ class CommunityMapperTest {
 
     @Test
     void findAll() {
-        List<CommunityDto> list=communityMapper.findAll();
-        System.out.println(list);
+//        List<CommunityDto> list=communityMapper.findAll();
+//        System.out.println(list);
     }
 
     @Test

@@ -1,6 +1,7 @@
 package com.project.gabojago.gabojagouser.dto.trip;
 
 import lombok.Data;
+import lombok.ToString;
 
 import java.util.Date;
 import java.util.List;
@@ -39,5 +40,7 @@ public class TripDto {
     // TripDto 와 조인하는 Dto 선언! - 이미지 - 출력할때 조인하기! -> Mapper 지연로딩
 
     private List<TripImgDto> imgs;
+
+    private List<TripReviewDto> reviews; // 리뷰 // 1:N // trip 게시글 : reviews
 
 }

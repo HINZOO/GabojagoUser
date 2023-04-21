@@ -1,6 +1,8 @@
 package com.project.gabojago.gabojagouser.controller.comm;
 
+import com.github.pagehelper.PageInfo;
 import com.project.gabojago.gabojagouser.dto.comm.CommImgDto;
+import com.project.gabojago.gabojagouser.dto.comm.CommPageDto;
 import com.project.gabojago.gabojagouser.dto.comm.CommunityDto;
 import com.project.gabojago.gabojagouser.dto.user.UserDto;
 import com.project.gabojago.gabojagouser.service.comm.CommunityService;
@@ -33,9 +35,12 @@ public class CommController {
 
     @GetMapping("/list.do")
     public String list(Model model,
-                       @SessionAttribute(required = false) UserDto loginUser){
+                       @SessionAttribute(required = false) UserDto loginUser,
+                       CommPageDto pageDto){
         List<CommunityDto> communities;
-        communities=communityService.list(loginUser);
+        communities=communityService.list(loginUser,pageDto);
+        PageInfo<CommunityDto> pageComms=new PageInfo<>(communities);
+        model.addAttribute("page",pageComms);
         model.addAttribute("communities",communities);
         return "/comm/list";
     }
@@ -63,7 +68,7 @@ public class CommController {
             @SessionAttribute(required = false) UserDto loginUser,
             @ModelAttribute CommunityDto commBoard,
             @RequestParam(value ="img",required = false) MultipartFile[] imgs
-            ) throws IOException {
+    ) throws IOException {
         String redirectPage = "redirect:/comm/register.do";
         //System.out.println("commBoard = " + commBoard);
         //if(!loginUser.getUId().equals(commBoard.getCId())) return redirectPage;
@@ -84,25 +89,25 @@ public class CommController {
                 }
             }
         }
-            commBoard.setImgs(commImgs);
-            int register = 0;
-            try {
-                register = communityService.register(commBoard);
-            } catch (Exception e) {
-                log.error(e.getMessage());
-            }
-            if (register > 0) {
-                redirectPage = "redirect:/comm/list.do";
-            } else {
-                if (commImgs != null) {
-                    for (CommImgDto i : commImgs) {
-                        File imgFile = new File(staticPath + i.getImgPath());
-                        if (imgFile.exists()) imgFile.delete();
-                    }
+        commBoard.setImgs(commImgs);
+        int register = 0;
+        try {
+            register = communityService.register(commBoard);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        }
+        if (register > 0) {
+            redirectPage = "redirect:/comm/list.do";
+        } else {
+            if (commImgs != null) {
+                for (CommImgDto i : commImgs) {
+                    File imgFile = new File(staticPath + i.getImgPath());
+                    if (imgFile.exists()) imgFile.delete();
                 }
             }
+        }
 
-            return redirectPage;
+        return redirectPage;
     }
 
     @GetMapping("/{cId}/modify.do")
@@ -146,13 +151,13 @@ public class CommController {
                 }
             }
         }
-       commBoard.setImgs(imgDtos);
+        commBoard.setImgs(imgDtos);
         try{
             if(delImgIds!=null) imgDtos=communityService.imgList(delImgIds);
             modify=communityService.modify(commBoard,delImgIds);
         }catch (Exception e){
             log.error(e.getMessage());
-       }
+        }
         if(modify>0){
             if(imgDtos!=null){
                 for(CommImgDto i:imgDtos){

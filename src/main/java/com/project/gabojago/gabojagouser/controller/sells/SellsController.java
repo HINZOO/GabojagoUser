@@ -38,10 +38,7 @@ public class SellsController {
     @Value("${static.path}")
     private String staticPath;
 
-    @GetMapping("gggg.do")
-    public void list(){
 
-    };
     @RequestMapping("/{title}/search.do")
     public String searchSells(@PathVariable String title,
                               Model model,
