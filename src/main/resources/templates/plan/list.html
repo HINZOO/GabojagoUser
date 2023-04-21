@@ -228,6 +228,7 @@
             let data = ctx.getImageData(xy(x), xy(y), xy(1), xy(1)).data;
 
             if(data[0]!=0 && isOn==false){
+                canvas.style.cursor="pointer"
                 isOn = true;
                 let mX=null,mY=null
                 let a = 0,b = 0
@@ -240,6 +241,7 @@
                 ctx.fillStyle="dodgerblue"
                 ctx.fillRect(mX,mY,10,10)
             } else if(data[0]==0 && data[1]==0 && data[2]==0 && isOn == true) {
+                canvas.style.cursor="default"
                 isOn =false;
                 clearC();
                 load();
