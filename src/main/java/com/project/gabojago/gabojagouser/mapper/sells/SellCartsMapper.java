@@ -9,6 +9,6 @@ import java.util.List;
 public interface SellCartsMapper {
     List<SellCartDto> findByUId(String uId);
 
-    int insertOne(String uId,int s_id);
+    int insertOne(SellCartDto sellCartDto);
     int deleteOne(int CartId);
 }

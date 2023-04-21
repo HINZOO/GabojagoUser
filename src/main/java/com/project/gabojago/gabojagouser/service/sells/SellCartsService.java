@@ -7,7 +7,7 @@ import java.util.List;
 public interface SellCartsService {
     List<SellCartDto> List(String uId);
 
-    int register(String uId,int sId);
+    int register(SellCartDto sellCartDto);
     int remove(int cartId);
 
 }

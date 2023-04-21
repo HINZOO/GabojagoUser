@@ -21,4 +21,5 @@ public interface SellsService {
     int remove(int sId);
 
 
+    SellsDto findBySId(int sId);
 }

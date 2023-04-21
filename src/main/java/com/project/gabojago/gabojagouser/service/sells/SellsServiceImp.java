@@ -97,4 +97,10 @@ public class SellsServiceImp implements SellsService{
     public int remove(int sId) {
         return this.sellsMapper.deleteOne(sId);
     }
+
+    @Override
+    public SellsDto findBySId(int sId) {
+        SellsDto sid = sellsMapper.findBySId(sId);
+        return sid;
+    }
 }

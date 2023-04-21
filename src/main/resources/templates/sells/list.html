@@ -5,6 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <title>판매글 리스트</title>
+    <script src="/public/js/sells/abc.js"></script>
 </head>
 <div layout:fragment="content">
     <div class="container">
@@ -20,6 +21,7 @@
                             <a class="page-link"
                                th:href="@{''(pageNum=${page.prePage})}"
                                th:classappend="${page.isHasPreviousPage ? '':'disabled'}"><i class="bi bi-arrow-left"></i></a>
+
                         </li>
                         <li class="page-item" th:each="p:${page.navigatepageNums}">
                             <a class="page-link"
@@ -63,27 +65,37 @@
             <h2>상품 리스트</h2>
             <div class="row">
                 <!-- 타임루프로 반복하여 데이터 출력 -->
-                <th:block th:each="s:${sells}" >
+                <th:block th:each="s:${sells}">
                     <div class="col-md-4">
                         <div class="card mb-4 box-shadow">
-                            <a th:href="@{'/sells/{sId}/detail.do'(sId=${s.sId})}">
-                                <img class="card-img-top" src="/public/img/sells/1.jpg" alt="${s.title}">
+                                <a th:href="@{'/sells/{sId}/detail.do'(sId=${s.sId})}">
+                                    <img class="card-img-top" src="/public/img/sells/1.jpg" alt="${s.title}">
+                                </a>
+                            <a style="position: absolute; top: 1vh; right: 1vh;font-size: 3vh;" id="like-btn" class="btn" th:href="@{'/cart/{sId}/register.do'(sId=${s.getSId()})}">
+                                <i id="like-icon"   class="bi bi-basket"></i>
+                            </a>
+                            <a style="position: absolute; top: 1vh; right: 6vh;font-size: 3vh;" id="like-btn2" class="btn" th:onclick="bookBtn([[${s.sId}]],this)" >
+                                <i id="like-icon2"   class="bi bi-bookmark"></i>
                             </a>
                             <div class="card-body">
                                 <p class="card-text" th:text="${s.title}"></p>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <small th:text="${s.getSId()}"></small>
-                                    <small class="text-muted" th:text="${#dates.format(s.postTime,'yyyy-MM-dd')}"></small>
+                                    <small  class="text-muted" th:text="${#dates.format(s.postTime,'yyyy-MM-dd')}"></small>
                                 </div>
                             </div>
                         </div>
                     </div>
+
                 </th:block>
             </div>
         </div>
     </div>
-
 <script>
+
+
+
+
 
     const searchButton = document.getElementById("searchBtn");
     const searchInput = document.getElementById("searchInput");
@@ -95,13 +107,13 @@
             const url = `/sells/${searchValue}/search.do`;
             window.location.href = url;
         }else {
-        e.preventDefault();
-        alert("검색어를 입력하세요");
-    }
+            e.preventDefault();
+            alert("검색어를 입력하세요");
+        }
     });
 
     searchForm.addEventListener("submit", (e) => {
-            const searchValue = searchInput.value;
+        const searchValue = searchInput.value;
         if (searchValue) {
             e.preventDefault();
             const url = `/sells/${searchValue}/search.do`;
