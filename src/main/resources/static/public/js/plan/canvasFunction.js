@@ -119,7 +119,7 @@ class CanvasCreate {
         let co = this
         let moveHandler;
         let imgElem = new Image();
-        let imgSrc = "../img/star.png";
+        let imgSrc = "/public/img/plan/star.png";
         imgElem.src = imgSrc;
         function drawHandler(e){
             if(co.activatedTool!=="stamp"){
