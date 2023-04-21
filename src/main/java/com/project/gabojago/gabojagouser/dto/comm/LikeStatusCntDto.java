@@ -4,6 +4,8 @@ import lombok.Data;
 
 @Data
 public class LikeStatusCntDto {
-    private  int like;
-    private int id;
+    private int likes;
+    private Integer cId;
+    private String uId;
+    private boolean status;
 }

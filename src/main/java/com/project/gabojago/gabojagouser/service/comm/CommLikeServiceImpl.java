@@ -20,8 +20,8 @@ public class CommLikeServiceImpl implements CommLikeService{
     }
 
     @Override
-    public CommLikeDto detail(int cId, String uId) {
-        CommLikeDto detail=commLikeMapper.findByCIdAndUId(cId,uId);
+    public boolean detail(int cId, String uId) {
+        boolean detail=commLikeMapper.findByCIdAndUId(cId,uId);
         return detail;
     }
     @Override

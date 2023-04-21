@@ -64,7 +64,7 @@
     <delete id="deleteOne">
         DELETE FROM communitys WHERE c_id=#{cId}
     </delete>
-    <select id="findAll" resultMap="CommMap" parameterType="CommPageDto">
+    <select id="findAll" resultMap="CommMap"  parameterType="CommPageDto">
         SELECT * FROM communitys
         <if test="searchField!=null and searchValue!=null">
             WHERE ${searchField} LIKE CONCAT('%',#{searchValue},'%')

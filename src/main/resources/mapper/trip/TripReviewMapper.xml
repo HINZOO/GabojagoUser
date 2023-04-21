@@ -10,7 +10,6 @@
         <result column="post_time" property="postTime"/>
         <result column="update_time" property="updateTime"/>
         <result column="grade" property="grade"/>
-        <result column="user" property="user"/>
         <association property="user"
                     select="com.project.gabojago.gabojagouser.mapper.user.UserMapper.findByUId"
                     column="u_id"

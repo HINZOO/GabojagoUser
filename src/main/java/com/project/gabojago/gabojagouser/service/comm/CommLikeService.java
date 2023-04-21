@@ -6,7 +6,7 @@ import com.project.gabojago.gabojagouser.dto.comm.LikeStatusCntDto;
 public interface CommLikeService {
     LikeStatusCntDto read(int cId);
     LikeStatusCntDto read(int cId,String loginUserId);
-    CommLikeDto detail(int cId,String uId);
+    boolean detail(int cId, String uId);
     int register(CommLikeDto like);
 
     int remove(CommLikeDto like);
