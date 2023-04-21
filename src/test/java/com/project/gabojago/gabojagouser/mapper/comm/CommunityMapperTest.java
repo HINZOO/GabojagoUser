@@ -1,5 +1,6 @@
 package com.project.gabojago.gabojagouser.mapper.comm;
 
+import com.project.gabojago.gabojagouser.dto.comm.CommPageDto;
 import com.project.gabojago.gabojagouser.dto.comm.CommunityDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,13 +17,14 @@ class CommunityMapperTest {
 
     @Test
     void findAll() {
-//        List<CommunityDto> list=communityMapper.findAll();
-//        System.out.println(list);
+        CommPageDto pageDto=new CommPageDto();
+        List<CommunityDto> list=communityMapper.findAll(pageDto);
+        System.out.println(list);
     }
 
     @Test
     void findByCId() {
-        CommunityDto detail=communityMapper.findByCId(1);
+        CommunityDto detail=communityMapper.findByCId(2);
         System.out.println(detail);
     }
 

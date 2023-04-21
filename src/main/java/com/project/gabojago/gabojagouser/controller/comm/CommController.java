@@ -47,8 +47,9 @@ public class CommController {
 
     @GetMapping("/{cId}/detail.do")
     public String detail(Model model,
-                         @PathVariable int cId){
-        CommunityDto comm=communityService.detail(cId);
+                         @PathVariable int cId,
+                         @SessionAttribute(required = false) UserDto loginUser){
+        CommunityDto comm=communityService.detail(cId,loginUser);
         model.addAttribute("c",comm);
         return "/comm/detail";
     }
@@ -120,7 +121,7 @@ public class CommController {
             redirectAttributes.addFlashAttribute("msg",msg);
             return "redirect:/user/login.do";
         }
-        CommunityDto comm= communityService.detail(cId);
+        CommunityDto comm= communityService.detail(cId, loginUser);
         model.addAttribute("c",comm);
         return "/comm/modify";
     }

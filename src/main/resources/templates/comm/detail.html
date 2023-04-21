@@ -4,6 +4,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout}">
 <div layout:fragment="content">
+    <script src="/public/js/CommLike.js" defer></script>
 <style>
     #mbtiChk>a{
         text-decoration: none;
@@ -61,11 +62,15 @@
             </div>
             <hr>
             <div class="card-body d-flex justify-content-end align-items-center" >
-                <div class=" text-end fs-3 ">
-                    <a href=""><i class="bi bi-heart text-danger me-2" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="좋아요"></i></a>
+                <div class="d-flex justify-content-end fs-3">
+                    <div th:id="'likeCont'+${c.cId}"  th:with="likes=${c.likes},id=${c.cId}">
+                        <th:block th:with="likes=${c.likes},cId=${c.cId}" th:include="/comm/Likes"> </th:block>
+                    </div>
+                    <div>
                     <a href=""><i class="bi bi-calendar-plus text-secondary me-2" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="내일정바로추가"></i></a>
                     <a href=""><i class="bi bi-bookmark-plus text-warning me-2" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="북마크"></i></a>
                     <a href="javascript:void(0)" id="commReport"><i class="bi bi-bell-fill text-danger" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="신고하기"></i></a>
+                    </div>
 
                 </div>
 

@@ -44,8 +44,12 @@ public class CommunityServiceImpl implements CommunityService{
     }
 
     @Override
-    public CommunityDto detail(int cId) {
+    public CommunityDto detail(int cId, UserDto loginUser) {
+        if(loginUser!=null){
+            userMapper.setLoginUserId(loginUser.getUId());
+        }
         CommunityDto detail=communityMapper.findByCId(cId);
+        userMapper.setLoginUserIdNull();
         return detail;
     }
 
