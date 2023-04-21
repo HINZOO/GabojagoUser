@@ -40,11 +40,11 @@ public class MyUserQnaController {
         }
         return "/my/qna/service";
     }
-    @GetMapping("/{qId}/detail.do")
+    @GetMapping("/{uId}/detail.do")
     private String detail(
             Model model,
-            @PathVariable int qId){
-        MyUserQnaDto qna=myUserQnaService.detail(qId);
+            @PathVariable int uId){
+        MyUserQnaDto qna=myUserQnaService.detail(uId);
         model.addAttribute("q",qna);
         return "/my/qna/detail";
     }
