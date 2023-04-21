@@ -24,7 +24,7 @@ public class CommunityServiceImpl implements CommunityService{
     @Override
     public List<CommunityDto> list(UserDto loginUser, CommPageDto pageDto) {
         if(loginUser!=null) userMapper.setLoginUserId(loginUser.getUId());
-        PageHelper.startPage(pageDto.getPageNum(),pageDto.getPagsSize(),pageDto.getOrderBy());
+        PageHelper.startPage(pageDto.getPageNum(),pageDto.getPageSize(),pageDto.getOrderBy());
         List<CommunityDto> list=communityMapper.findAll(pageDto);
         if(loginUser!=null)userMapper.setLoginUserIdNull();
         return list;

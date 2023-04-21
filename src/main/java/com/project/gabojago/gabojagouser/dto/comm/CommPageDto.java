@@ -5,13 +5,13 @@ import lombok.Data;
 @Data
 public class CommPageDto {
     private int pageNum=1;
-    private int pagsSize=5;
-    enum CommsType{
+    private int pageSize=5;
+    public enum CommsType{
         c_id,u_id,post_time,update_time,title,view_count,content,nkName,area,
         istj,istp,isfj,isfp,intj,intp,infj,infp,
         estj,estp,esfj,sefp,entj,entp,enfj,enfp
     }
-    enum DirectType{
+    public enum DirectType{
         DESC,ASC
     }
 
