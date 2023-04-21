@@ -18,7 +18,7 @@ public class UserUpdateController {
   private UserService userService;
 
   @GetMapping("/{uId}/update.do")
-  public String update(@PathVariable("uId") String uId,
+  public String update(@PathVariable String uId,
                        @SessionAttribute(required = false) UserDto loginUser,
                        Model model) {
     UserDto user = userService.detail(uId);

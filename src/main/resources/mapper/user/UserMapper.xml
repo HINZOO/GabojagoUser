@@ -51,13 +51,16 @@
   <update id="setLoginUserIdNull">
     SET @loginUserId=NULL;
   </update>
+  <delete id="deleteOne">
+    DELETE FROM users WHERE u_id=#{uId}
+  </delete>
   <select id="findUserByUIdAndPw" resultMap="UserMap">
     SELECT * FROM users WHERE u_id=#{uId} AND pw=#{pw}
   </select>
   <select id="findUserByUId" resultMap="UserMap">
     SELECT * FROM users WHERE u_id=#{uId}
   </select>
-    <select id="findAll" resultType="com.project.gabojago.gabojagouser.dto.user.UserDto">
-        SELECT * FROM users
-    </select>
+  <select id="findAll" resultType="com.project.gabojago.gabojagouser.dto.user.UserDto">
+      SELECT * FROM users
+  </select>
 </mapper>

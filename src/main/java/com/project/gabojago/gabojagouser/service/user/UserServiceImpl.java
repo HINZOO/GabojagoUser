@@ -45,6 +45,6 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public int dropout(UserDto user) {
-    return 0;
+    return userMapper.deleteOne(user);
   }
 }
