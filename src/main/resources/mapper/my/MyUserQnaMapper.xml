@@ -21,10 +21,10 @@
     <delete id="deleteOne">
         DELETE  FROM qnas WHERE q_id=#{cId}
     </delete>
-    <select id="findAll" resultType="com.project.gabojago.gabojagouser.dto.my.MyUserQnaDto">
+    <select id="findAll" resultMap="MyUserQnaMap">
         SELECT * FROM qnas
     </select>
-    <select id="findByQId" resultType="com.project.gabojago.gabojagouser.dto.my.MyUserQnaDto">
+    <select id="findByQId" resultMap="MyUserQnaMap">
         SELECT * FROM qnas WHERE q_id=#{qId}
     </select>
 </mapper>

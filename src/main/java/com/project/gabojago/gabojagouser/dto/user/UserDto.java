@@ -30,4 +30,5 @@ public class UserDto {
     private List<UserDto> followings;
     private List<UserDto> followers;
 
+
 }

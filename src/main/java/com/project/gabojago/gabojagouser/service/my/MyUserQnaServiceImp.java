@@ -1,6 +1,7 @@
 package com.project.gabojago.gabojagouser.service.my;
 
 import com.project.gabojago.gabojagouser.dto.my.MyUserQnaDto;
+import com.project.gabojago.gabojagouser.dto.user.UserDto;
 import com.project.gabojago.gabojagouser.mapper.my.MyUserQnaMapper;
 import com.project.gabojago.gabojagouser.mapper.user.UserMapper;
 import lombok.AllArgsConstructor;
@@ -22,10 +23,12 @@ public class MyUserQnaServiceImp implements MyUserQnaService {
     }
 
     @Override
-    public MyUserQnaDto detail(int qId) {
+    public MyUserQnaDto detail(int qId, UserDto loginUser) {
         MyUserQnaDto detail=myUserQnaMapper.findByQId(qId);
         return detail;
     }
+
+
     @Transactional
     @Override
     public int register(MyUserQnaDto myUserQna) {
@@ -36,7 +39,8 @@ public class MyUserQnaServiceImp implements MyUserQnaService {
     @Transactional
     @Override
     public int modify(MyUserQnaDto myUserQna) {
-        return 0;
+        int modify=myUserQnaMapper.updateOne(myUserQna);
+        return modify;
     }
 
     @Override
