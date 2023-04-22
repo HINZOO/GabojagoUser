@@ -121,11 +121,18 @@ public class TripReviewController {
         int modify=0;
         try {
             if(delImgIds!=null) imgDtos=tripReviewService.imgList(delImgIds);
-            modify= tripReviewService.modify(review);
+            modify= tripReviewService.modify(review, delImgIds);
         }catch (Exception e) {
             log.error(e.getMessage());
         }
-
+        if(modify>0){
+            if(imgDtos!=null){ // 삭제 이미지
+                for(TripReviewImgDto tri : imgDtos){
+                    File imgFile=new File(staticPath+tri.getImgPath());
+                    if(imgFile.exists()) imgFile.delete();
+                }
+            }
+        }
 
 
 

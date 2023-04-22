@@ -6,7 +6,6 @@ import com.project.gabojago.gabojagouser.mapper.trip.TripReivewImgMapper;
 import com.project.gabojago.gabojagouser.mapper.trip.TripReviewMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,13 +58,14 @@ public class TripReivewServiceImp implements TripReviewService {
     }
 
     @Override
-    @Transactional
-    public int modify(TripReviewDto tripReview) {
+    public int modify(TripReviewDto tripReview, int[] delImgIds) {
         int modify=tripReviewMapper.updateOne(tripReview);
-
-
+        if(delImgIds!=null){
+            for(int triId : delImgIds){
+                modify+=tripReivewImgMapper.deleteOne(triId);
+            }
+        }
         return modify;
-
     }
 
 

@@ -95,7 +95,7 @@
             <div class="form-control">
                 <label th:each="img:${t.imgs}" class="w-25 delImgItem" th:if="${img.imgMain==true}">
 <!--                    <i class="bi bi-x"></i>-->
-                    <input type="hidden" class="delImgInput" name="delMainImgId" th:value="${img.tiId}">
+                    <input type="checkbox" class="delImgInput" name="delMainImgId" th:value="${img.tiId}">
                     <img th:src="@{'{path}'(path=${img.imgPath})}" class="img-thumbnail">
                 </label>
             </div>

@@ -39,6 +39,14 @@ class TripReviewMapperTest {
 
     @Test
     void updateOne() {
+        TripReviewDto tripReview=new TripReviewDto();
+        tripReview.setTId(1);
+        tripReview.setTrId(1);
+        tripReview.setContent("수정테스트");
+        int insert=tripReviewMapper.updateOne(tripReview);
+        System.out.println("insert = " + insert);
+
+
     }
 
     @Test

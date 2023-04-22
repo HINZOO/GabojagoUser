@@ -200,18 +200,19 @@
             </div> <!-- 오른쪽 그리드 -->
         </div> <!-- // 그리드 row -->
     </section>
-    <script> // 리뷰등록 모달창 이미지 버튼
-    const imgAddBtn = document.getElementById("imgAddBtn");
-    const imgCont = document.getElementById("imgCont");
-    let imgAddBtnCount = 0;
-    imgAddBtn.addEventListener("click", (e) => {
-        if (imgAddBtnCount < 5) {
-            imgCont.insertAdjacentHTML("beforeend", imgInputComponent());
-            imgAddBtnCount++;
+    <script> 
+    // 리뷰등록 모달창 이미지 버튼
+    const registerImgAddBtn = document.getElementById("registerImgAddBtn");
+    const registerImgCont = document.getElementById("registerImgCont");
+    let registerImgAddBtnCount = 0;
+    registerImgAddBtn.addEventListener("click", (e) => {
+        if (registerImgAddBtnCount < 5) {
+            registerImgCont.insertAdjacentHTML("beforeend", registerImgInputComponent());
+            registerImgAddBtnCount++;
         }
     });
 
-    function imgInputComponent(label = "이미지", name = "img") {
+    function registerImgInputComponent(label = "이미지", name = "img") {
         return `
                  <p class="input-group mt-2">
                     <label class="input-group-text click">${label}</label>
@@ -223,30 +224,30 @@
                 </p>
             `
     }
-    //
-    // const imgAddBtn1 = document.getElementById("imgAddBtn1");
-    // const imgCont1 = document.getElementById("imgCont1");
-    // let imgAddBtnCount = 0;
-    // imgAddBtn1.addEventListener("click", (e) => {
-    //     if (imgAddBtnCount < 5) {
-    //         imgCont1.insertAdjacentHTML("beforeend", imgInputComponent1());
-    //         imgAddBtnCount++;
-    //     }
-    // });
-    //
-    // function imgInputComponent1(label = "이미지", name = "img") { // 🔥 label, name 넣는 이유?
-    //     return `
-    //              <p class="input-group mt-2">
-    //                 <label class="input-group-text click">${label}</label>
-    //                 <input class="form-control" type="file" name="${name}">
-    //
-    //                 <button type="button" class="btn btn-danger" onclick="this.closest('.input-group').remove()">
-    //                     <i class="bi bi-x-lg"></i>
-    //                 </button>
-    //             </p>
-    //         `
-    // }
+    
+    // 리뷰 수정모달
+    const modifyImgAddBtn = document.getElementById("modifyImgAddBtn");
+    const modifyImgCont = document.getElementById("modifyImgCont");
+    let modifyImgAddBtnCount = 0;
+    modifyImgAddBtn.addEventListener("click", (e) => {
+        if (modifyImgAddBtnCount < 5) {
+            modifyImgCont.insertAdjacentHTML("beforeend", modifyImgInputComponent());
+            modifyImgAddBtnCount++;
+        }
+    });
 
+    function modifyImgInputComponent(label = "이미지", name = "img") {
+        return `
+                 <p class="input-group mt-2">
+                    <label class="input-group-text click">${label}</label>
+                    <input class="form-control" type="file" name="${name}">
+
+                    <button type="button" class="btn btn-danger" onclick="this.closest('.input-group').remove()">
+                        <i class="bi bi-x-lg"></i>
+                    </button>
+                </p>
+            `
+    }
     </script>
     <script th:inline="javascript">
         const reviewRegisterModal = new bootstrap.Modal(document.getElementById("reviewRegisterModal"), {}); // {} 이게 뭐지?
@@ -255,6 +256,8 @@
         const reviewModifyForm=document.forms["reviewModifyForm"];
         const reviewCont = document.getElementById("reviewCont");
         reviewRegisterForm.onsubmit = registerReview;
+        reviewModifyForm.onsubmit=modifyReview;
+
 
         // 리뷰 등록 버튼 => 리뷰등록 모달창 보이기
         const loadReviewRegister=document.getElementById("loadReviewRegister");
@@ -262,17 +265,24 @@
             reviewRegisterModal.show();
         });
 
+        // 
         // 리뷰 수정 버튼 => 리뷰수정 모달창 보이기
+        // function loadModifyReview(){
+        //     alert("되나");
+        // }
+
         async function loadModifyReview(trId){
             let url=`/review/${trId}/detail.do`;
             const resp= await fetch(url);
             if(resp.status==200){
                 const json=await resp.json();
+                // const reviewImg=document.getElementById("reviewImg");
                 reviewModifyForm.querySelectorAll("[name]").forEach((input)=>{
                     let key=input.name;
                     if(key in json) {
                         if(key === "imgPath") {
                             input.src=json[key];
+                            // reviewImg.src=json[key];
                         }
                         input.value=json[key];
                     }
@@ -284,6 +294,22 @@
 
         }
 
+        async function modifyReview(e) {
+            e.preventDefault();
+            reviewModifyModal.hide();
+            let url="/review/handler.do";
+            const data=new FormData(reviewModifyForm);
+            const resp=await fetch(url,{method:"PUT", body:data});
+            if(resp.status===200){
+                const json=await resp.json();
+                if(json.modify>0) {
+                    alert("수정성공");
+                    loadReviews(reviewModifyForm.tId.value);
+                }
+            }else{
+                alert("수정 실패 status : " + resp.status);
+            }
+        }
 
         async function loadReviews(tId){
             let url=`/review/${tId}/list.do`

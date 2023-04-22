@@ -26,7 +26,7 @@
         VALUE (#{tId}, #{uId}, #{content}, #{visit}, #{grade})
     </insert>
     <update id="updateOne">
-        UPDATE trip_reivews SET content=#{content}, visit=#{visit}, grade=#{grade} WHERE tr_id=#{trId}
+        UPDATE trip_reviews SET content=#{content}, visit=#{visit}, grade=#{grade} WHERE tr_id=#{trId}
     </update>
     <delete id="deleteOne">
         DELETE FROM trip_reviews WHERE tr_id=#{trId}

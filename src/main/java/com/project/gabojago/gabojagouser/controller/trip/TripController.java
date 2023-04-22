@@ -91,12 +91,14 @@ public class TripController {
             @RequestParam (required = false)MultipartFile mainImg, // 메인이미지 파라미터
             @RequestParam(value="img", required = false) List<MultipartFile> imgs,
             @RequestParam(value="delImgId", required = false) List<Integer> delImgIds,
-            @RequestParam(required = false) int delMainImgId,
+            @RequestParam(value = "delMainImgId",required = false) int delMainImgId,
 
             RedirectAttributes redirectAttributes
     ) {
         String redirectPage = "redirect:/trip/" + trip.getTId() + "/modify.do";
         String msg="";
+
+        //
         if(imgs==null && !mainImg.isEmpty()){ // imgs 가 null 이고 메인이미지가 있을때
             imgs=new ArrayList<>();
             imgs.add(mainImg);
@@ -105,6 +107,21 @@ public class TripController {
                 delImgIds.add(delMainImgId);
             }
         }
+
+
+//        if (imgs == null) { // imgs가 null인 경우, 빈 리스트로 초기화
+//            imgs = new ArrayList<>();
+//        }
+//        if (!mainImg.isEmpty()) { // mainImg가 비어있지 않은 경우, imgs 리스트에 추가
+//            imgs.add(mainImg);
+//            if (delImgIds == null) { // delImgIds가 null인 경우, 빈 리스트로 초기화
+//                delImgIds = new ArrayList<>();
+//                delImgIds.add(delMainImgId);
+//            }
+//        }
+
+
+
         // 제목 입력 여부 확인
         if (trip.getTitle() == null || trip.getTitle().equals("")) {
             msg = "제목을 입력하세요.";

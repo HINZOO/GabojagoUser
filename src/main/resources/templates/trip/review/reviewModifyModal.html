@@ -7,7 +7,6 @@
       <input type="hidden" name="tId">
       <input type="hidden" name="imgPath">
 
-
       <div class="modal-header">
         <h1 class="modal-title fs-5" id="exampleModalLabel">리뷰 수정</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal"
@@ -28,20 +27,25 @@
           방문 <span> <i class="bi bi-record-circle text-danger"></i></span>
           방문전 <span>  <i class="bi bi-circle text-dark text-opacity-25"></i></span>
         </p>
+
         <p class="form-floating">
-          <input type="text" name="title" readonly
+          <input type="text" name="title" readonly th:value="${t.title}"
                  class="form-control" placeholder="장소이름">
           <label>장소이름</label>
         </p>
 
-<!--        <p id="imgDelCont">-->
-<!--          <h4>이미지 삭제(체크)</h4>-->
-<!--        <label th:each="${}"></label>-->
-<!--        </p>-->
+        <p id="imgDelCont">
+          <h4>이미지 삭제(체크)</h4>
+          <label th:each="r:${t.reviews}" class="d-flex">
+            <i th:each="i:${r.imgs}"> <!-- 리뷰의 trId 와 이미지의 trId 가 동일한 이미지 -->
+              <img th:if="${r.trId==1}" th:src="@{'{path}'(path=${i.imgPath})}" class="img-thumbnail">
+            </i>
+          </label>
+        </p>
 
 
-        <p id="ModifyimgCont">
-          <button id="imgAddBtn1" class="btn btn-danger w-100" type="button">
+        <p id="modifyImgCont">
+          <button id="modifyImgAddBtn" class="btn btn-danger w-100" type="button">
             이미지
             <i class="bi bi-plus-square"></i>
           </button>
