@@ -1,15 +1,11 @@
 package com.project.gabojago.gabojagouser.controller.comm;
 
 import com.project.gabojago.gabojagouser.dto.comm.CommReportDto;
-import com.project.gabojago.gabojagouser.dto.comm.CommunityDto;
 import com.project.gabojago.gabojagouser.dto.user.UserDto;
 import com.project.gabojago.gabojagouser.service.comm.CommReportService;
 import lombok.Data;
-import lombok.extern.java.Log;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @RestController
 @RequestMapping("/comm/report")

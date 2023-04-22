@@ -36,8 +36,7 @@
             </div>
             <p class="text-end text-muted me-2">
                 <small>작성일: <span th:text="${#dates.format(c.postTime,'yyyy-MM-dd')}"></span></small>
-                <small>수정일: <span th:text="${#dates.format(c.updateTime,'yyyy-MM-dd')}"></span></small>
-                <small><i class="bi bi-eye"></i>조회수</small>
+                <small><i class="bi bi-eye"></i>조회수 <span th:text="${c.viewCount}"></span></small>
             </p>
             <div class="card-body">
                 <div th:if="${c.imgs!=null}" th:id="'carousel'+${c.cId}" class="carousel slide" data-bs-ride="carousel">
