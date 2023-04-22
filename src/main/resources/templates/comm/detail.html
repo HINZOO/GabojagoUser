@@ -122,7 +122,7 @@
     </div>
 
     <!--😎 모달창 -->
-    <th:block th:include="/comm/reportModal"></th:block>
+    <th:block th:include="/comm/reportModal" th:with="uId=${c.getUId()},cId=${c.getCId()}"></th:block>
     <th:block th:include="/comm/profileModal"></th:block>
 
 

@@ -40,4 +40,5 @@ public class CommunityDto {
     private String loginUserLikeStatus;
 
 
+
 }
