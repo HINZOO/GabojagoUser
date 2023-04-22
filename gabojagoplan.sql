@@ -388,6 +388,8 @@ CREATE TABLE `comm_comment` (
                                 FOREIGN KEY (c_id) REFERENCES communitys (c_id) ON DELETE CASCADE ON UPDATE CASCADE,
                                 FOREIGN KEY (parent_cr_id) REFERENCES comm_comment (cc_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
+
+
 #같이놀자 ( 이미지테이블)
 CREATE TABLE `comm_imgs` (
                              `ci_id`	int unsigned AUTO_INCREMENT PRIMARY KEY COMMENT '같이놀자이미지 아이디',
@@ -683,3 +685,4 @@ VALUES
     (1, 'user03', '다음에도 꼭 다시 방문하고 싶은 곳이에요!', 1, 4),
     (1, 'user04', '이곳은 정말 특별한 경험이었어요.', 1, 5),
     (1, 'user05', '여기는 앞으로도 자주 찾게 될 것 같아요.', 1, 3);
+

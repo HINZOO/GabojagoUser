@@ -61,6 +61,7 @@
         WHERE c_id=#{cId}
     </update>
 
+
     <delete id="deleteOne">
         DELETE FROM communitys WHERE c_id=#{cId}
     </delete>
@@ -73,4 +74,8 @@
     <select id="findByCId" resultMap="CommMap">
         SELECT * FROM communitys WHERE c_id=#{cId};
     </select>
+
+    <update id="updateIncrementViewCountByCId">
+        UPDATE communitys SET view_count=(view_count+1) WHERE c_id=#{cId}
+    </update>
 </mapper>

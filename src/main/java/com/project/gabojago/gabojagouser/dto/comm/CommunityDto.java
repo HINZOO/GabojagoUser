@@ -33,11 +33,13 @@ public class CommunityDto {
     private int entp;
     private int enfj;
     private int enfp;
+
     private UserDto user;
     private List<CommImgDto> imgs;
     private List<CommReplyDto> replies;
     private LikeStatusCntDto likes;
     private String loginUserLikeStatus;
+
 
 
 }

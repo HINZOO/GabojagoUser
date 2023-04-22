@@ -48,6 +48,7 @@ public class CommunityServiceImpl implements CommunityService{
         if(loginUser!=null){
             userMapper.setLoginUserId(loginUser.getUId());
         }
+        communityMapper.updateIncrementViewCountByCId(cId);
         CommunityDto detail=communityMapper.findByCId(cId);
         userMapper.setLoginUserIdNull();
         return detail;
