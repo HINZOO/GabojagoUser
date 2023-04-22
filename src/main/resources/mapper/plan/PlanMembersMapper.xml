@@ -7,8 +7,11 @@
         <result column="mu_id" property="muId"/>
     </resultMap>
 
-
-    <select id="findByPId" resultMap="planMembersMap">
-        SELECT * FROM plan_members WHERE p_id=#{pId}
+    <select id="findByPId" resultMap="com.project.gabojago.gabojagouser.mapper.user.UserMapper.UserMap">
+        SELECT u.*
+        FROM plan_members m
+        left join users u
+        on m.mu_id = u.u_id
+        WHERE m.p_id=#{pId}
     </select>
 </mapper>

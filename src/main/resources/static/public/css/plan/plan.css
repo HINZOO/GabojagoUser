@@ -146,11 +146,55 @@ a:hover { color: black; text-decoration: none;}
 }
 .card-footer>div{
     background-size: contain;
-    background-color: rgba(221, 242, 255, 0.33);
+
     box-shadow: 0px 0px 1px 1px rgba(211, 211, 211, 0.57);
     border-radius: 50%;
     width: 30px;
     height: 30px;
+}
+.card-footer>div:hover{
+    box-shadow: 0px 0px 10px 5px #c7c7c7;
+}
+.card-footer .cardMy{
+    background-color: rgba(99, 196, 255, 0.56);
+}
+.card-footer .cardOr{
+    background-color: rgba(251, 125, 255, 0.56);
+}
+.cardReview{
+    cursor: pointer;
+    text-align: center;
+    line-height: 35px;
+    border-radius: 50%;
+    padding: 5px;
+    width: 45px;
+    height: 45px;
+    font-size: 27px;
+    background-color: lightgray;
+    color: white;
+    position: absolute;
+    top: 380px;
+    left : 240px;
+}
+.cardReview:hover{
+    color: black;
+    box-shadow: 0px 0px 10px 5px #d5d5d5;
+}
+.cardModify{
+    cursor: pointer;
+    text-align: center;
+    line-height: 30px;
+    border-radius: 50%;
+    padding: 5px;
+    font-size: 17px;
+    color: lightgray;
+    position: absolute;
+    top: 5px;
+    left : 260px;
+    z-index: 3;
+}
+.cardModify:hover{
+    color: black;
 }
 
 
@@ -380,6 +424,9 @@ canvas{
 #newScheduleBtn:hover{
     background-color: #595959;
 
+}
+.newPlanImg{
+ width: 100%;
 }
 
 

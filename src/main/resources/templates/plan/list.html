@@ -60,25 +60,35 @@
                     <div class="col-12" id="accordionSection">
                         <div class="listContent" style="overflow: hidden">
                             <th:block th:each="plan:${plans}">
-                                <a th:href="@{'{pId}/detail.do'(pId=${plan.getPId()})}">
-                                    <div class="card">
+
+                                    <div class="card" onclick=shout()>
+                                        <div class="cardReview" data-bs-toggle="tooltip" data-bs-placement="top" th:data-bs-title="리뷰작성">
+                                            <i class="bi bi-pencil-square"></i>
+                                        </div>
+                                        <div class="cardModify" onclick=shout()>
+                                            <i class="bi bi-gear-fill"></i></i>
+                                        </div>
                                         <img class="card-img-top" th:if="${plan.getImgPath()==null}" src="/public/img/plan/planSample.jpg">
                                         <img class="card-img-top" th:if="${plan.getImgPath()!=null}" th:src="${plan.getImgPath()}">
+                                        <a th:href="@{'{pId}/detail.do'(pId=${plan.getPId()})}">
                                         <div class="card-body" style="width: 100%;">
                                             <p class="cardTitle" th:text="${plan.getTitle()}"></p>
                                             <hr style="width: 60px; color: grey">
                                             <p class="card-text cardInfo mb-3" th:text="${plan.getInfo()}"></p>
                                             <p class="cardSchedule text-start">일정 : <span th:text="${plan.getPlanFrom()}"/> ~ <span th:text="${plan.getPlanTo()}"/></p>
                                         </div>
+                                        </a>
                                         <div class="card-footer">
-                                            <div style="background-image:url('/public/img/plan/profileDefault.png')"></div>
+                                                <div class="cardMy" style="background-image:url('/public/img/plan/profileDefault.png')"
+                                                    data-bs-toggle="tooltip" data-bs-placement="top" th:data-bs-title="나"></div>
+                                            <th:block th:each="mu:${plan.getMUsers()}">
+                                                <div class="cardOr" style="background-image:url('/public/img/plan/profileDefault.png')"
+                                                     data-bs-toggle="tooltip" data-bs-placement="top" th:data-bs-title="${mu.getNkName()}"></div>
+                                            </th:block>
                                         </div>
                                     </div>
-                                </a>
 
-                                <div th:text="${plan.getMUsers()}">
 
-                                </div>
                             </th:block>
                         </div>
                     </div>
@@ -103,6 +113,7 @@
                                 <div class="row">
                                     <div class="col-6">
                                         <div class="form-floating">
+                                            <img class="newPlanImg" src="/public/img/plan/planSample.jpg">
                                             <input type="file" class="form-control" name="img" id="floatingImg" placeholder="">
                                             <label for="floatingImg">대표이미지</label>
                                         </div>
@@ -172,6 +183,15 @@
 
 
     <script>
+        //툴팁 출력용
+
+
+        let cardModifyBtn = document.getElementsByClassName("cardModify");
+
+        function shout(){
+            console.log("되네")
+        }
+
         const newPlanBtn = document.querySelector("#newScheduleBtn");
         newPlanBtn.addEventListener("click",()=>{
             console.log("??")
