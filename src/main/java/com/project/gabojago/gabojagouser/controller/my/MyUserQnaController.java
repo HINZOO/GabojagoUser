@@ -116,45 +116,6 @@ public class MyUserQnaController {
         model.addAttribute("q",qna);
         return "/my/qna/modify";
     }
-    @PostMapping("modify.do")
-    public String modifyAction(
-            @ModelAttribute MyUserQnaDto qnaboard,
-            @RequestParam(value = "delImgId",required = false) int delImgId,
-            @RequestParam(value = "img",required = false) MultipartFile img
-    ) throws IOException {
-        String redirectPage="redirect:/my/qna/"+qnaboard.getQId()+"/modify.do";
-
-        MyUserQnaDto imgDto=null;
-        int modify=0;
-        if(img!=null){
-            if(!img.isEmpty()){
-                String[] contentTypes=img.getContentType().split("/");
-                if(contentTypes[0].equals("image")){
-                    String fileName=System.currentTimeMillis()+"_"+(int)(Math.random()*10000)+"."+contentTypes[1];
-                    Path path= Paths.get(staticPath + "/public/img/my/" + fileName);
-                    img.transferTo(path);
-                    imgDto.setFilePath("/public/img/my/" + fileName);
-                }
-            }
-        }
-//        try {
-//            if(delImgId!=null) imgDto=myUserQnaService.modify(delImgId);
-//        }catch (Exception e){
-//            log.error(e.getMessage());
-//        }
-//        if (register>0){
-//            redirectPage="redirect:/my/qna/serviceList.do";
-//        }else {
-//            File imgFile = new File(staticPath + imgDto.getFilePath());
-//            if (imgFile.exists()) imgFile.delete();
-//        }
-//        return redirectPage;
-//    }
-
-
-
-    }
-
 
     @GetMapping("/{qId}/remove.do")
     public String removeAction(@PathVariable int qId,
