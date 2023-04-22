@@ -60,7 +60,7 @@ class CanvasCreate {
     }
 
     shout(){
-        console.log("??")
+        console.log(this.id+ " 번 캔버스가 응답합니다")
     }
 
 
@@ -449,10 +449,37 @@ class CanvasCreate {
             tempObj.range = findRange(path);
         }
 
-
+        let socket = JSON.stringify(tempObj)
+        stomp.send('/pub/plan/canvas', {}, JSON.stringify({roomId: roomId, path: socket, writer: username}));
         co.currentCanvas.src = co.canvas.toDataURL()
         return co.layerArr.push(tempObj);
 
+    }
+    receiver(path) {
+        let co = this;
+        let c = JSON.parse(path);
+        co.ctx.strokeStyle=c.strokeStyle;
+        co.ctx.lineWidth=c.lineWidth;
+
+        co.ctx.beginPath();
+        co.ctx.moveTo(co.xy(c.moveTo[0])/c.scale,co.xy(c.moveTo[1])/c.scale)
+
+        if(c.type==="line") {
+            co.ctx.lineTo(co.xy(c.lineTo[0])/c.scale,co.xy(c.lineTo[1])/c.scale)
+            co.ctx.stroke();
+        } else if(c.type==="pen"){
+            c.path.forEach((p)=>{
+                co.ctx.lineTo(co.xy(p[0])/c.scale,co.xy(p[1])/c.scale);
+                co.ctx.stroke();
+            })
+        } else if(c.type==="rect"){
+            co.ctx.fillRect(
+                co.xy(c.moveTo[0])/c.scale,
+                co.xy(c.moveTo[1])/c.scale,
+                co.xy(c.lineTo[0])/c.scale-co.xy(c.moveTo[0])/c.scale,
+                co.xy(c.lineTo[1])/c.scale-co.xy(c.moveTo[1])/c.scale
+            );
+        }
     }
 
 
