@@ -4,6 +4,7 @@ import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 public class UserDto {
@@ -25,4 +26,8 @@ public class UserDto {
     private Date postTime;
     private String storeName;
     private String businessId;
+    private boolean following;
+    private List<UserDto> followings;
+    private List<UserDto> followers;
+
 }

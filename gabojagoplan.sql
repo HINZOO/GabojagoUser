@@ -505,13 +505,22 @@ CREATE TABLE `sell_carts` (
 
 
 #마이페이지( 팔로우 테이블)
+DROP TABLE  follows;
 CREATE TABLE `follows` (
-                           `f_id`	varchar(255)  PRIMARY KEY COMMENT '팔로우 아이디',
+                           `f_id`	int unsigned AUTO_INCREMENT  PRIMARY KEY COMMENT '팔로우인덱스',
                            `to_users`	varchar(255)	NOT NULL COMMENT '받는유저 아이디',
                            `from_users`	varchar(255)NOT NULL COMMENT '보내는유저',
+                           UNIQUE (from_users, to_users),
                            FOREIGN KEY (to_users) REFERENCES users (u_id) ON DELETE CASCADE ON UPDATE CASCADE,
                            FOREIGN KEY (from_users) REFERENCES users (u_id) ON DELETE CASCADE ON UPDATE CASCADE
+
 );
+INSERT INTO follows (to_users, from_users) VALUES ('user01','user02');
+INSERT INTO follows (to_users, from_users) VALUES ('user02','user01');
+INSERT INTO follows (to_users, from_users) VALUES ('user03','user01');
+INSERT INTO follows (to_users, from_users) VALUES ('user04','user01');
+INSERT INTO follows (to_users, from_users) VALUES ('user01','user04');
+INSERT INTO follows (to_users, from_users) VALUES ('user01','user05');
 
 #마이페이지( 문의하기 테이블)
 CREATE TABLE `qnas` (
