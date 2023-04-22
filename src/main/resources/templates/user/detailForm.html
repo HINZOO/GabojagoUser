@@ -24,8 +24,8 @@
     <p th:text="${user.postTime}"></p>
     <p class="text-end">
       <button class="btn btn-outline-primary">수정</button>
+      <a th:href="@{'/user/dropout.do'}" class="btn btn-outline-warning">탈퇴</a>
     </p>
   </form>
-      <a href="./dropout.do" class="btn btn-outline-warning">탈퇴</a>
 </div>
 </html>

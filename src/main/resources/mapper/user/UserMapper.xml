@@ -51,8 +51,8 @@
   <update id="setLoginUserIdNull">
     SET @loginUserId=NULL;
   </update>
-  <delete id="deleteOne">
-    DELETE FROM users WHERE u_id=#{uId}
+  <delete id="deleteOne" parameterType="UserDto">
+    DELETE FROM users WHERE u_id=#{uId} AND pw=#{pw}
   </delete>
   <select id="findUserByUIdAndPw" resultMap="UserMap">
     SELECT * FROM users WHERE u_id=#{uId} AND pw=#{pw}
