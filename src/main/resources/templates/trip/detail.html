@@ -80,7 +80,6 @@
                         </p>
                         <p class="card-text">
                             #enfj#enfp#istj
-
                             mbti / 해시태그
                         </p>
                         <h6>기본정보</h6>
@@ -100,7 +99,6 @@
                             등록일 / 수정일
                             <span></span>
                         </p>
-
                     </div> <!---->
 
                     <div class="card-footer bg-transparent border-dark border-opacity-25">
@@ -139,73 +137,15 @@
                             <span class="visually-hidden">Next</span>
                         </button>
                     </div>
-
                     <div class="pt-3">
                         <p class="d-flex justify-content-between align-items-center">
                             <span>
                                 여행가의 리뷰 <strong>52</strong>
                             </span>
-
-                            <a href="javascript:void(0)" th:onclick="reviewRegisterModal.show()">
+                            <a href="javascript:void(0)" id="loadReviewRegister">
                                 리뷰 작성하기
                             </a>
                         </p>
-                        <!-- 리뷰작성하기 Modal -->
-                        <div class="modal fade" id="reviewRegisterModal" tabindex="-1">
-                            <div class="modal-dialog">
-                                <form enctype="multipart/form-data" name="reviewRegisterForm" method="post"
-                                      class="modal-content">
-                                    <input type="hidden" name="tId" th:value="${t.tId}">
-                                    <input type="hidden" name="trId">
-                                    <input type="hidden" name="imgPath">
-
-                                    <div class="modal-header">
-                                        <h1 class="modal-title fs-5" id="exampleModalLabel">리뷰 작성하기</h1>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <p class="form-floating">
-                                            <input type="text" name="uId" readonly class="form-control"
-                                                   placeholder="글쓴이">
-                                            <!-- 로그인한 유저만 보이기 -->
-                                            <!--                                            <input th:value="${session.loginUser.uId}" type="text" name="uId" readonly class="form-control" placeholder="글쓴이">-->
-                                            <label>글쓴이</label>
-                                        </p>
-                                        <p>
-                                            평가 <span>☆☆☆☆☆</span>
-                                        </p>
-                                        <p>
-                                            방문 <span> <i class="bi bi-record-circle text-danger"></i></span>
-                                            방문전 <span>  <i class="bi bi-circle text-dark text-opacity-25"></i></span>
-                                        </p>
-                                        <p class="form-floating">
-                                            <input type="text" name="title" th:value="${t.title}" readonly
-                                                   class="form-control" placeholder="글쓴이">
-                                            <label>장소이름</label>
-                                        </p>
-                                        <p id="imgCont">
-                                            <button id="imgAddBtn" class="btn btn-danger w-100" type="button">
-                                                이미지
-                                                <i class="bi bi-plus-square"></i>
-                                            </button>
-                                        </p>
-                                        <!--                                        <p>-->
-                                        <!--                                            <input type="file" name="img" class="form-control"> &lt;!&ndash; 수정하는 이미지 &ndash;&gt;-->
-                                        <!--                                        </p>-->
-                                        <p class="form-floating">
-                                            <input type="text" name="content" class="form-control" placeholder="내용">
-                                            <label>내용</label>
-                                        </p>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">취소
-                                        </button>
-                                        <button type="submit" class="btn btn-outline-danger">등록</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
                         <hr>
                         <div class="d-flex justify-content-between align-items-center">
                             <p class="mb-0">
@@ -231,7 +171,7 @@
                             </ul>
                         </div> <!-- // reviewCont -->
 
-
+                        <!-- 리뷰댓글 입력폼 -->
                         <form action="">
                             <div class="row align-items-center">
                                 <div class="col-3">
@@ -242,7 +182,7 @@
                                 </div>
                                 <button class="btn col-auto">
                                     <i class="bi bi-send"></i>
-                                    <!--                                    등록-->
+                                    <!-- 등록 -->
                                 </button>
                                 <!-- input 태그로 버튼 모양내기 -->
                                 <label class="col-auto">
@@ -252,51 +192,11 @@
                             </div>
                         </form>
                     </div>
-
-
                 </div>
-                <!-- 게시글 이미지, 리뷰,댓글 (오른쪽) -->
+                <!-- 리뷰작성하기 Modal -->
+                <th:block th:include="/trip/review/reviewRegisterModal.html"></th:block>
+                <th:block th:include="/trip/review/reviewModifyModal.html"></th:block>
 
-                <div id="replyModifyModal" class="modal">
-                    <div class="modal-dialog">
-                        <form class="modal-content" name="replyModifyForm" method="post" enctype="multipart/form-data">
-                            <input type="hidden" name="bId"> <!-- 게시글아이디 받기 -->
-                            <input type="hidden" name="brId">
-                            <input type="hidden" name="imgPath"> <!-- hidden 타입 : 숨겨서 서버(요청메세지 본문)에 전달 -->
-                            <div class="modal-header">
-                                <h5 class="modal-title">리플 수정폼</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
-                            </div>
-                            <div id="replyModifyModalBody" class="modal-body"> <!-- 내용이 들어가는 태그에는 id 를 주는것이 좋다. -->
-                                <p class="form-floating">
-                                    <input type="text" name="uId" readonly class="form-control" placeholder="글쓴이">
-                                    <label>글쓴이</label>
-                                </p>
-                                <p>
-                                    <img name="imgPath" class="img-thumbnail" src="" alt="댓글 이미지"> <!-- 원본 이미지 -->
-                                </p>
-                                <p class="form-floating">
-                                    <input type="text" name="parentBrId" readonly class="form-control"
-                                           placeholder="참조하는 부모 댓글">
-                                    <label>참조하는 부모 댓글</label>
-                                </p>
-                                <p>
-                                    <input type="file" name="img" class="form-control"> <!-- 수정하는 이미지 -->
-                                </p>
-                                <p class="form-floating">
-                                    <input type="text" name="content" class="form-control" placeholder="내용">
-                                    <label>내용</label>
-                                </p>
-                            </div>
-                            <!-- 모달창 버튼 / 수정 삭제버튼만 있다. ( 초기화는 서버사이드렌더로 값을 가져와야 초기화가 가능하다. 여기서는 안됨)-->
-                            <div class="modal-footer">
-                                <button id="removeReplyBtn" type="button" class="btn btn-danger">삭제</button>
-                                <button type="submit" class="btn btn-primary">수정</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
             </div> <!-- 오른쪽 그리드 -->
         </div> <!-- // 그리드 row -->
     </section>
@@ -311,7 +211,7 @@
         }
     });
 
-    function imgInputComponent(label = "이미지", name = "img") { // 🔥 label, name 넣는 이유?
+    function imgInputComponent(label = "이미지", name = "img") {
         return `
                  <p class="input-group mt-2">
                     <label class="input-group-text click">${label}</label>
@@ -323,21 +223,67 @@
                 </p>
             `
     }
+    //
+    // const imgAddBtn1 = document.getElementById("imgAddBtn1");
+    // const imgCont1 = document.getElementById("imgCont1");
+    // let imgAddBtnCount = 0;
+    // imgAddBtn1.addEventListener("click", (e) => {
+    //     if (imgAddBtnCount < 5) {
+    //         imgCont1.insertAdjacentHTML("beforeend", imgInputComponent1());
+    //         imgAddBtnCount++;
+    //     }
+    // });
+    //
+    // function imgInputComponent1(label = "이미지", name = "img") { // 🔥 label, name 넣는 이유?
+    //     return `
+    //              <p class="input-group mt-2">
+    //                 <label class="input-group-text click">${label}</label>
+    //                 <input class="form-control" type="file" name="${name}">
+    //
+    //                 <button type="button" class="btn btn-danger" onclick="this.closest('.input-group').remove()">
+    //                     <i class="bi bi-x-lg"></i>
+    //                 </button>
+    //             </p>
+    //         `
+    // }
+
     </script>
     <script th:inline="javascript">
         const reviewRegisterModal = new bootstrap.Modal(document.getElementById("reviewRegisterModal"), {}); // {} 이게 뭐지?
+        const reviewModifyModal=new bootstrap.Modal(document.getElementById("reviewModifyModal"),{})
         const reviewRegisterForm = document.forms["reviewRegisterForm"];
+        const reviewModifyForm=document.forms["reviewModifyForm"];
         const reviewCont = document.getElementById("reviewCont");
         reviewRegisterForm.onsubmit = registerReview;
 
-        // async function loadRegistReview(trId){
-        //     let url=`/review/${trId}/detail.do`;
-        //     const resp=await fetch(url);
-        //     if(resp.status==200){
-        //         const json=await resp.json();
-        //
-        //     }
-        // }
+        // 리뷰 등록 버튼 => 리뷰등록 모달창 보이기
+        const loadReviewRegister=document.getElementById("loadReviewRegister");
+        loadReviewRegister.addEventListener("click",function(){
+            reviewRegisterModal.show();
+        });
+
+        // 리뷰 수정 버튼 => 리뷰수정 모달창 보이기
+        async function loadModifyReview(trId){
+            let url=`/review/${trId}/detail.do`;
+            const resp= await fetch(url);
+            if(resp.status==200){
+                const json=await resp.json();
+                reviewModifyForm.querySelectorAll("[name]").forEach((input)=>{
+                    let key=input.name;
+                    if(key in json) {
+                        if(key === "imgPath") {
+                            input.src=json[key];
+                        }
+                        input.value=json[key];
+                    }
+                })
+                reviewModifyModal.show();
+            } else{
+                alert("불러오기 실패 status: " + resp.status);
+            }
+
+        }
+
 
         async function loadReviews(tId){
             let url=`/review/${tId}/list.do`
@@ -350,6 +296,7 @@
 
         async function registerReview(e) {
             e.preventDefault();
+
             reviewRegisterModal.hide();
             let url = "/review/handler.do"
             const data = new FormData(reviewRegisterForm);
@@ -367,36 +314,8 @@
         }
 
 
-        // async function loadModifyReply(tId) { // 수정폼 버튼 클릭시 실행되는 함수
-        //     // alert(brId); // 기능하는지 테스트
-        //     let url = `/review/${tId}/detail.do`;
-        //     const resp = await fetch(url); // 호출
-        //     if (resp.status == 200) {
-        //         const json = await resp.json();
-        //         // json : {"brId":117,"parentBrId":116,"postTime":"2023-04-06T19:05:46.000+00:00","updateTime":"2023-04-06T19:05:46.000+00:00","status":"PUBLIC","imgPath":"/public/img/reply/1680807946731_4416.png","content":"안녕","likes":null,"replies":[],"uid":"mlucky","bid":4}
-        //         // 자바스크립트가 uid, bid 대소문자 구분을 못한다 => BoardReplyDto 에  @JsonProperty("bId") 속성 추가
-        //         // 이미지가 아니라 input 요소만 찾고 있어서 이미지 파일을 못찾는다.
-        //         // => replyModifyForm.querySelectorAll("input").forEach((input)=>{
-        //         replyModifyForm.querySelectorAll("[name]").forEach((input) => { // => 🍏이미지태그의 value 에 이미지가 들어온다
-        //             let key = input.name;
-        //             // 🍉input.value : input type='file' 에는 value 가 없음
-        //             // json 의 key 값이 있는것만 대입 (file 이미지 제외)
-        //             if (key in json) {
-        //                 if (key === "imgPath") { // 🍏이미지 input 태그의 value => name 으로 이미지 불러오기
-        //                     input.src = json[key]; // input 요소
-        //                 }
-        //                 input.value = json[key]; // src 요소 // json 에서 키값으로 가져온는것  json[brId] = 117 를 input value 에 대입
-        //             }
-        //         })
-        //         replyModifyModal.show();
-        //     } else {
-        //         alert("불러오기 실패 status:" + resp.status);
-        //     }
-        //
-        // }
-
-
     </script>
+
 
 </div>
 </html>

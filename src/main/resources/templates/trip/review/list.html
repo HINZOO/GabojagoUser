@@ -1,10 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-</body>
-</html>
+<ul class="list-group">
+    <li class="list-group-item" th:each="r:${t.reviews}">
+        <th:block th:include="/trip/review/detail.html"></th:block>
+    </li>
+</ul>
