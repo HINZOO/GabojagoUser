@@ -75,9 +75,15 @@
                                         </div>
                                     </div>
                                 </a>
+
+                                <div th:text="${plan.getMUsers()}">
+
+                                </div>
                             </th:block>
                         </div>
                     </div>
+
+
 
                     <div class="col-2" ></div>
                 </div> <!--메인섹션닫기-->
@@ -172,86 +178,102 @@
             new bootstrap.Modal(document.getElementById('staticBackdrop'), {}).show();
         })
 
-        // 깃발 꽂기ㅋㅋ
-        const box = document.querySelector(".flagContent")
-        const pBtn = document.getElementById("mapP")
-        const mBtn = document.getElementById("mapM")
-        const canvas = document.getElementById("listMap")
-        const ctx = canvas.getContext("2d")
-        canvas.width = 300;
-        canvas.height = 500;
-        let mapScale = 1.0;
-        ctx.save();
-        let currentC = new Image();
 
-        const map = new Image();
-        map.src = "/public/img/plan/listMap.png"
-        map.addEventListener('load', ()=>{
-            ctx.drawImage(map, 0, 0);
-            currentC.src = canvas.toDataURL();
-        });
-        function clearC(){
-            ctx.clearRect(0,0,300,500)
-        }
-        function xy(xy){
-            return xy/(box.clientWidth/300)
-        }
-        function load(){
-            ctx.scale(mapScale,mapScale);
-            ctx.drawImage(map,0,0);
-            ctx.restore();
+        window.addEventListener("load",()=>{
+            // 깃발 꽂기ㅋㅋ
+            const box = document.querySelector(".flagContent")
+            const pBtn = document.getElementById("mapP")
+            const mBtn = document.getElementById("mapM")
+            const canvas = document.getElementById("listMap")
+            const ctx = canvas.getContext("2d")
+            canvas.width = 300;
+            canvas.height = 500;
+            let mapScale = 1.0;
             ctx.save();
-        }
-        pBtn.addEventListener("click",()=>{
-            if(mapScale<5){
-                clearC()
-                mapScale*=1.2;
-                ctx.scale(1.2,1.2);
-                ctx.drawImage(currentC,0,0)
-                ctx.scale(1/1.2,1/1.2)
-                currentC.src = canvas.toDataURL();
-            }
+            let currentC = new Image();
 
-        })
-        mBtn.addEventListener("click",()=>{
-            if(mapScale>0.5){
-                clearC()
-                mapScale/=1.2;
-                load()
+            const map = new Image();
+            map.src = "/public/img/plan/listMap.png"
+            map.addEventListener('load', ()=>{
+                ctx.drawImage(map, 0, 0);
                 currentC.src = canvas.toDataURL();
-            }
-        })
-        let isOn = false;
-        canvas.addEventListener('mousemove', (event) => {
-            let x = event.offsetX;
-            let y = event.offsetY;
-            let data = ctx.getImageData(xy(x), xy(y), xy(1), xy(1)).data;
 
-            if(data[0]!=0 && isOn==false){
-                canvas.style.cursor="pointer"
-                isOn = true;
-                let mX=null,mY=null
-                let a = 0,b = 0
-                while (mX==null || mY==null){
-                    if(ctx.getImageData(xy(x)-a, xy(y), xy(1), xy(1)).data[0]!=0)a += xy(1);
-                    else mX = xy(x) - a
-                    if (ctx.getImageData(xy(x), xy(y) - b, xy(1), xy(1)).data[0] !=0) b += xy(1);
-                    else mY = xy(y) - b;
+
+            });
+            function clearC(){
+                ctx.clearRect(0,0,300,500)
+            }
+            function xy(xy){
+                return xy/(box.clientWidth/300)
+            }
+            function load(){
+                ctx.scale(mapScale,mapScale);
+                ctx.drawImage(map,0,0);
+                ctx.restore();
+                ctx.save();
+            }
+            pBtn.addEventListener("click",()=>{
+                if(mapScale<5){
+                    clearC()
+                    mapScale*=1.2;
+                    load()
+                    currentC.src = canvas.toDataURL();
+
+
+                    // clearC()
+                    // mapScale*=1.2;
+                    // ctx.scale(1.2,1.2);
+                    // ctx.drawImage(currentC,0,0)
+                    // ctx.scale(1/1.2,1/1.2)
+                    // currentC.src = canvas.toDataURL();
                 }
-                ctx.fillStyle="dodgerblue"
-                ctx.fillRect(mX,mY,10,10)
-            } else if(data[0]==0 && data[1]==0 && data[2]==0 && isOn == true) {
-                canvas.style.cursor="default"
-                isOn =false;
-                clearC();
-                load();
-            }
+
+            })
+            mBtn.addEventListener("click",()=>{
+                if(mapScale>0.5){
+                    clearC()
+                    mapScale/=1.2;
+                    load()
+                    currentC.src = canvas.toDataURL();
+                }
+            })
+
+
+            let isOn = false;
+            canvas.addEventListener('mousemove', (event) => {
+                let x = event.offsetX;
+                let y = event.offsetY;
+                let data = ctx.getImageData(xy(x), xy(y), 1, 1).data;
+
+                if(data[0]!==0 && isOn===false){
+                    canvas.style.cursor="pointer"
+                    isOn = true;
+                    let mX=null,mY=null
+                    let a = 0,b = 0
+                    while (mX==null || mY==null){
+                        if(ctx.getImageData(xy(x)-a, xy(y), 1, 1).data[0]!==0)a += xy(1);
+                        else mX = xy(x) - a
+                        if (ctx.getImageData(xy(x), xy(y) - b, 1, 1).data[0] !==0) b += xy(1);
+                        else mY = xy(y) - b;
+                    }
+                    ctx.fillStyle="dodgerblue"
+                    ctx.fillRect(mX,mY,10,10)
+                } else if(data[0]===0 && data[1]===0 && data[2]===0 && isOn === true) {
+                    canvas.style.cursor="default"
+                    isOn =false;
+                    clearC();
+                    load();
+                }
+
+            });
+        })
 
 
 
 
 
-        });
+
+
 
 
 
