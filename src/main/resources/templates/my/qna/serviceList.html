@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<html lang="ko"
-      xmlns:th="http://www.thymeleaf.org"
+<html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{/layout}">
-<body>
-    <div layout:fragment="content" class="container">
+      layout:decorate="~{layoutMy}">
+
+<div layout:fragment="content" class="container">
 
         <h3>고객센터/문의 내역</h3>
         <p class="text-end">
@@ -34,14 +33,12 @@
                         </th>
 
                             <td>
-                                <a class="" th:text="${#dates.format(q.postTime,'yyyy-MM-dd HH:mm:ss')}"></a>
+                                <span th:text="${#dates.format(q.postTime,'yyyy-MM-dd')}"></span>
                             </td>
                             <td><button class="btn btn-danger">완료</button></td>
                         </tr>
                 </tbody>
-
             </table>
-
         </div>
     </div>
 </body>

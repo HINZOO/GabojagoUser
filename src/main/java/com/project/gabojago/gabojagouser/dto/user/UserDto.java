@@ -25,4 +25,5 @@ public class UserDto {
     private Date postTime;
     private String storeName;
     private String businessId;
+
 }
