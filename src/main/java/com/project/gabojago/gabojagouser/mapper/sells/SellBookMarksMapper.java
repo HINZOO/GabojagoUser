@@ -11,5 +11,5 @@ public interface SellBookMarksMapper {
 
     int insertOne(SellBookmarksDto sellBookmarksDto);
 
-    int deleteOne(int tbId);
+    int deleteOne(int sbId);
 }
