@@ -5,16 +5,16 @@
   <title>마이페이지</title>
 </head>
 
-<div layout:fragment="content" class="container-fluid">
+<div layout:fragment="content" class="container">
 <div class="">
     <div>
       <div class="card mb-5 mt-5" style="width: 500px; float: none; margin: 0 auto">
-        <div class="row g-0">
+        <div class="row g-0" th:each="u:${user}">
           <div class="col-md-4">
-            <img src="/img/user/프로필.png" class="img-fluid rounded-start card-img-top" alt="회원이미지">
+            <img th:src="@{'{path}'(path=${u.imgPath})}" class="img-fluid rounded-start card-img-top" alt="회원이미지">
           </div>
           <div class="col-md-8">
-            <div class="card-body" th:each="u:${user}">
+            <div class="card-body" >
               <h5 class="card-title" th:text="${u.name}"></h5>
               <p class="card-text" th:text="${u.nkName}"></p>
               <p class="card-text"><small class="text-body-secondary" th:text="${u.prContent}"></small></p>

@@ -17,10 +17,8 @@
 <body>
     <header th:replace="/headerNav"></header>
     <main class="container-fluid d-flex">
-        <div id="cont">
-            <div th:include="/my/dropDownMenu"></div>
-        </div>
-        <div layout:fragment="content"></div>
+         <div class="w-25" th:include="/my/dropDownMenu"></div>
+         <div layout:fragment="content"></div>
     </main>
 
     <!--재사용 모달 창-->

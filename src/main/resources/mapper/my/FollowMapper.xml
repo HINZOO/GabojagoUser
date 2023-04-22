@@ -41,4 +41,5 @@
     <select id="findByToIdAndFromIdIsLoginUserId" resultType="java.lang.Boolean">
         SELECT COUNT(*) FROM follows WHERE from_users=@loginUserId AND to_users=#{uId};
     </select>
+
 </mapper>

@@ -22,6 +22,15 @@ public class MyUserController {
         model.addAttribute("user",loginUser);
         return "/my/user";
     }
+    @GetMapping("/follow/detail.do")
+    public String followDetail(
+            @SessionAttribute UserDto loginUser,
+            Model model
+    ){
+
+        model.addAttribute("user",loginUser);
+        return "/my/follow";
+    }
 }
 
 
