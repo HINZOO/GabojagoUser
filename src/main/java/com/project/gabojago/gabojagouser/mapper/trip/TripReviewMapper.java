@@ -14,5 +14,5 @@ public interface TripReviewMapper {
 
     int insertOne(TripReviewDto tripReview);
     int updateOne(TripReviewDto tripReview);
-    int deleteOne(TripReviewDto tripReview);
+    int deleteOne(int trId);
 }

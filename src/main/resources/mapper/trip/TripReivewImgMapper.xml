@@ -9,6 +9,7 @@
     <insert id="insertOne" useGeneratedKeys="true" keyProperty="triId">
         INSERT INTO trip_review_imgs (tr_id, img_path) VALUE (#{trId},#{imgPath})
     </insert>
+
     <delete id="deleteOne">
         DELETE FROM trip_review_imgs WHERE tri_id=#{triId}
     </delete>
@@ -16,6 +17,6 @@
         SELECT * FROM trip_review_imgs WHERE tr_id=#{trId}
     </select>
     <select id="findByTriId" resultMap="TripReviewImgMap">
-        SELECT * FROM trip_review_imgs WHERE tr_id=#{trId}
+        SELECT * FROM trip_review_imgs WHERE tri_id=#{triId}
     </select>
 </mapper>

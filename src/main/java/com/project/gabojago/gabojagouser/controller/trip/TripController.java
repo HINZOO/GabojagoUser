@@ -84,17 +84,21 @@ public class TripController {
         return "/trip/modify";
     }
 
+
     @PostMapping("/modify.do")
     public String modifyAction(
             @ModelAttribute TripDto trip,
             @RequestParam (required = false)MultipartFile mainImg, // 메인이미지 파라미터
-            @RequestParam(name="img", required = false) List<MultipartFile> imgs,
+            @RequestParam(value="img", required = false) List<MultipartFile> imgs,
             @RequestParam(value="delImgId", required = false) List<Integer> delImgIds,
-            @RequestParam(required = false) int delMainImgId,
+            @RequestParam(value = "delMainImgId",required = false) int delMainImgId,
+
             RedirectAttributes redirectAttributes
     ) {
         String redirectPage = "redirect:/trip/" + trip.getTId() + "/modify.do";
         String msg="";
+
+        //
         if(imgs==null && !mainImg.isEmpty()){ // imgs 가 null 이고 메인이미지가 있을때
             imgs=new ArrayList<>();
             imgs.add(mainImg);
@@ -103,6 +107,20 @@ public class TripController {
                 delImgIds.add(delMainImgId);
             }
         }
+
+
+//        if (imgs == null) { // imgs가 null인 경우, 빈 리스트로 초기화
+//            imgs = new ArrayList<>();
+//        }
+//        if (!mainImg.isEmpty()) { // mainImg가 비어있지 않은 경우, imgs 리스트에 추가
+//            imgs.add(mainImg);
+//            if (delImgIds == null) { // delImgIds가 null인 경우, 빈 리스트로 초기화
+//                delImgIds = new ArrayList<>();
+//                delImgIds.add(delMainImgId);
+//            }
+//        }
+
+
 
         // 제목 입력 여부 확인
         if (trip.getTitle() == null || trip.getTitle().equals("")) {
@@ -187,11 +205,11 @@ public class TripController {
             @ModelAttribute TripDto trip,
             RedirectAttributes redirectAttributes,
             @RequestParam MultipartFile mainImg, // 메인이미지 파라미터
-            @RequestParam(name = "img", required = false) List<MultipartFile> imgs) { // required=false : 파라미터 img 없어도 에러발생안하도록!
+            @RequestParam(value = "img", required = false) List<MultipartFile> imgs) { // required=false : 파라미터 img 없어도 에러발생안하도록!
         String redirectPage = "redirect:/trip/register.do";
 //        if(!loginUser.getUId().equals(trip.getUId())) return redirectPage; // 다르면 다시 등록페이지로 이동
         String msg="";
-        imgs.add(mainImg);
+        imgs.add(mainImg); // 메인이미지 추가
         // 제목 입력 여부 확인
         if (trip.getTitle() == null || trip.getTitle().equals("")) {
             msg = "여행지명을 입력하세요.";
@@ -215,7 +233,7 @@ public class TripController {
                             log.error(e.getMessage());
                         }
                         TripImgDto imgDto = new TripImgDto();
-                        if(i==imgs.size()-1)imgDto.setImgMain(true);
+                        if(i==imgs.size()-1)imgDto.setImgMain(true); // 인덱스 마지막일때 이미지 => 메인 이미지
                         imgDto.setImgPath("/public/img/trip/" + fileName);
                         imgDtos.add(imgDto);
 
