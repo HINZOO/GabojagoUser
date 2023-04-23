@@ -10,6 +10,7 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
   private UserMapper userMapper;
+
   public UserServiceImpl(UserMapper userMapper) {
     this.userMapper = userMapper;
   }
@@ -45,6 +46,6 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public int dropout(UserDto user) {
-    return 0;
+    return userMapper.deleteOne(user);
   }
 }

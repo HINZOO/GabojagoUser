@@ -15,4 +15,5 @@ public interface UserMapper {
   int updateOne(UserDto user);
   int setLoginUserId(String uId);
   int setLoginUserIdNull();
+  int deleteOne(UserDto user);
 }
