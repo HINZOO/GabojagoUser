@@ -14,15 +14,15 @@
         <collection property="sellOption"
                     select="com.project.gabojago.gabojagouser.mapper.sells.SellsOptionMapper.findBySId"
                     column="s_id"
-                    fetchType="eager"/>
+                    fetchType="lazy"/>
         <collection property="sellImgs"
                     select="com.project.gabojago.gabojagouser.mapper.sells.SellImgsMapper.findBySId"
                     column="s_id"
-                    fetchType="eager"/>
+                    fetchType="lazy"/>
     </resultMap>
-    <insert id="insertOne" useGeneratedKeys="true" keyProperty="sId" >
-        INSERT INTO sells (u_id,area,title,content,category)
-        VALUES (#{uId},#{area},#{title},#{content},#{category})
+    <insert id="insertOne" useGeneratedKeys="true" keyProperty="sId"  parameterType="SellsDto">
+        INSERT INTO sells (u_id,area,title,content,category,img_main)
+        VALUES (#{uId},#{area},#{title},#{content},#{category},#{imgMain})
     </insert>
     <update id="updateOne" >
         UPDATE sells SET area=#{area},title=#{title},content=#{content},category=#{category},img_main=#{imgMain} WHERE s_id=#{sId}

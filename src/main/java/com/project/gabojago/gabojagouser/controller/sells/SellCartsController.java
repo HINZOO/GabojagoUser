@@ -66,14 +66,18 @@ public class SellCartsController {
                        RedirectAttributes redirectAttributes){
         System.out.println("sId+loginUser.getUId() = " + sId+loginUser.getUId());
         int register=0;
-        String msg="장바구니(찜)등록 완료!";
+        String msg="";
+        if (loginUser!=null){
+            msg="장바구니(찜)등록 완료!";
         SellCartDto sellCartDto=new SellCartDto();
         sellCartDto.setSId(sId);
         sellCartDto.setUId(loginUser.getUId());
+        sellCartsService.register(sellCartDto);
+        }else {
+            msg="로그인 하셔야 이용가능합니다";
+        }
 
-        register=sellCartsService.register(sellCartDto);
         redirectAttributes.addFlashAttribute("msg",msg);
-        System.out.println("register = " + register);
         return "redirect:/sells/list.do";
     }
 }
