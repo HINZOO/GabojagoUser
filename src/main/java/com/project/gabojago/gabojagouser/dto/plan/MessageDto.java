@@ -10,5 +10,6 @@ public class MessageDto {
     private String roomId;
     private String writer;
     private String message;
+    private String path;
     private boolean System;
 }
