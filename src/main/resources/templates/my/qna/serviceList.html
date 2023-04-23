@@ -31,7 +31,6 @@
                         <th scope="row">
                             <a class="" th:text="${q.title}" th:href="@{'/my/qna/{qId}/detail.do'(qId=${q.qId})}"></a>
                         </th>
-
                             <td>
                                 <span th:text="${#dates.format(q.postTime,'yyyy-MM-dd')}"></span>
                             </td>
