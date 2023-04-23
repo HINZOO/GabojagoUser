@@ -1,4 +1,4 @@
-package com.project.gabojago.gabojagouser.dto.follow ;
+package com.project.gabojago.gabojagouser.dto.my;
 
 import lombok.Data;
 

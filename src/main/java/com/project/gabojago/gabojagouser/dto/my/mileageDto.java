@@ -1,4 +1,4 @@
-package com.project.gabojago.gabojagouser.dto.mileage;
+package com.project.gabojago.gabojagouser.dto.my;
 
 public class mileageDto {
     private int mId;

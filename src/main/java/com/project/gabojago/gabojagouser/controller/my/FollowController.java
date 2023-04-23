@@ -1,14 +1,10 @@
 package com.project.gabojago.gabojagouser.controller.my;
 
-import com.project.gabojago.gabojagouser.dto.follow.FollowDto;
+import com.project.gabojago.gabojagouser.dto.my.FollowDto;
 import com.project.gabojago.gabojagouser.dto.user.UserDto;
 import com.project.gabojago.gabojagouser.service.my.FollowService;
 import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/my/follow")

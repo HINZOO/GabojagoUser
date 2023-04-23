@@ -1,4 +1,4 @@
-package com.project.gabojago.gabojagouser.dto.note;
+package com.project.gabojago.gabojagouser.dto.my;
 
 public class noteDto {
     private int lId;
