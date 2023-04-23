@@ -12,18 +12,18 @@
       <div class="card col" style="height: 75vh; overflow-y: auto" >
         <div class="card-header d-flex justify-content-between align-items-center
                       bg-light position-sticky top-0" style="z-index: 999">
+          <h5 class="card-title">
+            제목 : <span th:text="${q.title}"></span>
+          </h5>
         </div>
         <div class="d-flex my-2">
           <div class="me-2">
             작성유저 : <small th:text="${q.getUId()}"></small>
           </div>
-        </div>
-        <h5 class="card-title">
-          제목 : <p th:text="${q.title}"></p>
-        </h5>
-        <div class="col-2 d-flex">
-          <a class="btn btn-sm btn-outline-primary me-1">수정</a>
-          <a class="btn btn-sm btn-outline-danger">삭제</a>
+          <div class="col-2 d-flex">
+            <a th:href="@{'/my/qna/{qId}/modify.do'(qId=${q.qId})}" class="btn btn-outline-primary btn-sm me-1">수정</a>
+            <a th:href="@{'/my/qna/{qId}/remove.do'(qId=${q.qId})}" class="btn btn-outline-danger btn-sm">삭제</a>
+          </div>
         </div>
         <hr>
         <p class="card-text">
