@@ -25,7 +25,7 @@ public class UserDetailController {
       redirectAttributes.addFlashAttribute("msg", "로그인이 필요합니다");
       return "redirect:/user/login.do";
     } else {
-      UserDto user = userService.detail(uId);
+      UserDto user = userService.detail(uId, loginUser.getUId());
       model.addAttribute("user", user);
     }
     return "user/detailForm";

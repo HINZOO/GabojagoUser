@@ -21,7 +21,7 @@ public class UserUpdateController {
   public String update(@PathVariable String uId,
                        @SessionAttribute(required = false) UserDto loginUser,
                        Model model) {
-    UserDto user = userService.detail(uId);
+    UserDto user = userService.detail(uId,null);
     model.addAttribute("user", user);
     return "user/updateForm";
   }

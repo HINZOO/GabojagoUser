@@ -702,4 +702,10 @@ VALUES
     ('user09', 'user03'), ('user09', 'user05'), ('user09', 'user06'), ('user09', 'user07'), ('user09', 'user08'),
     ('user10', 'user01'), ('user10', 'user02'), ('user10', 'user05'), ('user10', 'user08'), ('user10', 'user09');
 
+#커뮤니티 이미지 더미
+INSERT INTO  comm_imgs (c_id, img_path, img_main)
+VALUES
+    (1,'/public/img/comm/1681969679943_2023.jpeg',0),
+    (2,'/public/img/comm/1681969832415_8296.jpeg',0),
+    (3,'/public/img/comm/1681976587025_8955.jpeg',0)
 

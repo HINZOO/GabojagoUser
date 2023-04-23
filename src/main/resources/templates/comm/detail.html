@@ -39,10 +39,16 @@
                 <small><i class="bi bi-eye"></i>조회수 <span th:text="${c.viewCount}"></span></small>
             </p>
             <div class="card-body">
-                <div th:if="${c.imgs!=null}" th:id="'carousel'+${c.cId}" class="carousel slide" data-bs-ride="carousel">
-                    <div class="carousel-inner">
+                <p th:text="${c}"></p>
+                <div th:id="'carousel'+${c.cId}" class="carousel slide" data-bs-ride="carousel">
+                    <div th:if="${c.imgs != null}"  class="carousel-inner">
                         <div class="carousel-item" th:each="img,state:${c.imgs}" th:classappend="${(state.first)?'active':''}">
                             <img th:src="@{'{path}'(path=${img.imgPath})}" class="d-block w-100" alt="게시글 이미지">
+                        </div>
+                    </div>
+                    <div th:unless="${c.imgs != null}" class="carousel-inner">
+                        <div class="carousel-item">
+                            <img src="/public/img/comm/1681717713661_1319.jpeg" class="d-block w-100 active" alt="기본이미지">
                         </div>
                     </div>
                     <button class="carousel-control-prev" type="button" th:data-bs-target="'#carousel'+${c.cId}" data-bs-slide="prev">

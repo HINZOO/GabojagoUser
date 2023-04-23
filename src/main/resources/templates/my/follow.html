@@ -7,6 +7,7 @@
 
 <div layout:fragment="content" class="container">
  <h1>팔로우 목록</h1>
+    <p>😎 팔로워 리스트에 계속 false만 나오는 오류를 해결해야함</p>
     <div class="followCnt ms-5">
         <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
             <li class="nav-item" role="presentation">
@@ -29,9 +30,10 @@
                         <div class="d-flex align-items-center justify-content-between">
                             <th:block th:include="/my/followDetail"></th:block>
                             <div>
-                                <button  type="button" class="btn btn-outline-danger">삭제</button>
+                                <button  type="button"
+                                         th:onclick="toggleFollower([[${f.uId}]],this)"
+                                         class="btn btn-outline-danger">삭제</button>
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -45,7 +47,9 @@
                         <div class="d-flex align-items-center justify-content-between">
                             <th:block th:include="/my/followDetail"></th:block>
                             <div>
-                                <button  type="button" class="btn btn-outline-primary">팔로잉</button>
+                                <button  type="button"
+                                         th:onclick="toggleFollowing([[${f.uId}]],this)"
+                                         class="btn btn-outline-primary active">팔로잉</button>
                             </div>
                         </div>
                     </div>

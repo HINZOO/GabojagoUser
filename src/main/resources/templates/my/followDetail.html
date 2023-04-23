@@ -7,8 +7,12 @@
     (<span th:text="${f.uId}"></span>)
     <span th:if="${!(f.following)}" class="followCont">
         <i class="bi bi-dot"></i>
-        <button class="btn btn-link p-0 " >팔로우</button>
+        <button class="btn btn-link p-0"
+        th:onclick="following([[${f.uId}]],this)">팔로우</button>
     </span>
+    <div class="ms-5">
+        <p th:text="${f.prContent}"></p>
+    </div>
   </div>
 
 </div>
