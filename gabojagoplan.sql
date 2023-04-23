@@ -505,7 +505,6 @@ CREATE TABLE `sell_carts` (
 
 
 #마이페이지( 팔로우 테이블)
-DROP TABLE  follows;
 CREATE TABLE `follows` (
                            `f_id`	int unsigned AUTO_INCREMENT  PRIMARY KEY COMMENT '팔로우인덱스',
                            `to_users`	varchar(255)	NOT NULL COMMENT '받는유저 아이디',
@@ -515,12 +514,6 @@ CREATE TABLE `follows` (
                            FOREIGN KEY (from_users) REFERENCES users (u_id) ON DELETE CASCADE ON UPDATE CASCADE
 
 );
-INSERT INTO follows (to_users, from_users) VALUES ('user01','user02');
-INSERT INTO follows (to_users, from_users) VALUES ('user02','user01');
-INSERT INTO follows (to_users, from_users) VALUES ('user03','user01');
-INSERT INTO follows (to_users, from_users) VALUES ('user04','user01');
-INSERT INTO follows (to_users, from_users) VALUES ('user01','user04');
-INSERT INTO follows (to_users, from_users) VALUES ('user01','user05');
 
 #마이페이지( 문의하기 테이블)
 CREATE TABLE `qnas` (
@@ -694,4 +687,13 @@ VALUES
     (1, 'user03', '다음에도 꼭 다시 방문하고 싶은 곳이에요!', 1, 4),
     (1, 'user04', '이곳은 정말 특별한 경험이었어요.', 1, 5),
     (1, 'user05', '여기는 앞으로도 자주 찾게 될 것 같아요.', 1, 3);
+
+#팔로우 더미
+INSERT INTO follows (to_users, from_users) VALUES ('user01','user02');
+INSERT INTO follows (to_users, from_users) VALUES ('user02','user01');
+INSERT INTO follows (to_users, from_users) VALUES ('user03','user01');
+INSERT INTO follows (to_users, from_users) VALUES ('user04','user01');
+INSERT INTO follows (to_users, from_users) VALUES ('user01','user04');
+INSERT INTO follows (to_users, from_users) VALUES ('user01','user05');
+
 

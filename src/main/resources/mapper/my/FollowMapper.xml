@@ -27,18 +27,19 @@
         DELETE FROM follows WHERE from_users=#{fromUsers} AND to_users=#{toUsers}
     </delete>
     <select id="findByFromId" resultMap="UserMap">
-        SELECT u.*,(true) following
+        SELECT u.*
+             ,(true) following
             FROM follows f LEFT JOIN users u on f.to_users = u.u_id
             WHERE from_users=#{uId}
 
     </select>
     <select id="findByToId" resultMap="UserMap">
         SELECT u.*
-             ,(SELECT COUNT(*) FROM follows  WHERE f.from_users=@loginUserId AND f.to_users=f.from_users) following
+             ,(SELECT COUNT(*) FROM follows  WHERE  from_users=@loginUserId AND  to_users=f.from_users) following
         FROM  follows f LEFT JOIN users u ON f.from_users=u.u_id
         WHERE to_users=#{uId}
     </select>
-    <select id="findByToIdAndFromIdIsLoginUserId" resultType="java.lang.Boolean">
+    <select id="findByToIdAndFromIdIsLoginUserId" resultMap="UserMap">
         SELECT COUNT(*) FROM follows WHERE from_users=@loginUserId AND to_users=#{uId};
     </select>
 
