@@ -160,6 +160,8 @@ public class SellsController {
             } catch (Exception e) {
                 log.error(e.getMessage());
                 msg += "에러:" + e.getMessage();
+
+
             }
             if (modify > 0) { // 수정성공
                 if (imgDtos == null || imgDtos.size() < 1) {
