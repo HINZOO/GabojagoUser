@@ -74,8 +74,8 @@
                             <a style="position: absolute; top: 1vh; right: 1vh;font-size: 3vh;" id="like-btn" class="btn" th:href="@{'/cart/{sId}/register.do'(sId=${s.getSId()})}">
                                 <i id="like-icon"   class="bi bi-basket"></i>
                             </a>
-                            <a style="position: absolute; top: 1vh; right: 6vh;font-size: 3vh;" id="like-btn2" class="btn" th:onclick="bookBtn([[${s.sId}]],this)" >
-                                <i id="like-icon2"   class="bi bi-bookmark"></i>
+                            <a style="position: absolute; top: 1vh; right: 6vh;font-size: 3vh;" id="like-btn2" class="btn bi bi-bookmark" th:onclick="bookBtn([[${s.sId}]],this)" >
+                                <i id="like-icon2"   class=""></i>
                             </a>
                             <div class="card-body">
                                 <p class="card-text" th:text="${s.title}"></p>

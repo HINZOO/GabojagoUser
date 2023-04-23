@@ -1,10 +1,8 @@
 package com.project.gabojago.gabojagouser.controller.sells;
 import com.github.pagehelper.PageInfo;
-import com.project.gabojago.gabojagouser.dto.sells.SellImgsDto;
-import com.project.gabojago.gabojagouser.dto.sells.SellPageDto;
-import com.project.gabojago.gabojagouser.dto.sells.SellsDto;
-import com.project.gabojago.gabojagouser.dto.sells.SellsOptionDto;
+import com.project.gabojago.gabojagouser.dto.sells.*;
 import com.project.gabojago.gabojagouser.dto.user.UserDto;
+import com.project.gabojago.gabojagouser.service.sells.SellBookMarksService;
 import com.project.gabojago.gabojagouser.service.sells.SellsService;
 
 import lombok.extern.log4j.Log4j2;
@@ -29,8 +27,9 @@ import java.util.List;
 @Log4j2
 public class SellsController {
     private SellsService sellsService;
-
-    public SellsController(SellsService sellsService) {
+    private SellBookMarksService sellBookMarksService;
+    public SellsController(SellsService sellsService,SellBookMarksService sellBookMarksService) {
+        this.sellBookMarksService=sellBookMarksService;
         this.sellsService = sellsService;
     }
     @Value("${img.upload.path}")
@@ -175,7 +174,7 @@ public class SellsController {
         String redirectPage="redirect:/sells/register.do";
         String msg="";
 
-
+        System.out.println("sell입니다 = " + sell);
         if(name == null || price == null) { // 옵션 없으면
             msg = "옵션은 최소 1개이상 추가해 주세요";
             redirectAttributes.addFlashAttribute("msg", msg);
@@ -222,4 +221,31 @@ public class SellsController {
         return "redirect:/sells/list.do";
     }
 
+
+    @GetMapping("/sellBook/list.do")
+    public String list(@SessionAttribute UserDto loginUser,
+                       Model model){
+        System.out.println("loginUser = " + loginUser);
+        List<SellBookmarksDto> list=sellBookMarksService.List(loginUser.getUId());
+        model.addAttribute("list",list);
+        return "/sells/sellBookList";
+    }
+    @GetMapping("/{sbId}/{sId}/remove.do")
+    public String sellBookRemoveAction(@PathVariable int sbId,
+                                        @PathVariable int sId,
+                                        RedirectAttributes redirectAttributes,
+                                        Model model){
+        int remove=0;
+        String msg="";
+        String redirectPath="redirect:/sells/sellBook/list.do";
+        remove=sellBookMarksService.remove(sbId);
+        if (remove>0){
+            msg="북마크가 삭제 되었습니다.";
+        }else {
+            msg="북마크 삭제 실패!! 다시 시도하세요";
+        }
+        redirectAttributes.addFlashAttribute("msg","북마크가 삭제되었습니다.");
+        return redirectPath;
+
+    }
 }

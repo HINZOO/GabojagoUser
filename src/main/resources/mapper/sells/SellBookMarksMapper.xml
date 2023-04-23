@@ -13,7 +13,7 @@
     <insert id="insertOne">
         INSERT INTO sell_bookmarks (u_id,s_id) VALUE (#{uId},#{sId})
     </insert>
-    <delete id="deleteOne">
+    <delete id="deleteOne" >
         DELETE FROM sell_bookmarks WHERE sb_id=#{sbId}
     </delete>
     <select id="findByUId" resultMap="sellBookMap">
