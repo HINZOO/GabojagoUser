@@ -35,7 +35,7 @@
     </select>
     <select id="findByToId" resultMap="UserMap">
         SELECT u.*
-             ,(SELECT COUNT(*) FROM follows  WHERE  from_users=@loginUserId AND  to_users=f.from_users) following
+             ,(SELECT COUNT(*) FROM follows  WHERE  from_users=@loginUserId AND to_users=f.from_users) following
         FROM  follows f LEFT JOIN users u ON f.from_users=u.u_id
         WHERE to_users=#{uId}
     </select>

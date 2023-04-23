@@ -689,11 +689,17 @@ VALUES
     (1, 'user05', '여기는 앞으로도 자주 찾게 될 것 같아요.', 1, 3);
 
 #팔로우 더미
-INSERT INTO follows (to_users, from_users) VALUES ('user01','user02');
-INSERT INTO follows (to_users, from_users) VALUES ('user02','user01');
-INSERT INTO follows (to_users, from_users) VALUES ('user03','user01');
-INSERT INTO follows (to_users, from_users) VALUES ('user04','user01');
-INSERT INTO follows (to_users, from_users) VALUES ('user01','user04');
-INSERT INTO follows (to_users, from_users) VALUES ('user01','user05');
+INSERT INTO follows(to_users, from_users)
+VALUES
+    ('user01', 'user02'), ('user01', 'user03'), ('user01', 'user04'), ('user01', 'user05'), ('user01', 'user06'),
+    ('user02', 'user01'), ('user02', 'user03'), ('user02', 'user05'), ('user02', 'user06'), ('user02', 'user07'),
+    ('user03', 'user01'), ('user03', 'user04'), ('user03', 'user05'), ('user03', 'user06'), ('user03', 'user07'),
+    ('user04', 'user01'), ('user04', 'user03'), ('user04', 'user05'), ('user04', 'user07'), ('user04', 'user08'),
+    ('user05', 'user01'), ('user05', 'user03'), ('user05', 'user04'), ('user05', 'user07'), ('user05', 'user10'),
+    ('user06', 'user02'), ('user06', 'user03'), ('user06', 'user04'), ('user06', 'user05'), ('user06', 'user07'),
+    ('user07', 'user02'), ('user07', 'user05'), ('user07', 'user06'), ('user07', 'user08'), ('user07', 'user10'),
+    ('user08', 'user04'), ('user08', 'user05'), ('user08', 'user06'), ('user08', 'user09'), ('user08', 'user10'),
+    ('user09', 'user03'), ('user09', 'user05'), ('user09', 'user06'), ('user09', 'user07'), ('user09', 'user08'),
+    ('user10', 'user01'), ('user10', 'user02'), ('user10', 'user05'), ('user10', 'user08'), ('user10', 'user09');
 
 
