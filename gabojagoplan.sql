@@ -505,7 +505,7 @@ CREATE TABLE `sell_carts` (
 
 
 #마이페이지( 팔로우 테이블)
->>>>>>> origin/trip
+
 CREATE TABLE `follows` (
                            `f_id`	int unsigned AUTO_INCREMENT  PRIMARY KEY COMMENT '팔로우인덱스',
                            `to_users`	varchar(255)	NOT NULL COMMENT '받는유저 아이디',
@@ -619,6 +619,16 @@ INSERT INTO communitys (u_id, p_id, title, content, area, istj, istp, isfj, isfp
     ('user04', 4, 'Coffee lovers unite!4', 'Looking for people who enjoy trying out new coffee shops in the Gyeonggi area. Lets share our favorite spots and maybe even organize a coffee tasting event.3', '경기', 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0);
 INSERT INTO communitys (u_id, p_id, title, content, area, istj, istp, isfj, isfp, intj, intp, infj, infp, estj, estp, esfj, esfp, entj, entp, enfj, enfp) VALUES
     ('user05', 5, 'Coffee lovers unite!5', 'Looking for people who enjoy trying out new coffee shops in the Gyeonggi area.', '강원', 0, 0, 1, 1,1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+INSERT INTO communitys (u_id, p_id, title, content, area, istj, istp, isfj, isfp, intj, intp, infj, infp, estj, estp, esfj, esfp, entj, entp, enfj, enfp) VALUES
+    ('user01', 2, 'Lets hike together6!', 'Looking for hiking buddies in the Seoul area. Planning to go to Bukhansan National Park next weekend.', '서울', 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+INSERT INTO communitys (u_id, p_id, title, content, area, istj, istp, isfj, isfp, intj, intp, infj, infp, estj, estp, esfj, esfp, entj, entp, enfj, enfp) VALUES
+    ('user06', 2, 'Coffee lovers unite!7', 'Looking for people who enjoy trying out new coffee shops in the Gyeonggi area. Lets share our favorite spots and maybe even organize a coffee tasting event.1', '서울', 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+INSERT INTO communitys (u_id, p_id, title, content, area, istj, istp, isfj, isfp, intj, intp, infj, infp, estj, estp, esfj, esfp, entj, entp, enfj, enfp) VALUES
+    ('user07', 3, 'Coffee lovers unite!8', 'Looking for people who enjoy trying out new coffee shops in the Gyeonggi area. Lets share our favorite spots and maybe even organize a coffee tasting event.2', '제주', 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+INSERT INTO communitys (u_id, p_id, title, content, area, istj, istp, isfj, isfp, intj, intp, infj, infp, estj, estp, esfj, esfp, entj, entp, enfj, enfp) VALUES
+    ('user08', 4, 'Coffee lovers unite!9', 'Looking for people who enjoy trying out new coffee shops in the Gyeonggi area. Lets share our favorite spots and maybe even organize a coffee tasting event.3', '경기', 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0);
+INSERT INTO communitys (u_id, p_id, title, content, area, istj, istp, isfj, isfp, intj, intp, infj, infp, estj, estp, esfj, esfp, entj, entp, enfj, enfp) VALUES
+    ('user09', 5, 'Coffee lovers unite!10', 'Looking for people who enjoy trying out new coffee shops in the Gyeonggi area.', '강원', 0, 0, 1, 1,1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 
 
 #판매글 데이터
@@ -689,7 +699,7 @@ VALUES
     (1, 'user04', '이곳은 정말 특별한 경험이었어요.', 1, 5),
     (1, 'user05', '여기는 앞으로도 자주 찾게 될 것 같아요.', 1, 3);
 
-<<<<<<< HEAD
+
 #팔로우 더미
 INSERT INTO follows(to_users, from_users)
 VALUES
@@ -709,7 +719,7 @@ INSERT INTO  comm_imgs (c_id, img_path, img_main)
 VALUES
     (1,'/public/img/comm/1681969679943_2023.jpeg',0),
     (2,'/public/img/comm/1681969832415_8296.jpeg',0),
-    (3,'/public/img/comm/1681976587025_8955.jpeg',0)
+    (3,'/public/img/comm/1681976587025_8955.jpeg',0);
 
 #가보자고 리뷰 댓글 데이터
 INSERT INTO trip_review_comments (tr_id, u_id, content, status, parent_trc_id)
