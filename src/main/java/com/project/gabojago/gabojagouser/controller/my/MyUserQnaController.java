@@ -21,6 +21,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -115,6 +116,36 @@ public class MyUserQnaController {
         MyUserQnaDto qna= myUserQnaService.detail(qId,loginUser);
         model.addAttribute("q",qna);
         return "/my/qna/modify";
+    }
+    @PostMapping("/modify.do")
+    public String modifyAction(
+
+            @ModelAttribute MyUserQnaDto board,
+            @RequestParam(value="delImgId",required = false) int delImgId,
+            @RequestParam(name = "img",required = false) MultipartFile img
+    ) throws IOException {
+
+        String redirectPage="redirect:/my/qna/"+board.getQId()+"/modify.do";
+
+        int modify=0;
+        MyUserQnaDto imgDto=null;
+        if(img!=null){
+            if(!img.isEmpty()){
+                String[] contentTypes=img.getContentType().split("/");
+                if(contentTypes[0].equals("image")){
+                    String fileName=System.currentTimeMillis()+"_"+(int)(Math.random()*10000)+"."+contentTypes[1];
+                    Path path= Paths.get(staticPath + "/public/img/my/" + fileName);
+                    img.transferTo(path);
+                    imgDto.setFilePath("/public/img/my/" + fileName);
+                }
+            }
+        }
+        try {
+            modify=myUserQnaService.modify(board);
+        }catch (Exception e){
+            log.error(e.getMessage());
+        }
+        return redirectPage;
     }
 
     @GetMapping("/{qId}/remove.do")

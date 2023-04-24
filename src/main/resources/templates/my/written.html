@@ -34,7 +34,6 @@
             <th scope="row">
               <a class="" th:text="${c.title}" th:href="@{'/comm/{cId}/detail.do'(cId=${c.cId})}"></a>
             </th>
-
             <td>
               <span th:text="${#dates.format(c.postTime,'yyyy-MM-dd')}"></span>
             </td>
