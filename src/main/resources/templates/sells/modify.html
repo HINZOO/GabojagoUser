@@ -19,6 +19,13 @@
     <input id="uIdInput" type="text" name="uId" th:value="${sell.getUId()}" readonly class="form-control" placeholder="??"> <!-- th:value="${session.loginUser.uId}"-->
     <label class="">아이디(글쓴이)</label>
   </p>
+    <p >
+    <h4>메인 이미지 삭제 (체크)</h4>
+    <label th:each="img:${sell.getSellImgs()}" class="w-25 delImgItem">
+      <input type="checkbox" class="delImgInput" name="delImgId" th:value="${img.getSimgId()}">
+      <img th:src="@{'{path}'(path=${sell.imgMain})}" class="img-thumbnail">
+    </label>
+    </p>
     <p class="input-group">
       <label class="input-group-text">메인이미지</label>
       <input class="form-control" type="file" name="mainImg">

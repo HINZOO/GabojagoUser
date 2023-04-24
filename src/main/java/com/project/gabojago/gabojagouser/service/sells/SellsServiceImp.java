@@ -44,7 +44,7 @@ public class SellsServiceImp implements SellsService{
     }
 
     @Override
-    public List<SellImgsDto> imgList(int[] simgId) {
+    public List<SellImgsDto> imgList(List<Integer> simgId) {
         List<SellImgsDto> imgList=null;
         if(simgId!=null){
             imgList=new ArrayList<>();
@@ -94,7 +94,7 @@ public class SellsServiceImp implements SellsService{
     }
 
     @Override
-    public int modify(SellsDto sells, int[] delImgIds, int[] delOptionIds) {
+    public int modify(SellsDto sells,List<Integer> delImgIds, int[] delOptionIds) {
         int modify=sellsMapper.updateOne(sells);
         System.out.println("sells+delImgIds+delOptionIds = " + sells+delImgIds+delOptionIds);
         if (delImgIds!=null){
@@ -109,6 +109,7 @@ public class SellsServiceImp implements SellsService{
         }
         if (sells.getSellImgs() != null) {
             for (SellImgsDto img : sells.getSellImgs()){
+                System.out.println("img다 = " + img+sells.getSId());
                 img.setSId(sells.getSId());
                 modify += sellImgsMapper.insertOne(img);
             }

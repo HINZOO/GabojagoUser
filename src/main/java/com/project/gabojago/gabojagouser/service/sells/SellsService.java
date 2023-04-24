@@ -12,12 +12,12 @@ public interface SellsService {
     List<SellsDto> List(SellPageDto pageDto);
     List<SellsDto> findByTitle(String title);
     List<SellsDto> findByCategory(String category, SellPageDto pageDto);
-    List<SellImgsDto> imgList(int[] simgId);
+    List<SellImgsDto> imgList(List<Integer> simgId);
     SellsDto detail(int sId);
     int optionRegister(SellsOptionDto sellsOption);
     int imgRegister(SellImgsDto sellImgsDto);
     int register(SellsDto sells);
-    int modify(SellsDto sells, int[] delImgIds, int[] delOptionIds);
+    int modify(SellsDto sells, List<Integer> delImgIds, int[] delOptionIds);
     int remove(int sId);
 
 
