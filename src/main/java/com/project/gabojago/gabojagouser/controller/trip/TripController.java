@@ -92,22 +92,21 @@ public class TripController {
             @RequestParam(name="img", required = false) List<MultipartFile> imgs,
             @RequestParam(name="delImgId", required = false) List<Integer> delImgIds,
             @RequestParam(name = "delMainImgId",required = false) int delMainImgId,
-
             RedirectAttributes redirectAttributes
     ) throws IOException {
         String redirectPage = "redirect:/trip/" + trip.getTId() + "/modify.do";
         String msg="";
 
-        //
-        if(imgs==null && !mainImg.isEmpty()){ // imgs 가 null 이고 메인이미지가 있을때
-            imgs=new ArrayList<>();
+
+
+        if(!mainImg.isEmpty()){ // imgs 가 null 이고 메인이미지가 있을때
+            if(imgs==null)imgs=new ArrayList<>();
             imgs.add(mainImg);
             if(delImgIds==null) {
                 delImgIds=new ArrayList<>();
                 delImgIds.add(delMainImgId);
             }
         }
-
 
 //        if (imgs == null) { // imgs가 null인 경우, 빈 리스트로 초기화
 //            imgs = new ArrayList<>();
@@ -120,8 +119,6 @@ public class TripController {
 //            }
 //        }
 
-
-
         // 제목 입력 여부 확인
         if (trip.getTitle() == null || trip.getTitle().equals("")) {
             msg = "제목을 입력하세요.";
@@ -133,16 +130,23 @@ public class TripController {
             imgDtos=new ArrayList<>();
             for (int i=0; i<imgs.size(); i++) {
                 MultipartFile img=imgs.get(i);
+
                 if (!img.isEmpty()) {
                     String[] contentTypes = img.getContentType().split("/");
                     if (contentTypes[0].equals("image")) {
+                        log.info(img.getOriginalFilename());
+                        System.out.println("staticPath = " + staticPath);
+                        System.out.println("img.getOriginalFilename() = " + img.getOriginalFilename());
                         String fileName = System.currentTimeMillis() + "_" + (int) (Math.random() * 10000) + "." + contentTypes[1];
                         Path path = Paths.get(staticPath + "/public/img/trip/" + fileName);
                         img.transferTo(path);
                         TripImgDto imgDto = new TripImgDto();
-                        if(i==imgs.size()-1)imgDto.setImgMain(true);
+                        //Users/moon/eunjeong/GabojagoUser/src/main/resources/static/public/img/trip
+                        if(!mainImg.isEmpty() && i==imgs.size()-1)imgDto.setImgMain(true);
+                        imgDto.setTId(trip.getTId());
                         imgDto.setImgPath("/public/img/trip/" + fileName);
                         imgDtos.add(imgDto);
+                        log.info(imgDto);
 //                        if (imgDtos != null && imgDtos.size() > 0) {
 //                            imgDtos.get(0).setImgMain(true);지
 //                        }
@@ -151,21 +155,25 @@ public class TripController {
             }
         }
         trip.setImgs(imgDtos);
+        List<TripImgDto> delImgDtos=null;
         int modify = 0;
         msg="등록실패";
         try {
-            if (delImgIds != null) imgDtos = tripService.imgList(delImgIds); // 삭제할 이미지아이디가 있으면 => 수정
+            if (delImgIds != null) delImgDtos = tripService.imgList(delImgIds); // 삭제할 이미지아이디가 있으면 => 수정
             modify =  tripService.modify(trip, delImgIds); // db 에서 삭제
+
         } catch (Exception e) {
             log.error(e.getMessage());
             msg+="에러:"+e.getMessage();
         }
         if (modify > 0) { // 수정성공
-            if (imgDtos == null || imgDtos.size() < 1) {
+            if (imgs == null || imgs.size() < 1) {
                 redirectAttributes.addFlashAttribute("msg", "이미지는 최소 1개 이상이어야 합니다.");
                 return redirectPage;
-            }else { // 삭제할 이미지 있으면
-                    for (TripImgDto ti : imgDtos) {
+            }
+
+           if(delImgDtos!=null) { // 삭제할 이미지 있으면
+                    for (TripImgDto ti : delImgDtos) {
                         File imgFile = new File(staticPath + ti.getImgPath());
                         if (imgFile.exists()) imgFile.delete(); // 실제 삭제
                     }

@@ -33,14 +33,22 @@
                 </p>
                 <p id="imgDelCont"> <!-- imgs 의 img 들의  imgPath -->
                     <h4>이미지 삭제(체크)</h4>
-                    <label th:each="r:${t.reviews}" class="d-flex">
-                        <i th:each="i:${r.imgs}"> <!-- 삭제할 이미지 delImgId 를 여러개 받기 -->
-                            <input type="hidden" class="delImgInput" name="delImgId" th:value="${i.triId}">
-                            <!-- name 이름으로 파라미터 요청이 들어오고 값은 value 로 들어온다.  -->
-                            <input type="hidden" name="imgPath"> <!-- hidden 타입 : 숨겨서 서버(요청메세지 본문)에 전달 -->
-                            <img th:if="${r.trId==1}" th:src="@{'{path}'(path=${i.imgPath})}" class="img-thumbnail">
-                        </i>
+                <div class="d-flex">
+                    <label th:each="img:${r.imgs}" class="w-25 delImgItem"> <!-- 리뷰한개의 각 1개의 이미지 -->
+                        <i class="bi bi-x"></i>
+                        <input type="checkbox" class="delImgInput" name="delImgId" th:value="${img.triId}">
+                        <img th:src="@{'{path}'(path=${img.imgPath})}" class="img-thumbnail" alt="">
                     </label>
+                </div>
+
+<!--                <p th:text="${r.trId}"></p>-->
+
+<!--                    <input type="hidden" class="delImgInput" name="delImgId" th:value="${i.triId}">-->
+<!--                    &lt;!&ndash; name 이름으로 파라미터 요청이 들어오고 값은 value 로 들어온다.  &ndash;&gt;-->
+<!--                    <input type="hidden" name="imgPath"> &lt;!&ndash; hidden 타입 : 숨겨서 서버(요청메세지 본문)에 전달 &ndash;&gt;-->
+<!--                    <img th:if="${r.trId==1}" th:src="@{'{path}'(path=${i.imgPath})}" class="img-thumbnail">-->
+
+
                 </p>
 
                 <p id="modifyImgCont">
