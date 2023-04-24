@@ -25,7 +25,7 @@ public class FollowController {
     ) {
         String loginUserId = (loginUser != null) ? loginUser.getUId() : null;
         UserDto user = userService.detail(uId, loginUserId);
-        model.addAttribute("user", loginUser);
+        model.addAttribute("user", user);
         return "/my/follow";
     }
 
