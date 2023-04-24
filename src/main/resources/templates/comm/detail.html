@@ -72,7 +72,7 @@
                     </div>
                     <div>
                     <a href=""><i class="bi bi-calendar-plus text-secondary me-2" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="내일정바로추가"></i></a>
-                    <a href=""><i class="bi bi-bookmark-plus text-warning me-2" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="북마크"></i></a>
+                    <a href="javascript:void(0)"  th:onclick="registerBookMark([[${c.cId}]])"><i class="bi bi-bookmark-plus text-warning me-2" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="북마크"></i></a>
                     <a href="javascript:void(0)" id="commReport"><i class="bi bi-bell-fill text-danger" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="신고하기"></i></a>
                     </div>
 
@@ -135,6 +135,7 @@
         const profileModal=new bootstrap.Modal(document.getElementById('profileModal',{}));
         const profile=document.getElementsByClassName("profile");
         const commReport=document.getElementById("commReport");
+        const bookMarkCheck=document.getElementById("bookMarkCheck");
         const replyContainer=document.getElementById("replyCont");
         const replyInsertForm=document.forms["replyInsertForm"];
         const replyReplyForm=document.forms["replyReplyForm"];
@@ -211,7 +212,25 @@
                 }
             }
         }
+    //북마크 클릭시 등록
 
+     async function registerBookMark(cId){
+         let check=confirm("북마크를 등록하시겠습니까?");
+         let url="/bookmark/"+cId+"/handler.do";
+         if(check){
+             if(resp.status===200){
+                 const resp= await fetch(url,{method:"POST"});
+                 const json=await resp.json();
+                 if(json.handler>0) {
+                     alert("북마크 등록 성공!");
+                 }
+             }else{
+                 alert("북마크 등록 실패");
+             }
+         }
+
+
+     }
 
     </script>
 </div>

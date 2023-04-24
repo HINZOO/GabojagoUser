@@ -1,0 +1,44 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layoutMy}">
+<head>
+    <title>마이페이지</title>
+</head>
+
+<div layout:fragment="content" class="container">
+    <h2>
+        북마크 리스트
+    </h2>
+    <div class="categoryContainer d-flex justify-content-evenly" >
+        <div class="card" style="width: 30rem;">
+            <img src="/public/img/gabojago.gif" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">가보자고 북마크</h5>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">An item
+                    <a href="#" class="card-link">X</a>
+                </li>
+            </ul>
+        </div>
+        <div class="card" style="width: 30rem;">
+            <img src="/public/img/gachinolja.gif" class="card-img-top" alt="...">
+            <div class="card-body">
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item d-flex justify-content-between align-content-center" th:each="c:${bookMark}">
+                    <p class="p-0">
+                        <a th:href="@{'/comm/{cId}/detail.do'(cId=${c.cId})}" th:text="${c.comm.title}"></a>
+                    </p>
+                    <p class="p-0">
+                        <a href="javascript:void(0)" class="text-danger text-decoration-none">
+                            <i class="bi bi-x-square-fill"></i>
+                        </a>
+                    </p>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+
+</div>
