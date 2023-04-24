@@ -10,8 +10,8 @@
         <result property="postPath" column="post_path"/>
     </resultMap>
     <insert id="insertOne" useGeneratedKeys="true" keyProperty="qId" parameterType="MyUserQnaDto">
-        INSERT INTO qnas (u_id, title, content, file_path, post_time) VALUE
-        (#{uId},#{title},#{content},#{filePath},#{postTime})
+        INSERT INTO qnas (u_id, title, content, file_path) VALUE
+        (#{uId},#{title},#{content},#{filePath})
     </insert>
     <update id="updateOne">
         UPDATE qnas SET u_id=#{uId},title=#{title},content=#{content},

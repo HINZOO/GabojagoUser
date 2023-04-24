@@ -30,10 +30,7 @@
                     파일을 추가해주세요 (문의 해결에 도움이 됩니다.)
                 </span>
         <div class="input-group mt-2">
-            <input class="form-control" type="file" name="${name}">
-            <button type="button" class="btn btn-danger">
-                <i class="bi bi-x-lg"></i>
-            </button>
+            <input class="form-control" type="file" name="img">
         </div>
 
         </p>
@@ -46,7 +43,6 @@
             <textarea id="contentInput" name="content" rows="4" class="form-control" placeholder=""></textarea>
         </p>
         <p class="text-end">
-            <button type="submit" class="btn btn-danger" th:href="@{'/my/qna/{uId}/serviceList.do'}">취소</button>
             <button type="submit" class="btn btn-primary">등록하기</button>
         </p>
     </form>
