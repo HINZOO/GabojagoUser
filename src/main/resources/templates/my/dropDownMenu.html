@@ -1,6 +1,6 @@
 <div class="text-center mt-4 h-75 border-1 rounded-2">
     <ul class="menu m-2 p-0  " style="list-style: none">
-        <li><h5 class="mt-2">나의정보</h5></li>
+        <li><h5 class="mt-2 text-dark"><a href="/my/user.do" class="text-decoration-none text-dark">나의정보</a></h5></li>
         <li><a class="" th:href="@{'/user/{uId}/detail.do'(uId=${session.loginUser.getUId()})}">정보수정</a></li>
         <li><a class="" href="#">비밀번호 변경</a></li>
         <li><a class="" href="/user/dropout.do">회원탈퇴</a></li>

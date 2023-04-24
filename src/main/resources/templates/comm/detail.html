@@ -39,7 +39,6 @@
                 <small><i class="bi bi-eye"></i>조회수 <span th:text="${c.viewCount}"></span></small>
             </p>
             <div class="card-body">
-                <p th:text="${c}"></p>
                 <div th:id="'carousel'+${c.cId}" class="carousel slide" data-bs-ride="carousel">
                     <div th:if="${c.imgs != null}"  class="carousel-inner">
                         <div class="carousel-item" th:each="img,state:${c.imgs}" th:classappend="${(state.first)?'active':''}">
