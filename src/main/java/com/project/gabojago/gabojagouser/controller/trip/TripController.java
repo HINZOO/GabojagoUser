@@ -89,12 +89,12 @@ public class TripController {
     public String modifyAction(
             @ModelAttribute TripDto trip,
             @RequestParam (required = false)MultipartFile mainImg, // 메인이미지 파라미터
-            @RequestParam(value="img", required = false) List<MultipartFile> imgs,
-            @RequestParam(value="delImgId", required = false) List<Integer> delImgIds,
-            @RequestParam(value = "delMainImgId",required = false) int delMainImgId,
+            @RequestParam(name="img", required = false) List<MultipartFile> imgs,
+            @RequestParam(name="delImgId", required = false) List<Integer> delImgIds,
+            @RequestParam(name = "delMainImgId",required = false) int delMainImgId,
 
             RedirectAttributes redirectAttributes
-    ) {
+    ) throws IOException {
         String redirectPage = "redirect:/trip/" + trip.getTId() + "/modify.do";
         String msg="";
 
@@ -138,11 +138,7 @@ public class TripController {
                     if (contentTypes[0].equals("image")) {
                         String fileName = System.currentTimeMillis() + "_" + (int) (Math.random() * 10000) + "." + contentTypes[1];
                         Path path = Paths.get(staticPath + "/public/img/trip/" + fileName);
-                        try {
-                            img.transferTo(path);
-                        } catch (IOException e) {
-                            log.error(e.getMessage());
-                        }
+                        img.transferTo(path);
                         TripImgDto imgDto = new TripImgDto();
                         if(i==imgs.size()-1)imgDto.setImgMain(true);
                         imgDto.setImgPath("/public/img/trip/" + fileName);
@@ -205,7 +201,7 @@ public class TripController {
             @ModelAttribute TripDto trip,
             RedirectAttributes redirectAttributes,
             @RequestParam MultipartFile mainImg, // 메인이미지 파라미터
-            @RequestParam(value = "img", required = false) List<MultipartFile> imgs) { // required=false : 파라미터 img 없어도 에러발생안하도록!
+            @RequestParam(name = "img", required = false) List<MultipartFile> imgs) { // required=false : 파라미터 img 없어도 에러발생안하도록!
         String redirectPage = "redirect:/trip/register.do";
 //        if(!loginUser.getUId().equals(trip.getUId())) return redirectPage; // 다르면 다시 등록페이지로 이동
         String msg="";
