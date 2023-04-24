@@ -26,11 +26,15 @@
           </div>
         </div>
         <hr>
-        <p class="card-text">
-          <sapn th:text="${q.content}"></sapn>
-        </p>
+
+        <div>
+          <p class="card-text">
+            <sapn th:text="${q.content}"></sapn>
+            <img th:src="@{'{path}'(path=${q.filePath})}" class="d-block w-100" alt="게시글 이미지">
+          </p>
+        </div>
+        </div>
       </div>
-    </div>
   </section>
 </div>
 </body>
