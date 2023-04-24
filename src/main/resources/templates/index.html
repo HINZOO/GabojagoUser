@@ -8,7 +8,9 @@
         <h1 class="mt-3">테스트용 메인화면:)</h1>
 
 
-    <h3 clas="my-4">가보자고</h3>
+    <h3 clas="my-4">
+        <i class="bi bi-car-front"></i>
+        가보자고</h3>
     <div id="tripContainer" class="d-flex justify-content-evenly my-4">
         <div class="card" style="width: 18rem;" th:each="t:${trip}">
             <img src="..." class="card-img-top" alt="...">
@@ -21,7 +23,9 @@
     </div>
 
 
-    <h3>같이놀자</h3>
+    <h3>
+        <i class="bi bi-people"></i>
+        같이놀자</h3>
     <div id="commContainer" class="d-flex justify-content-evenly my-4">
         <div class="card" style="width: 18rem;" th:each="c:${comm}">
             <div class="card-body">
@@ -48,14 +52,34 @@
             </div>
             <div class="card-body">
                 <h5 class="card-title" th:text="${c.title}"></h5>
-                <p class="card-text"></p>
-                <a href="#" class="btn btn-primary">바로가기</a>
+            </div>
+            <div class="card-footer">
+                <p id="mbtiChk">
+                    <a href="/comm/list.do?searchField=istp&searchValue=1" class="" th:text="${c.istp==1}?'#ISTP':''" ></a>
+                    <a href="/comm/list.do?searchField=istj&searchValue=1" class="" th:text="${c.istj==1}?'#ISTJ':''" ></a>
+                    <a href="/comm/list.do?searchField=isfj&searchValue=1" class="" th:text="${c.isfj==1}?'#ISFJ':''" ></a>
+                    <a href="/comm/list.do?searchField=isfp&searchValue=1" class="" th:text="${c.isfp==1}?'#ISFP':''" ></a>
+                    <a href="/comm/list.do?searchField=intj&searchValue=1" class="" th:text="${c.intj==1}?'#INTJ':''" ></a>
+                    <a href="/comm/list.do?searchField=intp&searchValue=1" class="" th:text="${c.intp==1}?'#INTP':''" ></a>
+                    <a href="/comm/list.do?searchField=infj&searchValue=1" class="" th:text="${c.infj==1}?'#INFJ':''" ></a>
+                    <a href="/comm/list.do?searchField=infp&searchValue=1" class="" th:text="${c.infp==1}?'#INFP':''" ></a>
+                    <a href="/comm/list.do?searchField=estj&searchValue=1" class="" th:text="${c.estj==1}?'#ESTJ':''" ></a>
+                    <a href="/comm/list.do?searchField=estp&searchValue=1" class="" th:text="${c.estp==1}?'#ESTP':''" ></a>
+                    <a href="/comm/list.do?searchField=esfj&searchValue=1" class="" th:text="${c.esfj==1}?'#ESFJ':''" ></a>
+                    <a href="/comm/list.do?searchField=esfp&searchValue=1" class="" th:text="${c.esfp==1}?'#ESFP':''" ></a>
+                    <a href="/comm/list.do?searchField=entj&searchValue=1" class="" th:text="${c.entj==1}?'#ENTJ':''" ></a>
+                    <a href="/comm/list.do?searchField=entp&searchValue=1" class="" th:text="${c.entp==1}?'#ENTP':''" ></a>
+                    <a href="/comm/list.do?searchField=enfj&searchValue=1" class="" th:text="${c.enfj==1}?'#ENFJ':''" ></a>
+                    <a href="/comm/list.do?searchField=enfp&searchValue=1" class="" th:text="${c.enfp==1}?'#ENFP':''" ></a>
+                </p>
             </div>
         </div>
     </div>
 
 
-    <h3>상품판매</h3>
+    <h3>
+        <i class="bi bi-cart"></i>
+        상품판매</h3>
     <div id="sellContainer" class="d-flex justify-content-evenly my-4">
         <div class="card" style="width: 18rem;" th:each="s:${sells}">
             <div class="card-body">

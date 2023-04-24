@@ -11,4 +11,5 @@ public interface CommLikeService {
 
     int remove(CommLikeDto like);
 
+
 }

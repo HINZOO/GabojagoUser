@@ -15,5 +15,6 @@ public interface CommunityService {
     int register(CommunityDto community);
     int modify(CommunityDto community, int[] delImgIds);
     int remove(int cId);
+    List<CommunityDto> likesList(CommPageDto commPageDto);
 
 }

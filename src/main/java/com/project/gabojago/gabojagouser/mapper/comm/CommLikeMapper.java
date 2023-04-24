@@ -14,4 +14,5 @@ public interface CommLikeMapper {
 
     int deleteOne(CommLikeDto boardLikeDto);
 
+
 }

@@ -19,4 +19,5 @@
     <select id="findByUId" resultMap="commBookMap">
         SELECT * FROM comm_bookmarks WHERE u_id=#{uId}
     </select>
+
 </mapper>

@@ -14,6 +14,7 @@ public interface CommunityMapper {
     int updateOne(CommunityDto community);
     int deleteOne(int cId);
     int updateIncrementViewCountByCId(int cId);
+    List<CommunityDto> countListBylikes(CommPageDto pageDto);
 
 
 

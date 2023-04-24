@@ -35,4 +35,6 @@
     <select id="findByCIdAndUIdIsLoginUserId" resultType="boolean">
         SELECT COUNT(*) status FROM comm_likes WHERE c_id=#{cId} AND u_id=@loginUserId
     </select>
+
+
 </mapper>

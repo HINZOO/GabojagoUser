@@ -45,4 +45,6 @@ public class CommLikeServiceImpl implements CommLikeService{
         int remove=commLikeMapper.deleteOne(like);
         return remove;
     }
+
+
 }

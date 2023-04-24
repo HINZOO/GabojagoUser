@@ -7,6 +7,7 @@ import java.util.List;
 @Mapper
 public interface CommBookMarkMapper {
     List<CommBookmarkDto> findByUId(String uId);
+
     int insertOne(CommBookmarkDto bookmark);
     int deleteOne(int cbookId);
 }
