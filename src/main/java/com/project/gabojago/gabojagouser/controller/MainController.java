@@ -23,10 +23,12 @@ public class MainController {
     private CommunityService commService;
     private SellsService sellsService;
 
-    @GetMapping
+    @GetMapping("/")
     public String indexPage(Model model){
         CommPageDto commPageDto=new CommPageDto();
         SellPageDto sellPageDto=new SellPageDto();
+        commPageDto.setPageSize(4);
+        sellPageDto.setPageSize(4);
         List<TripDto> tripList=tripService.list();
         List<CommunityDto> commList=commService.list(null,commPageDto);
         List<SellsDto> sellsList=sellsService.List(sellPageDto);
