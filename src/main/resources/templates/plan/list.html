@@ -9,66 +9,96 @@
 
 </head>
 
-<div layout:fragment="content">
-    <div class="container listMain">
+<div layout:fragment="content" class="container-fluid px-0">
+        <div class="row">
+            <div class="col-2" ></div><!-- 이거 없애야됨 -->
 
-            <section class="row" >
-                <div class="col">
-                    <div class="listTitle">
-                        <span class="listTitleP">새 일정</span>
-                        <hr>
-                    </div>
-                    <div class="listContent">
-                        <div id="newPlanBtn">
-                            NEW
+            <div class="col-md-8 mainSection px-0">
+                <div class="row listMainHeader px-0 ">
+                    <img class="listMainHeaderImg mx-0 px-0" src="/public/img/plan/listHeader.jpg">
+                    <div class="col-6 titleBox">
+                        <div class="titleInnerBox">
+                            <p class="listHeaderTitle">나의 여행들</p>
                         </div>
                     </div>
-                </div>
-            </section>
-            <section class="row" >
-                <div class="col">
-                    <div class="listTitle">
-                        <span class="listTitleP">나의 일정</span><hr>
-                    </div>
-                    <div class="listContent" style="overflow: hidden">
-                        <th:block th:each="plan:${plans}">
-                            <a th:href="@{'{pId}/detail.do'(pId=${plan.getPId()})}">
-                                <div class="card">
-                                    <div class="card-header" style="width: 100%">
-                                        <p class="cardSchedule text-start"><span th:text="${plan.getPlanFrom()}"/> ~ <span th:text="${plan.getPlanTo()}"/></p>
-                                    </div>
-                                    <div class="cardImg" style="background-image:url('/public/img/plan/planSample.jpg');">
-                                        <p class="cardTitle" th:text="${plan.getTitle()}"></p>
-                                    </div>
-                                    <div class="card-body">
-                                        <p class="card-text cardInfo mb-3" th:text="${plan.getInfo()}"></p>
-                                    </div>
-                                    <div class="card-footer" style="width: 100%">
-                                        <div class="cardInnerLeft">
-                                            <a href="#" class="btn btn-outline-dark rounded-circle btn-sm"  role="button">　</a>
-                                        </div>
-                                        <div class="cardInnerRight">
-                                            <a href="#" class="btn btn-secondary btn-sm" style="color: white;">리뷰작성</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        </th:block>
-                    </div>
-                </div>
-            </section>
-            <section class="row" >
-                <div class="col">
-                    <div class="listTitle">
-                        <span class="listTitleP">북 마 크</span><hr>
-                    </div>
-                    <div class="listContent">
-                        내용
-                    </div>
-                </div>
-            </section>
+                    <div class="col-6 rightBox">
+                        <div class="flagBox">
+                            <div class="tdlTitle">
+                                <span>　Travel Flag</span>
+                                <span><i class="bi bi-flag-fill" id="flagB"></i>
+                                    <span class="tdlPBtn" id="mapP" style="margin-right: 5px">+</span>
+                                    <span class="tdlPBtn" id="mapM" style="margin-right: 5px">-</span>
+                                </span>
+                            </div>
 
-    </div>
+                            <div class="flagContent">
+                                <canvas id="listMap"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <div class="col-12 scheduleHeader">
+                        <div class="row">
+                            <div class="col-md-2">
+
+                            </div>
+                            <div class="col-md-8">
+
+                            </div> <!--col 8-->
+
+                            <div class="col-md-2 scheduleInputBox">
+                                <div id="newScheduleBtn">
+                                    <i class="bi bi-plus-circle"></i>
+                                </div>
+                            </div>
+                        </div> <!--내부로우 수정필요-->
+                    </div> <!--스케쥴헤더-->
+
+                    <div class="col-12" id="accordionSection">
+                        <div class="listContent" style="overflow: hidden">
+                            <th:block th:each="plan:${plans}">
+
+                                    <div class="card" onclick=shout()>
+                                        <div class="cardReview" data-bs-toggle="tooltip" data-bs-placement="top" th:data-bs-title="리뷰작성">
+                                            <i class="bi bi-pencil-square"></i>
+                                        </div>
+                                        <div class="cardModify" onclick=shout()>
+                                            <i class="bi bi-gear-fill"></i></i>
+                                        </div>
+                                        <img class="card-img-top" th:if="${plan.getImgPath()==null}" src="/public/img/plan/planSample.jpg">
+                                        <img class="card-img-top" th:if="${plan.getImgPath()!=null}" th:src="${plan.getImgPath()}">
+                                        <a th:href="@{'{pId}/detail.do'(pId=${plan.getPId()})}">
+                                        <div class="card-body" style="width: 100%;">
+                                            <p class="cardTitle" th:text="${plan.getTitle()}"></p>
+                                            <hr style="width: 60px; color: grey">
+                                            <p class="card-text cardInfo mb-3" th:text="${plan.getInfo()}"></p>
+                                            <p class="cardSchedule text-start">일정 : <span th:text="${plan.getPlanFrom()}"/> ~ <span th:text="${plan.getPlanTo()}"/></p>
+                                        </div>
+                                        </a>
+                                        <div class="card-footer">
+                                                <div class="cardMy" style="background-image:url('/public/img/plan/profileDefault.png')"
+                                                    data-bs-toggle="tooltip" data-bs-placement="top" th:data-bs-title="나"></div>
+                                            <th:block th:each="mu:${plan.getMUsers()}">
+                                                <div class="cardOr" style="background-image:url('/public/img/plan/profileDefault.png')"
+                                                     data-bs-toggle="tooltip" data-bs-placement="top" th:data-bs-title="${mu.getNkName()}"></div>
+                                            </th:block>
+                                        </div>
+                                    </div>
+
+
+                            </th:block>
+                        </div>
+                    </div>
+
+
+
+                    <div class="col-2" ></div>
+                </div> <!--메인섹션닫기-->
+            </div> <!--그리드 row 닫기-->
+
 
             <!--새 플랜 만들기 모달 부분-->
             <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -79,11 +109,12 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <form  method="post" action="./insert.do">
+                            <form  method="post" action="./insert.do" enctype="multipart/form-data">
                                 <div class="row">
                                     <div class="col-6">
                                         <div class="form-floating">
-                                            <input type="file" class="form-control" name="tempImg" id="floatingImg" placeholder="">
+                                            <img class="newPlanImg" src="/public/img/plan/planSample.jpg">
+                                            <input type="file" class="form-control" name="img" id="floatingImg" placeholder="">
                                             <label for="floatingImg">대표이미지</label>
                                         </div>
                                     </div>
@@ -152,11 +183,124 @@
 
 
     <script>
-        let newPlanBtn = document.querySelector("#newPlanBtn");
+        //툴팁 출력용
+
+
+        let cardModifyBtn = document.getElementsByClassName("cardModify");
+
+        function shout(){
+            console.log("되네")
+        }
+
+        const newPlanBtn = document.querySelector("#newScheduleBtn");
         newPlanBtn.addEventListener("click",()=>{
             console.log("??")
             new bootstrap.Modal(document.getElementById('staticBackdrop'), {}).show();
         })
+
+
+        window.addEventListener("load",()=>{
+            // 깃발 꽂기ㅋㅋ
+            const box = document.querySelector(".flagContent")
+            const pBtn = document.getElementById("mapP")
+            const mBtn = document.getElementById("mapM")
+            const canvas = document.getElementById("listMap")
+            const ctx = canvas.getContext("2d")
+            canvas.width = 300;
+            canvas.height = 500;
+            let mapScale = 1.0;
+            ctx.save();
+            let currentC = new Image();
+
+            const map = new Image();
+            map.src = "/public/img/plan/listMap.png"
+            map.addEventListener('load', ()=>{
+                ctx.drawImage(map, 0, 0);
+                currentC.src = canvas.toDataURL();
+
+
+            });
+            function clearC(){
+                ctx.clearRect(0,0,300,500)
+            }
+            function xy(xy){
+                return xy/(box.clientWidth/300)
+            }
+            function load(){
+                ctx.scale(mapScale,mapScale);
+                ctx.drawImage(map,0,0);
+                ctx.restore();
+                ctx.save();
+            }
+            pBtn.addEventListener("click",()=>{
+                if(mapScale<5){
+                    clearC()
+                    mapScale*=1.2;
+                    load()
+                    currentC.src = canvas.toDataURL();
+
+
+                    // clearC()
+                    // mapScale*=1.2;
+                    // ctx.scale(1.2,1.2);
+                    // ctx.drawImage(currentC,0,0)
+                    // ctx.scale(1/1.2,1/1.2)
+                    // currentC.src = canvas.toDataURL();
+                }
+
+            })
+            mBtn.addEventListener("click",()=>{
+                if(mapScale>0.5){
+                    clearC()
+                    mapScale/=1.2;
+                    load()
+                    currentC.src = canvas.toDataURL();
+                }
+            })
+
+
+            let isOn = false;
+            canvas.addEventListener('mousemove', (event) => {
+                let x = event.offsetX;
+                let y = event.offsetY;
+                let data = ctx.getImageData(xy(x), xy(y), 1, 1).data;
+
+                if(data[0]!==0 && isOn===false){
+                    canvas.style.cursor="pointer"
+                    isOn = true;
+                    let mX=null,mY=null
+                    let a = 0,b = 0
+                    while (mX==null || mY==null){
+                        if(ctx.getImageData(xy(x)-a, xy(y), 1, 1).data[0]!==0)a += xy(1);
+                        else mX = xy(x) - a
+                        if (ctx.getImageData(xy(x), xy(y) - b, 1, 1).data[0] !==0) b += xy(1);
+                        else mY = xy(y) - b;
+                    }
+                    ctx.fillStyle="dodgerblue"
+                    ctx.fillRect(mX,mY,10,10)
+                } else if(data[0]===0 && data[1]===0 && data[2]===0 && isOn === true) {
+                    canvas.style.cursor="default"
+                    isOn =false;
+                    clearC();
+                    load();
+                }
+
+            });
+        })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     </script>
 
 </div>

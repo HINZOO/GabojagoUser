@@ -1,0 +1,60 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layoutMy}">
+<head>
+    <title>마이페이지</title>
+</head>
+
+<div layout:fragment="content" class="container">
+ <h1>팔로우 목록</h1>
+    <p>😎 팔로워 리스트에 계속 false만 나오는 오류를 해결해야함</p>
+    <div class="followCnt ms-5">
+        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">
+                    팔로워</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">
+                    팔로잉</button>
+            </li>
+        </ul>
+        <div class="tab-content" id="pills-tabContent">
+            <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab" tabindex="0">
+<!--                팔로우리스트-->
+                <h3>팔로워 리스트</h3>
+                <P th:text="${user.followers}"></P>
+                <div id="followerCont" class="list-group  w-75">
+                    <div th:each="f:${user.followers}"
+                         class="list-group-item ">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <th:block th:include="/my/followDetail"></th:block>
+                            <div>
+                                <button  type="button"
+                                         th:onclick="toggleFollower([[${f.uId}]],this)"
+                                         class="btn btn-outline-danger">삭제</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab" tabindex="0">
+                <h3>팔로잉 리스트</h3>
+                <P th:text="${user.followings}"></P>
+                <div id="followingsCont" class="list-group  w-75">
+                    <div th:each="f:${user.followings}"
+                         class="list-group-item ">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <th:block th:include="/my/followDetail"></th:block>
+                            <div>
+                                <button  type="button"
+                                         th:onclick="toggleFollowing([[${f.uId}]],this)"
+                                         class="btn btn-outline-primary active">팔로잉</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

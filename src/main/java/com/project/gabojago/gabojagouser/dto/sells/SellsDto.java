@@ -17,7 +17,7 @@ public class SellsDto {
     private int viewCount;
     private String category;
     private int qnt;
-    private boolean imgMain;
+    private String imgMain;
     private List<SellsOptionDto> sellOption;
     private List<SellImgsDto> sellImgs;
 }

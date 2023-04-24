@@ -8,11 +8,16 @@ import com.project.gabojago.gabojagouser.service.plan.PlanCheckListsService;
 import com.project.gabojago.gabojagouser.service.plan.PlanService;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.nio.channels.Pipe;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -21,11 +26,17 @@ import java.util.Objects;
 
 @Controller
 @RequestMapping("/plan")
-@AllArgsConstructor
 @Log4j2
 public class PlanController {
     private PlanService planService;
     private PlanCheckListsService planCheckListsService;
+    @Value("${static.path}")
+    private String staticPath;
+
+    public PlanController(PlanService planService, PlanCheckListsService planCheckListsService) {
+        this.planService = planService;
+        this.planCheckListsService = planCheckListsService;
+    }
 
     @GetMapping("/list.do")
     public String list(
@@ -46,7 +57,20 @@ public class PlanController {
     }
 
     @PostMapping("/insert.do")
-    public String insert(PlanDto planDto){ // 새 플랜 등록
+    public String insert(
+            PlanDto planDto,
+            @RequestParam(value ="img",required = false) MultipartFile[] img) throws IOException {
+        log.info("플랜테스트"+img);;;
+        if (img != null) {
+            String[] contentTypes = img[0].getContentType().split("/");
+            if (contentTypes[0].equals("image")) {
+                String fileName = System.currentTimeMillis() + "_" + (int) (Math.random() * 10000) + "." + contentTypes[1];
+                Path path = Paths.get(staticPath + "/public/img/plan/" + fileName);
+                img[0].transferTo(path);
+                planDto.setImgPath("/public/img/plan/" + fileName);
+            }
+        }
+
         int register;
         register = planService.register(planDto);
         return "redirect:/plan/list.do";

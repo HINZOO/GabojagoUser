@@ -18,6 +18,18 @@
     <result column="post_time" property="postTime"/>
     <result column="store_name" property="storeName"/>
     <result column="business_id" property="businessId"/>
+    <association property="following"
+                 select="com.project.gabojago.gabojagouser.mapper.my.FollowMapper.findByToIdAndFromIdIsLoginUserId"
+                 column="u_id"
+                 fetchType="eager"/>
+    <collection property="followings"
+                select="com.project.gabojago.gabojagouser.mapper.my.FollowMapper.findByFromId"
+                column="u_id"
+                fetchType="lazy"/>
+    <collection property="followers"
+                select="com.project.gabojago.gabojagouser.mapper.my.FollowMapper.findByToId"
+                column="u_id"
+                fetchType="eager"/>
   </resultMap>
   <insert id="insertOne" parameterType="com.project.gabojago.gabojagouser.dto.user.UserDto">
     INSERT INTO users
@@ -51,13 +63,16 @@
   <update id="setLoginUserIdNull">
     SET @loginUserId=NULL;
   </update>
+  <delete id="deleteOne" parameterType="UserDto">
+    DELETE FROM users WHERE u_id=#{uId} AND pw=#{pw}
+  </delete>
   <select id="findUserByUIdAndPw" resultMap="UserMap">
     SELECT * FROM users WHERE u_id=#{uId} AND pw=#{pw}
   </select>
   <select id="findUserByUId" resultMap="UserMap">
     SELECT * FROM users WHERE u_id=#{uId}
   </select>
-    <select id="findAll" resultType="com.project.gabojago.gabojagouser.dto.user.UserDto">
-        SELECT * FROM users
-    </select>
+  <select id="findAll" resultType="com.project.gabojago.gabojagouser.dto.user.UserDto">
+      SELECT * FROM users
+  </select>
 </mapper>

@@ -42,14 +42,15 @@ public class UserSignupController {
       @ModelAttribute UserDto user,
       RedirectAttributes redirectAttributes,
       @RequestParam(value = "img", required = false) MultipartFile img) throws IOException {
-    String redirectPage = "redirect:/user/signup.do";
     if(img!=null) {
       log.info(img.getContentType());
       log.info(img.getOriginalFilename());
       String[] contentTypes = img.getContentType().split("/");// "image/png"
+      log.info(contentTypes[0]);
       if(contentTypes[0].equals("image")) {
         String fileName = System.currentTimeMillis() + "_" + (int) (Math.random() * 10000)+"."+contentTypes[1];
         Path path = Paths.get(staticPath + "/public/img/user/" + fileName);
+        log.info(path);
         img.transferTo(path);
         user.setImgPath("/public/img/user/" + fileName);
       }

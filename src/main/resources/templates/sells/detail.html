@@ -57,7 +57,9 @@
                     <h3 class="text-end" id="totalPrice"></h3>
                     <hr>
                     <div class="text-end">
+                        <th:block th:if="${session.loginUser.uId == sells.uId}">
                         <a class="btn btn-secondary" th:href="@{'/sells/{sId}/modify.do'(sId=${sells.getSId()})}" >수정하기</a>
+                        </th:block>
                         <button type="submit" class="btn btn-primary ">결제하기</button>
                     </div>
             </div>

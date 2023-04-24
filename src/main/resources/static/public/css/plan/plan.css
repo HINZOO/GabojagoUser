@@ -35,44 +35,32 @@ body{
 a:link { color: black; text-decoration: none;}
 a:visited { color: black; text-decoration: none;}
 a:hover { color: black; text-decoration: none;}
-#newPlanBtn {
-    background-color: #ffffff;
-    width: 130px;
-    height: 170px;
-    box-shadow: 0px 0px 10px 5px whitesmoke;
-    color: lightgrey;
-    font-size: 30px;
+
+.listMainHeader{
+    width: 100%;
+    height: 40vh;
+}
+
+.listMainHeaderImg{
+    z-index: -999;
+    position: absolute;
+    width: 67.3vw;
+    height: 45vh;
+    opacity: 0.9;
+    filter: contrast(70%) grayscale(50%);
+}
+
+.listHeaderTitle{
+    letter-spacing: 5px;
+    padding-top: 50px;
+    font-family: do hyeon;
+    color: white;
     font-weight: bold;
-    text-align: center;
+    font-size: 50px;
+    text-shadow: -1px 0 gray, 1px 1px gray, 1px 2px gray, 0 -1px gray;
 }
-#newPlanBtn:hover {
-    box-shadow: 0px 0px 10px 5px #e5e5e5;
-}
-.listMain{
-    padding-top: 20px;
 
-}
-.listMain section {
-    min-height: 33vh;
-    padding: 20px 10px;
-    margin-bottom: 50px;
-    border-radius: 10px;
-    box-shadow: 0px 0px 10px 1px #e3e3e3;
-}
-.listTitle {
 
-}
-.listTitle hr {
-    margin-top: 10px;
-    border: 2px solid grey;
-    width: 95%;
-}
-.listTitleP {
-    font-size: 25px;
-    border-left: 10px solid lightgrey;
-    padding: 2px 10px 2px 10px;
-    color: #3b3b3b;
-}
 .listContent {
     overflow: hidden;
     padding: 20px 0px 20px 30px
@@ -80,10 +68,45 @@ a:hover { color: black; text-decoration: none;}
 .listContent div {
     display: inline-block;
 }
+.flagBox{
+    background-color: rgba(0, 0, 0, 0.24);
+    display: inline-block;
+    font-family: Russo one;
+    color: white;
+    padding: 10px;
+    border-radius: 15px;
+    width: 60%;
+    height: 30vh;
+}
+.flagContent{
+    padding: 0px !important;
+    height: 85%;
+    overflow: hidden;
+}
+.flagContent > canvas {
+    width: 100%;
+
+}
+#flagB{
+    cursor: pointer;
+    font-size: 15px;
+    padding: 5px;
+    border-radius: 50%;
+}
+#flagB:hover{
+    color: firebrick;
+    background-color: white;
+}
+
+
+
 .card {
+    border: 1px solid transparent;
     width: 300px;
     border-radius: 10px;
     box-shadow: 0px 0px 10px 5px whitesmoke;
+    margin-right: 40px;
+    margin-bottom: 40px;
 }
 .card:hover {
     box-shadow: 0px 0px 10px 5px #e5e5e5;
@@ -91,58 +114,89 @@ a:hover { color: black; text-decoration: none;}
 .card img{
     width: 100%;
     object-fit: cover;
-    height: 180px;
+    height: 220px;
     opacity: 0.9;
 }
 .cardSchedule{
+    font-family: "Yu Gothic";
     font-size: 12px;
     margin: 0px;
 }
 
-.cardImg{
-    position: relative;
-    display: flex !important;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: nowrap;
-    width: 100%;
-    height: 200px;
-    text-align: center;
-
-}
-.cardImg::before{
-    position: absolute;
-    content: "";
-    opacity: 0.1;
-    top: 0px;
-    left: 0px;
-    right: 0px;
-    bottom: 0px;
-    background-color: #000000;
-}
 
 .cardTitle{
     font-family: 'TheJamsil5Bold';
-    position: relative;
-    color: white;
-    font-size: 30px;
-    /*text-shadow: -1px 0 gray, 1px 1px gray, 1px 2px gray, 0 -1px gray;*/
+    color: dodgerblue;
+    font-size: 22px;
+}
+.card-body{
+    width: 100%;
+    padding: 20px;
 }
 
 .cardInfo{
-    min-height: 60px;
+    font-family: "Yu Gothic";
+    min-height: 30px;
     overflow: hidden;
 }
 .card-footer{
-    background-color: transparent;
+    height: 50px;
+    border: none;
+    background-color: white;
 }
-.cardInnerLeft{
-    width: 180px;
+.card-footer>div{
+    background-size: contain;
+
+    box-shadow: 0px 0px 1px 1px rgba(211, 211, 211, 0.57);
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
 }
-.cardInnerRight{
-    text-align: right;
-    width: 80px;
+.card-footer>div:hover{
+    box-shadow: 0px 0px 10px 5px #c7c7c7;
 }
+.card-footer .cardMy{
+    background-color: rgba(99, 196, 255, 0.56);
+}
+.card-footer .cardOr{
+    background-color: rgba(251, 125, 255, 0.56);
+}
+.cardReview{
+    cursor: pointer;
+    text-align: center;
+    line-height: 35px;
+    border-radius: 50%;
+    padding: 5px;
+    width: 45px;
+    height: 45px;
+    font-size: 27px;
+    background-color: lightgray;
+    color: white;
+    position: absolute;
+    top: 380px;
+    left : 240px;
+}
+.cardReview:hover{
+    color: black;
+    box-shadow: 0px 0px 10px 5px #d5d5d5;
+}
+.cardModify{
+    cursor: pointer;
+    text-align: center;
+    line-height: 30px;
+    border-radius: 50%;
+    padding: 5px;
+    font-size: 17px;
+    color: lightgray;
+    position: absolute;
+    top: 5px;
+    left : 260px;
+    z-index: 3;
+}
+.cardModify:hover{
+    color: black;
+}
+
 
 
 
@@ -201,7 +255,7 @@ canvas{
 }
 .rightBox{
     text-align: right;
-    padding-top: 5vh;
+    padding-top: 4vh;
     padding-rightt: 50px;
 
 }
@@ -291,6 +345,7 @@ canvas{
 
 
 .headerTitle{
+    text-shadow: -1px 0 gray, 1px 1px black, 1px 2px gray, 0 -1px gray;
     font-size: 40px;
     color: white;
     font-weight: bold;
@@ -370,6 +425,9 @@ canvas{
     background-color: #595959;
 
 }
+.newPlanImg{
+ width: 100%;
+}
 
 
 
@@ -411,7 +469,7 @@ canvas{
     width: 100%;
     min-height: 50vh;
     background-color: #fdfdfd;
-    border-top: 10px solid lightgrey ;
+    border-top: 10px double whitesmoke;
     padding: 20px 50px 0px 50px;
 }
 
@@ -497,4 +555,49 @@ canvas{
     background-color: whitesmoke;
 }
 
+.chatBtn{
+    width: 60px;
+    height: 60px;
+    position: fixed;
+    right: 50px;
+    bottom: 50px;
+    cursor: pointer;
+    font-size: 50px;
+    transform: scaleX(-1);
+}
+.offcanvas{
+    width: 15.8vw !important;
+}
+.chatBody{
+    height: 95vh;
+}
+#msgBox{
+    padding: 10px;
+    height: 90%;
+    background-color: white;
+    border-radius: 20px;
+}
+.chatSystem{
+    padding: 10px 0px;
+    color: gray;
+    text-align: center;
+    font-size: 12px;
+}
+.chatMy{
+    width: 100%;
+    /*float: right;*/
+    margin: 8px 8px;
+    padding: 0px 5px;
+    color: black;
+    text-align: right;
+    font-size: 12px;
+}
+.chatOrder{
+    width: 100%;
+    /*float: left;*/
+    margin: 8px 8px;
+    color: black;
+    text-align: left;
+    font-size: 12px;
+}
 

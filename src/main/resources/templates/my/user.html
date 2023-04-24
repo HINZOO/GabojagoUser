@@ -1,28 +1,24 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout}">
+      layout:decorate="~{layoutMy}">
 <head>
   <title>마이페이지</title>
 </head>
 
-<div layout:fragment="content" class="container-fluid">
-<div class="d-flex">
-    <div>
-      <th:block th:include="/my/dropDownMenu"></th:block>
-    </div>
+<div layout:fragment="content" class="container">
+<div class="">
     <div>
       <div class="card mb-5 mt-5" style="width: 500px; float: none; margin: 0 auto">
-        <div class="row g-0">
+        <div class="row g-0" th:each="u:${user}">
           <div class="col-md-4">
-            <img src="/img/user/프로필.png" class="img-fluid rounded-start card-img-top" alt="회원이미지">
+            <img th:src="@{'{path}'(path=${u.imgPath})}" class="img-fluid rounded-start card-img-top" alt="회원이미지">
           </div>
           <div class="col-md-8">
-            <div class="card-body">
-              <h5 class="card-title">후추</h5>
-              <p class="card-text">후추바보대머리깎아라</p>
-              <p class="card-text"><small class="text-body-secondary">자기소개</small></p>
-              <p>마일리지</p>
-              <p>팔로우 0명 팔로워 0명</p>
+            <div class="card-body" >
+              <h5 class="card-title" th:text="${u.name}"></h5>
+              <p class="card-text" th:text="${u.nkName}"></p>
+              <p class="card-text"><small class="text-body-secondary" th:text="${u.prContent}"></small></p>
+              <span>나의 MBTI : <p th:text="${u.mbti}"></p></span>
               <a class="btn btn-info" href="#">쪽지함</a>
               <a class="btn btn-secondary" href="/{uId}/detail.do">정보수정</a>
             </div>

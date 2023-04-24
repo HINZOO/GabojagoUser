@@ -32,6 +32,10 @@
                      select="com.project.gabojago.gabojagouser.mapper.user.UserMapper.findUserByUId"
                      column="u_id"
                      fetchType="lazy"/>
+        <association property="likes"
+                     select="com.project.gabojago.gabojagouser.mapper.comm.CommLikeMapper.countStatusByCId"
+                     column="c_id"
+                     fetchType="eager"/>
         <collection property="imgs"
                     select="com.project.gabojago.gabojagouser.mapper.comm.CommImgMapper.findByCId"
                     column="c_id"
@@ -40,11 +44,12 @@
                     select="com.project.gabojago.gabojagouser.mapper.comm.CommReplyMapper.findByCIdAndParentCrIdIsNull"
                     column="c_id"
                     fetchType="lazy"/>
+
     </resultMap>
 
     <insert id="insertOne" parameterType="communityDto" useGeneratedKeys="true" keyProperty="cId">
-    INSERT INTO communitys (u_id, p_id, title, content, area, istj, istp, isfj, isfp, intj, intp, infj, infp, estj, estp, esfj, esfp, entj, entp, enfj, enfp)
-    VALUE (#{uId}, #{pId}, #{title}, #{content}, #{area}, #{istj}, #{istp}, #{isfj}, #{isfp}, #{intj}, #{intp}, #{infj}, #{infp}, #{estj}, #{estp}, #{esfj}, #{esfp}, #{entj}, #{entp}, #{enfj}, #{enfp})
+        INSERT INTO communitys (u_id, p_id, title, content, area, istj, istp, isfj, isfp, intj, intp, infj, infp, estj, estp, esfj, esfp, entj, entp, enfj, enfp)
+            VALUE (#{uId}, #{pId}, #{title}, #{content}, #{area}, #{istj}, #{istp}, #{isfj}, #{isfp}, #{intj}, #{intp}, #{infj}, #{infp}, #{estj}, #{estp}, #{esfj}, #{esfp}, #{entj}, #{entp}, #{enfj}, #{enfp})
 
     </insert>
     <update id="updateOne" parameterType="communityDto">
@@ -56,13 +61,21 @@
         WHERE c_id=#{cId}
     </update>
 
+
     <delete id="deleteOne">
         DELETE FROM communitys WHERE c_id=#{cId}
     </delete>
-    <select id="findAll" resultMap="CommMap">
+    <select id="findAll" resultMap="CommMap"  parameterType="CommPageDto">
         SELECT * FROM communitys
+        <if test="searchField!=null and searchValue!=null">
+            WHERE ${searchField} LIKE CONCAT('%',#{searchValue},'%')
+        </if>
     </select>
     <select id="findByCId" resultMap="CommMap">
         SELECT * FROM communitys WHERE c_id=#{cId};
     </select>
+
+    <update id="updateIncrementViewCountByCId">
+        UPDATE communitys SET view_count=(view_count+1) WHERE c_id=#{cId}
+    </update>
 </mapper>

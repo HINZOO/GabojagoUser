@@ -1,3 +1,4 @@
+
 DROP DATABASE gabojagoPlan;
 CREATE DATABASE gabojagoPlan CHARACTER SET utf8;
 use gabojagoPlan;
@@ -160,10 +161,9 @@ CREATE TABLE `trip_review_comments` (
                                         FOREIGN KEY (u_id) REFERENCES users (u_id) ON DELETE CASCADE ON UPDATE CASCADE,
                                         FOREIGN KEY (tr_id) REFERENCES trip_reviews (tr_id) ON DELETE CASCADE ON UPDATE CASCADE,
                                         FOREIGN KEY (parent_trc_id) REFERENCES trip_review_comments (trc_id) ON DELETE CASCADE ON UPDATE CASCADE
-
-# ALTER TABLE trip_review_comments ADD COLUMN img_path VARCHAR(255) COMMENT '이미지 경로'
-
 );
+ALTER TABLE trip_review_comments ADD COLUMN img_path VARCHAR(255) COMMENT '이미지 경로';
+
 #가보자고 (좋아요 페이지)
 #제약조건 추가 1개만 좋아요 가능하게
 CREATE TABLE `trip_likes` (
@@ -498,19 +498,21 @@ CREATE TABLE `sell_refunds` (
 CREATE TABLE `sell_carts` (
                               `cart_id`	int unsigned AUTO_INCREMENT PRIMARY KEY COMMENT '장바구니 아이디',
                               `u_id`	varchar(255) NOT NULL COMMENT '작성자 아이디',
-                              `o_id`	int unsigned NOT NULL COMMENT '옵션 아이디',
+                              `s_id`	int unsigned NOT NULL COMMENT '옵션 아이디',
                               FOREIGN KEY (u_id) REFERENCES users (u_id) ON DELETE CASCADE ON UPDATE CASCADE,
-                              FOREIGN KEY (o_id) REFERENCES sell_options (o_id) ON DELETE CASCADE ON UPDATE CASCADE
+                              FOREIGN KEY (s_id) REFERENCES sells (s_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-
 #마이페이지( 팔로우 테이블)
+
 CREATE TABLE `follows` (
-                           `f_id`	varchar(255)  PRIMARY KEY COMMENT '팔로우 아이디',
+                           `f_id`	int unsigned AUTO_INCREMENT  PRIMARY KEY COMMENT '팔로우인덱스',
                            `to_users`	varchar(255)	NOT NULL COMMENT '받는유저 아이디',
                            `from_users`	varchar(255)NOT NULL COMMENT '보내는유저',
+                           UNIQUE (from_users, to_users),
                            FOREIGN KEY (to_users) REFERENCES users (u_id) ON DELETE CASCADE ON UPDATE CASCADE,
                            FOREIGN KEY (from_users) REFERENCES users (u_id) ON DELETE CASCADE ON UPDATE CASCADE
+
 );
 
 #마이페이지( 문의하기 테이블)
@@ -556,24 +558,24 @@ CREATE TABLE `notes` (
 #유저더미
 INSERT INTO users (u_id, pw, name, nk_name, email, birth, phone, address, detail_address, pr_content, permission, mbti, img_path, store_name, business_id)
 VALUES
-    ('USER01', '1234', '김철수', '바보철수', 'user01@example.com', '1990-01-01', '010-1234-5678', '서울특별시 강남구', '삼성동 123-45', '안녕하세요. 저는 철수입니다.', 'USER', 'ISTJ', '/images/user01.jpg', NULL, NULL),
-    ('USER02', '1234', '김영수', '영수', 'kimyoungsoo@gmail.com', '1995-02-03', '010-1111-2222', '서울특별시 강남구', '신사동 123-1', '안녕하세요. 저는 웹 개발자입니다.', 'USER', 'ISTJ', NULL, NULL, NULL),
-    ('USER03', '1234', '이은지', '은지', 'leeeunji@gmail.com', '1998-06-17', '010-1234-5679', '서울특별시 관악구', '신림동 543-2', '안녕하세요. 저는 디자이너입니다.', 'USER', 'INFP', NULL, NULL, NULL),
-    ('USER04', '1234', '박민수', '민수', 'parkminsou@gmail.com', '1987-09-23', '010-5555-5555', '경기도 부천시', '상동 23-4', '안녕하세요. 저는 영화 감독입니다.', 'USER', 'INTJ', NULL, NULL, NULL),
-    ('USER05', '1234', '장현아', '현아', 'janghyuna@gmail.com', '2000-01-01', '010-8888-8888', '서울특별시 송파구', '잠실동 456-7', '안녕하세요. 저는 대학생입니다.', 'USER', 'ENFP', NULL, NULL, NULL),
-    ('USER06', '1234', '오현우', '현우', 'ohyunwoo@gmail.com', '1992-07-11', '010-2222-3333', '서울특별시 종로구', '관수동 23-1', '안녕하세요. 저는 작가입니다.', 'USER', 'ISFP', NULL, NULL, NULL),
-    ('USER07', '1234', '서지수', '지수', 'seojisoo@gmail.com', '1985-12-30', '010-7777-7777', '서울특별시 서대문구', '이화동 17-5', '안녕하세요. 저는 편집자입니다.', 'USER', 'INTP', NULL, NULL, NULL),
-    ('USER08', '1234', '강민지', '민지', 'kangminji@gmail.com', '1994-03-24', '010-1234-5677', '서울특별시 마포구', '망원동 456-7', '안녕하세요. 저는 영화 배우입니다.', 'USER', 'ESFP', NULL, NULL, NULL),
-    ('USER09', '1234','박성준', '성준', 'parksungjun@gmail.com', '1991-11-11', '010-9999-9999', '경기도 의정부시', '송산동 123-4', '안녕하세요. 저는 의사입니다.', 'USER', 'ENTJ', NULL, NULL, NULL),
-    ('USER10', '1234', '임수현', '수현', 'limsoohyun@gmail.com', '1996-08-08', '010-7777-7776', '서울특별시 강동구', '천호동 456-7', '안녕하세요. 저는 공무원입니다.', 'PARTNER', 'ISTP', NULL, NULL, NULL);
+    ('user01', '1234', '김철수', '바보철수', 'user01@example.com', '1990-01-01', '010-1234-5678', '서울특별시 강남구', '삼성동 123-45', '안녕하세요. 저는 철수입니다.', 'USER', 'ISTJ', '/images/user01.jpg', NULL, NULL),
+    ('user02', '1234', '김영수', '영수', 'kimyoungsoo@gmail.com', '1995-02-03', '010-1111-2222', '서울특별시 강남구', '신사동 123-1', '안녕하세요. 저는 웹 개발자입니다.', 'USER', 'ISTJ', NULL, NULL, NULL),
+    ('user03', '1234', '이은지', '은지', 'leeeunji@gmail.com', '1998-06-17', '010-1234-5679', '서울특별시 관악구', '신림동 543-2', '안녕하세요. 저는 디자이너입니다.', 'USER', 'INFP', NULL, NULL, NULL),
+    ('user04', '1234', '박민수', '민수', 'parkminsou@gmail.com', '1987-09-23', '010-5555-5555', '경기도 부천시', '상동 23-4', '안녕하세요. 저는 영화 감독입니다.', 'USER', 'INTJ', NULL, NULL, NULL),
+    ('user05', '1234', '장현아', '현아', 'janghyuna@gmail.com', '2000-01-01', '010-8888-8888', '서울특별시 송파구', '잠실동 456-7', '안녕하세요. 저는 대학생입니다.', 'USER', 'ENFP', NULL, NULL, NULL),
+    ('user06', '1234', '오현우', '현우', 'ohyunwoo@gmail.com', '1992-07-11', '010-2222-3333', '서울특별시 종로구', '관수동 23-1', '안녕하세요. 저는 작가입니다.', 'USER', 'ISFP', NULL, NULL, NULL),
+    ('user07', '1234', '서지수', '지수', 'seojisoo@gmail.com', '1985-12-30', '010-7777-7777', '서울특별시 서대문구', '이화동 17-5', '안녕하세요. 저는 편집자입니다.', 'USER', 'INTP', NULL, NULL, NULL),
+    ('user08', '1234', '강민지', '민지', 'kangminji@gmail.com', '1994-03-24', '010-1234-5677', '서울특별시 마포구', '망원동 456-7', '안녕하세요. 저는 영화 배우입니다.', 'USER', 'ESFP', NULL, NULL, NULL),
+    ('user09', '1234','박성준', '성준', 'parksungjun@gmail.com', '1991-11-11', '010-9999-9999', '경기도 의정부시', '송산동 123-4', '안녕하세요. 저는 의사입니다.', 'USER', 'ENTJ', NULL, NULL, NULL),
+    ('user10', '1234', '임수현', '수현', 'limsoohyun@gmail.com', '1996-08-08', '010-7777-7776', '서울특별시 강동구', '천호동 456-7', '안녕하세요. 저는 공무원입니다.', 'PARTNER', 'ISTP', NULL, NULL, NULL);
 
 
 #플래너더미
-INSERT INTO plans(p_id, u_id, title, info, plan_from, plan_to, img_path, plan_status, review) VALUES(1, 'USER01', '취업 기원 제주도여행', '취업 좀 하자 제발', '2023-04-01', '2023-04-03', '/public/img/plan/p1Sample.jpg', 'PUBLIC', false);
-INSERT INTO plans(p_id, u_id, title, info, plan_from, plan_to, img_path, plan_status, review) VALUES(2, 'USER01', '강원도 삼척 행', '강원도 다녀오기', '2022-03-11', '2022-03-15', '/public/img/plan/p2Sample.jpg', 'PUBLIC', true);
-INSERT INTO plans(p_id, u_id, title, info, plan_from, plan_to, img_path, plan_status, review) VALUES(3, 'USER02', '놀러가자', '언제놀러가지', '2023-05-01', '2023-05-03', '/public/img/plan/p1Sample.jpg', 'PUBLIC', false);
-INSERT INTO plans(p_id, u_id, title, info, plan_from, plan_to, img_path, plan_status, review) VALUES(4, 'USER04', '제주도 한 달 살기', '나의 워라벨을 위함', '2023-02-01', '2023-03-03', '/public/img/plan/p1Sample.jpg', 'PUBLIC', false);
-INSERT INTO plans(p_id, u_id, title, info, plan_from, plan_to, img_path, plan_status, review) VALUES(5, 'USER05', '경주에서 수학여행 즐기기', '어른이되어 도전하는 수학여행', '2023-06-01', '2023-06-03', '/public/img/plan/p1Sample.jpg', 'PUBLIC', false);
+INSERT INTO plans(p_id, u_id, title, info, plan_from, plan_to, img_path, plan_status, review) VALUES(1, 'user01', '취업 기원 제주도여행', '취업 좀 하자 제발', '2023-04-01', '2023-04-03', '/public/img/plan/p1Sample.jpg', 'PUBLIC', false);
+INSERT INTO plans(p_id, u_id, title, info, plan_from, plan_to, img_path, plan_status, review) VALUES(2, 'user02', '강원도 삼척 행', '강원도 다녀오기', '2022-03-11', '2022-03-15', '/public/img/plan/p2Sample.jpg', 'PUBLIC', true);
+INSERT INTO plans(p_id, u_id, title, info, plan_from, plan_to, img_path, plan_status, review) VALUES(3, 'user02', '놀러가자', '언제놀러가지', '2023-05-01', '2023-05-03', '/public/img/plan/p1Sample.jpg', 'PUBLIC', false);
+INSERT INTO plans(p_id, u_id, title, info, plan_from, plan_to, img_path, plan_status, review) VALUES(4, 'user04', '제주도 한 달 살기', '나의 워라벨을 위함', '2023-02-01', '2023-03-03', '/public/img/plan/p1Sample.jpg', 'PUBLIC', false);
+INSERT INTO plans(p_id, u_id, title, info, plan_from, plan_to, img_path, plan_status, review) VALUES(5, 'user05', '경주에서 수학여행 즐기기', '어른이되어 도전하는 수학여행', '2023-06-01', '2023-06-03', '/public/img/plan/p1Sample.jpg', 'PUBLIC', false);
 
 #플래너 그림판 로딩 테스트용 더미(User01로 접속하면 나옴)
 
@@ -607,16 +609,19 @@ VALUES (1, 1, '[{"type":"pen","strokeStyle":"#ff0000","lineWidth":0.5,"scale":1,
 
 #커뮤니티더미
 INSERT INTO communitys (u_id, p_id, title, content, area, istj, istp, isfj, isfp, intj, intp, infj, infp, estj, estp, esfj, esfp, entj, entp, enfj, enfp) VALUES
-    ('USER01', 1, 'Lets hike together!', 'Looking for hiking buddies in the Seoul area. Planning to go to Bukhansan National Park next weekend.', '서울', 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-INSERT INTO communitys (u_id, p_id, title, content, area, istj, istp, isfj, isfp, intj, intp, infj, infp, estj, estp, esfj, esfp, entj, entp, enfj, enfp) VALUES
-    ('USER02', 2, 'Coffee lovers unite!2', 'Looking for people who enjoy trying out new coffee shops in the Gyeonggi area. Lets share our favorite spots and maybe even organize a coffee tasting event.1', '서울', 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-INSERT INTO communitys (u_id, p_id, title, content, area, istj, istp, isfj, isfp, intj, intp, infj, infp, estj, estp, esfj, esfp, entj, entp, enfj, enfp) VALUES
-    ('USER03', 3, 'Coffee lovers unite!3', 'Looking for people who enjoy trying out new coffee shops in the Gyeonggi area. Lets share our favorite spots and maybe even organize a coffee tasting event.2', '제주', 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-INSERT INTO communitys (u_id, p_id, title, content, area, istj, istp, isfj, isfp, intj, intp, infj, infp, estj, estp, esfj, esfp, entj, entp, enfj, enfp) VALUES
-    ('USER04', 4, 'Coffee lovers unite!4', 'Looking for people who enjoy trying out new coffee shops in the Gyeonggi area. Lets share our favorite spots and maybe even organize a coffee tasting event.3', '경기', 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0);
-INSERT INTO communitys (u_id, p_id, title, content, area, istj, istp, isfj, isfp, intj, intp, infj, infp, estj, estp, esfj, esfp, entj, entp, enfj, enfp) VALUES
-    ('USER05', 5, 'Coffee lovers unite!5', 'Looking for people who enjoy trying out new coffee shops in the Gyeonggi area.', '강원', 0, 0, 1, 1,1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-
+    ('user01', 1, '서울 여행지 추천해주세요!', '서울에서 반드시 가봐야 할 여행지를 추천해주세요!', '서울', 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+    ('user02', 1, '강원도 여행 계획 중인데요!', '강원도에서 꼭 가봐야 할 곳과 추천 숙소가 있으신가요? 공유 부탁드립니다.', '강원', 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0),
+    ('user03', 2, '인천에서 맛집 찾기!', '인천에서 유명한 맛집이나 먹을 만한 곳 추천 부탁드립니다.', '인천', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0),
+    ('user01', 3, '서울 여행지 추천해주세요!', '서울에서 반드시 가봐야 할 여행지를 추천해주세요!', '서울', 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+    ('user02', 4, '강원도 여행 계획 중인데요!', '강원도에서 꼭 가봐야 할 곳과 추천 숙소가 있으신가요? 공유 부탁드립니다.', '강원', 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0),
+    ('user03', 1, '인천에서 맛집 찾기!', '인천에서 유명한 맛집이나 먹을 만한 곳 추천 부탁드립니다.', '인천', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0),
+    ('user01', 2, '서울 여행지 추천해주세요!', '서울에서 반드시 가봐야 할 여행지를 추천해주세요!', '서울', 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+    ('user02', 1, '강원도 여행 계획 중인데요!', '강원도에서 꼭 가봐야 할 곳과 추천 숙소가 있으신가요? 공유 부탁드립니다.', '강원', 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0),
+    ('user03', 1, '인천에서 맛집 찾기!', '인천에서 유명한 맛집이나 먹을 만한 곳 추천 부탁드립니다.', '인천', 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0),
+    ('user01', 1, '서울 자유여행코스 추천', '서울에 3박 4일로 자유여행을 계획중입니다. 추천해주시는 코스나 맛집이 있다면 알려주세요!', '서울', 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+    ('user02', 2, '인천 간만에 데이트코스', '최근 바쁜 일상에 지쳐있던 제 남자친구와 함께 인천에 데이트를 갔습니다. 여러분께 추천드릴만한 장소들을 소개해드릴게요!', '인천', 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0),
+    ('user03', 3, '경기도 캠핑장 추천해주세요', '경기도 지역에서 가족과 함께 캠핑을 계획중입니다. 추천해주실만한 캠핑장이 있다면 알려주세요!', '경기', 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+    ('user04', 4, '강원도 드라이브 코스 추천', '강원도로 드라이브를 갈 예정입니다. 추천해주실만한 드라이브 코스나 경치 좋은 장소가 있다면 알려주세요!', '강원', 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0);
 
 #판매글 데이터
 INSERT INTO sells (u_id, area, title, content, category, qnt, img_main)
@@ -627,8 +632,7 @@ VALUES
     ('user04', '광주', '판매글 제목4', '판매글 내용4', '레저', 8, true),
     ('user05', '대구', '판매글 제목5', '판매글 내용5', '박물관', 2, false),
     ('user06', '울산', '판매글 제목6', '판매글 내용6', '워터', 4, true),
-    ('user07', '부산', '판매글 제목7', '판매글 내용7', '테마', 3, false),
-    ('user08', '세종', '판매글 제목8', '판매글 내용8', '키즈', 2, true),
+    ('user07', '부산', '판매글 제목7', '판매글 내용7', '테마', 3, false),    ('user08', '세종', '판매글 제목8', '판매글 내용8', '키즈', 2, true),
     ('user09', '경기', '판매글 제목9', '판매글 내용9', '레저', 5, false),
     ('user10', '강원', '판매글 제목10', '판매글 내용10', '박물관', 1, true),
     ('user01', '충북', '판매글 제목11', '판매글 내용11', '워터', 3, false),
@@ -686,17 +690,39 @@ VALUES
     (1, 'user04', '이곳은 정말 특별한 경험이었어요.', 1, 5),
     (1, 'user05', '여기는 앞으로도 자주 찾게 될 것 같아요.', 1, 3);
 
+
+#팔로우 더미
+INSERT INTO follows(to_users, from_users)
+VALUES
+    ('user01', 'user02'), ('user01', 'user03'), ('user01', 'user04'), ('user01', 'user05'), ('user01', 'user06'),
+    ('user02', 'user01'), ('user02', 'user03'), ('user02', 'user05'), ('user02', 'user06'), ('user02', 'user07'),
+    ('user03', 'user01'), ('user03', 'user04'), ('user03', 'user05'), ('user03', 'user06'), ('user03', 'user07'),
+    ('user04', 'user01'), ('user04', 'user03'), ('user04', 'user05'), ('user04', 'user07'), ('user04', 'user08'),
+    ('user05', 'user01'), ('user05', 'user03'), ('user05', 'user04'), ('user05', 'user07'), ('user05', 'user10'),
+    ('user06', 'user02'), ('user06', 'user03'), ('user06', 'user04'), ('user06', 'user05'), ('user06', 'user07'),
+    ('user07', 'user02'), ('user07', 'user05'), ('user07', 'user06'), ('user07', 'user08'), ('user07', 'user10'),
+    ('user08', 'user04'), ('user08', 'user05'), ('user08', 'user06'), ('user08', 'user09'), ('user08', 'user10'),
+    ('user09', 'user03'), ('user09', 'user05'), ('user09', 'user06'), ('user09', 'user07'), ('user09', 'user08'),
+    ('user10', 'user01'), ('user10', 'user02'), ('user10', 'user05'), ('user10', 'user08'), ('user10', 'user09');
+
+#커뮤니티 이미지 더미
+INSERT INTO  comm_imgs (c_id, img_path, img_main)
+VALUES
+    (1,'/public/img/comm/1681969679943_2023.jpeg',0),
+    (2,'/public/img/comm/1681969832415_8296.jpeg',0),
+    (3,'/public/img/comm/1681976587025_8955.jpeg',0);
+
 #가보자고 리뷰 댓글 데이터
 INSERT INTO trip_review_comments (tr_id, u_id, content, status, parent_trc_id)
 VALUES
-    (19, 'user01', '가보자고리 재미있었어요!', 'PUBLIC', NULL),
-    (19, 'user02', '뷰가 너무 아름다웠어요!', 'PUBLIC', NULL),
-    (20, 'user03', '다음에도 꼭 가보고 싶어요!', 'PUBLIC', NULL),
-    (21, 'user04', '추천하는 가보자고리 루트가 있나요?', 'PUBLIC', NULL),
-    (21, 'user05', '가보자고리 최고!', 'PUBLIC', NULL),
-    (22, 'user06', '재밌는 추억이었어요!', 'PUBLIC', 4),
-    (19, 'user07', '뷰가 너무 아름다워요!', 'PUBLIC', NULL),
-    (24, 'user08', '가보자고리 루트 추천해요!', 'PUBLIC', NULL),
-    (22, 'user09', '다음에도 꼭 가보고 싶어요!', 'PUBLIC', NULL),
-    (25, 'user10', '가보자고리 가는 것을 추천합니다!', 'PUBLIC', NULL);
+    (1, 'user01', '가보자고리 재미있었어요!', 'PUBLIC', NULL),
+    (1, 'user02', '뷰가 너무 아름다웠어요!', 'PUBLIC', NULL),
+    (2, 'user03', '다음에도 꼭 가보고 싶어요!', 'PUBLIC', NULL),
+    (2, 'user04', '추천하는 가보자고리 루트가 있나요?', 'PUBLIC', NULL),
+    (2, 'user05', '가보자고리 최고!', 'PUBLIC', NULL),
+    (2, 'user06', '재밌는 추억이었어요!', 'PUBLIC', NULL),
+    (1, 'user07', '뷰가 너무 아름다워요!', 'PUBLIC', NULL),
+    (2, 'user08', '가보자고리 루트 추천해요!', 'PUBLIC', NULL),
+    (2, 'user09', '다음에도 꼭 가보고 싶어요!', 'PUBLIC', NULL),
+    (2, 'user10', '가보자고리 가는 것을 추천합니다!', 'PUBLIC', NULL);
 
