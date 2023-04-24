@@ -498,11 +498,10 @@ CREATE TABLE `sell_refunds` (
 CREATE TABLE `sell_carts` (
                               `cart_id`	int unsigned AUTO_INCREMENT PRIMARY KEY COMMENT '장바구니 아이디',
                               `u_id`	varchar(255) NOT NULL COMMENT '작성자 아이디',
-                              `o_id`	int unsigned NOT NULL COMMENT '옵션 아이디',
+                              `s_id`	int unsigned NOT NULL COMMENT '옵션 아이디',
                               FOREIGN KEY (u_id) REFERENCES users (u_id) ON DELETE CASCADE ON UPDATE CASCADE,
-                              FOREIGN KEY (o_id) REFERENCES sell_options (o_id) ON DELETE CASCADE ON UPDATE CASCADE
+                              FOREIGN KEY (s_id) REFERENCES sells (s_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
-
 
 #마이페이지( 팔로우 테이블)
 
@@ -610,26 +609,19 @@ VALUES (1, 1, '[{"type":"pen","strokeStyle":"#ff0000","lineWidth":0.5,"scale":1,
 
 #커뮤니티더미
 INSERT INTO communitys (u_id, p_id, title, content, area, istj, istp, isfj, isfp, intj, intp, infj, infp, estj, estp, esfj, esfp, entj, entp, enfj, enfp) VALUES
-    ('user01', 1, 'Lets hike together!', 'Looking for hiking buddies in the Seoul area. Planning to go to Bukhansan National Park next weekend.', '서울', 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-INSERT INTO communitys (u_id, p_id, title, content, area, istj, istp, isfj, isfp, intj, intp, infj, infp, estj, estp, esfj, esfp, entj, entp, enfj, enfp) VALUES
-    ('user02', 2, 'Coffee lovers unite!2', 'Looking for people who enjoy trying out new coffee shops in the Gyeonggi area. Lets share our favorite spots and maybe even organize a coffee tasting event.1', '서울', 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-INSERT INTO communitys (u_id, p_id, title, content, area, istj, istp, isfj, isfp, intj, intp, infj, infp, estj, estp, esfj, esfp, entj, entp, enfj, enfp) VALUES
-    ('user03', 3, 'Coffee lovers unite!3', 'Looking for people who enjoy trying out new coffee shops in the Gyeonggi area. Lets share our favorite spots and maybe even organize a coffee tasting event.2', '제주', 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-INSERT INTO communitys (u_id, p_id, title, content, area, istj, istp, isfj, isfp, intj, intp, infj, infp, estj, estp, esfj, esfp, entj, entp, enfj, enfp) VALUES
-    ('user04', 4, 'Coffee lovers unite!4', 'Looking for people who enjoy trying out new coffee shops in the Gyeonggi area. Lets share our favorite spots and maybe even organize a coffee tasting event.3', '경기', 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0);
-INSERT INTO communitys (u_id, p_id, title, content, area, istj, istp, isfj, isfp, intj, intp, infj, infp, estj, estp, esfj, esfp, entj, entp, enfj, enfp) VALUES
-    ('user05', 5, 'Coffee lovers unite!5', 'Looking for people who enjoy trying out new coffee shops in the Gyeonggi area.', '강원', 0, 0, 1, 1,1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-INSERT INTO communitys (u_id, p_id, title, content, area, istj, istp, isfj, isfp, intj, intp, infj, infp, estj, estp, esfj, esfp, entj, entp, enfj, enfp) VALUES
-    ('user01', 2, 'Lets hike together6!', 'Looking for hiking buddies in the Seoul area. Planning to go to Bukhansan National Park next weekend.', '서울', 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-INSERT INTO communitys (u_id, p_id, title, content, area, istj, istp, isfj, isfp, intj, intp, infj, infp, estj, estp, esfj, esfp, entj, entp, enfj, enfp) VALUES
-    ('user06', 2, 'Coffee lovers unite!7', 'Looking for people who enjoy trying out new coffee shops in the Gyeonggi area. Lets share our favorite spots and maybe even organize a coffee tasting event.1', '서울', 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-INSERT INTO communitys (u_id, p_id, title, content, area, istj, istp, isfj, isfp, intj, intp, infj, infp, estj, estp, esfj, esfp, entj, entp, enfj, enfp) VALUES
-    ('user07', 3, 'Coffee lovers unite!8', 'Looking for people who enjoy trying out new coffee shops in the Gyeonggi area. Lets share our favorite spots and maybe even organize a coffee tasting event.2', '제주', 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-INSERT INTO communitys (u_id, p_id, title, content, area, istj, istp, isfj, isfp, intj, intp, infj, infp, estj, estp, esfj, esfp, entj, entp, enfj, enfp) VALUES
-    ('user08', 4, 'Coffee lovers unite!9', 'Looking for people who enjoy trying out new coffee shops in the Gyeonggi area. Lets share our favorite spots and maybe even organize a coffee tasting event.3', '경기', 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0);
-INSERT INTO communitys (u_id, p_id, title, content, area, istj, istp, isfj, isfp, intj, intp, infj, infp, estj, estp, esfj, esfp, entj, entp, enfj, enfp) VALUES
-    ('user09', 5, 'Coffee lovers unite!10', 'Looking for people who enjoy trying out new coffee shops in the Gyeonggi area.', '강원', 0, 0, 1, 1,1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-
+    ('user01', 1, '서울 여행지 추천해주세요!', '서울에서 반드시 가봐야 할 여행지를 추천해주세요!', '서울', 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+    ('user02', 1, '강원도 여행 계획 중인데요!', '강원도에서 꼭 가봐야 할 곳과 추천 숙소가 있으신가요? 공유 부탁드립니다.', '강원', 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0),
+    ('user03', 2, '인천에서 맛집 찾기!', '인천에서 유명한 맛집이나 먹을 만한 곳 추천 부탁드립니다.', '인천', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0),
+    ('user01', 3, '서울 여행지 추천해주세요!', '서울에서 반드시 가봐야 할 여행지를 추천해주세요!', '서울', 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+    ('user02', 4, '강원도 여행 계획 중인데요!', '강원도에서 꼭 가봐야 할 곳과 추천 숙소가 있으신가요? 공유 부탁드립니다.', '강원', 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0),
+    ('user03', 1, '인천에서 맛집 찾기!', '인천에서 유명한 맛집이나 먹을 만한 곳 추천 부탁드립니다.', '인천', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0),
+    ('user01', 2, '서울 여행지 추천해주세요!', '서울에서 반드시 가봐야 할 여행지를 추천해주세요!', '서울', 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+    ('user02', 1, '강원도 여행 계획 중인데요!', '강원도에서 꼭 가봐야 할 곳과 추천 숙소가 있으신가요? 공유 부탁드립니다.', '강원', 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0),
+    ('user03', 1, '인천에서 맛집 찾기!', '인천에서 유명한 맛집이나 먹을 만한 곳 추천 부탁드립니다.', '인천', 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0),
+    ('user01', 1, '서울 자유여행코스 추천', '서울에 3박 4일로 자유여행을 계획중입니다. 추천해주시는 코스나 맛집이 있다면 알려주세요!', '서울', 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+    ('user02', 2, '인천 간만에 데이트코스', '최근 바쁜 일상에 지쳐있던 제 남자친구와 함께 인천에 데이트를 갔습니다. 여러분께 추천드릴만한 장소들을 소개해드릴게요!', '인천', 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0),
+    ('user03', 3, '경기도 캠핑장 추천해주세요', '경기도 지역에서 가족과 함께 캠핑을 계획중입니다. 추천해주실만한 캠핑장이 있다면 알려주세요!', '경기', 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+    ('user04', 4, '강원도 드라이브 코스 추천', '강원도로 드라이브를 갈 예정입니다. 추천해주실만한 드라이브 코스나 경치 좋은 장소가 있다면 알려주세요!', '강원', 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0);
 
 #판매글 데이터
 INSERT INTO sells (u_id, area, title, content, category, qnt, img_main)
@@ -640,8 +632,7 @@ VALUES
     ('user04', '광주', '판매글 제목4', '판매글 내용4', '레저', 8, true),
     ('user05', '대구', '판매글 제목5', '판매글 내용5', '박물관', 2, false),
     ('user06', '울산', '판매글 제목6', '판매글 내용6', '워터', 4, true),
-    ('user07', '부산', '판매글 제목7', '판매글 내용7', '테마', 3, false),
-    ('user08', '세종', '판매글 제목8', '판매글 내용8', '키즈', 2, true),
+    ('user07', '부산', '판매글 제목7', '판매글 내용7', '테마', 3, false),    ('user08', '세종', '판매글 제목8', '판매글 내용8', '키즈', 2, true),
     ('user09', '경기', '판매글 제목9', '판매글 내용9', '레저', 5, false),
     ('user10', '강원', '판매글 제목10', '판매글 내용10', '박물관', 1, true),
     ('user01', '충북', '판매글 제목11', '판매글 내용11', '워터', 3, false),
@@ -724,14 +715,14 @@ VALUES
 #가보자고 리뷰 댓글 데이터
 INSERT INTO trip_review_comments (tr_id, u_id, content, status, parent_trc_id)
 VALUES
-    (19, 'user01', '가보자고리 재미있었어요!', 'PUBLIC', NULL),
-    (19, 'user02', '뷰가 너무 아름다웠어요!', 'PUBLIC', NULL),
-    (20, 'user03', '다음에도 꼭 가보고 싶어요!', 'PUBLIC', NULL),
-    (21, 'user04', '추천하는 가보자고리 루트가 있나요?', 'PUBLIC', NULL),
-    (21, 'user05', '가보자고리 최고!', 'PUBLIC', NULL),
-    (22, 'user06', '재밌는 추억이었어요!', 'PUBLIC', 4),
-    (19, 'user07', '뷰가 너무 아름다워요!', 'PUBLIC', NULL),
-    (24, 'user08', '가보자고리 루트 추천해요!', 'PUBLIC', NULL),
-    (22, 'user09', '다음에도 꼭 가보고 싶어요!', 'PUBLIC', NULL),
-    (25, 'user10', '가보자고리 가는 것을 추천합니다!', 'PUBLIC', NULL);
+    (1, 'user01', '가보자고리 재미있었어요!', 'PUBLIC', NULL),
+    (1, 'user02', '뷰가 너무 아름다웠어요!', 'PUBLIC', NULL),
+    (2, 'user03', '다음에도 꼭 가보고 싶어요!', 'PUBLIC', NULL),
+    (2, 'user04', '추천하는 가보자고리 루트가 있나요?', 'PUBLIC', NULL),
+    (2, 'user05', '가보자고리 최고!', 'PUBLIC', NULL),
+    (2, 'user06', '재밌는 추억이었어요!', 'PUBLIC', NULL),
+    (1, 'user07', '뷰가 너무 아름다워요!', 'PUBLIC', NULL),
+    (2, 'user08', '가보자고리 루트 추천해요!', 'PUBLIC', NULL),
+    (2, 'user09', '다음에도 꼭 가보고 싶어요!', 'PUBLIC', NULL),
+    (2, 'user10', '가보자고리 가는 것을 추천합니다!', 'PUBLIC', NULL);
 
