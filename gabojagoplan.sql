@@ -246,7 +246,7 @@ CREATE TABLE `sells` (
                          `view_count`	INT UNSIGNED DEFAULT 0 COMMENT '조회수',
                          `category`	enum('워터','테마','키즈','레저','박물관')	NOT NULL COMMENT '카테고리',
                          `qnt`	int unsigned COMMENT '수량',
-                         `img_main`	boolean	COMMENT '대표이미지',
+                         `img_main`	varchar(255)  NOT NULL	COMMENT '대표이미지',
                          FOREIGN KEY (u_id) REFERENCES users (u_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 #상품판매 (상품옵션 테이블)
@@ -475,7 +475,7 @@ CREATE TABLE `sell_view_counts` (
 #상품판매 ( 북마크)
 #제약조건 추가 1개만북마크 가능하게
 CREATE TABLE `sell_bookmarks` (
-                                  `sbook_id`	int unsigned AUTO_INCREMENT PRIMARY KEY COMMENT '판매북마크 아이디',
+                                  `sb_id`	int unsigned AUTO_INCREMENT PRIMARY KEY COMMENT '판매북마크 아이디',
                                   `s_id`	int unsigned NOT NULL COMMENT '판매글 아이디',
                                   `u_id`	varchar(255)NOT NULL COMMENT '유저 아이디',
                                   FOREIGN KEY (u_id) REFERENCES users (u_id) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -626,25 +626,26 @@ INSERT INTO communitys (u_id, p_id, title, content, area, istj, istp, isfj, isfp
 #판매글 데이터
 INSERT INTO sells (u_id, area, title, content, category, qnt, img_main)
 VALUES
-    ('user01', '서울', '판매글 제목1', '판매글 내용1', '워터', 5, true),
-    ('user02', '인천', '판매글 제목2', '판매글 내용2', '테마', 3, false),
-    ('user03', '대전', '판매글 제목3', '판매글 내용3', '키즈', 1, true),
-    ('user04', '광주', '판매글 제목4', '판매글 내용4', '레저', 8, true),
-    ('user05', '대구', '판매글 제목5', '판매글 내용5', '박물관', 2, false),
-    ('user06', '울산', '판매글 제목6', '판매글 내용6', '워터', 4, true),
-    ('user07', '부산', '판매글 제목7', '판매글 내용7', '테마', 3, false),    ('user08', '세종', '판매글 제목8', '판매글 내용8', '키즈', 2, true),
-    ('user09', '경기', '판매글 제목9', '판매글 내용9', '레저', 5, false),
-    ('user10', '강원', '판매글 제목10', '판매글 내용10', '박물관', 1, true),
-    ('user01', '충북', '판매글 제목11', '판매글 내용11', '워터', 3, false),
-    ('user02', '충남', '판매글 제목12', '판매글 내용12', '테마', 6, true),
-    ('user03', '전북', '판매글 제목13', '판매글 내용13', '키즈', 4, true),
-    ('user04', '전남', '판매글 제목14', '판매글 내용14', '레저', 7, false),
-    ('user05', '경북', '판매글 제목15', '판매글 내용15', '박물관', 2, true),
-    ('user06', '경남', '판매글 제목16', '판매글 내용16', '워터', 5, false),
-    ('user07', '제주', '판매글 제목17', '판매글 내용17', '테마', 1, true),
-    ('user07', '제주', '판매글 제목17', '판매글 내용17', '키즈', 1, true),
-    ('user07', '제주', '판매글 제목171', '판매글 내용17', '레저', 1, true),
-    ('user07', '제주', '판매글 제목171', '판매글 내용17', '테마', 1, true);
+    ('user01', '서울', '판매글 제목1', '판매글 내용1', '워터', 5, '/public/img/sell/1681824976260_1751.jpeg'),
+    ('user02', '인천', '판매글 제목2', '판매글 내용2', '테마', 3, '/public/img/sell/1681825094140_3117.png'),
+    ('user03', '대전', '판매글 제목3', '판매글 내용3', '키즈', 1, '/public/img/sell/1681826322331_3834.jpeg'),
+    ('user04', '광주', '판매글 제목4', '판매글 내용4', '레저', 8, '/public/img/sell/1681827855970_8530.jpeg'),
+    ('user05', '대구', '판매글 제목5', '판매글 내용5', '박물관', 2, '/public/img/sell/1681827855974_6437.jpeg'),
+    ('user06', '울산', '판매글 제목6', '판매글 내용6', '워터', 4, '/public/img/sell/1681827855978_9700.png'),
+    ('user07', '부산', '판매글 제목7', '판매글 내용7', '테마', 3, '/public/img/sell/1681831564266_3265.jpeg'),
+    ('user08', '세종', '판매글 제목8', '판매글 내용8', '키즈', 2, '/public/img/sell/1681831564272_5576.jpeg'),
+    ('user09', '경기', '판매글 제목9', '판매글 내용9', '레저', 5, '/public/img/sell/1681831564275_4220.jpeg'),
+    ('user10', '강원', '판매글 제목10', '판매글 내용10', '박물관', 1, '/public/img/sell/1681864171471_7382.jpeg'),
+    ('user01', '충북', '판매글 제목11', '판매글 내용11', '워터', 3, '/public/img/sell/1681865519206_4470.jpeg'),
+    ('user02', '충남', '판매글 제목12', '판매글 내용12', '테마', 6, '/public/img/sell/1681868521560_8515.jpeg'),
+    ('user03', '전북', '판매글 제목13', '판매글 내용13', '키즈', 4, '/public/img/sell/1681868654202_3174.jpeg'),
+    ('user04', '전남', '판매글 제목14', '판매글 내용14', '레저', 7, '/public/img/sell/1682065508712_4507.jpeg'),
+    ('user05', '경북', '판매글 제목15', '판매글 내용15', '박물관', 2, '/public/img/sell/1682065508720_8121.jpeg'),
+    ('user06', '경남', '판매글 제목16', '판매글 내용16', '워터', 5, '/public/img/sell/1682065508723_666.jpeg'),
+    ('user07', '제주', '판매글 제목17', '판매글 내용17', '테마', 1, '/public/img/sell/1682152239247_5163.png'),
+    ('user07', '제주', '판매글 제목17', '판매글 내용17', '키즈', 1, '/public/img/sell/1682234090230_1592.png'),
+    ('user07', '제주', '판매글 제목171', '판매글 내용17', '레저', 1, '/public/img/sell/1682234803268_3166.png'),
+    ('user07', '제주', '판매글 제목171', '판매글 내용17', '테마', 1, '/public/img/sell/1682234803271_4526.png');
 
 INSERT INTO `sell_options` (`s_id`, `name`, `price`, `stock`)
 
