@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 @Controller
-@RequestMapping("/reviewCmt")
+@RequestMapping("/reviewcmt")
 @Log4j2
 public class TripReviewCmtController {
     private TripReviewCmtService tripReviewCmtService;

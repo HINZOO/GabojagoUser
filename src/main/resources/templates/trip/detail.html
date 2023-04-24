@@ -170,14 +170,13 @@
                             </ul>
                         </div> <!-- // reviewCont -->
                     </div>
+
                     <div class="card-footer position-sticky bottom-0 bg-light" style="border: 1px solid #ddd;">
                         <!-- 리뷰댓글 입력폼 -->
                         <form enctype="multipart/form-data" name="reviewCmtInsertForm" method="post" action="">
                             <div class="row align-items-center">
-                                    <!-- 댓글쓰는 유저 프로필이미지 넣기 -->
-<!--                                <div class="col-1">-->
-<!--                                    <img th:src="@{'{path}'(path=${t.user.imgPath})}" class="border rounded-circle" style="width: 45px; height: 45px;">-->
-<!--                                </div>-->
+                                <input type="text">
+                                <input type="text" name="trId">
                                 <div class="col-3">
                                     <input name="parentTrId" placeholder="부모댓글" type="text" readonly class="form-control">
                                 </div>
@@ -196,6 +195,8 @@
                             </div>
                         </form>
                     </div>
+
+
                 </div>
                 <!-- 리뷰작성하기 Modal -->
                 <th:block th:include="/trip/review/reviewRegisterModal.html"></th:block>
@@ -297,7 +298,7 @@
         async function registerReviewCmt(e){
             e.preventDefault();
             const data = new FormData(reviewCmtInsertForm);
-            let url="/reviewCmt/handler.do"
+            let url="/reviewcmt/handler.do"
             const resp=await fetch(url,{method:"POST", body:data});
             if(resp.status===200){
                 const json=await resp.json();
