@@ -370,7 +370,7 @@
             const form = ele.parentElement;
             const data = new FormData(form)
             data.set("checkStatus",ele.parentElement["checkStatus"].getAttribute("value"))
-            let url ='/plan/tdlHandler.do'
+            let url ='/plan/checkList.do'
             const resp = await fetch(url,{method:"POST",body:data});
             const result = await resp.json();
             if(resp.status===200){
@@ -389,7 +389,7 @@
             const form = ele.parentElement;
             const data = new FormData(form)
             data.set("checkStatus",ele.getAttribute("value"))
-            let url ='/plan/tdlHandler.do'
+            let url ='/plan/checkList.do'
             const resp = await fetch(url,{method:"PUT",body:data});
             const result = await resp.json();
             console.log(result)
@@ -409,7 +409,7 @@
 
         // 체크리스트 삭제 하는 경우
         async function tdlDelete(ele){
-            let url ='/plan/tdlHandler.do'
+            let url ='/plan/checkList.do'
             const resp = await fetch(url,{method:"DELETE",body:ele.parentElement["clId"].getAttribute("value")});
             const result = await resp.json();
             if(resp.status===200 && result===1){

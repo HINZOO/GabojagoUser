@@ -36,6 +36,13 @@ a:link { color: black; text-decoration: none;}
 a:visited { color: black; text-decoration: none;}
 a:hover { color: black; text-decoration: none;}
 
+input[type=date] {
+
+}
+
+
+
+
 .listMainHeader{
     width: 100%;
     height: 40vh;
@@ -98,6 +105,38 @@ a:hover { color: black; text-decoration: none;}
     background-color: white;
 }
 
+.newPlanStatusBox{
+    position: relative;
+    left: 55%;
+}
+.memberSelectBox{
+    margin: 0px 12px;
+    padding: 5px 10px;
+    width: 94%;
+    border: 1px solid lightgrey;
+    border-radius: 10px;
+}
+.memberSelectBoxHeader{
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    color: gray;
+}
+.memberSelectBoxPBtn{
+    cursor: pointer;
+}
+.memberSelectBoxPBtn:hover{
+    color: dodgerblue;
+    text-shadow: 0px 0 gray, 1px 1px lightblue, 1px 2px lightblue, 0 0px gray;
+
+}
+.newPlanFooter{
+    height: 35px;
+    border: none;
+    background-color: white;
+}
+
+
 
 
 .card {
@@ -144,7 +183,7 @@ a:hover { color: black; text-decoration: none;}
     border: none;
     background-color: white;
 }
-.card-footer>div{
+.card-footer>div, .newPlanFooter>div{
     background-size: contain;
 
     box-shadow: 0px 0px 1px 1px rgba(211, 211, 211, 0.57);
@@ -152,13 +191,13 @@ a:hover { color: black; text-decoration: none;}
     width: 30px;
     height: 30px;
 }
-.card-footer>div:hover{
+.card-footer>div:hover, .newPlanFooter>div:hover {
     box-shadow: 0px 0px 10px 5px #c7c7c7;
 }
-.card-footer .cardMy{
+.cardMy{
     background-color: rgba(99, 196, 255, 0.56);
 }
-.card-footer .cardOr{
+.cardOr{
     background-color: rgba(251, 125, 255, 0.56);
 }
 .cardReview{
@@ -425,8 +464,19 @@ canvas{
     background-color: #595959;
 
 }
-.newPlanImg{
- width: 100%;
+#newPlanPreviewBox{
+    background-image: url("/public/img/plan/planDefault.jpeg");
+    background-size: cover;
+    border: 1px solid #e8e8e8;
+    border-radius: 10px;
+    width: 100%;
+    height: 280px;
+}
+#newPlanPreview{
+    width: 100%;
+    height: 100%;
+    object-position: center;
+    object-fit: scale-down;
 }
 
 
