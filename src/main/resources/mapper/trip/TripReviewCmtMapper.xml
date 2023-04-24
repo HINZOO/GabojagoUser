@@ -4,12 +4,17 @@
     <resultMap id="TripReviewCmtMap" type="TripReviewCmtDto">
         <id property="trcId" column="trc_id"/>
         <result property="trId" column="tr_id"/>
+        <result property="uId" column="u_id"/>
         <result property="content" column="content"/>
         <result property="status" column="status"/>
         <result property="postTime" column="post_time"/>
         <result property="updateTime" column="update_time"/>
         <result property="parentTrcId" column="parent_trc_id"/>
         <result property="imgPath" column="img_path"/>
+<!--        <association property="user"-->
+<!--                     select="com.project.gabojago.gabojagouser.mapper.user.UserMapper.findUserByUId"-->
+<!--                     column="u_id"-->
+<!--                     fetchType="lazy"/>-->
 
         <collection property="comments"
                     select="findByParentTrcId"

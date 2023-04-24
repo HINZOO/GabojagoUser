@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<div th:each="rc:${r.comments}"> <!-- r.comments : TripReviewCmtDto 배열  - 리뷰 하나에 댓글들 -->
+<!--    <label th:text="${rc}"></label> &lt;!&ndash; rc : 댓글 한개 &ndash;&gt;-->
+<!--    <p th:text="${r.user.imgPath}"></p>-->
+
+    <div class="mb-3 d-flex justify-content-between align-items-center">
+        <div class="d-flex align-items-center"><div>
+                <img th:src="@{'{path}'(path=${r.user.imgPath})}" class="border rounded-circle" style="width: 45px; height: 45px;">
+                @<strong th:text="${rc.uId}"></strong>
+                <!--            <span>리뷰 6</span>-->
+                <a href="#">팔로우</a>
+            </div>
+        </div>
+    </div>
+    <div>
+        <div>
+            <span th:text="${rc.content}"></span>
+        </div>
+        <div>
+            <img th:if="${rc.imgPath}" class="img-thumbnail w-25" th:src="@{'{path}'(path=${rc.imgPath})}" alt="">
+        </div>
+
+        <div class="d-flex justify-content-between align-items-center">
+            <p>
+                 <span class="me-2">
+                    작성일 :
+                    <small th:text="${#dates.format(rc.postTime,'yyy.MM.dd')}"></small>
+                     <!-- date.format(데이트객체, 포맷) 으로 날짜 예쁘게 수정하기 -->
+                </span>
+            </p>
+            <p class="d-flex align-items-center">
+                <a href="" class="text-muted text-decoration-none me-2">
+                    <i class="bi bi-heart text-danger fs-4"></i>
+                </a>
+                <a href="javascript:void(0)" class="btn btn-outline-secondary" th:onclick="reviewCmtClick([[${r.trId}]],[[${rc.trcId}]])">댓글달기</a>
+                <!-- 작성자에게만 보이기 -->
+                <a href="javascript:void(0)"  class="btn btn-outline-dark ms-2">삭제</a>
+            </p>
+        </div>
+    </div>
+</div>
+
+
+
+
+</html>

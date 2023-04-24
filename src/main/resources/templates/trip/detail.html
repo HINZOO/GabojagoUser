@@ -8,24 +8,33 @@
     <title>맞춤추천 리스트</title>
     <script src=""></script>
     <style>
-        .splide {
-            width: 800px;
-            height: 500px;
+        /*.splide {*/
+        /*    width: 800px;*/
+        /*    height: 500px;*/
+        /*}*/
+
+        /*.splide__slide {*/
+        /*    padding: 1rem;*/
+        /*}*/
+
+        /*.splide__slide img {*/
+        /*    width: 100%;*/
+        /*    height: 100%;*/
+        /*    object-fit: cover;*/
+        /*}*/
+
+        .delImgInput {
+            display: none;
+        }
+        .delImgItem > .delImgInput:checked + img {
+            background-color: lightcoral;
         }
 
-        .splide__slide {
-            padding: 1rem;
-        }
 
-        .splide__slide img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
     </style>
 </head>
 <div layout:fragment="content" class="container">
-    <script src="/public/js/splideTest.js"></script>
+<!--    <script src="/public/js/splideTest.js"></script>-->
     <h3 class="my-4">맞춤추천 상세</h3>
 
     <!--    <div class="splide">-->
@@ -170,16 +179,18 @@
                             </ul>
                         </div> <!-- // reviewCont -->
                     </div>
+
                     <div class="card-footer position-sticky bottom-0 bg-light" style="border: 1px solid #ddd;">
                         <!-- 리뷰댓글 입력폼 -->
                         <form enctype="multipart/form-data" name="reviewCmtInsertForm" method="post" action="">
                             <div class="row align-items-center">
-                                    <!-- 댓글쓰는 유저 프로필이미지 넣기 -->
-<!--                                <div class="col-1">-->
-<!--                                    <img th:src="@{'{path}'(path=${t.user.imgPath})}" class="border rounded-circle" style="width: 45px; height: 45px;">-->
-<!--                                </div>-->
-                                <div class="col-3">
-                                    <input name="parentTrId" placeholder="부모댓글" type="text" readonly class="form-control">
+                                <input type="hidden" name="uId" th:value="${session.loginUser.uId}">
+                                <input type="hidden" name="tId" th:value="${t.tId}">
+                                <div class="col-2">
+                                    <input name="trId" placeholder="부모댓글" type="text" readonly class="form-control">
+                                </div>
+                                <div class="col-2">
+                                    <input name="parentTrcId" placeholder="부모대댓글" type="text" readonly class="form-control">
                                 </div>
                                 <div class="col">
                                     <input name="content" placeholder="댓글달기..." type="text" class="form-control">
@@ -196,10 +207,12 @@
                             </div>
                         </form>
                     </div>
+
+
                 </div>
                 <!-- 리뷰작성하기 Modal -->
                 <th:block th:include="/trip/review/reviewRegisterModal.html"></th:block>
-                <th:block th:include="/trip/review/reviewModifyModal.html"></th:block>
+
 
             </div> <!-- 오른쪽 그리드 -->
         </div> <!-- // 그리드 row -->
@@ -293,11 +306,18 @@
         }
 
 
+        function reviewCmtClick(trId,trcId){
+            reviewCmtInsertForm.trId.value=trId;
+            reviewCmtInsertForm.parentTrcId.value=trcId;
+
+        }
+
+
         reviewCmtInsertForm.onsubmit=registerReviewCmt;
         async function registerReviewCmt(e){
             e.preventDefault();
             const data = new FormData(reviewCmtInsertForm);
-            let url="/reviewCmt/handler.do"
+            let url="/reviewcmt/handler.do"
             const resp=await fetch(url,{method:"POST", body:data});
             if(resp.status===200){
                 const json=await resp.json();

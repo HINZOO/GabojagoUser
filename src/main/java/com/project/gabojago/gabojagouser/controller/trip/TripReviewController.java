@@ -65,23 +65,26 @@ public class TripReviewController {
     public @ResponseBody HandlerDto registerHandler(
             @ModelAttribute TripReviewDto review,
 //            @SessionAttribute UserDto loginUser
-            @RequestParam(name="img", required = false) List<MultipartFile> imgs
+            @RequestParam(name="img", required = false) MultipartFile[] imgs
             ) throws IOException {
 
         HandlerDto handlerDto=new HandlerDto();
         List<TripReviewImgDto> imgDtos=null;
-        if(imgs!=null && !imgs.isEmpty()){
+        if(imgs!=null){
             imgDtos=new ArrayList<>();
             for(MultipartFile img : imgs){
-                String[] contentTypes=img.getContentType().split("/");
-                if(contentTypes[0].equals("image")){
-                    String fileName=System.currentTimeMillis()+"_"+(int)(Math.random()*100000)+"."+contentTypes[1];
-                    Path path = Paths.get(staticPath + "/public/img/trip/review/" + fileName);
-                    img.transferTo(path);
-                    TripReviewImgDto imgDto=new TripReviewImgDto();
-                    imgDto.setImgPath("/public/img/trip/review/"+fileName);
-                    imgDtos.add(imgDto);
+                if(!img.isEmpty()){
+                    String[] contentTypes=img.getContentType().split("/");
+                    if(contentTypes[0].equals("image")){
+                        String fileName=System.currentTimeMillis()+"_"+(int)(Math.random()*100000)+"."+contentTypes[1];
+                        Path path = Paths.get(staticPath + "/public/img/trip/review/" + fileName);
+                        img.transferTo(path);
+                        TripReviewImgDto imgDto=new TripReviewImgDto();
+                        imgDto.setImgPath("/public/img/trip/review/"+fileName);
+                        imgDtos.add(imgDto);
+                    }
                 }
+
             }
         }
         review.setImgs(imgDtos);
@@ -121,7 +124,9 @@ public class TripReviewController {
             imgDtos=new ArrayList<>();
             for(MultipartFile img:imgs){ // 여러 이미지를 반복문 돌려서 하나의 이미지를 빼고
                 if(!img.isEmpty()) { // 이미지 파일이 있는지
-                    // log.info(img.getOriginalFilename()); // 테스트_이미지 불러와짐
+                    log.info(img.getOriginalFilename()); // 테스트_이미지 불러와짐
+                    log.info(staticPath);
+                    log.info(img.getContentType());
                     String[] contentTypes=img.getContentType().split("/");
                     if(contentTypes[0].equals("image")){
                         String fileName=System.currentTimeMillis()+"_"+(int)(Math.random()*100000)+"."+contentTypes[1];
@@ -142,48 +147,41 @@ public class TripReviewController {
         }catch (Exception e){
             log.error(e.getMessage());
         }
-        if(modify>0){
+
+        // 수정성공시 선택한 이미지 삭제 코드???
+         if(modify==0){ // 수정 실패시 이미지삭제
             if(imgDtos!=null){
                 for(TripReviewImgDto imgDto : imgDtos){
                     File imgFile=new File(staticPath+imgDto.getImgPath());
                     if(imgFile.exists()) imgFile.delete();
                 }
             }
-        }
+        } else { // 수정 성공시 선택한 이미지 삭제
+             if(imgDtos!=null){
+                 for(TripReviewImgDto imgDto : imgDtos){
+                     File imgFile=new File(staticPath+imgDto.getImgPath());
+                     if(imgFile.exists()) imgFile.delete();
+                 }
+             }
+         }
+
+
         handlerDto.setModify(modify);
         return handlerDto;
-//
-//        List<TripReviewImgDto> imgDtos=null;
-//        int modify=0;
-//        try {
-//            if(delImgIds!=null) imgDtos=tripReviewService.imgList(delImgIds);
-//            modify= tripReviewService.modify(review, delImgIds);
-//        }catch (Exception e) {
-//            log.error(e.getMessage());
-//        }
-//        if(modify>0){
-//            if(imgDtos!=null){ // 삭제 이미지
-//                for(TripReviewImgDto tri : imgDtos){
-//                    File imgFile=new File(staticPath+tri.getImgPath());
-//                    if(imgFile.exists()) imgFile.delete();
-//                }
-//            }
-//        }
-//        return handlerDto;
     }
 
     @DeleteMapping("/handler.do")
     public @ResponseBody HandlerDto remove(
-            TripReviewDto review
+            @ModelAttribute TripReviewDto review // 폼으로 등록한 dto 를 파라미터로 맵핑해서 받아오겠다.
 //            @SessionAttribute UserDto loginUser
     ){
-        log.info(review.getImgs());
-        System.out.println("review.getImgs() = " + review.getImgs());
         HandlerDto handlerDto=new HandlerDto();
         List<TripReviewImgDto> imgDtos=null;
         int remove=0;
         try{
-            imgDtos=review.getImgs();
+            // review 의 detail 을 받아온적이 없다? 파라미터로 받아온 review 를 이용해서 detail 을 db 에서 불러오기
+            TripReviewDto detail=tripReviewService.detail(review.getTrId());
+            imgDtos=detail.getImgs();
             remove=tripReviewService.remove(review.getTrId());
         }catch (Exception e){
             log.error(e.getMessage());

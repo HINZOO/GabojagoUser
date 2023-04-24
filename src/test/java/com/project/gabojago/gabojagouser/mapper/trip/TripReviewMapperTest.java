@@ -23,7 +23,9 @@ class TripReviewMapperTest {
 
     @Test
     void findByTrId() {
-        
+        TripReviewDto review=tripReviewMapper.findByTrId(1);
+        System.out.println("review = " + review);
+        assertNotNull(review);
     }
 
     @Test
