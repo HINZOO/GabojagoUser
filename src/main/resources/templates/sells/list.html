@@ -69,7 +69,7 @@
                     <div class="col-md-4">
                         <div class="card mb-4 box-shadow">
                                 <a th:href="@{'/sells/{sId}/detail.do'(sId=${s.sId})}">
-                                    <img class="card-img-top" src="/public/img/sells/1.jpg" alt="${s.title}">
+                                    <img class="card-img-top" th:src="${s.imgMain}" alt="${s.title}">
                                 </a>
                             <a style="position: absolute; top: 1vh; right: 1vh;font-size: 3vh;" id="like-btn" class="btn" th:href="@{'/cart/{sId}/register.do'(sId=${s.getSId()})}">
                                 <i id="like-icon"   class="bi bi-basket"></i>

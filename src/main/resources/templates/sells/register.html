@@ -14,6 +14,10 @@
     <input id="uIdInput" type="text" name="uId" th:value="${session.loginUser.getUId()}" readonly class="form-control" placeholder="??"> <!-- th:value="${session.loginUser.uId}"-->
     <label class="">아이디(글쓴이)</label>
   </p>
+    <p class="input-group">
+      <label class="input-group-text">메인이미지</label>
+      <input class="form-control" type="file" name="mainImg">
+    </p>
   <p id="imgCont">
     <button id="imgAddBtn" class="btn btn-light w-100" type="button">
       이미지
