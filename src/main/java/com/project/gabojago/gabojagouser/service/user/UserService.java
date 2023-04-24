@@ -6,7 +6,7 @@ import java.util.List;
 public interface UserService {
   List<UserDto> list();
   UserDto login(UserDto user);
-  UserDto detail(String user);
+  UserDto detail(String user,String loginUserId);
   UserDto idCheck(String userId);
   int modify(UserDto user);
   int signup(UserDto user);

@@ -10,4 +10,7 @@ public class SellBookmarksDto {
     private int sId;
     private String uId;
     private List<SellsDto> sellList;
+    public String getU_id() {
+        return uId;
+    }
 }

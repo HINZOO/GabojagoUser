@@ -26,5 +26,4 @@ public class UserIdCheckController {
       return 0;
     }
   }
-
 }

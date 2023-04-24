@@ -89,6 +89,13 @@ public class CommController {
                     }
                 }
             }
+        }else{
+            CommImgDto basicImg=new CommImgDto();
+            basicImg.setCId(commBoard.getCId());
+            basicImg.setImgMain(false);
+            basicImg.setImgPath("/public/img/comm/basic1.jpg");
+            commImgs = new ArrayList<>();
+            boolean add = commImgs.add(basicImg);
         }
         commBoard.setImgs(commImgs);
         int register = 0;

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-        layout:decorate="~{/layout}">
+      layout:decorate="~{/layout}">
 <head>
     <meta charset="UTF-8">
     <title>판매글 리스트</title>
@@ -47,18 +47,17 @@
     <div class="row">
         <div class="col-md-2">
             <h2>카테고리</h2>
-            <div >
+            <div>
                 <ul class="list-group">
-                    <li class="list-group-item"><a href="/sells/list.do" class="category-link" >전체</a></li>
-                    <li class="list-group-item"><a th:href="@{'/sells/{category}/list.do'(category='워터')}">워터파크</a></li>
-                    <li class="list-group-item"><a th:href="@{'/sells/{category}/list.do'(category='테마')}">테마파크</a></li>
-                    <li class="list-group-item"><a th:href="@{'/sells/{category}/list.do'(category='키즈')}">키즈</a></li>
-                    <li class="list-group-item"><a th:href="@{'/sells/{category}/list.do'(category='레저')}">레저</a></li>
-                    <li class="list-group-item"><a th:href="@{'/sells/{category}/list.do'(category='박물관')}">박물관</a></li>
+                    <li class="list-group-item"><a href="/sells/list.do" class="category-link">전체</a></li>
+                    <li class="list-group-item"><a th:href="@{'/sells/{category}/list.do'(category='워터')}" class="category-link" style="font-size:1.2rem;">워터파크</a></li>
+                    <li class="list-group-item"><a th:href="@{'/sells/{category}/list.do'(category='테마')}" class="category-link" style="font-size:1.2rem;">테마파크</a></li>
+                    <li class="list-group-item"><a th:href="@{'/sells/{category}/list.do'(category='키즈')}" class="category-link" style="font-size:1.2rem;">키즈</a></li>
+                    <li class="list-group-item"><a th:href="@{'/sells/{category}/list.do'(category='레저')}" class="category-link" style="font-size:1.2rem;">레저</a></li>
+                    <li class="list-group-item"><a th:href="@{'/sells/{category}/list.do'(category='박물관')}" class="category-link" style="font-size:1.2rem;">박물관</a></li>
                 </ul>
             </div>
         </div>
-
 
 
         <div class="col-md-10">
@@ -68,14 +67,14 @@
                 <th:block th:each="s:${sells}">
                     <div class="col-md-4">
                         <div class="card mb-4 box-shadow">
-                                <a th:href="@{'/sells/{sId}/detail.do'(sId=${s.sId})}">
-                                    <img class="card-img-top" src="/public/img/sells/1.jpg" alt="${s.title}">
-                                </a>
+                            <a th:href="@{'/sells/{sId}/detail.do'(sId=${s.sId})}" class="aspect-ratio" style="width: 100%; height: 0; padding-bottom: 70%; position: relative;">
+                                <img class="card-img-top" th:src="${s.imgMain}" alt="${s.title}" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
+                            </a>
                             <a style="position: absolute; top: 1vh; right: 1vh;font-size: 3vh;" id="like-btn" class="btn" th:href="@{'/cart/{sId}/register.do'(sId=${s.getSId()})}">
                                 <i id="like-icon"   class="bi bi-basket"></i>
                             </a>
-                            <a style="position: absolute; top: 1vh; right: 6vh;font-size: 3vh;" id="like-btn2" class="btn" th:onclick="bookBtn([[${s.sId}]],this)" >
-                                <i id="like-icon2"   class="bi bi-bookmark"></i>
+                            <a style="position: absolute; top: 1vh; right: 6vh;font-size: 3vh;" id="like-btn2" class="btn bi bi-bookmark" th:onclick="bookBtn([[${s.sId}]],this)" >
+                                <i id="like-icon2"   class=""></i>
                             </a>
                             <div class="card-body">
                                 <p class="card-text" th:text="${s.title}"></p>
@@ -91,39 +90,39 @@
             </div>
         </div>
     </div>
-<script>
+    <script>
 
 
 
 
 
-    const searchButton = document.getElementById("searchBtn");
-    const searchInput = document.getElementById("searchInput");
-    const searchForm = document.getElementById("searchForm");
+        const searchButton = document.getElementById("searchBtn");
+        const searchInput = document.getElementById("searchInput");
+        const searchForm = document.getElementById("searchForm");
 
-    searchButton.addEventListener("click", (e) => {
-        const searchValue = searchInput.value;
-        if (searchValue) {
-            const url = `/sells/${searchValue}/search.do`;
-            window.location.href = url;
-        }else {
-            e.preventDefault();
-            alert("검색어를 입력하세요");
-        }
-    });
+        searchButton.addEventListener("click", (e) => {
+            const searchValue = searchInput.value;
+            if (searchValue) {
+                const url = `/sells/${searchValue}/search.do`;
+                window.location.href = url;
+            }else {
+                e.preventDefault();
+                alert("검색어를 입력하세요");
+            }
+        });
 
-    searchForm.addEventListener("submit", (e) => {
-        const searchValue = searchInput.value;
-        if (searchValue) {
-            e.preventDefault();
-            const url = `/sells/${searchValue}/search.do`;
-            window.location.href = url;
-        }else {
-            e.preventDefault();
-            alert("검색어를 입력하세요");
-        }
-    });
+        searchForm.addEventListener("submit", (e) => {
+            const searchValue = searchInput.value;
+            if (searchValue) {
+                e.preventDefault();
+                const url = `/sells/${searchValue}/search.do`;
+                window.location.href = url;
+            }else {
+                e.preventDefault();
+                alert("검색어를 입력하세요");
+            }
+        });
 
-</script>
-    </div>
+    </script>
+</div>
 </html>
