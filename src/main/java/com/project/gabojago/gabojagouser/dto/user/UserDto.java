@@ -1,5 +1,7 @@
 package com.project.gabojago.gabojagouser.dto.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -7,6 +9,7 @@ import java.util.Date;
 import java.util.List;
 
 @Data
+@JsonIgnoreProperties({"handler"})
 public class UserDto {
     private String uId;
     private String pw;

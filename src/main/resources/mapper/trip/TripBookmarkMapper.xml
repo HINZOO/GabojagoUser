@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.project.gabojago.gabojagouser.mapper.trip.TripBookmarkMapper">
+    <resultMap id="tripBookMarkMap" type="tripBookmarkDto">
+        <id column="tb_id" property="tbId"/>
+        <result column="t_id" property="tId"/>
+        <result column="u_id" property="uId"/>
+        <association property="trips"
+                     select="com.project.gabojago.gabojagouser.mapper.trip.TripMapper.findByTId"
+                     column="t_id"
+                     fetchType="lazy"/>
+    </resultMap>
+    <insert id="insertOne" parameterType="tripBookmarkDto" useGeneratedKeys="true" keyProperty="tbId">
+        INSERT INTO trip_bookmarks (t_id, u_id) VALUE (#{tId},#{uId})
+    </insert>
+    <delete id="deleteOne">
+        DELETE FROM trip_bookmarks WHERE tb_id=#{tbId};
+    </delete>
+    <select id="findByUId" resultMap="tripBookMarkMap">
+        SELECT * FROM trip_bookmarks WHERE u_id=#{uId};
+    </select>
+</mapper>

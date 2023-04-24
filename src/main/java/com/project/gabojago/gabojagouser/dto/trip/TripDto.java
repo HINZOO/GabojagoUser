@@ -1,5 +1,6 @@
 package com.project.gabojago.gabojagouser.dto.trip;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.ToString;
 
@@ -7,6 +8,7 @@ import java.util.Date;
 import java.util.List;
 
 @Data
+@JsonIgnoreProperties({"handler"})
 public class TripDto {
     private int tId; // pk (auto_increment)
     private String uId; // fk user.u_id 참조

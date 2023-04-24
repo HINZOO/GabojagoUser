@@ -3,11 +3,12 @@ package com.project.gabojago.gabojagouser.controller.my;
 import com.project.gabojago.gabojagouser.dto.comm.CommBookmarkDto;
 import com.project.gabojago.gabojagouser.dto.comm.CommPageDto;
 import com.project.gabojago.gabojagouser.dto.comm.CommunityDto;
-import com.project.gabojago.gabojagouser.dto.my.MyUserQnaDto;
+import com.project.gabojago.gabojagouser.dto.trip.TripBookmarkDto;
 import com.project.gabojago.gabojagouser.dto.user.UserDto;
 import com.project.gabojago.gabojagouser.service.comm.CommBookMarkService;
 import com.project.gabojago.gabojagouser.service.comm.CommunityService;
 import com.project.gabojago.gabojagouser.service.my.MyUserQnaService;
+import com.project.gabojago.gabojagouser.service.trip.TripBookMarkService;
 import com.project.gabojago.gabojagouser.service.user.UserService;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -15,7 +16,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -26,7 +26,8 @@ public class MyUserController {
     private UserService userService;
     private MyUserQnaService myUserQnaService;
     private CommunityService communityService;
-    private CommBookMarkService bookMarkService;
+    private CommBookMarkService commBookMarkService;
+    private TripBookMarkService tripBookMarkService;
 
     @GetMapping("/user.do")
     public String list(Model model,
@@ -45,14 +46,18 @@ public class MyUserController {
         return "/my/written";
     }
     //북마크
-    @GetMapping("/bookMark.do")
+    @GetMapping("/{uId}/bookMark.do")
     public String bookMark(Model model,
+                           @PathVariable String uId,
                            @SessionAttribute UserDto loginUser){
-        List<CommBookmarkDto> commBookmarkList= bookMarkService.list(loginUser.getUId());
-
-        model.addAttribute("bookMark",commBookmarkList);
+        List<CommBookmarkDto> commBookmarkList= commBookMarkService.list(loginUser.getUId());
+        List<TripBookmarkDto> tripBookmarkList= tripBookMarkService.list(loginUser.getUId());
+        model.addAttribute("uId",uId);
+        model.addAttribute("commBookMark",commBookmarkList);
+        model.addAttribute("tripBookMark",tripBookmarkList);
         return "/my/bookMark";
     }
+
 
 }
 

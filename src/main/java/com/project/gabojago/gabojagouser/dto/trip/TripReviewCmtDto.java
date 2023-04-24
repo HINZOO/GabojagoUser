@@ -1,10 +1,11 @@
 package com.project.gabojago.gabojagouser.dto.trip;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 import java.util.Date;
 import java.util.List;
-
+@JsonIgnoreProperties({"handler"})
 @Data
 public class TripReviewCmtDto {
     private int trcId; // pk (auto_increment)

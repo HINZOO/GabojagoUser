@@ -216,10 +216,10 @@
 
      async function registerBookMark(cId){
          let check=confirm("북마크를 등록하시겠습니까?");
-         let url="/bookmark/"+cId+"/handler.do";
+         let url="/bookmark/comm/"+cId+"/handler.do";
          if(check){
+             const resp= await fetch(url,{method:"POST"});
              if(resp.status===200){
-                 const resp= await fetch(url,{method:"POST"});
                  const json=await resp.json();
                  if(json.handler>0) {
                      alert("북마크 등록 성공!");
@@ -228,8 +228,6 @@
                  alert("북마크 등록 실패");
              }
          }
-
-
      }
 
     </script>

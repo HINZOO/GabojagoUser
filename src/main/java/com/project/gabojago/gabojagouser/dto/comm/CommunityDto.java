@@ -1,11 +1,13 @@
 package com.project.gabojago.gabojagouser.dto.comm;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.project.gabojago.gabojagouser.dto.user.UserDto;
 import lombok.Data;
 
 import java.util.List;
 
 @Data
+@JsonIgnoreProperties({"handler"})
 public class CommunityDto {
     private int cId;//PK
     private String uId;//User.u_id//FK
