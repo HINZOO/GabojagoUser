@@ -161,6 +161,8 @@ CREATE TABLE `trip_review_comments` (
                                         FOREIGN KEY (tr_id) REFERENCES trip_reviews (tr_id) ON DELETE CASCADE ON UPDATE CASCADE,
                                         FOREIGN KEY (parent_trc_id) REFERENCES trip_review_comments (trc_id) ON DELETE CASCADE ON UPDATE CASCADE
 
+# ALTER TABLE trip_review_comments ADD COLUMN img_path VARCHAR(255) COMMENT '이미지 경로'
+
 );
 #가보자고 (좋아요 페이지)
 #제약조건 추가 1개만 좋아요 가능하게
@@ -678,8 +680,23 @@ VALUES
 #가보자고 리뷰 데이터
 INSERT INTO trip_reviews (t_id, u_id, content, visit, grade)
 VALUES
-    (1, 'USER01', '이곳이 정말 멋진 곳이에요!', 1, 5),
-    (1, 'USER02', '여기는 가보자고 추천해준 곳 중에서 제일 좋았어요.', 1, 4),
-    (1, 'USER03', '다음에도 꼭 다시 방문하고 싶은 곳이에요!', 1, 4),
-    (1, 'USER04', '이곳은 정말 특별한 경험이었어요.', 1, 5),
-    (1, 'USER05', '여기는 앞으로도 자주 찾게 될 것 같아요.', 1, 3);
+    (1, 'user01', '이곳이 정말 멋진 곳이에요!', 1, 5),
+    (1, 'user02', '여기는 가보자고 추천해준 곳 중에서 제일 좋았어요.', 1, 4),
+    (1, 'user03', '다음에도 꼭 다시 방문하고 싶은 곳이에요!', 1, 4),
+    (1, 'user04', '이곳은 정말 특별한 경험이었어요.', 1, 5),
+    (1, 'user05', '여기는 앞으로도 자주 찾게 될 것 같아요.', 1, 3);
+
+#가보자고 리뷰 댓글 데이터
+INSERT INTO trip_review_comments (tr_id, u_id, content, status, parent_trc_id)
+VALUES
+    (19, 'user01', '가보자고리 재미있었어요!', 'PUBLIC', NULL),
+    (19, 'user02', '뷰가 너무 아름다웠어요!', 'PUBLIC', NULL),
+    (20, 'user03', '다음에도 꼭 가보고 싶어요!', 'PUBLIC', NULL),
+    (21, 'user04', '추천하는 가보자고리 루트가 있나요?', 'PUBLIC', NULL),
+    (21, 'user05', '가보자고리 최고!', 'PUBLIC', NULL),
+    (22, 'user06', '재밌는 추억이었어요!', 'PUBLIC', 4),
+    (19, 'user07', '뷰가 너무 아름다워요!', 'PUBLIC', NULL),
+    (24, 'user08', '가보자고리 루트 추천해요!', 'PUBLIC', NULL),
+    (22, 'user09', '다음에도 꼭 가보고 싶어요!', 'PUBLIC', NULL),
+    (25, 'user10', '가보자고리 가는 것을 추천합니다!', 'PUBLIC', NULL);
+

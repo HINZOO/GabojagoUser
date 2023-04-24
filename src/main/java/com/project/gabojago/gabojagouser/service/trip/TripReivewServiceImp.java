@@ -18,18 +18,7 @@ public class TripReivewServiceImp implements TripReviewService {
     private TripReivewImgMapper tripReivewImgMapper;
 
 
-    @Override
-    public List<TripReviewImgDto> imgList(int[] triId) {
-        List<TripReviewImgDto> imgList=null;
-        if(triId!=null) {
-            imgList=new ArrayList<>();
-            for(int id : triId) {
-                TripReviewImgDto imgDto=tripReivewImgMapper.findByTriId(id);
-                imgList.add(imgDto);
-            }
-        }
-        return imgList;
-    }
+
 
     @Override
     public List<TripReviewDto> list(int tId) {
@@ -41,6 +30,20 @@ public class TripReivewServiceImp implements TripReviewService {
     public TripReviewDto detail(int trId) {
         TripReviewDto detail=tripReviewMapper.findByTrId(trId);
         return detail;
+    }
+
+    // 🍒수정시 이미지 삭제하려고, 이미지 리스트 불러오기
+    @Override
+    public List<TripReviewImgDto> imgList(int[] triId) {
+        List<TripReviewImgDto> imgList=null;
+        if(triId!=null) {
+            imgList=new ArrayList<>();
+            for(int id : triId) {
+                TripReviewImgDto imgDto=tripReivewImgMapper.findByTriId(id);
+                imgList.add(imgDto);
+            }
+        }
+        return imgList;
     }
 
     // 리뷰 등록 실패시 이미지 제거
@@ -59,7 +62,14 @@ public class TripReivewServiceImp implements TripReviewService {
 
     @Override
     public int modify(TripReviewDto tripReview, int[] delImgIds) {
+        // 내용 수정 + 이미지 등록 + 삭제
         int modify=tripReviewMapper.updateOne(tripReview);
+        if(tripReview.getImgs()!=null){
+            for(TripReviewImgDto img : tripReview.getImgs()){
+                img.setTrId(tripReview.getTrId());
+                modify+=tripReivewImgMapper.insertOne(img);
+            }
+        }
         if(delImgIds!=null){
             for(int triId : delImgIds){
                 modify+=tripReivewImgMapper.deleteOne(triId);
