@@ -18,7 +18,7 @@
                     <img class="listMainHeaderImg mx-0 px-0" src="/public/img/plan/listHeader.jpg">
                     <div class="col-6 titleBox">
                         <div class="titleInnerBox">
-                            <p class="listHeaderTitle">나의 여행들</p>
+                            <p class="listHeaderTitle">나의 여행기록</p>
                         </div>
                     </div>
                     <div class="col-6 rightBox">
@@ -80,10 +80,12 @@
                                         </a>
                                         <div class="card-footer">
                                                 <div class="cardMy" style="background-image:url('/public/img/plan/profileDefault.png')"
-                                                    data-bs-toggle="tooltip" data-bs-placement="top" th:data-bs-title="나"></div>
+                                                    data-bs-toggle="tooltip" data-bs-placement="top" th:data-bs-title="나">
+                                                </div>
                                             <th:block th:each="mu:${plan.getMUsers()}">
                                                 <div class="cardOr" style="background-image:url('/public/img/plan/profileDefault.png')"
-                                                     data-bs-toggle="tooltip" data-bs-placement="top" th:data-bs-title="${mu.getNkName()}"></div>
+                                                     data-bs-toggle="tooltip" data-bs-placement="top" th:data-bs-title="${mu.getNkName()}">
+                                                </div>
                                             </th:block>
                                         </div>
                                     </div>
@@ -104,71 +106,64 @@
             <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered modal-lg">
                     <div class="modal-content">
+                    <form  method="post" action="./insert.do" enctype="multipart/form-data">
                         <div class="modal-header bg-primary bg-opacity-10">
                             <h1 class="modal-title fs-5" id="staticBackdropLabel">새 플랜 만들기</h1>
+                            <div class="newPlanStatusBox">
+                                <input class="form-check-input" type="radio" name="planStatus" id="flexRadioDefault1" value="PUBLIC" checked>
+                                <label class="form-check-label" for="flexRadioDefault1">공개</label>
+                                <input class="form-check-input" type="radio" name="planStatus" value="PRIVATE" id="flexRadioDefault2" style="margin-left: 10px">
+                                <label class="form-check-label" for="flexRadioDefault2">비공개</label>
+                            </div>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <form  method="post" action="./insert.do" enctype="multipart/form-data">
                                 <div class="row">
                                     <div class="col-6">
-                                        <div class="form-floating">
-                                            <img class="newPlanImg" src="/public/img/plan/planSample.jpg">
-                                            <input type="file" class="form-control" name="img" id="floatingImg" placeholder="">
-                                            <label for="floatingImg">대표이미지</label>
+                                        <div id="newPlanPreviewBox" class="mb-3">
+                                            <img id="newPlanPreview">
                                         </div>
+                                        <input type="file" class="form-control col-12 mb-3" id="newPlanImg" name="img" placeholder="">
                                     </div>
                                     <div class="col-6">
                                         <div class="row">
-                                            <div class="col-12 mb-3">
-                                                <div class="form-floating">
-                                                    <input type="text" class="form-control" name="uId" value="USER01" id="floatingId" placeholder="" hidden>
-                                                    <label for="floatingId"></label>
-                                                </div>
+                                            <div class="form-floating col-12">
+                                                <input type="text" class="form-control" name="uId" value="USER01" id="floatingId" placeholder="" hidden>
+                                                <label for="floatingId"></label>
                                             </div>
-                                            <div class="col-12 mb-3">
-                                                <div class="form-floating">
-                                                    <input type="text" class="form-control" name="title" id="floatingTitle" placeholder="">
-                                                    <label for="floatingTitle">플랜 타이틀</label>
-                                                </div>
+                                            <div class="form-floating col-12 mb-3">
+                                                <input type="text" class="form-control" name="title" id="floatingTitle" placeholder="">
+                                                <label for="floatingTitle">타 이 틀</label>
                                             </div>
-                                            <div class="col-6">
-                                                <div class="form-floating">
-                                                    <input type="date" class="form-control" name="planFrom" id="floatingFrom" placeholder="">
-                                                    <label for="floatingFrom">일정 시작</label>
-                                                </div>
+                                            <div class="form-floating col-6">
+                                                <input type="date" class="form-control" name="planFrom" id="floatingFrom" placeholder="">
+                                                <label for="floatingFrom">일정 시작</label>
                                             </div>
-                                            <div class="col-6 mb-3">
-                                                <div class="form-floating">
-                                                    <input type="date" class="form-control" name="planTo" id="floatingTo" placeholder="">
-                                                    <label for="floatingTo">일정 끝</label>
-                                                </div>
+                                            <div class="form-floating col-6 mb-3">
+                                                <input type="date" class="form-control" name="planTo" id="floatingTo" placeholder="">
+                                                <label for="floatingTo">일정 끝</label>
                                             </div>
-                                            <div class="col-12 mb-3">
-                                                <div class="form-floating">
-                                                    <input type="text" class="form-control" name="info" id="floatingInfo" placeholder="" style="height: 200px">
-                                                    <label for="floatingInfo">설 명</label>
-                                                </div>
+                                            <div class="form-floating col-12 mb-3">
+                                                <input type="text" class="form-control" name="info" id="floatingInfo" placeholder="" style="height: 100px">
+                                                <label for="floatingInfo">설 명</label>
                                             </div>
-                                            <div class="col-6">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="planStatus" id="flexRadioDefault1" value="PUBLIC" checked>
-                                                    <label class="form-check-label" for="flexRadioDefault1">공개</label>
+                                            <div class="memberSelectBox">
+                                                <div class="memberSelectBoxHeader mb-1">
+                                                    <span>멤버 리스트</span>
+                                                    <span class="memberSelectBoxPBtn"><i class="bi bi-plus-circle"></i></span>
                                                 </div>
-                                            </div>
-                                            <div class="col-6 mb-3">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="planStatus" value="PRIVATE" id="flexRadioDefault2" >
-                                                    <label class="form-check-label" for="flexRadioDefault2">비공개</label>
+                                                <div class="newPlanFooter">
+                                                    <div class="cardMy" style="background-image:url('/public/img/plan/profileDefault.png')"
+                                                         data-bs-toggle="tooltip" data-bs-placement="top" th:data-bs-title="나">
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                    <button type="submit" class="btn btn-primary">만들기</button>
+                                <div class="modal-footer ">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-primary">만들기</button>
                                 </div>
                             </form>
                         </div>
@@ -183,18 +178,26 @@
 
 
     <script>
-        //툴팁 출력용
-
 
         let cardModifyBtn = document.getElementsByClassName("cardModify");
 
-        function shout(){
-            console.log("되네")
-        }
+
+        // 새 플랜 작성 시 대표이미지 미리보기
+        const img = document.getElementById("newPlanImg")
+        const imgBox = document.getElementById("newPlanPreviewBox")
+        img.addEventListener("change",()=>{
+            let selectedFile = img.files[0];
+            let fileReader = new FileReader();
+            fileReader.readAsDataURL(selectedFile);
+            fileReader.onload = function () {
+                document.getElementById("newPlanPreview").src = fileReader.result;
+            };
+            imgBox.style.backgroundImage="none";
+        })
+
 
         const newPlanBtn = document.querySelector("#newScheduleBtn");
         newPlanBtn.addEventListener("click",()=>{
-            console.log("??")
             new bootstrap.Modal(document.getElementById('staticBackdrop'), {}).show();
         })
 
