@@ -30,6 +30,10 @@
                 select="com.project.gabojago.gabojagouser.mapper.my.FollowMapper.findByToId"
                 column="u_id"
                 fetchType="eager"/>
+    <collection property="plans"
+                select="com.project.gabojago.gabojagouser.mapper.plan.PlanMapper.findByUId"
+                column="u_id"
+                fetchType="lazy"/>
   </resultMap>
   <insert id="insertOne" parameterType="com.project.gabojago.gabojagouser.dto.user.UserDto">
     INSERT INTO users

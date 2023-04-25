@@ -1,6 +1,7 @@
 package com.project.gabojago.gabojagouser.dto.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.project.gabojago.gabojagouser.dto.plan.PlanDto;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 import java.util.Date;
@@ -30,6 +31,5 @@ public class UserDto {
     private boolean following;
     private List<UserDto> followings;
     private List<UserDto> followers;
-
-
+    private List<PlanDto> plans;
 }

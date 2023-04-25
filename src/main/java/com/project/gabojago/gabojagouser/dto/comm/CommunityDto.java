@@ -1,6 +1,7 @@
 package com.project.gabojago.gabojagouser.dto.comm;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.project.gabojago.gabojagouser.dto.plan.PlanDto;
 import com.project.gabojago.gabojagouser.dto.user.UserDto;
 import lombok.Data;
 
@@ -41,7 +42,5 @@ public class CommunityDto {
     private List<CommReplyDto> replies;
     private LikeStatusCntDto likes;
     private String loginUserLikeStatus;
-
-
 
 }
