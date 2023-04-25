@@ -42,8 +42,6 @@ class CanvasCreate {
         // 스타일 관련 초기 설정
         this.canvas.width = 1200;
         this.canvas.height = 500;
-        // this.canvas.offCanvas.width = 1200;
-        // this.canvas.offCanvas.height = 500;
         this.ctx.strokeStyle = "black";
         this.ctx.lineWidth = 0.5;
         this.ctx.scale(1.0,1.0)
@@ -51,17 +49,14 @@ class CanvasCreate {
         this.ctx.setLineDash([0,0])
         this.ctx.save();
 
+        // 버튼활성화 및 배경디자인 생성
+        this.pageLiner(this.canvas.width,this.canvas.height)
+
+        this.toolActivation()
+        this.colorBtn();
 
         // 레이어 데이터가 있는 경우 로딩
         this.layerLoad();
-        this.currentCanvas.src = this.canvas.toDataURL();
-        this.ctx.drawImage(this.currentCanvas,0,0)
-
-        // 버튼활성화 및 배경디자인 생성
-        this.pageLiner(this.canvas.width,this.canvas.height)
-        this.toolActivation()
-
-        this.colorBtn();
 
     }
 
@@ -257,8 +252,8 @@ class CanvasCreate {
                 for(let i = co.layerArr.length-1 ; i>=0 ; i--){
                     /*
                       마우스클릭 위치(e.offset)는 pageSize을 보정하지 않았기때문에
-                      레이어의 range도 currentScale과 요소 자체 scale만 보정해서 선택여부 파악해주고
-                      나중에 그려줄때는 pageSize까지 보정해야 원하는 위치에 제대로 그려짐
+                      레이어의 range도 currentScale과 요소 자체 scale만 보정해서 범위 해당 여부 파악해주고
+                      나중에 그려줄때는 pageSize까지 보정해야 원하는 위치에 테두리가 그려짐
                      */
                     let scale = co.layerArr[i].scale;
                     let minX = co.layerArr[i].range[0][0]*co.currentScale/scale;
@@ -366,6 +361,7 @@ class CanvasCreate {
     lineTool(){
         let co = this;
         let moveHandler;
+        co.currentCanvas.src = co.canvas.toDataURL()
         function drawHandler(e) {
             if(co.activatedTool!=="line"){
                 this.removeEventListener("mousedown", drawHandler)
@@ -403,6 +399,7 @@ class CanvasCreate {
     rectTool(){
         let co = this;
         let moveHandler;
+        co.currentCanvas.src = co.canvas.toDataURL();
         function drawHandler(e) {
             if(co.activatedTool!=="rect"){
                 this.removeEventListener("mousedown", drawHandler
@@ -539,6 +536,7 @@ class CanvasCreate {
         let c = JSON.parse(path);
         co.ctx.scale(co.currentScale,co.currentScale)
         co.loadFunction(co,c,true);
+        co.currentCanvas.src=co.canvas.toDataURL();
         co.canvasRestore();
     }
 
@@ -557,6 +555,7 @@ class CanvasCreate {
         arr.forEach((c)=>{
           co.loadFunction(co,c,true);
         })
+        co.currentCanvas.src=co.canvas.toDataURL();
         co.canvasRestore();
     }
     loadFunction(co,c,receive=false){
@@ -573,11 +572,9 @@ class CanvasCreate {
         co.ctx.beginPath();
         co.ctx.moveTo(modi(c.moveTo[0])/c.scale,modi(c.moveTo[1])/c.scale)
         if(c.type==="line") {
-
             co.ctx.lineTo(modi(c.lineTo[0])/c.scale,modi(c.lineTo[1])/c.scale)
             co.ctx.stroke();
         } else if(c.type==="pen"){
-
             c.path.forEach((p)=>{
                 co.ctx.lineTo(modi(p[0])/c.scale,modi(p[1])/c.scale);
                 co.ctx.stroke();
@@ -681,8 +678,6 @@ class CanvasCreate {
             let button = document.getElementById(content);
             button.style.background = content;
             button.style.color = "white";
-            button.style.width = "30px";
-            button.style.height = "30px";
             button.style.borderRadius = "5px";
             button.style.boxShadow = "1px 1px 5px grey";
 
