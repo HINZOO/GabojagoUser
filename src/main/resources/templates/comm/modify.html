@@ -7,7 +7,6 @@
 <body>
     <div layout:fragment="content" class="container">
         <form name="registerForm" class="mx-auto w-80" action="/comm/modify.do" method="post"  enctype="multipart/form-data" >
-            <input type="hidden" name="pId" value="1">
             <input type="hidden" name="content" value="">
             <input type="hidden" name="cId" th:value="${c.cId}">
 
@@ -28,6 +27,16 @@
                 let content=document.getElementById("contentVal");
                  $('#summernote').summernote('pasteHTML',content.value);
             </script>
+
+            <ul class="list-group my-4">
+                <li class="list-group-item listHeaderTitle list-group-item-action active">
+                    <h5>일정 등록</h5>
+                </li>
+                <li class="list-group-item" th:each="p:${session.loginUser.plans}">
+                    <input class="form-check-input me-1" type="radio" name="pId"  th:value="${p.pId}" id="firstRadio" checked>
+                    <label class="form-check-label" for="firstRadio" th:text="${p.title}">\</label>
+                </li>
+            </ul>
 
             <h5 class="mt-2 my-0 p-0">mbti</h5>
 
