@@ -196,7 +196,6 @@
                 </div>
                 <!-- 리뷰작성하기 Modal -->
                 <th:block th:include="/trip/review/reviewRegisterModal.html"></th:block>
-<!--                <th:block th:include="/trip/review/reviewModifyModal.html"></th:block>-->
 
             </div> <!-- 오른쪽 그리드 -->
         </div> <!-- // 그리드 row -->
@@ -204,8 +203,7 @@
     <script> 
     // 리뷰등록 모달창 이미지 버튼
     const registerImgAddBtn = document.getElementById("registerImgAddBtn");
-    if(registerImgAddBtn){
-
+    if(registerImgAddBtn){ // // 👀 함수 위치가 달라서 ? if 문 해주는거? register 함수 아래에 있으면 if 안해줘도 되나?
         const registerImgCont = document.getElementById("registerImgCont");
         let registerImgAddBtnCount = 0;
         registerImgAddBtn.addEventListener("click", (e) => {
@@ -231,7 +229,7 @@
 
     // 리뷰 수정모달
     const modifyImgAddBtn = document.getElementById("modifyImgAddBtn");
-    if(modifyImgAddBtn){
+    if(modifyImgAddBtn){ // 👀 if(reviewModifyModal) 이안에 있어도 되는것? 스크립트가 달라서?
         const modifyImgCont = document.getElementById("modifyImgCont");
         let modifyImgAddBtnCount = 0;
         modifyImgAddBtn.addEventListener("click", (e) => {
@@ -258,6 +256,7 @@
     <script th:inline="javascript">
         const reviewRegisterModal = new bootstrap.Modal(document.getElementById("reviewRegisterModal"), {}); // {} 이게 뭐지?
         let reviewModifyModal;
+
         if(document.getElementById("reviewModifyModal")){
             reviewModifyModal=new bootstrap.Modal(document.getElementById("reviewModifyModal"),{})
         }
@@ -265,10 +264,11 @@
         const reviewModifyForm=document.forms["reviewModifyForm"];
         const reviewCmtInsertForm=document.forms["reviewCmtInsertForm"];
         const reviewCont = document.getElementById("reviewCont");
-
         const removeReviewBtn=document.getElementById("removeReviewBtn");
-        if(removeReviewBtn){
+
+
             removeReviewBtn.addEventListener("click",removeReview);
+        if(removeReviewBtn){ // 👀 if(reviewModifyModal) 안에 있어도 되나?
         }
 
         // 리뷰 등록 버튼 => 리뷰등록 모달창 보이기
@@ -276,7 +276,7 @@
         loadReviewRegister.addEventListener("click",function(){
             reviewRegisterModal.show();
         });
-        if(reviewModifyModal){
+        if(reviewModifyModal){ // 👀 if(reviewModifyModal) 하나로 합치는건 ?
             async function removeReview(){
                 let c = confirm("삭제 하시겠습니까"); // 삭제 알림창 (확인 true / 취소 false)
                 let url="/review/handler.do";
