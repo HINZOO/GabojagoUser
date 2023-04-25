@@ -51,4 +51,10 @@ public class UserServiceImpl implements UserService {
   public int dropout(UserDto user) {
     return userMapper.deleteOne(user);
   }
+
+  @Override
+  public int modifyEmailCheck(UserDto user) {//이메일체크
+    int modifyEmailCheck=userMapper.updateStatusByUIdAndEmailCheckCode(user);
+    return modifyEmailCheck;
+  }
 }

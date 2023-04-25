@@ -11,4 +11,5 @@ public interface UserService {
   int modify(UserDto user);
   int signup(UserDto user);
   int dropout(UserDto user);
+  int modifyEmailCheck(UserDto userDto);
 }
