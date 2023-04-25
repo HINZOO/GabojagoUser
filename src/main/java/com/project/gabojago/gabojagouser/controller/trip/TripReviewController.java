@@ -1,10 +1,12 @@
 package com.project.gabojago.gabojagouser.controller.trip;
 
+import com.project.gabojago.gabojagouser.dto.trip.TripDto;
 import com.project.gabojago.gabojagouser.dto.trip.TripImgDto;
 import com.project.gabojago.gabojagouser.dto.trip.TripReviewDto;
 import com.project.gabojago.gabojagouser.dto.trip.TripReviewImgDto;
 import com.project.gabojago.gabojagouser.dto.user.UserDto;
 import com.project.gabojago.gabojagouser.service.trip.TripReviewService;
+import com.project.gabojago.gabojagouser.service.trip.TripService;
 import lombok.Data;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,9 +27,16 @@ import java.util.List;
 @Log4j2
 public class TripReviewController {
     private TripReviewService tripReviewService;
+    private TripService tripService;
 
-    public TripReviewController(TripReviewService tripReviewService) {
+//    public TripReviewController(TripReviewService tripReviewService) {
+//        this.tripReviewService = tripReviewService;
+//    }
+
+
+    public TripReviewController(TripReviewService tripReviewService, TripService tripService) {
         this.tripReviewService = tripReviewService;
+        this.tripService = tripService;
     }
 
     @Value("${static.path}")
@@ -49,6 +58,8 @@ public class TripReviewController {
             @PathVariable int tId,
             Model model) {
         List<TripReviewDto> reviews=tripReviewService.list(tId);
+        TripDto trip=tripService.detail(tId);
+        model.addAttribute("t",trip);
         model.addAttribute("reviews",reviews);
         System.out.println("reviews = " + reviews);
         return "/trip/review/list";
@@ -64,7 +75,7 @@ public class TripReviewController {
     @PostMapping("/handler.do")
     public @ResponseBody HandlerDto registerHandler(
             @ModelAttribute TripReviewDto review,
-//            @SessionAttribute UserDto loginUser
+            @SessionAttribute UserDto loginUser,
             @RequestParam(name="img", required = false) MultipartFile[] imgs
             ) throws IOException {
 
@@ -110,11 +121,10 @@ public class TripReviewController {
     @PutMapping("/handler.do")
     public @ResponseBody HandlerDto modify(
             @ModelAttribute TripReviewDto review,
-//            @SessionAttribute UserDto loginUser,
+            @SessionAttribute UserDto loginUser,
             @RequestParam(name="img", required = false) MultipartFile[] imgs, // 이미지 등록
             @RequestParam(name="delImgId", required = false) int[] delImgIds // 이미지 삭제
     ) throws IOException {
-        // review=tripReviewService.detail(review.getTrId()); // detail 실행
 
         HandlerDto handlerDto=new HandlerDto();
         List<TripReviewImgDto> imgDtos=null;

@@ -22,8 +22,21 @@
                     평가 <span>☆☆☆☆☆</span>
                 </p>
                 <p>
-                    방문 <span> <i class="bi bi-record-circle text-danger"></i></span>
-                    방문전 <span>  <i class="bi bi-circle text-dark text-opacity-25"></i></span>
+                    <label>
+                        <input type="radio" name="visit" value="1" checked>
+                        방문
+                    </label>
+                    <label>
+                        <input type="radio" name="visit" value="0">
+                        방문전
+                    </label>
+
+<!--                    -->
+<!--                    <span th:if="${r.visit == 1}">방문</span>-->
+<!--                    <span th:if="${r.visit == 0}">방문전</span>-->
+<!--                    -->
+<!--                    방문 <span> <i class="bi bi-record-circle text-danger"></i></span>-->
+<!--                    방문전 <span>  <i class="bi bi-circle text-dark text-opacity-25"></i></span>-->
                 </p>
 
                 <p class="form-floating">
@@ -34,10 +47,9 @@
                 <div id="imgDelCont"> <!-- imgs 의 img 들의  imgPath -->
                     <h4>이미지 삭제(체크)</h4>
                     <p th:text="${r.trId}"></p>
-
                     <div class="d-flex">
                         <label th:each="img:${r.imgs}" class="w-25 delImgItem"> <!-- 리뷰한개의 각 1개의 이미지 -->
-                            <span th:text="${r.imgs}"></span>
+<!--                            <input type="hidden" name="imgPath">-->
                             <i class="bi bi-x"></i>
                             <input type="checkbox" class="delImgInput" name="delImgId" th:value="${img.triId}">
                             <img th:src="@{'{path}'(path=${img.imgPath})}" class="img-thumbnail" alt="">
