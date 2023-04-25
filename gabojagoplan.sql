@@ -235,6 +235,7 @@ CREATE TABLE `plans` (
 );
 
 #여행지티켓 테이블
+#img_main 칼럼 변경
 CREATE TABLE `sells` (
                          `s_id`		int unsigned AUTO_INCREMENT PRIMARY KEY COMMENT '판패글 아이디',
                          `u_id`	varchar(255) NOT NULL COMMENT '작성자 아이디',
@@ -484,6 +485,7 @@ CREATE TABLE `sell_bookmarks` (
 );
 
 
+
 #환불 페이지
 CREATE TABLE `sell_refunds` (
                                 `refund_id`	int unsigned AUTO_INCREMENT PRIMARY KEY COMMENT '환불 아이디',
@@ -646,6 +648,8 @@ VALUES
     ('user07', '제주', '판매글 제목17', '판매글 내용17', '키즈', 1, '/public/img/sell/1682234090230_1592.png'),
     ('user07', '제주', '판매글 제목171', '판매글 내용17', '레저', 1, '/public/img/sell/1682234803268_3166.png'),
     ('user07', '제주', '판매글 제목171', '판매글 내용17', '테마', 1, '/public/img/sell/1682234803271_4526.png');
+
+
 
 INSERT INTO `sell_options` (`s_id`, `name`, `price`, `stock`)
 
