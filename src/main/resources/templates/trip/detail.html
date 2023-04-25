@@ -8,29 +8,12 @@
     <title>맞춤추천 리스트</title>
     <script src=""></script>
     <style>
-        /*.splide {*/
-        /*    width: 800px;*/
-        /*    height: 500px;*/
-        /*}*/
-
-        /*.splide__slide {*/
-        /*    padding: 1rem;*/
-        /*}*/
-
-        /*.splide__slide img {*/
-        /*    width: 100%;*/
-        /*    height: 100%;*/
-        /*    object-fit: cover;*/
-        /*}*/
-
         .delImgInput {
             display: none;
         }
         .delImgItem > .delImgInput:checked + img {
             background-color: lightcoral;
         }
-
-
     </style>
 </head>
 <div layout:fragment="content" class="container">
@@ -174,6 +157,7 @@
                         <div id="reviewCont">
                             <ul class="list-group">
                                 <li class="list-group-item" th:each="r:${t.reviews}">
+<!--                                    <span th:text="${r}"></span>-->
                                     <th:block th:include="/trip/review/detail.html"></th:block>
                                 </li>
                             </ul>
@@ -187,10 +171,10 @@
                                 <input type="hidden" name="uId" th:value="${session.loginUser.uId}">
                                 <input type="hidden" name="tId" th:value="${t.tId}">
                                 <div class="col-2">
-                                    <input name="trId" placeholder="부모댓글" type="text" readonly class="form-control">
+                                    <input name="trId" placeholder="리뷰댓글" type="text" readonly class="form-control">
                                 </div>
                                 <div class="col-2">
-                                    <input name="parentTrcId" placeholder="부모대댓글" type="text" readonly class="form-control">
+                                    <input name="parentTrcId" placeholder="부모댓글" type="text" readonly class="form-control">
                                 </div>
                                 <div class="col">
                                     <input name="content" placeholder="댓글달기..." type="text" class="form-control">
@@ -212,7 +196,7 @@
                 </div>
                 <!-- 리뷰작성하기 Modal -->
                 <th:block th:include="/trip/review/reviewRegisterModal.html"></th:block>
-
+<!--                <th:block th:include="/trip/review/reviewModifyModal.html"></th:block>-->
 
             </div> <!-- 오른쪽 그리드 -->
         </div> <!-- // 그리드 row -->
@@ -305,11 +289,21 @@
             reviewModifyModal.hide();
         }
 
-
+        // 댓글달기 클릭 시, input 에 value 값(파라미터로 넘기는 값) 담는 함수
         function reviewCmtClick(trId,trcId){
             reviewCmtInsertForm.trId.value=trId;
             reviewCmtInsertForm.parentTrcId.value=trcId;
+        }
 
+        async function loadReviewsCmt(trId){
+            let url=`/reviewcmt/${trId}/list.do`
+            const resp=await fetch(url);
+            if(resp.status===200){
+                let text=await resp.text();
+                reviewCont.innerHTML=text; // ajax 로 리스트 새로 불러오기
+                // console.log(text);
+                // alert("변경");
+            }
         }
 
 
@@ -323,6 +317,8 @@
                 const json=await resp.json();
                 if(json.register>0){
                     alert("등록성공");
+                    await loadReviews(reviewCmtInsertForm.tId.value);
+                    // loadReviews(reviewModifyForm.tId.value);
                     // await loadReviewsCmt(reviewCmtInsertForm.trId.value);
                 }
             }else{
@@ -345,12 +341,6 @@
                         if(key==="imgPath"){
                             input.src=json[key];
                         }
-                        // if(key==="imgs") {
-                        //     json[key].forEach((img)=>{ // {"triId":43,"trId":19,"imgPath":"/public/img/trip/review/1682224117423_27386.jpeg"}
-                        //         input.src=json[img.imgPath];
-                        //     })
-                        // }
-                        //
                         else{
                             input.value=json[key];
                         }
@@ -359,6 +349,26 @@
                 reviewModifyModal.show();
             } else{
                 alert("불러오기 실패 status: " + resp.status);
+            }
+        }
+
+
+        reviewRegisterForm.onsubmit = registerReview;
+        async function registerReview(e) {
+            e.preventDefault(); // ajax => form 에 버튼 submit 이벤트 막기
+            reviewRegisterModal.hide();
+            let url = "/review/handler.do"
+            const data = new FormData(reviewRegisterForm);
+            const resp = await fetch(url, {method: "POST", body: data});
+            if (resp.status===200) {
+                const json = await resp.json(); // 응답객체 json 객체로 파싱
+                if (json.register > 0) {
+                    alert("등록성공");
+                    await loadReviews(reviewRegisterForm.tId.value);
+                }
+                console.log(json);
+            } else {
+                alert("등록실패 status: " + resp.status);
             }
         }
 
@@ -391,24 +401,7 @@
             }
         }
 
-        reviewRegisterForm.onsubmit = registerReview;
-        async function registerReview(e) {
-            e.preventDefault(); // ajax => form 에 버튼 submit 이벤트 막기
-            reviewRegisterModal.hide();
-            let url = "/review/handler.do"
-            const data = new FormData(reviewRegisterForm);
-            const resp = await fetch(url, {method: "POST", body: data});
-            if (resp.status===200) {
-                const json = await resp.json(); // 응답객체 json 객체로 파싱
-                if (json.register > 0) {
-                    alert("등록성공");
-                    await loadReviews(reviewRegisterForm.tId.value);
-                }
-                console.log(json);
-            } else {
-                alert("등록실패 status: " + resp.status);
-            }
-        }
+
 
 
     </script>

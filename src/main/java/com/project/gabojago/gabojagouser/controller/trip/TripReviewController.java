@@ -140,31 +140,52 @@ public class TripReviewController {
             }
         }
         review.setImgs(imgDtos);
+        List<TripReviewImgDto> delImgDtos=null; // -- 🔥추가한 코드 될지 확인해야함
         int modify=0;
         try{
-            if(delImgIds!=null) imgDtos=tripReviewService.imgList(delImgIds);
+            if(delImgIds!=null) delImgDtos=tripReviewService.imgList(delImgIds); // -- 🔥추가한 코드 될지 확인해야함
+//            if(delImgIds!=null) imgDtos=tripReviewService.imgList(delImgIds);
             modify=tripReviewService.modify(review,delImgIds); // 서비스 register 에서 이미지를 db 에 저장하는 코드가 있어야 한다.
         }catch (Exception e){
             log.error(e.getMessage());
         }
 
-        // 수정성공시 선택한 이미지 삭제 코드???
-         if(modify==0){ // 수정 실패시 이미지삭제
-            if(imgDtos!=null){
-                for(TripReviewImgDto imgDto : imgDtos){
-                    File imgFile=new File(staticPath+imgDto.getImgPath());
+        // -- 🔥추가한 코드 될지 확인해야함
+        // db 수정성공시 선택한 이미지 삭제 코드???
+        if(modify>0){
+            if(delImgDtos!=null){
+                for(TripReviewImgDto tri : delImgDtos){
+                    File imgFile = new File(staticPath + tri.getImgPath());
                     if(imgFile.exists()) imgFile.delete();
                 }
             }
-        } else { // 수정 성공시 선택한 이미지 삭제
-             if(imgDtos!=null){
-                 for(TripReviewImgDto imgDto : imgDtos){
-                     File imgFile=new File(staticPath+imgDto.getImgPath());
-                     if(imgFile.exists()) imgFile.delete();
-                 }
-             }
-         }
+        }
+        else { // 수정실패시, 추가 등록했던 이미지 삭제
+            if(imgDtos!=null){
+                for(TripReviewImgDto imgDto : imgDtos){
+                    File imgFile = new File(staticPath + imgDto.getImgPath());
+                    if (imgFile.exists()) imgFile.delete(); // 파일삭제
+                }
+            }
+        }
+        // -- 🔥추가한 코드 될지 확인해야함
 
+        // 👀
+//         if(modify==0){ // 수정 실패시 이미지삭제
+//            if(imgDtos!=null){
+//                for(TripReviewImgDto imgDto : imgDtos){
+//                    File imgFile=new File(staticPath+imgDto.getImgPath());
+//                    if(imgFile.exists()) imgFile.delete();
+//                }
+//            }
+//        } else { // 수정 성공시 선택한 이미지 삭제
+//             if(imgDtos!=null){
+//                 for(TripReviewImgDto imgDto : imgDtos){
+//                     File imgFile=new File(staticPath+imgDto.getImgPath());
+//                     if(imgFile.exists()) imgFile.delete();
+//                 }
+//             }
+//         }
 
         handlerDto.setModify(modify);
         return handlerDto;
@@ -179,7 +200,7 @@ public class TripReviewController {
         List<TripReviewImgDto> imgDtos=null;
         int remove=0;
         try{
-            // review 의 detail 을 받아온적이 없다? 파라미터로 받아온 review 를 이용해서 detail 을 db 에서 불러오기
+            // review 의 detail 을 db 에서 받아온적이 없다? 파라미터로 받아온 review 를 이용해서 detail 을 db 에서 불러오기
             TripReviewDto detail=tripReviewService.detail(review.getTrId());
             imgDtos=detail.getImgs();
             remove=tripReviewService.remove(review.getTrId());

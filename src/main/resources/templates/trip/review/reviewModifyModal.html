@@ -31,43 +31,38 @@
                            class="form-control" placeholder="장소이름">
                     <label>장소이름</label>
                 </p>
-                <p id="imgDelCont"> <!-- imgs 의 img 들의  imgPath -->
+                <div id="imgDelCont"> <!-- imgs 의 img 들의  imgPath -->
                     <h4>이미지 삭제(체크)</h4>
-                <div class="d-flex">
-                    <label th:each="img:${r.imgs}" class="w-25 delImgItem"> <!-- 리뷰한개의 각 1개의 이미지 -->
-                        <i class="bi bi-x"></i>
-                        <input type="checkbox" class="delImgInput" name="delImgId" th:value="${img.triId}">
-                        <img th:src="@{'{path}'(path=${img.imgPath})}" class="img-thumbnail" alt="">
-                    </label>
+                    <p th:text="${r.trId}"></p>
+
+                    <div class="d-flex">
+                        <label th:each="img:${r.imgs}" class="w-25 delImgItem"> <!-- 리뷰한개의 각 1개의 이미지 -->
+                            <span th:text="${r.imgs}"></span>
+                            <i class="bi bi-x"></i>
+                            <input type="checkbox" class="delImgInput" name="delImgId" th:value="${img.triId}">
+                            <img th:src="@{'{path}'(path=${img.imgPath})}" class="img-thumbnail" alt="">
+                        </label>
+                    </div>
+
+
+                    <p id="modifyImgCont">
+                        <button id="modifyImgAddBtn" class="btn btn-danger w-100" type="button">
+                            이미지
+                            <i class="bi bi-plus-square"></i>
+                        </button>
+                    </p>
+                    <p>
+                    </p>
+                    <p class="form-floating">
+                        <input type="text" name="content" class="form-control" placeholder="내용">
+                        <label>내용</label>
+                    </p>
                 </div>
-
-<!--                <p th:text="${r.trId}"></p>-->
-
-<!--                    <input type="hidden" class="delImgInput" name="delImgId" th:value="${i.triId}">-->
-<!--                    &lt;!&ndash; name 이름으로 파라미터 요청이 들어오고 값은 value 로 들어온다.  &ndash;&gt;-->
-<!--                    <input type="hidden" name="imgPath"> &lt;!&ndash; hidden 타입 : 숨겨서 서버(요청메세지 본문)에 전달 &ndash;&gt;-->
-<!--                    <img th:if="${r.trId==1}" th:src="@{'{path}'(path=${i.imgPath})}" class="img-thumbnail">-->
-
-
-                </p>
-
-                <p id="modifyImgCont">
-                    <button id="modifyImgAddBtn" class="btn btn-danger w-100" type="button">
-                        이미지
-                        <i class="bi bi-plus-square"></i>
+                <div class="modal-footer">
+                    <button id="removeReviewBtn" class="btn btn-outline-dark" data-bs-dismiss="modal">삭제
                     </button>
-                </p>
-                <p>
-                </p>
-                <p class="form-floating">
-                    <input type="text" name="content" class="form-control" placeholder="내용">
-                    <label>내용</label>
-                </p>
-            </div>
-            <div class="modal-footer">
-                <button id="removeReviewBtn" class="btn btn-outline-dark" data-bs-dismiss="modal">삭제
-                </button>
-                <button type="submit" class="btn btn-outline-danger">등록</button>
+                    <button type="submit" class="btn btn-outline-danger">등록</button>
+                </div>
             </div>
         </form>
     </div>
