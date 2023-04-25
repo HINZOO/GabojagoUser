@@ -6,6 +6,9 @@
         <result column="p_id" property="pId"/>
         <result column="mu_id" property="muId"/>
     </resultMap>
+    <insert id="insertOne" useGeneratedKeys="true" keyProperty="mlId"  parameterType="planMembersDto">
+        INSERT INTO plan_members (p_id, mu_id) VALUE (#{pId}, #{muId})
+    </insert>
 
     <select id="findByPId" resultMap="com.project.gabojago.gabojagouser.mapper.user.UserMapper.UserMap">
         SELECT u.*

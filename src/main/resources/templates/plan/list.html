@@ -80,7 +80,7 @@
                                         </a>
                                         <div class="card-footer">
                                                 <div class="cardMy" style="background-image:url('/public/img/plan/profileDefault.png')"
-                                                    data-bs-toggle="tooltip" data-bs-placement="top" th:data-bs-title="나">
+                                                    data-bs-toggle="tooltip" data-bs-placement="top" th:data-bs-title="${plan.getUId()}">
                                                 </div>
                                             <th:block th:each="mu:${plan.getMUsers()}">
                                                 <div class="cardOr" style="background-image:url('/public/img/plan/profileDefault.png')"
@@ -103,21 +103,25 @@
 
 
             <!--새 플랜 만들기 모달 부분-->
-            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal fade" id="newPlanModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered modal-lg">
                     <div class="modal-content">
-                    <form  method="post" action="./insert.do" enctype="multipart/form-data">
-                        <div class="modal-header bg-primary bg-opacity-10">
-                            <h1 class="modal-title fs-5" id="staticBackdropLabel">새 플랜 만들기</h1>
+                    <form id="newPlanModalForm"  method="post" action="./insert.do" enctype="multipart/form-data">
+                        <div class="modal-header bg-primary bg-opacity-25 py-2">
+                            <h1 class="modal-title fs-4" id="staticBackdropLabel">새 여행 계획</h1>
                             <div class="newPlanStatusBox">
-                                <input class="form-check-input" type="radio" name="planStatus" id="flexRadioDefault1" value="PUBLIC" checked>
-                                <label class="form-check-label" for="flexRadioDefault1">공개</label>
-                                <input class="form-check-input" type="radio" name="planStatus" value="PRIVATE" id="flexRadioDefault2" style="margin-left: 10px">
-                                <label class="form-check-label" for="flexRadioDefault2">비공개</label>
+                                <input class="form-check-input statusC" type="radio" name="planStatus" id="flexRadioDefault1" value="PUBLIC" checked style="display: none" >
+                                <label class="form-check-label statusL" for="flexRadioDefault1">
+                                    <i class="bi bi-unlock-fill"></i>
+                                </label>
+                                <input class="form-check-input statusC" type="radio" name="planStatus" value="PRIVATE" id="flexRadioDefault2" style="margin-left: 10px; display: none" >
+                                <label class="form-check-label statusL" for="flexRadioDefault2">
+                                    <i class="bi bi-lock-fill"></i>
+                                </label>
                             </div>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <div class="modal-body">
+                        <div class="modal-body newPlanModalBody pb-1">
                                 <div class="row">
                                     <div class="col-6">
                                         <div id="newPlanPreviewBox" class="mb-3">
@@ -127,32 +131,30 @@
                                     </div>
                                     <div class="col-6">
                                         <div class="row">
-                                            <div class="form-floating col-12">
-                                                <input type="text" class="form-control" name="uId" value="USER01" id="floatingId" placeholder="" hidden>
-                                                <label for="floatingId"></label>
-                                            </div>
+                                            <input type="text" class="form-control" name="uId" th:value="${session.loginUser.getUId()}" placeholder="" hidden>
+                                            <input type="text" class="form-control" name="members" value="" placeholder="" hidden>
                                             <div class="form-floating col-12 mb-3">
-                                                <input type="text" class="form-control" name="title" id="floatingTitle" placeholder="">
+                                                <input type="text" class="form-control" name="title" id="floatingTitle" placeholder="타이틀">
                                                 <label for="floatingTitle">타 이 틀</label>
                                             </div>
                                             <div class="form-floating col-6">
-                                                <input type="date" class="form-control" name="planFrom" id="floatingFrom" placeholder="">
-                                                <label for="floatingFrom">일정 시작</label>
+                                                <input type="text" class="form-control" name="planFrom" id="floatingFrom" placeholder="일정 시작" onfocus="(this.type='date')">
+                                                <label for="floatingFrom">FROM.</label>
                                             </div>
                                             <div class="form-floating col-6 mb-3">
-                                                <input type="date" class="form-control" name="planTo" id="floatingTo" placeholder="">
-                                                <label for="floatingTo">일정 끝</label>
+                                                <input type="text" class="form-control" name="planTo" id="floatingTo" placeholder="일정 끝" onfocus="(this.type='date')">
+                                                <label  for="floatingTo">TO.</label>
                                             </div>
                                             <div class="form-floating col-12 mb-3">
-                                                <input type="text" class="form-control" name="info" id="floatingInfo" placeholder="" style="height: 100px">
+                                                <input type="text" class="form-control" name="info" id="floatingInfo" placeholder="설 명" style="height: 100px">
                                                 <label for="floatingInfo">설 명</label>
                                             </div>
                                             <div class="memberSelectBox">
                                                 <div class="memberSelectBoxHeader mb-1">
-                                                    <span>멤버 리스트</span>
-                                                    <span class="memberSelectBoxPBtn"><i class="bi bi-plus-circle"></i></span>
+                                                    <span>멤 버 리 스 트</span>
+                                                    <span id="memberSelectBoxPBtn"><i class="bi bi-plus-circle"></i></span>
                                                 </div>
-                                                <div class="newPlanFooter">
+                                                <div id="memberSelectBoxFooter">
                                                     <div class="cardMy" style="background-image:url('/public/img/plan/profileDefault.png')"
                                                          data-bs-toggle="tooltip" data-bs-placement="top" th:data-bs-title="나">
                                                     </div>
@@ -161,15 +163,50 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="modal-footer ">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                        <button type="submit" class="btn btn-primary">만들기</button>
+                                <div class="modal-footer py-1">
+                                        <button type="submit" class="btn btn-primary sB">생 성</button>
                                 </div>
                             </form>
                         </div>
 
                     </div>
                 </div>
+
+
+                <div class="modal" id="newMemberModal" tabindex="-1">
+                    <div class="modal-dialog modal-dialog-centered  modal-sm">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">멤버 추가(임시)</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <form id="memberSearchForm">
+                            <div class="modal-body memberSearchList py-1">
+                                <input type="checkbox" class="memberSearchCheckBoxInput" value="USER02" name="members" id="mcb1" style="display: none">
+                                <label For="mcb1">
+                                    <div class="memberSearchListCheckBox"></div>
+                                    <div class="cardOr" style="background-image:url('/public/img/plan/profileDefault.png')"></div>
+                                    <span>USER02</span>
+                                </label>
+                                <input type="checkbox" class="memberSearchCheckBoxInput" value="USER03" name="members" id="mcb2" style="display: none">
+                                <label For="mcb2">
+                                    <div class="memberSearchListCheckBox"></div>
+                                    <div class="cardOr" style="background-image:url('/public/img/plan/profileDefault.png')"></div>
+                                    <span>USER03</span>
+                                </label>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" id="memberSelectBoxIBtn" class="btn btn-primary">추가</button>
+                            </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
             </div>
 
 
@@ -178,7 +215,6 @@
 
 
     <script>
-
         let cardModifyBtn = document.getElementsByClassName("cardModify");
 
 
@@ -195,15 +231,46 @@
             imgBox.style.backgroundImage="none";
         })
 
+        // 새 플랜 작성시 멤버 추가 모달
+        const memPBtn = document.getElementById("memberSelectBoxPBtn")
+        memPBtn.onclick =()=>{
+            const modal = new bootstrap.Modal(document.getElementById('newMemberModal'), {});
+            modal.show();
+            const memIBtn = document.getElementById("memberSelectBoxIBtn")
+            memIBtn.onclick = ()=>{
+                const form = document.getElementById("memberSearchForm")
+                const inputFormFooter = document.getElementById("memberSelectBoxFooter");
+                let formArr = [];
+                for(let member of form["members"]){
+                    if(member.checked){
+                        formArr.push(member.value)
+                        inputFormFooter.insertAdjacentHTML('beforeend',`
+                     <div class="cardOr" style="background-image:url('/public/img/plan/profileDefault.png')"
+                             data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="${member.value}">
+                        </div>
+                    `)
+                    }
+                }
+                const tooltipTriggerList = document.querySelectorAll('.cardOr')
+                const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+
+                const newPlanModalForm = document.getElementById("newPlanModalForm")
+                newPlanModalForm["members"].value=formArr;
+
+                modal.hide();
+            }
+
+
+        }
+
 
         const newPlanBtn = document.querySelector("#newScheduleBtn");
-        newPlanBtn.addEventListener("click",()=>{
-            new bootstrap.Modal(document.getElementById('staticBackdrop'), {}).show();
-        })
+        newPlanBtn.onclick = ()=>{
+            new bootstrap.Modal(document.getElementById('newPlanModal'), {}).show();
+        }
 
-
+        // 깃발 꽂기.. 그냥 해봄
         window.addEventListener("load",()=>{
-            // 깃발 꽂기ㅋㅋ
             const box = document.querySelector(".flagContent")
             const pBtn = document.getElementById("mapP")
             const mBtn = document.getElementById("mapM")

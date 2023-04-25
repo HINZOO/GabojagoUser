@@ -8,4 +8,5 @@ import java.util.List;
 @Mapper
 public interface PlanMembersMapper {
     List<PlanMembersDto> findByPId(int pId);
+    int insertOne(PlanMembersDto planMembersDto);
 }
