@@ -26,8 +26,18 @@ public class UserDto {
     private String imgPath;
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date postTime;
+    //이메일 체크
+    public enum StatusType{
+        SIGNUP,EMAIL_CHECK,BLOCK,LEAVE,REPORT
+    }
+    private StatusType status;
+    private String emailCheckCode;
+
+    //파트너 정보
     private String storeName;
     private String businessId;
+
+    //유저 조인
     private boolean following;
     private List<UserDto> followings;
     private List<UserDto> followers;

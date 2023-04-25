@@ -32,6 +32,8 @@ CREATE TABLE `users` (
                          `store_name`	varchar(255) COMMENT '상호명',
                          `business_id`	varchar(255) COMMENT '사업자 번호'
 );
+ALTER TABLE users ADD COLUMN status          ENUM('SIGNUP','EMAIL_CHECK','BLOCK','LEAVE','REPORT') NOT NULL DEFAULT 'SIGNUP' COMMENT '계정상태';
+ALTER TABLE users ADD COLUMN     email_check_code VARCHAR(8) COMMENT '이메일 확인 코드';
 
 #해시태그 테이블
 CREATE TABLE `hashtags` (

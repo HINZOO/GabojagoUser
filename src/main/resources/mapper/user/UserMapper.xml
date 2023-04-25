@@ -18,6 +18,8 @@
     <result column="post_time" property="postTime"/>
     <result column="store_name" property="storeName"/>
     <result column="business_id" property="businessId"/>
+    <result column="status" property="status"/>
+    <result column="email_check_code" property="emailCheckCode"/>
     <association property="following"
                  select="com.project.gabojago.gabojagouser.mapper.my.FollowMapper.findByToIdAndFromIdIsLoginUserId"
                  column="u_id"
@@ -38,10 +40,10 @@
   <insert id="insertOne" parameterType="com.project.gabojago.gabojagouser.dto.user.UserDto">
     INSERT INTO users
       (u_id, pw, name, nk_name, email, birth, phone, address, detail_address,
-       pr_content, permission, mbti, img_path,  store_name, business_id)
+       pr_content, permission, mbti, img_path,  store_name, business_id,status,email_check_code)
     VALUES
       (#{uId}, #{pw}, #{name}, #{nkName}, #{email}, #{birth}, #{phone}, #{address}, #{detailAddress},
-       #{prContent}, #{permission}, #{mbti}, #{imgPath}, #{storeName}, #{businessId})
+       #{prContent}, #{permission}, #{mbti}, #{imgPath}, #{storeName}, #{businessId},#{status},#{emailCheckCode})
   </insert>
   <update id="updateOne" parameterType="com.project.gabojago.gabojagouser.dto.user.UserDto">
     UPDATE users SET
@@ -66,6 +68,9 @@
     </update>
   <update id="setLoginUserIdNull">
     SET @loginUserId=NULL;
+  </update>
+  <update id="updateStatusByUIdAndEmailCheckCode">
+    UPDATE users SET status=#{status} WHERE u_id=#{uId} AND email_check_code=#{emailCheckCode}
   </update>
   <delete id="deleteOne" parameterType="UserDto">
     DELETE FROM users WHERE u_id=#{uId} AND pw=#{pw}

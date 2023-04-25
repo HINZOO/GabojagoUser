@@ -36,6 +36,7 @@ dependencies {
 	implementation 'org.webjars.npm:bootstrap:5.2.3'
 	implementation 'org.webjars.npm:bootstrap-icons:1.10.3'
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
+	implementation 'org.springframework.boot:spring-boot-starter-mail:3.0.4'
 }
 
 tasks.named('test') {
