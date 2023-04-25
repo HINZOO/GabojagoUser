@@ -75,53 +75,54 @@
                     <div class="col-md-8">
                         <div class="btnLine" role="group">
                             <!--이미지 삽입-->
-                            <button type="button" id="imgBtn">
+                            <button type="button" id="imgBtn" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="이미지 삽입">
                                 <i class="bi bi-image"></i>
                                 <input id="imgInput" type="file" style="display: none"/>
                             </button>
                             <!--보관함-->
-                            <button type="button" id="loadBtn">
+                            <button type="button" id="loadBtn" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="테스트용">
                                 <i class="bi bi-folder2-open"></i>
                             </button>
                             <!--선택-->
-                            <button type="button" id="selectorBtn">
+                            <button type="button" id="selectorBtn" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="선택 & 이동">
                                 <i class="bi bi-hand-index"></i>
                             </button>
-                            <!--이동-->
-                            <button type="button"  id="moveBtn" style="background-color: #5d5d5d">
-                                <i class="bi bi-arrows-move"></i>
-                            </button>
                             <!--펜-->
-                            <button type="button" id="penBtn">
+                            <button type="button" id="penBtn" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="펜">
                                 <i class="bi bi-pencil"></i>
                             </button>
                             <!--직선-->
-                            <button type="button" id="lineBtn" >
+                            <button type="button" id="lineBtn" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="직 선">
                                 <i class="bi bi-slash-lg"></i>
                             </button>
                             <!--박스 -->
-                            <button type="button"  id="rectBtn">
+                            <button type="button"  id="rectBtn" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="사각형">
                                 <i class="bi bi-square"></i>
                             </button>
                             <!--텍스트입력-->
-                            <button type="button"  id="textBtn" style="background-color: #5d5d5d">
+                            <button type="button"  id="textBtn" style="background-color: #5d5d5d" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="텍스트">
                                 <i class="bi bi-fonts"></i>
                             </button>
                             </button>
                             <!--포스트잇-->
-                            <button type="button"  id="postBtn" style="background-color: #5d5d5d">
-                                <i class="bi bi-sticky"></i>
-                            </button>
+                            <div class="dropdown py-0" id="postBtn" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="스티커">
+                                <button role="button" id="dropdownMenuLink1" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="bi bi-sticky"></i>
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink1">
+                                    <button id="rr" ></button>
+                                </ul>
+                            </div>
                             <!--스템프-->
-                            <button type="button" id="stampBtn">
+                            <button type="button" id="stampBtn" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="스템프">
                                 <i class="bi bi-star"></i>
                             </button>
                             <!--파레트-->
-                            <div class="dropdown py-0" id="palateBtn">
-                                <button role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                            <div class="dropdown py-0" id="palateBtn" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="색 상">
+                                <button role="button" id="dropdownMenuLink2" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="bi bi-palette"></i>
                                 </button>
-                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink2">
                                     <button id="red" ></button>
                                     <button id="orange"></button>
                                     <button id="yellow"></button>
@@ -133,16 +134,16 @@
                                     <button id="white"></button>
                                 </ul>
                             </div>
-                            <!--플러스버튼-->
-                            <button type="button"  id="plusBtn">
-                                <i class="bi bi-plus-circle"></i>
+                            <!--줌 인-->
+                            <button type="button" id="plusBtn" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="줌 인">
+                                <i class="bi bi-zoom-in"></i>
                             </button>
-                            <!--마이너스버튼-->
-                            <button type="button"  id="minusBtn">
-                                <i class="bi bi-dash-circle"></i>
+                            <!--줌 아웃-->
+                            <button type="button" id="minusBtn" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="줌 아웃">
+                                <i class="bi bi-zoom-out"></i>
                             </button>
                             <!-- 지우기 -->
-                            <button type="button"  id="removeBtn">
+                            <button type="button" id="removeBtn" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="캔버스 비우기">
                                 <i class="bi bi-trash"></i>
                             </button>
 
@@ -244,9 +245,10 @@
             </div>
         </div>
     </div>
-            <!--      채팅방      -->
-            <i class="bi bi-chat-dots-fill chatBtn" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling"></i>
-            <th:block th:include="/plan/chatting"></th:block>
+
+    <!--      채팅방      -->
+    <i class="bi bi-chat-dots-fill chatBtn" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling"></i>
+    <th:block th:include="/plan/chatting"></th:block>
 
     <script th:inline="javascript">
         let activatedCanvas;

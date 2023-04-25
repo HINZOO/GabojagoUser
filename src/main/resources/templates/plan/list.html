@@ -11,7 +11,7 @@
 
 <div layout:fragment="content" class="container-fluid px-0">
         <div class="row">
-            <div class="col-2" ></div><!-- 이거 없애야됨 -->
+            <div class="col-2" id="forModal"></div><!-- 이거 없애야됨 -->
 
             <div class="col-md-8 mainSection px-0">
                 <div class="row listMainHeader px-0 ">
@@ -61,12 +61,15 @@
                         <div class="listContent" style="overflow: hidden">
                             <th:block th:each="plan:${plans}">
 
-                                    <div class="card" onclick=shout()>
+                                    <div class="card">
                                         <div class="cardReview" data-bs-toggle="tooltip" data-bs-placement="top" th:data-bs-title="리뷰작성">
                                             <i class="bi bi-pencil-square"></i>
                                         </div>
-                                        <div class="cardModify" onclick=shout()>
-                                            <i class="bi bi-gear-fill"></i></i>
+                                        <div class="cardModify" th:onclick="'planModify(' + ${plan.getPId()} + ')'" >
+                                            <i class="bi bi-gear-fill"></i>
+                                        </div>
+                                        <div class="cardRemove" th:data-u-id="${plan.getUId()}" th:data-p-id="${plan.getPId()}" onclick="planRemove(this)" >
+                                            <i class="bi bi-trash3-fill"></i>
                                         </div>
                                         <img class="card-img-top" th:if="${plan.getImgPath()==null}" src="/public/img/plan/planSample.jpg">
                                         <img class="card-img-top" th:if="${plan.getImgPath()!=null}" th:src="${plan.getImgPath()}">
@@ -205,17 +208,40 @@
 
 
 
-
-
             </div>
 
+    <script th:inline="javascript">
+
+        async function planModify(pId){
+            let url =`/plan/${pId}/modify.do`
+            const resp = await fetch(url,{method:"PUT"});
+            const result = await resp.text();
+            document.getElementById("forModal").insertAdjacentHTML("beforeend",result)
+            new bootstrap.Modal(document.getElementById('modifyPlanModal'), {}).show();
+            // if(resp.status===200){
+            //
+            // }else {
+            //     alert("캔버스 생성 실패 status :"+resp.status);
+            // }
+        }
 
 
-
-
-
-    <script>
-        let cardModifyBtn = document.getElementsByClassName("cardModify");
+        async function planRemove(ele){
+            if([[${session.loginUser.uId}]] !== ele.dataset.uId) {
+                alert("플랜을 생성한 사람만 삭제 할 수 있습니다!")
+            }
+            else {
+                if(confirm("삭제된 정보는 복구할 수 없습니다. 그래도 삭제 할까요?")) {
+                    let url =`/plan/${pId}/delete.do`
+                    const resp = await fetch(url,{method:"DELETE"});
+                    const result = await resp.json()
+                    if(resp.status===200){
+                    }else {
+                        alert("플랜 삭제 실패 status : " + resp.status);
+                    }
+                }
+            }
+        }
 
 
         // 새 플랜 작성 시 대표이미지 미리보기

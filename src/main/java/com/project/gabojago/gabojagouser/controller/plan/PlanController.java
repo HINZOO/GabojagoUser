@@ -104,7 +104,10 @@ public class PlanController {
         }
     }
     @GetMapping("/{pId}/detail.do")
-    public String detail(@PathVariable int pId, Model model) throws ParseException { // 플랜 detail 보기
+    public String detail(
+            @PathVariable int pId,
+            Model model) throws ParseException
+    { // 플랜 detail 보기
         PlanDto plan = planService.detail(pId);
 
         // 여행 기간이 여러 날인 경우 분리해서 렌더링 하기 위함
@@ -116,6 +119,22 @@ public class PlanController {
         model.addAttribute("plan", plan);
         model.addAttribute("period", gap);
         return "/plan/detail";
+    }
+    @PutMapping ("/{pId}/modify.do")
+    public String modify(
+            @PathVariable int pId,
+            Model model)
+    {
+        PlanDto planDto = planService.detail(pId);
+        model.addAttribute("plan",planDto);
+        return "/plan/planModify";
+    }
+    @DeleteMapping("/{pId}/delete.do")
+    public @ResponseBody int delete(
+            @SessionAttribute UserDto loginUser,
+            @PathVariable int pId)
+    {
+        return 1;
     }
 
     @PostMapping("/checkList.do")
