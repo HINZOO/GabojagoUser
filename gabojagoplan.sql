@@ -708,7 +708,7 @@ VALUES
 
 #가보자고 이미지 더미
 INSERT INTO trip_imgs (t_id,img_path,img_main)
-VALUES (   (1,'/public/img/trip/default.jpeg',0),
+VALUES  (1,'/public/img/trip/default.jpeg',0),
            (1,'/public/img/trip/default.jpeg',1),
            (2,'/public/img/trip/default.jpeg',0),
            (2,'/public/img/trip/default.jpeg',1),
@@ -720,7 +720,7 @@ VALUES (   (1,'/public/img/trip/default.jpeg',0),
            (5,'/public/img/trip/default.jpeg',1),
            (6,'/public/img/trip/default.jpeg',0),
            (6,'/public/img/trip/default.jpeg',1)
-       )
+       ;
 
 
 #가보자고 리뷰 데이터
