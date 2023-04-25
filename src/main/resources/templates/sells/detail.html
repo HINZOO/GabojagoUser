@@ -61,12 +61,35 @@
                         <a class="btn btn-secondary" th:href="@{'/sells/{sId}/modify.do'(sId=${sells.getSId()})}" >수정하기</a>
                         </th:block>
                         <button type="submit" class="btn btn-primary ">결제하기</button>
+                        <a class="btn btn-danger" id="apibtn">API 호출</a>
+                        <script>
+                           const btn= document.getElementById("apibtn");
+                           btn.addEventListener("click",()=>{
+                               fetch('/jq/kakaopay.cls')
+                                   .then(response => {
+                                       if (response.ok) {
+                                           return response.json();
+                                       }
+                                       throw new Error('네트워크 응답이 올바르지 않습니다.');
+                                   })
+                                   .then(data => {
+                                       let box = data.next_redirect_pc_url;
+                                       window.location.href = box;
+                                   })
+                                   .catch(error => {
+                                       console.error('가져오기 작업에 문제가 있습니다:', error);
+                                   });
+                           })
+
+                        </script>
                     </div>
             </div>
         </div>
     </div>
     </div>
     <script>
+
+
         function up(){
             quantityInput.value++
         }function down(){
