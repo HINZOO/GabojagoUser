@@ -551,7 +551,7 @@ class CanvasCreate {
         co.ctx.scale(co.currentScale,co.currentScale)
         co.ctx.drawImage(co.defaultBack,0,0);
 
-        if(index===undefined && rest == true){ arr = co.layerArr;}
+        if(index===undefined){ arr = co.layerArr;}
         else if(index !== undefined && rest === true){ arr = co.layerArr.filter((c,i)=>{return i !== index });}
 
         arr.forEach((c)=>{
@@ -571,12 +571,13 @@ class CanvasCreate {
         }
 
         co.ctx.beginPath();
+        co.ctx.moveTo(modi(c.moveTo[0])/c.scale,modi(c.moveTo[1])/c.scale)
         if(c.type==="line") {
-            co.ctx.moveTo(modi(c.moveTo[0])/c.scale,modi(c.moveTo[1])/c.scale)
+
             co.ctx.lineTo(modi(c.lineTo[0])/c.scale,modi(c.lineTo[1])/c.scale)
             co.ctx.stroke();
         } else if(c.type==="pen"){
-            co.ctx.moveTo(modi(c.moveTo[0])/c.scale,modi(c.moveTo[1])/c.scale)
+
             c.path.forEach((p)=>{
                 co.ctx.lineTo(modi(p[0])/c.scale,modi(p[1])/c.scale);
                 co.ctx.stroke();
@@ -645,6 +646,7 @@ class CanvasCreate {
         ///////배열 테스트용/////
         document.getElementById("loadBtn").addEventListener("click", ()=>{
             this.layerLoad()
+            console.log(JSON.stringify(this.layerArr))
         });
 
 

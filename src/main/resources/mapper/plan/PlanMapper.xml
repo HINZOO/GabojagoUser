@@ -33,10 +33,13 @@
         VALUE (#{uId}, #{title}, #{info}, #{planFrom}, #{planTo}, #{imgPath}, #{planStatus})
     </insert>
     <update id="updateOne">
-
+        UPDATE plans
+        SET title=#{title}, info=#{info}, plan_from=#{planFrom}, plan_to=#{planTo}, img_path=#{imgPath}, plan_status=#{planStatus}
+        WHERE p_id=#{pId}
     </update>
     <delete id="deleteOne">
-
+        DELETE FROM plans
+               WHERE p_id=#{pId}
     </delete>
     <select id="findAll" resultMap="planMap">
         SELECT * FROM plans
