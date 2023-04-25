@@ -23,8 +23,8 @@
     </resultMap>
 
     <insert id="insertOne" useGeneratedKeys="true" keyProperty="trcId" parameterType="TripReviewCmtDto">
-        INSERT INTO trip_review_comments (tr_id, u_id, content, status, parent_trc_id, img_path)
-        VALUE (#{trId}, #{uId}, #{content}, #{parentTrcId}, #{status}, #{imgPath});
+        INSERT INTO trip_review_comments (tr_id, u_id, content, parent_trc_id, img_path)
+        VALUE (#{trId}, #{uId}, #{content}, #{parentTrcId}, #{imgPath});
     </insert>
     <update id="updateOne">
         UPDATE trip_review_comments
