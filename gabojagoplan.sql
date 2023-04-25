@@ -658,7 +658,7 @@ VALUES
     (1, '청소년', '8000', 30),
     (1, '소인', '5000', 10);
 
-#가보자고 더미
+#가보자고 게시글 더미
 INSERT INTO trips (u_id, title, area, address, phone, url_address, content,
                    istj, istp, isfj, isfp, intj, intp, infj, infp, estj, estp, esfj,
                    esfp, entj, entp, enfj, enfp, category)
@@ -670,21 +670,22 @@ VALUES
     ('user05', '인천에서 즐기는 봄꽃 여행', '인천', '강화도', '01014312222', 'https://www.visitjeju.net/kr/','인천의 아름다운 벚꽃을 감상하며 봄을 느껴보세요.', 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, '힐링'),
     ('user06', '부산에서 즐기는 봄꽃 여행', '부산', '목포', '01055115322', 'https://www.visitjeju.net/kr/','부산의 아름다운 벚꽃을 감상하며 봄을 느껴보세요.', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, '힐링');
 
-INSERT INTO trip_imgs (t_id, img_path, img_main)
+#가보자고 이미지 더미
+INSERT INTO trip_imgs (t_id,img_path,img_main)
+VALUES (   (1,'/public/img/trip/default.jpeg',0),
+           (1,'/public/img/trip/default.jpeg',1),
+           (2,'/public/img/trip/default.jpeg',0),
+           (2,'/public/img/trip/default.jpeg',1),
+           (3,'/public/img/trip/default.jpeg',0),
+           (3,'/public/img/trip/default.jpeg',1),
+           (4,'/public/img/trip/default.jpeg',0),
+           (4,'/public/img/trip/default.jpeg',1),
+           (5,'/public/img/trip/default.jpeg',0),
+           (5,'/public/img/trip/default.jpeg',1),
+           (6,'/public/img/trip/default.jpeg',0),
+           (6,'/public/img/trip/default.jpeg',1)
+       )
 
-VALUES
-    (1, '/public/img/trip/1681874098138_9606.jpeg', 0),
-    (1, '/public/img/trip/1681919983348_5750.jpeg', 1),
-    (2, '/public/img/trip/1681874098138_9606.jpeg', 0),
-    (2, '/public/img/trip/1681903838888_2292.jpeg', 1),
-    (3, '/public/img/trip/1681874098138_9606.jpeg', 0),
-    (3, '/public/img/trip/1681920887716_6975.jpeg', 1),
-    (4, '/public/img/trip/1681874098138_9606.jpeg', 0),
-    (4, '/public/img/trip/1681920915756_7364.jpeg', 1),
-    (5, '/public/img/trip/1681874098138_9606.jpeg', 0),
-    (5, '/public/img/trip/1681920956987_5938.jpeg', 1),
-    (6, '/public/img/trip/1681874098138_9606.jpeg', 0),
-    (6, '/public/img/trip/1681920967721_9464.jpeg', 1);
 
 #가보자고 리뷰 데이터
 INSERT INTO trip_reviews (t_id, u_id, content, visit, grade)
