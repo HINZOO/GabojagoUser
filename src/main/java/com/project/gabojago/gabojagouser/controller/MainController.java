@@ -9,6 +9,7 @@ import com.project.gabojago.gabojagouser.mapper.trip.TripMapper;
 import com.project.gabojago.gabojagouser.service.comm.CommunityService;
 import com.project.gabojago.gabojagouser.service.sells.SellsService;
 import com.project.gabojago.gabojagouser.service.trip.TripService;
+import com.project.gabojago.gabojagouser.service.user.EmailService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
