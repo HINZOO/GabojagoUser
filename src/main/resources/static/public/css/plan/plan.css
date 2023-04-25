@@ -495,41 +495,60 @@ canvas{
     border: 1px solid transparent;
     line-height: 25px;
     padding-top: 10px;
-    margin-top: -20px;
+    margin-top: -10px;
 }
 
 .dayBtn{
     font-family: Russo One;
+    height: 35px;
     letter-spacing: 2px;
-    margin-left: 15px;
-    border-radius: 10px;
-    font-size: 15px;
-    background-color: rgba(211, 211, 211, 0.66);
+    margin-left: 35px;
+    border-radius: 15px;
+    font-size: 20px;
+    background-color: rgba(176, 211, 255, 0.66);
     color: white;
     text-shadow: -1px 0 lightgrey, 1px 1px gray, 1px 2px gray, 0 -1px lightgrey;
 }
 
 
 .btnLine{
-    box-sizing: border-box;
+    height: 35px;
+
+
 
 }
+.btnLine div{
+    margin-top: -5px;
+    border: none;
+    width: 35px;
+    height: 35px;
+    display: inline-block;
+    background-color: transparent !important;
+    margin-left: 3px;
+    border-radius: 5px;
+}
+.btnLine div i {
+    font-size: 25px;
+}
 .btnLine i {
-    font-size: 20px;
+    margin: 0px;
+    padding: 0px;
+    font-size: 25px;
 }
 .btnLine button{
-    text-align: center;
-    width: 30px;
-    height: 30px;
+    /*text-align: center;*/
+    width: 35px;
+    height: 35px;
     border: 0px solid transparent;
     margin-left: 3px !important;
-    background-color: lightgray;
+
     border-radius: 5px;
     color: #5b5b5b;
 
 }
-.btnLine button:hover{
-    background-color: rgba(176, 176, 176, 0.73);
+.btnLine button:hover, #palateBtn{
+    background-color: lightgrey;
+    color: dodgerblue;
 }
 
 .scheduleInputBox{
