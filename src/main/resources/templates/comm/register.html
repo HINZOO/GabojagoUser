@@ -7,7 +7,6 @@
 <body>
     <div layout:fragment="content" class="container">
         <form name="registerForm" class="mx-auto w-80" action="./register.do" method="post"  enctype="multipart/form-data" >
-            <input type="hidden" name="pId" value="1">
             <input type="hidden" name="content" value="">
 
             <h2 class="my-4">Community 글쓰기 양식</h2>
@@ -23,6 +22,16 @@
 
             <th:block th:include="../static/summernote/summerBoard.html"></th:block>
 
+
+            <ul class="list-group my-4">
+                <li class="list-group-item listHeaderTitle list-group-item-action active">
+                    <h5>일정 등록</h5>
+                </li>
+                <li class="list-group-item" th:each="p:${session.loginUser.plans}">
+                    <input class="form-check-input me-1" type="radio" name="pId"  th:value="${p.pId}" id="firstRadio" checked>
+                    <label class="form-check-label" for="firstRadio" th:text="${p.title}">\</label>
+                </li>
+            </ul>
 
             <h5 class="mt-2 my-0 p-0">mbti</h5>
             <div class="d-flex justify-content-evenly">
@@ -82,7 +91,24 @@
                 <button type="reset" class="btn btn-warning me-1">초기화</button>
             </div>
 
-
+            <!--😎 일정입력 모달창-->
+            <div class="modal" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Modal title</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Modal body text goes here.</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </form>
         <script>
             const imgAddBtn=document.getElementById('imgAddBtn');
@@ -112,6 +138,10 @@
               </button>
               </p>`;
             }
+
+            function planRegisterForm(){
+                console.log("클릭크~");
+            };
         </script>
     </div>
 

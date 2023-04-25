@@ -42,8 +42,8 @@
                     fetchType="lazy"/>
         <collection property="replies"
                     select="com.project.gabojago.gabojagouser.mapper.comm.CommReplyMapper.findByCIdAndParentCrIdIsNull"
-                    column="c_id"
-                    fetchType="lazy"/>
+                    column="c_id"/>
+
 
     </resultMap>
 
