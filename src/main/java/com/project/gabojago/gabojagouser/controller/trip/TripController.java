@@ -2,6 +2,7 @@ package com.project.gabojago.gabojagouser.controller.trip;
 
 import com.project.gabojago.gabojagouser.dto.trip.TripDto;
 import com.project.gabojago.gabojagouser.dto.trip.TripImgDto;
+import com.project.gabojago.gabojagouser.dto.trip.TripPageDto;
 import com.project.gabojago.gabojagouser.dto.user.UserDto;
 import com.project.gabojago.gabojagouser.service.trip.TripService;
 import lombok.extern.log4j.Log4j2;
@@ -261,10 +262,11 @@ public class TripController {
 
     @GetMapping("/list.do")
     public String list(Model model,
-                       @SessionAttribute(required = false) UserDto loginUser
+                       @SessionAttribute(required = false) UserDto loginUser,
+                       TripPageDto pageDto
     ) {
         List<TripDto> trips;
-        trips = tripService.list();
+        trips = tripService.list(pageDto);
         model.addAttribute("trips", trips);
         return "/trip/list";
     }

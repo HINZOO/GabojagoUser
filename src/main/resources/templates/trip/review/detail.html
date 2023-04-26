@@ -14,12 +14,9 @@
 </div>
 
 <div>
-    <p>리뷰아이디 테스트</p>
-    <span th:text="${r.trId}"></span>
     <div>
         <span th:text="${r.content}"></span>
     </div>
-
     <div class="d-flex">
         <div th:each="img:${r.imgs}">
             <img class="img-thumbnail w-20" style="max-height: 100px; object-fit: cover"
@@ -68,14 +65,12 @@
 
             <!-- 작성자에게만 보이기 -->
             <a href="javascript:void(0)"
-               th:if="${session.loginUser!=null  && session.loginUser.uId==r.uId}"
                th:onclick="loadModifyReview([[${r.trId}]])"
                class="btn btn-outline-danger ms-2">수정</a>
+<!--               th:if="${session.loginUser!=null  && session.loginUser.uId==r.uId}"-->
         </p>
     </div>
 </div>
-
-<!--<span th:text="${t}"></span>-->
 
 <!-- 리뷰작성하기 Modal -->
 <th:block th:include="/trip/review/reviewModifyModal.html"></th:block>

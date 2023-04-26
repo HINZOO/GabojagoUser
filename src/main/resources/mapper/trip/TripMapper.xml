@@ -7,6 +7,7 @@
         <result column="title" property="title"/>
         <result column="post_time" property="postTime"/>
         <result column="update_time" property="updateTime"/>
+        <result column="view_count" property="viewCount"/>
         <result column="area" property="area"/>
         <result column="address" property="address"/>
         <result column="phone" property="phone"/>
@@ -82,16 +83,24 @@
             category=#{category}
         WHERE t_id=#{tId}
     </update>
+
+    <update id="updateIncrementViewCountByTId">
+        UPDATE trips SET view_count=(view_count+1) WHERE t_id=#{tId}
+    </update>
+
     <delete id="deleteOne" parameterType="TripDto">
         DELETE FROM trips WHERE t_id=#{tId}
     </delete>
+
     <select id="findAll" resultMap="TripMap">
         SELECT * FROM trips
+        <if test="searchField!=null and searchValue!=null">
+            WHERE ${searchField} LIKE CONCAT('%',#{searchValue},'%')
+        </if>
     </select>
+
     <select id="findByTId" resultMap="TripMap">
         SELECT * FROM trips WHERE t_id=#{tId}
     </select>
-    <select id="findByPhone" resultType="TripDto">
-        SELECT * FROM trips WHERE phone=#{phone}
-    </select>
+
 </mapper>

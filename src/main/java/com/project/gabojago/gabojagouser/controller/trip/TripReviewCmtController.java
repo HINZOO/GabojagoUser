@@ -59,7 +59,7 @@ public class TripReviewCmtController {
     public @ResponseBody  HandlerDto registerHandler(
             @ModelAttribute TripReviewCmtDto reviewCmt,
             @SessionAttribute UserDto loginUser,
-            MultipartFile img
+            @RequestParam(required = false) MultipartFile img // img 파라미터 없어도 오류 안뜨게
             ) throws IOException {
         log.info(reviewCmt);
         log.info(img.getOriginalFilename());
