@@ -65,7 +65,7 @@
                                         <div class="cardReview" data-bs-toggle="tooltip" data-bs-placement="top" th:data-bs-title="리뷰작성">
                                             <i class="bi bi-pencil-square"></i>
                                         </div>
-                                        <div class="cardModify" th:onclick="'planModify(' + ${plan.getPId()} + ')'" >
+                                        <div class="cardModify" th:data-u-id="${plan.getUId()}" th:data-p-id="${plan.getPId()}" onclick="planModify(this)" >
                                             <i class="bi bi-gear-fill"></i>
                                         </div>
                                         <div class="cardRemove" th:data-u-id="${plan.getUId()}" th:data-p-id="${plan.getPId()}" onclick="planRemove(this)" >
@@ -83,7 +83,7 @@
                                         </a>
                                         <div class="card-footer">
                                                 <div class="cardMy" style="background-image:url('/public/img/plan/profileDefault.png')"
-                                                    data-bs-toggle="tooltip" data-bs-placement="top" th:data-bs-title="${plan.getUId()}">
+                                                    data-bs-toggle="tooltip" data-bs-placement="top" th:data-bs-title="${plan.getNkName()}">
                                                 </div>
                                             <th:block th:each="mu:${plan.getMUsers()}">
                                                 <div class="cardOr" style="background-image:url('/public/img/plan/profileDefault.png')"
@@ -159,7 +159,7 @@
                                                 </div>
                                                 <div id="memberSelectBoxFooter">
                                                     <div class="cardMy" style="background-image:url('/public/img/plan/profileDefault.png')"
-                                                         data-bs-toggle="tooltip" data-bs-placement="top" th:data-bs-title="나">
+                                                         data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="나">
                                                     </div>
                                                 </div>
                                             </div>
@@ -213,19 +213,23 @@
     <script th:inline="javascript">
 
         // 플랜 수정
-        async function planModify(pId){
-            let url =`/plan/${pId}/modify.do`
-            const resp = await fetch(url,{method:"PUT"});
-            const result = await resp.text();
-            document.getElementById("forModal").insertAdjacentHTML("beforeend",result)
-            new bootstrap.Modal(document.getElementById('modifyPlanModal'), {}).show();
-            // if(resp.status===200){
-            //
-            // }else {
-            //     alert("캔버스 생성 실패 status :"+resp.status);
-            // }
+        async function planModify(ele){
+            if([[${session.loginUser.uId}]] !== ele.dataset.uId) {
+                alert("플랜을 생성한 사람만 수정 할 수 있습니다!")
+            }
+            else {
+                let url =`/plan/${ele.dataset.pId}/modify.do`
+                const resp = await fetch(url,{method:"GET"});
+                const result = await resp.text();
+                if(resp.status===200){
+                    document.getElementById("forModal").insertAdjacentHTML("beforeend",result)
+                    let modalForm = document.getElementById('modifyPlanModal');
+                    new bootstrap.Modal(modalForm, {}).show();
+                } else {
+                    alert("플랜 정보를 불러오지 못했습니다! :" + resp.status);
+                }
+            }
         }
-
 
         // 플랜 삭제
         async function planRemove(ele){
@@ -239,16 +243,16 @@
                     data.set("uId", ele.dataset.uId);
                     let url ='/plan/delete.do';
                     const resp = await fetch(url,{method:"DELETE", body: data});
-                    const result = await resp
-                    console.log(result)
-                    // if(resp.status===200){
-                    // }else {
-                    //     alert("플랜 삭제 실패 status : " + resp.status);
-                    // }
+                    const result = await resp.json()
+                    if(resp.status===200 && result === 1){
+                        alert("삭제 성공!")
+                        location.href="/plan/list.do"
+                    }else {
+                        alert("플랜 삭제 실패 status : " + resp.status);
+                    }
                 }
             }
         }
-
 
         // 새 플랜 작성 시 대표이미지 미리보기
         const img = document.getElementById("newPlanImg")
@@ -291,10 +295,7 @@
 
                 modal.hide();
             }
-
-
         }
-
 
         const newPlanBtn = document.querySelector("#newScheduleBtn");
         newPlanBtn.onclick = ()=>{

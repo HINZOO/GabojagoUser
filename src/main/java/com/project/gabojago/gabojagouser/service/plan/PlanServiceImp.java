@@ -28,13 +28,13 @@ public class PlanServiceImp implements PlanService {
     }
 
     @Override
-    public int register(PlanDto plan) {
-        return planMapper.insertOne(plan);
+    public int register(PlanDto plandto) {
+        return planMapper.insertOne(plandto);
     }
 
     @Override
-    public int modify(PlanDto plan) {
-        return 0;
+    public int modify(PlanDto plandto) {
+        return planMapper.updateOne(plandto);
     }
 
     @Override

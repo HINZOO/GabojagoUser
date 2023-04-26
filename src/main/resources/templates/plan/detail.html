@@ -20,8 +20,17 @@
                     <div class="col-6 titleBox">
                         <div class="titleInnerBox">
                             <p class="headerTitle" th:text="${plan.getTitle()}"/>
-                            <span class="headerFrom" th:text="${plan.getPlanFrom()}"/> ~ <span class="headerTo" th:text="${plan.getPlanTo()}"/>
-                            <p class="headerStatus" th:text="${plan.getPlanStatus()}"/>
+                            <span class="headerFrom" th:text="${plan.getPlanFrom()}"
+                                  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="일정 시작" /> ~
+                            <span class="headerTo" th:text="${plan.getPlanTo()}"
+                                  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="일정 끝" />
+                            <br><span class="headerStatus" th:text="${plan.getPlanStatus()}"
+                                  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="공개여부" />
+                            <br>
+                            <span th:text="${plan.getNkName()} + ','"/>
+                            <th:block th:each="mu:${plan.getMUsers()}">
+                                <span th:text="${mu.getNkName()} + ','"/>
+                            </th:block>
                         </div>
                     </div>
                     <div class="col-6 rightBox">
@@ -40,7 +49,7 @@
                                     <input type="checkbox" class="tdlCheck" name="checkStatus" th:value="${checkList.getCheckStatus()}" th:id="'tdlCheck_'+${checkList.getClId()}"  onclick=tdlModify(this) th:if="${checkList.getCheckStatus()=='CHECKED'}" checked>
                                     <input type="checkbox" class="tdlCheck" name="checkStatus" th:value="${checkList.getCheckStatus()}" th:id="'tdlCheck_'+${checkList.getClId()}"  onclick=tdlModify(this) th:if="${checkList.getCheckStatus()=='UNCHECKED'}">
                                     <label class="tdlCheckLabel p-0" th:for="'tdlCheck_'+${checkList.getClId()}"></label>
-                                    <input type="text" class="tdlInput" th:classappend="${checkList.getCheckStatus()} == 'CHECKED' ? 'textCancel'" th:value="${checkList.getContent()}" name="content">
+                                    <input type="text" class="tdlInput" th:classappend="${checkList.getCheckStatus()} == 'CHECKED' ? 'textCancel'" th:value="${checkList.getContent()}" name="content" readonly>
                                     <i class="bi bi-check-circle tdlSubmit" onclick=talRegistry(this) style="display: none"></i>
                                     <span onclick=tdlDelete(this)><span class="tdlMBtn tdlDelete">-</span></span>
                                 </form>
@@ -146,6 +155,10 @@
                             <button type="button" id="removeBtn" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="캔버스 비우기">
                                 <i class="bi bi-trash"></i>
                             </button>
+                            <!--이미지 저장-->
+                            <button type="button" id="saveBtn" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="이미지로 저장">
+                                <i class="bi bi-layer-forward"></i>
+                            </button>
 
                             </div><!--버튼그룹닫기-->
                         </div> <!--col 9-->
@@ -236,7 +249,6 @@
                         </div>
 
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                             <button type="submit" class="btn btn-primary">만들기</button>
                         </div>
                     </form>
@@ -252,14 +264,18 @@
 
     <script th:inline="javascript">
         let activatedCanvas;
+        // 캔버스 인스턴스 저장용
         let canvasMap=new Map();
 
+        document.getElementById("saveBtn");
 
 
 
+
+
+        // ############### 페이지 기본 CRUD 기능 ############### //
 
         // 게시글을 로드 할 때 화면 초기화 스케쥴이 추가되고 그림판까지 만든 경우와, 그림판은 만들지 않은 경우를 구분하여 처리
-
         document.addEventListener("DOMContentLoaded",()=>{
             let initArr=[];
             let nBtns = document.querySelectorAll(".newCanvasBtn");
@@ -331,18 +347,20 @@
 
         // 화이트보드 삭제하는 경우
         async function newCanvasDel(ele){
-            let body = ele.nextElementSibling;
-            let [btn, canvas] = body.children;
-            let pathId = canvas.getAttribute("id")
-            let url =`/plan/contents/canvasHandler.do`
-            const resp = await fetch(url,{method:"DELETE",body:pathId});
-            const result = await resp.json();
-            if(resp.status===200 && result===1){
-                canvas.remove();
-                btn.style.display="block"
-                body.style.height="130px"
-            }else {
-                alert("캔버스 삭제 실패 status :"+resp.status);
+            if(confirm("삭제한 데이터는 복구할 수 없습니다. 그래도 삭제 할까요?")){
+                let body = ele.nextElementSibling;
+                let [btn, canvas] = body.children;
+                let pathId = canvas.getAttribute("id")
+                let url =`/plan/contents/canvasHandler.do`
+                const resp = await fetch(url,{method:"DELETE",body:pathId});
+                const result = await resp.json();
+                if(resp.status===200 && result===1){
+                    canvas.remove();
+                    btn.style.display="block"
+                    body.style.height="130px"
+                }else {
+                    alert("캔버스 삭제 실패 status :"+resp.status);
+                }
             }
         }
 
@@ -456,12 +474,13 @@
                     </div>`;
         }
 
+        // ############### 채팅방 관련 기능 ############### //
 
         let title = [[${plan.getTitle()}]];
         let roomId = [[${plan.getPId()}]];;
         let username = [[${session.loginUser.nkName}]] || "anonymous"
 
-        console.log(title + ", " + roomId + ", " + username);
+        // console.log(title + ", " + roomId + ", " + username);
 
         // socketJs가 stomp를 갖고있다
         let sockJs = new SockJS("/gabojago/plan");
@@ -474,25 +493,17 @@
                 let content = JSON.parse(chat.body);
                 let writer = content.writer;
                 let system = content.system;
-                let str = '';
+                let msg;
                 if(system){
-                    str += "<div class='chatSystem'>";
-                    str += "<b>" + "SYSTEM" + " : " + content.message + "</b>";
-                    str += "</div>";
-                    document.querySelector("#msgBox").insertAdjacentHTML('beforeend',str);
+                    msg = msgComponent("chatSystem","SYSTEM",content.message);
                 }
                 else if(writer === username ){
-                    str += "<div class='chatMy'>";
-                    str += "<b>" + writer + " : " + content.message + "</b>";
-                    str += "</div>";
-                    document.querySelector("#msgBox").insertAdjacentHTML('beforeend',str);
+                    msg = msgComponent("chatMy",writer,content.message);
                 }
-                else{
-                    str += "<div class='chatOrder'>";
-                    str += "<b>" + writer + " : " + content.message + "</b>";
-                    str += "</div>";
-                    document.querySelector("#msgBox").insertAdjacentHTML('beforeend',str)
+                else {
+                    msg = msgComponent("chatOrder",writer,content.message);
                 }
+                document.querySelector("#msgBox").insertAdjacentHTML('beforeend',msg);
             });
 
             stomp.subscribe("/sub/plan/path/" + roomId, function (path) {
@@ -501,19 +512,26 @@
                 if(writer !== username ) {
                     canvasMap.get(content.pk).receiver(content.path);
                 }
-
             });
 
-            //3. send(path, header, message)로 메세지를 보낼 수 있음
-            // 최초 입장시 입장 정보 알림
+            // send(path, header, message)로 메세지를 보낼 수 있음
+            // 최초 연결시 입장 정보 알림
             stomp.send('/pub/plan/enter', {}, JSON.stringify({roomId: roomId, writer: username, system : true}))
         });
 
+        // 채팅방 메시지 보낼 시
         document.querySelector("#msgSendBtn").addEventListener("click", function(e){
             let msg = document.getElementById("msg");
             stomp.send('/pub/plan/message', {}, JSON.stringify({roomId: roomId, message: msg.value, writer: username}));
             msg.value = '';
         });
+
+        // 채팅방 메시지 수신 시
+        function msgComponent(type,writer,msg){
+            return `<div class='${type}'>
+                     <b>${writer}:${msg}</b>
+                    </div>`
+        }
 
 
 
@@ -522,6 +540,7 @@
     </script>
 
     <script type="text/javascript" th:src="@{/public/js/plan/canvasFunction.js}"></script>
+
 </div> <!--레이아웃 닫기-->
 </html>
 

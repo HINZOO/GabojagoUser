@@ -37,6 +37,26 @@
                 column="u_id"
                 fetchType="lazy"/>
   </resultMap>
+  <resultMap id="PureUserMap" type="UserDto">
+    <id column="u_id" property="uId"/>
+    <result column="pw" property="pw"/>
+    <result column="name" property="name"/>
+    <result column="nk_name" property="nkName"/>
+    <result column="email" property="email"/>
+    <result column="birth" property="birth"/>
+    <result column="phone" property="phone"/>
+    <result column="address" property="address"/>
+    <result column="detail_address" property="detailAddress"/>
+    <result column="pr_content" property="prContent"/>
+    <result column="permission" property="permission"/>
+    <result column="mbti" property="mbti"/>
+    <result column="img_path" property="imgPath"/>
+    <result column="post_time" property="postTime"/>
+    <result column="store_name" property="storeName"/>
+    <result column="business_id" property="businessId"/>
+    <result column="status" property="status"/>
+    <result column="email_check_code" property="emailCheckCode"/>
+  </resultMap>
   <insert id="insertOne" parameterType="com.project.gabojago.gabojagouser.dto.user.UserDto">
     INSERT INTO users
       (u_id, pw, name, nk_name, email, birth, phone, address, detail_address,

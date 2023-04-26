@@ -26,8 +26,9 @@
             </div>
             <div class="col-6">
               <div class="row">
-                <input type="text" class="form-control" name="uId" th:value="${session.loginUser.getUId()}" placeholder="" hidden>
-                <input type="text" class="form-control" name="members" value="" placeholder="" hidden>
+                <input type="text" class="form-control" name="pId" th:value="${plan.getPId()}" hidden>
+                <input type="text" class="form-control" name="uId" th:value="${session.loginUser.getUId()}" hidden>
+                <input type="text" class="form-control" name="members" value="" hidden>
                 <div class="form-floating col-12 mb-3">
                   <input type="text" class="form-control" th:value="${plan.getTitle()}" name="title" id="floatingTitle" placeholder="타이틀">
                   <label for="floatingTitle">타 이 틀</label>

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 @Data
+@JsonIgnoreProperties({"handler"})
 public class PlanContentsDto {
 
     private int conId; // PK
