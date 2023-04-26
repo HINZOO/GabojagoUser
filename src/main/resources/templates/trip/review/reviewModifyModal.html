@@ -22,21 +22,20 @@
                     평가 <span>☆☆☆☆☆</span>
                 </p>
                 <p>
+                    <p th:text="${r}"></p>
+                    <p th:text="${r.visit}"></p>
                     <label>
-                        <input type="radio" name="visit" value="1" checked>
+<!--                        <input type="radio" name="visit" th:value="${r.visit==1}" th:checked="${#strings.equals(r.visit,1)}">-->
+<!--                        <input type="radio" name="visit" value="1" th:checked="${r.visit==1}">-->
+                        <input type="radio" name="visit" value="1" th:checked="${r.visit==true}">
                         방문
                     </label>
                     <label>
-                        <input type="radio" name="visit" value="0">
+<!--                        <input type="radio" name="visit" th:value="${r.visit==0}" th:checked="${#strings.equals(r.visit,0)}">-->
+<!--                        <input type="radio" name="visit" value="0" th:checked="${r.visit==0}">-->
+                        <input type="radio" name="visit" value="0" th:checked="${r.visit==flase}">
                         방문전
                     </label>
-
-<!--                    -->
-<!--                    <span th:if="${r.visit == 1}">방문</span>-->
-<!--                    <span th:if="${r.visit == 0}">방문전</span>-->
-<!--                    -->
-<!--                    방문 <span> <i class="bi bi-record-circle text-danger"></i></span>-->
-<!--                    방문전 <span>  <i class="bi bi-circle text-dark text-opacity-25"></i></span>-->
                 </p>
 
                 <p class="form-floating">

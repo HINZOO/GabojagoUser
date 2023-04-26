@@ -28,7 +28,6 @@
                                th:href="@{''(pageNum=${p},pageSize=${6})}"
                                th:text="${p}"
                                th:classappend="${p==page.pageNum ? 'active' : ''}">
-
                             </a>
                         </li>
                         <li class="page-item">
@@ -85,17 +84,11 @@
                             </div>
                         </div>
                     </div>
-
                 </th:block>
             </div>
         </div>
     </div>
     <script>
-
-
-
-
-
         const searchButton = document.getElementById("searchBtn");
         const searchInput = document.getElementById("searchInput");
         const searchForm = document.getElementById("searchForm");

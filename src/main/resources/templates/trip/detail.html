@@ -169,11 +169,15 @@
                         </div> <!-- // reviewCont -->
                     </div>
 <!--                    <p th:text="${t}"></p>-->
-                    <div class="card-footer position-sticky bottom-0 bg-light" style="border: 1px solid #ddd;">
+                    <div class="card-footer position-sticky bottom-0 bg-light" style="border: 1px solid #ddd;"
+                         >
+<!--                         th:if="${session.loginUser!=null}">-->
                         <!-- 리뷰댓글 입력폼 -->
-                        <form enctype="multipart/form-data" name="reviewCmtInsertForm" method="post" action="">
+                        <form enctype="multipart/form-data" name="reviewCmtInsertForm" method="post" action=""
+                             >
                             <div class="row align-items-center">
-                                <input type="hidden" name="uId" th:value="${session.loginUser.uId}">
+                                <input type="hidden" name="uId">
+<!--                                <input type="hidden" name="uId" th:value="${session.loginUser.uId}">-->
                                 <input type="hidden" name="trcId"> <!-- 리뷰댓글 삭제시 필요한 pk -->
                                 <div class="col-2">
                                     <input name="trId" placeholder="리뷰댓글" type="text" readonly class="form-control">
@@ -320,8 +324,6 @@
                 if(json.register>0){
                     alert("등록성공");
                     await loadReviews(reviewRegisterForm.tId.value);
-
-                    // await loadReviewsCmt(reviewCmtInsertForm.trId.value);
                 }
             }else{
                 alert("등록실패 status:" + resp.status);
@@ -421,9 +423,17 @@
                     await loadReviews(reviewRegisterForm.tId.value);
                 }
                 console.log(json);
-            } else {
-                alert("등록실패 status: " + resp.status);
             }
+            // else {
+            //     alert("등록실패 status: " + resp.status);
+            // }
+            else if(resp.status===400){
+                alert("로그인 하셔야 이용할 수 있는 서비스 입니다.");
+            }else if(resp.status===500) { // 팔로잉 했는데 한번더 팔로잉하면 db 오류 발생 or db 통신오류 // 500 에러
+                alert("이미 팔로잉되었거나 또는 오류가 발생했으니 새로고침하고 다시 시도하세요");
+            }
+
+
         }
 
         if(reviewModifyModal){

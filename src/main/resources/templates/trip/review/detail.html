@@ -67,7 +67,9 @@
                th:onclick="reviewCmtClick([[${r.trId}]],'')">댓글달기</a> <!-- 대댓글 클릭 했다가 리뷰댓글 클릭했을때, 부모댓글번호 삭제하기위해서 '' 추가 -->
 
             <!-- 작성자에게만 보이기 -->
-            <a href="javascript:void(0)" th:onclick="loadModifyReview([[${r.trId}]])"
+            <a href="javascript:void(0)"
+               th:if="${session.loginUser!=null  && session.loginUser.uId==r.uId}"
+               th:onclick="loadModifyReview([[${r.trId}]])"
                class="btn btn-outline-danger ms-2">수정</a>
         </p>
     </div>

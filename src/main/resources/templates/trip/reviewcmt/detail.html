@@ -32,7 +32,8 @@
                 </a>
                 <a href="javascript:void(0)" class="btn btn-outline-secondary" th:onclick="reviewCmtClick([[${rc.trId}]],[[${rc.trcId}]])">댓글달기</a>
                 <!-- 작성자에게만 보이기 -->
-                <a id="removeReviewCmtBtn" th:onclick="removeReviewCmt([[${rc.trId}]],[[${rc.trcId}]])" class="btn btn-outline-dark ms-2">삭제</a>
+                <a th:onclick="removeReviewCmt([[${rc.trId}]],[[${rc.trcId}]])" class="btn btn-outline-dark ms-2">삭제</a>
+<!--                <a th:if="${session.loginUser!=null  && session.loginUser.uId==rc.uId}" th:onclick="removeReviewCmt([[${rc.trId}]],[[${rc.trcId}]])" class="btn btn-outline-dark ms-2">삭제</a>-->
             </p>
         </div>
     </div>
