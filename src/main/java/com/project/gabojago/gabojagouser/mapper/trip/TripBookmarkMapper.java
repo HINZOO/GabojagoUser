@@ -12,13 +12,7 @@ public interface TripBookmarkMapper {
     // 일정목록에서 조회되는 북마크 리스트
     // 일정목록에 등록
     // 일정목록에서 삭제(수정 x)
-
-    TripBookmarkDto countStatusByTId(int tId); // 게시글번호 필요 => 매개변수
-    TripBookmarkDto countStatusByUId(String uId);
-    String findByTIdAndUIdIsLoginUserId(int tId); // 로그인한 유저가 북마크를 한 내역
-
-    List<TripBookmarkDto> findAll(); // 전체리스트 조회
-    TripBookmarkDto findByTId(int tId); // 북마크 조회
-    int insertOne(TripBookmarkDto tripBookmark);
-    int deleteOne(TripBookmarkDto tripBookmark);
+    List<TripBookmarkDto> findByUId(String uId);
+    int insertOne(TripBookmarkDto bookmark);
+    int deleteOne(int tbId);
 }

@@ -51,93 +51,100 @@
                     </div>
                 </div>
 
-                >
+
                 <div class="row">
                     <div class="col-12 scheduleHeader">
                     <div class="row">
                     <div class="col-md-2">
                         <div class="btn-group">
                             <button type="button" class="btn btn-secondary btn-lg dropdown-toggle dayBtn py-0 border-0" data-bs-toggle="dropdown" aria-expanded="false">
-                                Day 01
+                                DAY 01
                             </button>
-                            <ul class="dropdown-menu p-0 border-0" style="text-align: center">
-                                <li><a class="dropdown-item dayBtn mx-0" style="color: white" href="#">DAY 02</a></li>
-                                <li><a class="dropdown-item dayBtn mx-0" style="color: white" href="#">DAY 03</a></li>
+                            <ul class="dropdown-menu p-0 border-0" style="text-align: center" role="tablist">
+                                <li><a class="dropdown-item dayBtn mx-0 active" style="color: white" href="#" id="day01-tab" data-bs-toggle="tab"
+                                       data-bs-target="#day01" type="button" role="tab" aria-controls="userinfo"
+                                       aria-selected="true">DAY 02</a>
+                                </li>
+                                <li><a class="dropdown-item dayBtn mx-0" style="color: white" href="#" id="day02-tab" data-bs-toggle="tab"
+                                       data-bs-target="#day02" type="button" role="tab" aria-controls="myreview"
+                                       aria-selected="true">DAY 02</a>
+                                </li>
                             </ul>
                         </div>
                     </div>
                     <div class="col-md-8">
-                        <div class="btn-group btn-group-horizon btnLine" role="group">
+                        <div class="btnLine" role="group">
                             <!--이미지 삽입-->
-                            <button class="btn-group"  type="button" id="imgBtn">
+                            <button type="button" id="imgBtn">
                                 <i class="bi bi-image"></i>
                                 <input id="imgInput" type="file" style="display: none"/>
                             </button>
                             <!--보관함-->
-                            <button class="btn-group"  type="button" id="loadBtn">
+                            <button type="button" id="loadBtn">
                                 <i class="bi bi-folder2-open"></i>
                             </button>
-                            <!-- 지우기 -->
-                            <button class="btn-group"  type="button"  id="removeBtn">
-                                <i class="bi bi-trash"></i>
-                            </button>
                             <!--선택-->
-                            <button class="btn-group" type="button" id="selectorBtn">
+                            <button type="button" id="selectorBtn">
                                 <i class="bi bi-hand-index"></i>
                             </button>
                             <!--이동-->
-                            <button class="btn-group" type="button"  id="moveBtn" style="background-color: #5d5d5d">
+                            <button type="button"  id="moveBtn" style="background-color: #5d5d5d">
                                 <i class="bi bi-arrows-move"></i>
                             </button>
                             <!--펜-->
-                            <button class="btn-group"  type="button" id="penBtn">
+                            <button type="button" id="penBtn">
                                 <i class="bi bi-pencil"></i>
                             </button>
                             <!--직선-->
-                            <button class="btn-group"  type="button" id="lineBtn" >
+                            <button type="button" id="lineBtn" >
                                 <i class="bi bi-slash-lg"></i>
                             </button>
                             <!--박스 -->
-                            <button class="btn-group"  type="button"  id="rectBtn">
+                            <button type="button"  id="rectBtn">
                                 <i class="bi bi-square"></i>
                             </button>
                             <!--텍스트입력-->
-                            <button class="btn-group" type="button"  id="textBtn" style="background-color: #5d5d5d">
+                            <button type="button"  id="textBtn" style="background-color: #5d5d5d">
                                 <i class="bi bi-fonts"></i>
                             </button>
-                            <!--파레트-->
-                            <button class="btn-group"  type="button"   id="palateBtn" style="background-color: #5d5d5d">
-                                <i class="bi bi-palette"></i>
                             </button>
                             <!--포스트잇-->
-                            <button class="btn-group"  type="button"  id="postBtn" style="background-color: #5d5d5d">
+                            <button type="button"  id="postBtn" style="background-color: #5d5d5d">
                                 <i class="bi bi-sticky"></i>
                             </button>
                             <!--스템프-->
-                            <button class="btn-group"  type="button" id="stampBtn" style="background-color: #5d5d5d">
+                            <button type="button" id="stampBtn">
                                 <i class="bi bi-star"></i>
                             </button>
-                            <!--설정-->
-                            <button class="btn-group"  type="button"  id="settingBtn" style="background-color: #5d5d5d">
-                                <i class="bi bi-gear"></i>
-                            </button>
+                            <!--파레트-->
+                            <div class="dropdown py-0" id="palateBtn">
+                                <button role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-palette"></i>
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                    <button id="red" ></button>
+                                    <button id="orange"></button>
+                                    <button id="yellow"></button>
+                                    <button id="green"></button>
+                                    <button id="blue"></button>
+                                    <button id="navy"></button>
+                                    <button id="purple"></button>
+                                    <button id="black"></button>
+                                    <button id="white"></button>
+                                </ul>
+                            </div>
                             <!--플러스버튼-->
-                            <button class="btn-group"  type="button"  id="plusBtn">
+                            <button type="button"  id="plusBtn">
                                 <i class="bi bi-plus-circle"></i>
                             </button>
                             <!--마이너스버튼-->
-                            <button class="btn-group"  type="button"  id="minusBtn">
+                            <button type="button"  id="minusBtn">
                                 <i class="bi bi-dash-circle"></i>
                             </button>
-                            <button class="btn-group" id="red" ></button>
-                            <button class="btn-group" id="orange"></button>
-                            <button class="btn-group" id="yellow"></button>
-                            <button class="btn-group" id="green"></button>
-                            <button class="btn-group" id="blue"></button>
-                            <button class="btn-group" id="navy"></button>
-                            <button class="btn-group" id="purple"></button>
-                            <button class="btn-group" id="black"></button>
-                            <button class="btn-group" id="white"></button>
+                            <!-- 지우기 -->
+                            <button type="button"  id="removeBtn">
+                                <i class="bi bi-trash"></i>
+                            </button>
 
                             </div><!--버튼그룹닫기-->
                         </div> <!--col 9-->
@@ -151,28 +158,28 @@
 
                 </div> <!--스케쥴헤더-->
 
+                <div class="tab-content p-0 m-0">
+                    <div class="tab-pane fade active show" id="day01" role="tabpanel" aria-labelledby="day01-tab">
 
-
-                    <div class="accordion .accordion-flush" id="accordionSection">
-                        <div class="accordion-item" th:each="content:${plan.getContents()}">
-                            <th:block th:include="/plan/contents"></th:block>
+                        <div class="accordion .accordion-flush" id="accordionSection">
+                            <div class="accordion-item" th:each="content:${plan.getContents()}">
+                                <th:block th:include="/plan/contents"></th:block>
+                            </div>
                         </div>
+
+
                     </div>
+
+
+                    <div class="tab-pane fade" id="day02" role="tabpanel"
+                         aria-labelledby="day02-tab">탭2</div>
+                </div>
+
+
 
             </div> <!--메인섹션닫기-->
 
             <div class="col-md-2" ></div>
-
-<!--            <div class="col-md-2">-->
-<!--                <div class="row row-cols-1 sideGrid">-->
-<!--                  <div class="col addBox">-->
-
-<!--                  </div>-->
-<!--                </div>-->
-<!--            </div> &lt;!&ndash;우측사이드 닫기&ndash;&gt;-->
-
-
-
 
     </div> <!--그리드 row 닫기-->
 
@@ -246,23 +253,11 @@
         let canvasMap=new Map();
 
 
-        document.getElementById("imgBtn").addEventListener("mousedown",()=>{
-            console.log(canvasMap.get(1));
-            let input = document.getElementById("imgInput")
-            input.click();
-            input.addEventListener("change",async (e)=>{
-                let data = new FormData()
-                data.append("img",input.files[0])
-                let url =`/plan/contents/imgHandler.do`
-                const resp = await fetch(url,{method:"POST",body:data});
-            },{once:true})
-        })
 
 
-        /*
-        게시글을 로드 할 때 화면 초기화
-        스케쥴이 추가되고 그림판까지 만든 경우와, 그림판은 만들지 않은 경우를 구분하여 처리
-         */
+
+        // 게시글을 로드 할 때 화면 초기화 스케쥴이 추가되고 그림판까지 만든 경우와, 그림판은 만들지 않은 경우를 구분하여 처리
+
         document.addEventListener("DOMContentLoaded",()=>{
             let initArr=[];
             let nBtns = document.querySelectorAll(".newCanvasBtn");
@@ -371,7 +366,7 @@
             const form = ele.parentElement;
             const data = new FormData(form)
             data.set("checkStatus",ele.parentElement["checkStatus"].getAttribute("value"))
-            let url ='/plan/tdlHandler.do'
+            let url ='/plan/checkList.do'
             const resp = await fetch(url,{method:"POST",body:data});
             const result = await resp.json();
             if(resp.status===200){
@@ -390,7 +385,7 @@
             const form = ele.parentElement;
             const data = new FormData(form)
             data.set("checkStatus",ele.getAttribute("value"))
-            let url ='/plan/tdlHandler.do'
+            let url ='/plan/checkList.do'
             const resp = await fetch(url,{method:"PUT",body:data});
             const result = await resp.json();
             console.log(result)
@@ -410,7 +405,7 @@
 
         // 체크리스트 삭제 하는 경우
         async function tdlDelete(ele){
-            let url ='/plan/tdlHandler.do'
+            let url ='/plan/checkList.do'
             const resp = await fetch(url,{method:"DELETE",body:ele.parentElement["clId"].getAttribute("value")});
             const result = await resp.json();
             if(resp.status===200 && result===1){
@@ -458,6 +453,66 @@
                         </div>
                     </div>`;
         }
+
+
+        let title = [[${plan.getTitle()}]];
+        let roomId = [[${plan.getPId()}]];;
+        let username = [[${session.loginUser.nkName}]] || "anonymous"
+
+        console.log(title + ", " + roomId + ", " + username);
+
+        // socketJs가 stomp를 갖고있다
+        let sockJs = new SockJS("/gabojago/plan");
+        let stomp = Stomp.over(sockJs);
+
+        // stomp.connect로 접속하고 구독 상태를 유지
+        stomp.connect({}, function (){
+            // subscribe(path, callback) => path 경로로 메세지가 들어오면 콜백 함수를 실행
+            stomp.subscribe("/sub/plan/room/" + roomId, function (chat) {
+                let content = JSON.parse(chat.body);
+                let writer = content.writer;
+                let system = content.system;
+                let str = '';
+                if(system){
+                    str += "<div class='chatSystem'>";
+                    str += "<b>" + "SYSTEM" + " : " + content.message + "</b>";
+                    str += "</div>";
+                    document.querySelector("#msgBox").insertAdjacentHTML('beforeend',str);
+                }
+                else if(writer === username ){
+                    str += "<div class='chatMy'>";
+                    str += "<b>" + writer + " : " + content.message + "</b>";
+                    str += "</div>";
+                    document.querySelector("#msgBox").insertAdjacentHTML('beforeend',str);
+                }
+                else{
+                    str += "<div class='chatOrder'>";
+                    str += "<b>" + writer + " : " + content.message + "</b>";
+                    str += "</div>";
+                    document.querySelector("#msgBox").insertAdjacentHTML('beforeend',str)
+                }
+            });
+
+            stomp.subscribe("/sub/plan/path/" + roomId, function (path) {
+                let content = JSON.parse(path.body);
+                let writer = content.writer;
+                if(writer !== username ) {
+                    canvasMap.get(content.pk).receiver(content.path);
+                }
+
+            });
+
+            //3. send(path, header, message)로 메세지를 보낼 수 있음
+            // 최초 입장시 입장 정보 알림
+            stomp.send('/pub/plan/enter', {}, JSON.stringify({roomId: roomId, writer: username, system : true}))
+        });
+
+        document.querySelector("#msgSendBtn").addEventListener("click", function(e){
+            let msg = document.getElementById("msg");
+            stomp.send('/pub/plan/message', {}, JSON.stringify({roomId: roomId, message: msg.value, writer: username}));
+            msg.value = '';
+        });
+
 
 
 

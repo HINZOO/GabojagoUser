@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.project.gabojago.gabojagouser.mapper.sells.SellsMapper">
-    <resultMap id="sellsMap" type="com.project.gabojago.gabojagouser.dto.sells.SellsDto">
+    <resultMap id="sellsMap" type="SellsDto">
         <id column="s_id" property="sId"/>
         <result column="u_id" property="uId"/>
         <result column="area" property="area"/>
@@ -14,15 +14,15 @@
         <collection property="sellOption"
                     select="com.project.gabojago.gabojagouser.mapper.sells.SellsOptionMapper.findBySId"
                     column="s_id"
-                    fetchType="eager"/>
+                    fetchType="lazy"/>
         <collection property="sellImgs"
                     select="com.project.gabojago.gabojagouser.mapper.sells.SellImgsMapper.findBySId"
                     column="s_id"
-                    fetchType="eager"/>
+                    fetchType="lazy"/>
     </resultMap>
-    <insert id="insertOne" useGeneratedKeys="true" keyProperty="sId" >
-        INSERT INTO sells (u_id,area,title,content,category)
-        VALUES (#{uId},#{area},#{title},#{content},#{category})
+    <insert id="insertOne" useGeneratedKeys="true" keyProperty="sId"  parameterType="SellsDto">
+        INSERT INTO sells (u_id,area,title,content,category,img_main)
+        VALUES (#{uId},#{area},#{title},#{content},#{category},#{imgMain})
     </insert>
     <update id="updateOne" >
         UPDATE sells SET area=#{area},title=#{title},content=#{content},category=#{category},img_main=#{imgMain} WHERE s_id=#{sId}

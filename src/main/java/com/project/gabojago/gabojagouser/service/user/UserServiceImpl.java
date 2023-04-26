@@ -10,6 +10,7 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
   private UserMapper userMapper;
+
   public UserServiceImpl(UserMapper userMapper) {
     this.userMapper = userMapper;
   }
@@ -24,8 +25,11 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public UserDto detail(String user) {
-    return userMapper.findUserByUId(user);
+  public UserDto detail(String user,String loginUserId) {
+    userMapper.setLoginUserId(loginUserId);
+    UserDto detail=userMapper.findUserByUId(user);
+    userMapper.setLoginUserIdNull();
+    return detail;
   }
 
   @Override
@@ -45,6 +49,12 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public int dropout(UserDto user) {
-    return 0;
+    return userMapper.deleteOne(user);
+  }
+
+  @Override
+  public int modifyEmailCheck(UserDto user) {//이메일체크
+    int modifyEmailCheck=userMapper.updateStatusByUIdAndEmailCheckCode(user);
+    return modifyEmailCheck;
   }
 }

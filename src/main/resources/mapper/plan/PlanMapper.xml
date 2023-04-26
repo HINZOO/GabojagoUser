@@ -21,6 +21,11 @@
                     select="com.project.gabojago.gabojagouser.mapper.plan.PlanCheckListsMapper.findByPId"
                     column="p_id"
                     fetchType="lazy"/>
+        <collection property="mUsers"
+                    select="com.project.gabojago.gabojagouser.mapper.plan.PlanMembersMapper.findByPId"
+                    column="p_id"
+                    fetchType="lazy"/>
+
     </resultMap>
     <insert id="insertOne" useGeneratedKeys="true" keyProperty="pId"  parameterType="PlanDto">
         INSERT
@@ -28,10 +33,13 @@
         VALUE (#{uId}, #{title}, #{info}, #{planFrom}, #{planTo}, #{imgPath}, #{planStatus})
     </insert>
     <update id="updateOne">
-
+        UPDATE plans
+        SET title=#{title}, info=#{info}, plan_from=#{planFrom}, plan_to=#{planTo}, img_path=#{imgPath}, plan_status=#{planStatus}
+        WHERE p_id=#{pId}
     </update>
     <delete id="deleteOne">
-
+        DELETE FROM plans
+               WHERE p_id=#{pId}
     </delete>
     <select id="findAll" resultMap="planMap">
         SELECT * FROM plans

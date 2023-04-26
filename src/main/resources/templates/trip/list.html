@@ -14,6 +14,81 @@
 <!--        <div class="text-end">-->
             <a class="btn btn-primary" href="/trip/register.do" role="button">여행지 등록</a>
         </div>
+
+<!--    <nav aria-label="Page navigation example">-->
+<!--        <ul class="pagination">-->
+<!--            <li class="page-item">-->
+<!--                <a class="page-link"-->
+<!--                   th:href="@{''(pageNum=${page.prePage})}"-->
+<!--                   th:classappend="${page.isHasPreviousPage ? '':'disabled'}"><i class="bi bi-arrow-left"></i></a>-->
+
+<!--            </li>-->
+<!--            <li class="page-item" th:each="p:${page.navigatepageNums}">-->
+<!--                <a class="page-link"-->
+<!--                   th:href="@{''(pageNum=${p},pageSize=${6})}"-->
+<!--                   th:text="${p}"-->
+<!--                   th:classappend="${p==page.pageNum ? 'active' : ''}">-->
+<!--                </a>-->
+<!--            </li>-->
+<!--            <li class="page-item">-->
+<!--                <a class="page-link"-->
+<!--                   th:href="@{''(pageNum=${page.nextPage})}"-->
+<!--                   th:classappend="${page.isHasNextPage ? '':'disabled'}"><i class="bi bi-arrow-right"></i></a>-->
+<!--            </li>-->
+<!--        </ul>-->
+
+<!--&lt;!&ndash;        <form action="" style="width: 450px;" class="mx-auto">&ndash;&gt;-->
+<!--&lt;!&ndash;            <div class="input-group">&ndash;&gt;-->
+<!--&lt;!&ndash;                <label class="input-group-text bi bi-list-columns">정렬</label>&ndash;&gt;-->
+<!--&lt;!&ndash;                <select name="order" class="form-control">&ndash;&gt;-->
+<!--&lt;!&ndash;                    &lt;!&ndash; param : 파라미터 의미 &ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;                    <option value="">칼럼</option>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <option th:selected="(${#strings.equals(param.order,'t_id')})" value="t_id">글번호</option>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <option th:selected="(${#strings.equals(param.order,'u_id')})" value="u_id">글쓴이</option>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <option th:selected="(${#strings.equals(param.order,'post_time')})" value="post_time">작성일</option>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <option th:selected="(${#strings.equals(param.order,'update_time')})" value="update_time">수정일</option>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <option th:selected="(${#strings.equals(param.order,'title')})" value="title">제목</option>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <option th:selected="(${#strings.equals(param.order,'view_count')})" value="view_count">조회수</option>&ndash;&gt;-->
+<!--&lt;!&ndash;                </select>&ndash;&gt;-->
+<!--&lt;!&ndash;                <select name="direct" class="form-control">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <option value="">방향</option>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <option th:selected="(${#strings.equals(param.direct,'DESC')})" value="DESC">내림차순&ndash;&gt;-->
+<!--&lt;!&ndash;                    <option th:selected="(${#strings.equals(param.direct,'ASC')})" value="ASC">오름차순&ndash;&gt;-->
+<!--&lt;!&ndash;                </select>&ndash;&gt;-->
+<!--&lt;!&ndash;                <button class="btn btn-primary">정렬</button>&ndash;&gt;-->
+<!--&lt;!&ndash;            </div>&ndash;&gt;-->
+
+<!--&lt;!&ndash;            <div class="input-group my-3">&ndash;&gt;-->
+<!--&lt;!&ndash;                <label class="input-group-text bi bi-search">정렬</label>&ndash;&gt;-->
+<!--&lt;!&ndash;                <select name="searchField" class="form-control">&ndash;&gt;-->
+<!--&lt;!&ndash;                    &lt;!&ndash; param : 파라미터 의미 &ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;                    <option value="">칼럼</option>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <option th:selected="(${#strings.equals(param.searchField,'t_id')})" value="t_id">글번호</option>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <option th:selected="(${#strings.equals(param.searchField,'u_id')})" value="u_id">글쓴이</option>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <option th:selected="(${#strings.equals(param.searchField,'post_time')})" value="post_time">작성일</option>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <option th:selected="(${#strings.equals(param.searchField,'update_time')})" value="update_time">수정일</option>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <option th:selected="(${#strings.equals(param.searchField,'title')})" value="title">제목</option>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <option th:selected="(${#strings.equals(param.searchField,'content')})" value="content">내용</option>&ndash;&gt;-->
+<!--&lt;!&ndash;                </select>&ndash;&gt;-->
+<!--&lt;!&ndash;                <input type="text" class="form-control" name="searchValue" placeholder="검색어 입력"&ndash;&gt;-->
+<!--&lt;!&ndash;                       th:value="${param.searchValue}">&ndash;&gt;-->
+<!--&lt;!&ndash;                <button class="btn btn-primary">검색</button>&ndash;&gt;-->
+<!--&lt;!&ndash;            </div>&ndash;&gt;-->
+<!--&lt;!&ndash;        </form>&ndash;&gt;-->
+
+
+
+<!--&lt;!&ndash;        <th:block th:include="/pageNav.html"></th:block>&ndash;&gt;-->
+
+
+
+
+
+<!--    </nav>-->
+
+
+
+
     <section id="tripListCont" class="row row-cols-lg-4 row-cols-1 g-6">
         <div class="col" th:each="t:${trips}">
                 <div class="card mt-4">

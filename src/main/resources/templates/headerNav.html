@@ -27,18 +27,6 @@
             </div>
             <div >
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            마이페이지
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="/my/user.do">회원정보</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="#">일정/커뮤니케이션</a></li>
-                            <li><a class="dropdown-item" href="/my/qna/service.do">고객센터</a></li>
-                            <li><a class="dropdown-item" href="#">나의활동</a></li>
-                        </ul>
-                    </li>
                     <th:block th:if="${session.loginUser==null}">
                         <li class="nav-item d-flex ">
                             <a class="nav-link me-2" href="/user/login.do">로그인</a>
@@ -46,12 +34,20 @@
                         </li>
                     </th:block>
                     <th:block th:if="${session.loginUser!=null}">
-                        <li class="nav-item d-flex">
-                            <a class="nav-link me-2"
-                               th:href="@{'/user/{uId}/detail.do'(uId=${session.loginUser.uId})}">
+                        <li class="nav-item dropdown d-flex">
+                            <a
+                               th:href="@{'/user/{uId}/detail.do'(uId=${session.loginUser.uId})}"
+                               class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <span th:text="${session.loginUser.uId}"></span>
                                 (<span th:text="${session.loginUser.name}"></span>)
                             </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="/my/user.do">회원정보</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#">일정/커뮤니케이션</a></li>
+                                <li><a class="dropdown-item" href="/my/qna/service.do">고객센터</a></li>
+                                <li><a class="dropdown-item" href="#">나의활동</a></li>
+                            </ul>
                             <a class="nav-link" href="/user/logout.do">로그아웃</a>
                         </li>
                     </th:block>

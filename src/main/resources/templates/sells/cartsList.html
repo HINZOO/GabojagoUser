@@ -5,45 +5,44 @@
 <head>
     <meta charset="UTF-8">
     <title>장바구니</title>
-
+    <script src="/public/js/sells/abc.js"></script>
 </head>
 <div layout:fragment="content">
     <div class="container">
         <main role="main" class="container">
+            <div>
+               <a class="btn btn-outline-info" href="/my/user.do"> 마이페이지 가기</a>
+            </div>
             <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
                 <h1 class="display-4">장바구니</h1>
+
             </div>
-            <div class="card-deck mb-3 text-center">
+            <div class="card-deck mb-3 text-center" >
                 <!-- 장바구니 항목 -->
                 <div class="card mb-4 box-shadow" th:each="c:${list}">
-                    <div class="card-header">
+                    <div class="d-flex justify-content-between card-header">
+                        <p><b>카트 ID:</b><span th:text="${c.cartId}"></span></p>
                         <h4 class="my-0 font-weight-normal">상품 정보</h4>
+                        <p></p>
                     </div>
                     <div class="card-body">
-                        <ul class="list-unstyled mt-3 mb-4">
-                            <li><b>카트 ID:</b><span th:text="${c.cartId}"></span> </li>
-                            <li><b>유저 ID:</b> <span th:text="${c.getUId()}"></span></li>
-                            <li><b>상품 ID:</b><span th:text="${c.getSId()}"></span></li>
+                        <ul class="list-unstyled mt-3 mb-4" th:each="s:${c.getSellList()}" th:if="${s.getSId()==c.getSId()}">
+                            <li ><b>제목:</b><span th:text="${s.getTitle()}"></span></li>
+                            <li><b>내용:</b><span th:text="${s.content}"></span></li>
+                            <li><b>카테고리:</b><span th:text="${s.category}"></span></li>
+                            <li><b>지역:</b><span th:text="${s.area}"></span></li>
+                            <li><a th:href="@{'/sells/{sId}/detail.do'(sId=${s.getSId()})}"><span>상품 보러가기</span></a></li>
+                            <li></li>
                         </ul>
                         <!-- 장바구니 취소 버튼 -->
-                        <button th:onclick="remove([[${c.cartId}]])" type="button" class="btn btn-danger">장바구니 취소</button>
+                        <a th:href="@{'/cart/{cartId}/{sId}/remove.do'(cartId=${c.cartId},sId=${c.getSId()})}" type="button" class="btn btn-danger">장바구니 취소</a>
                     </div>
                 </div>
             </div>
         </main>
     </div>
     <script>
-        async function remove(cartId){
-            let url=`/cart/${cartId}/remove.do`;
-            const resp=await fetch(url,{method:"DELETE"});
-            const result = await resp.text(); // 서버에서 반환한 int 값을 문자열로 변환하여 저장
-                alert(result);
-            if (result === "1") {
-                alert("삭제되었습니다.");
-            } else {
-                alert("삭제에 실패하였습니다.");
-            }
-        }
+
     </script>
 </div>
 </html>

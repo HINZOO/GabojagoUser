@@ -30,9 +30,11 @@
         SELECT COUNT(*) likes, u_id FROM comm_likes WHERE u_id=#{uId}
     </select>
     <select id="findByCIdAndUId" resultType="boolean">
-        SELECT COUNT(*) FROM comm_likes WHERE c_id=#{cId} AND u_id=#{uId}
+        SELECT COUNT(*) status FROM comm_likes WHERE c_id=#{cId} AND u_id=#{uId}
     </select>
     <select id="findByCIdAndUIdIsLoginUserId" resultType="boolean">
-        SELECT COUNT(*) FROM comm_likes WHERE c_id=#{cId} AND u_id=@loginUserId
+        SELECT COUNT(*) status FROM comm_likes WHERE c_id=#{cId} AND u_id=@loginUserId
     </select>
+
+
 </mapper>

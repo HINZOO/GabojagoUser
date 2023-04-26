@@ -43,6 +43,8 @@ public class CommLikeServiceImpl implements CommLikeService{
     @Override
     public int remove(CommLikeDto like) {
         int remove=commLikeMapper.deleteOne(like);
-        return 0;
+        return remove;
     }
+
+
 }

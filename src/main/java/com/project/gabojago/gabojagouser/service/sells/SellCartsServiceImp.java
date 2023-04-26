@@ -20,8 +20,8 @@ public class SellCartsServiceImp implements SellCartsService{
     }
 
     @Override
-    public int register(String uId, int sId) {
-        int register=sellCartsMapper.insertOne(uId, sId);
+    public int register(SellCartDto sellCartDto) {
+        int register=sellCartsMapper.insertOne(sellCartDto);
         return register;
     }
 

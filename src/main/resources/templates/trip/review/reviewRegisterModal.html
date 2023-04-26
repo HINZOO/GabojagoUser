@@ -1,0 +1,64 @@
+<div class="modal fade" id="reviewRegisterModal" tabindex="-1">
+  <div class="modal-dialog">
+    <form enctype="multipart/form-data" name="reviewRegisterForm" method="post"
+          class="modal-content">
+      <!--                                    <input type="hidden" name="tId">--> <!-- 이름만 써주고, ajax 로 값 너어준거 -->
+      <input type="hidden" name="trId">
+      <input type="hidden" name="tId" th:value="${t.tId}">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">리뷰 작성하기</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p class="form-floating">
+          <input type="text" name="uId" th:value="${session.loginUser.uId}" readonly class="form-control"
+                 placeholder="글쓴이">
+          <!-- 로그인한 유저만 보이기 -->
+          <!-- <input th:value="${session.loginUser.uId}" type="text" name="uId" readonly class="form-control" placeholder="글쓴이">-->
+          <label>글쓴이</label>
+        </p>
+        <p>
+          평가 <span>☆☆☆☆☆</span>
+        </p>
+        <p>
+
+        <label>
+          <input type="radio" name="visit" value="1" checked>
+          방문
+        </label>
+        <label>
+          <input type="radio" name="visit" value="0">
+          방문전
+        </label>
+
+
+
+
+        </p>
+        <p class="form-floating">
+          <input type="text" name="title" th:value="${t.title}" readonly
+                 class="form-control" placeholder="글쓴이">
+          <label>장소이름</label>
+        </p>
+        <p id="registerImgCont">
+          <button id="registerImgAddBtn" class="btn btn-danger w-100" type="button">
+            이미지
+            <i class="bi bi-plus-square"></i>
+          </button>
+        </p>
+        <p>
+        </p>
+        <p class="form-floating">
+          <input type="text" name="content" class="form-control" placeholder="내용">
+          <label>내용</label>
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">취소
+        </button>
+        <button type="submit" class="btn btn-outline-danger">등록</button>
+      </div>
+    </form>
+  </div>
+</div>

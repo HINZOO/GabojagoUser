@@ -15,4 +15,6 @@ public interface UserMapper {
   int updateOne(UserDto user);
   int setLoginUserId(String uId);
   int setLoginUserIdNull();
+  int deleteOne(UserDto user);
+  int updateStatusByUIdAndEmailCheckCode(UserDto user);//이메일 체크
 }

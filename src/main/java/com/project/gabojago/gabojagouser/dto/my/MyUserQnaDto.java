@@ -1,5 +1,6 @@
 package com.project.gabojago.gabojagouser.dto.my;
 
+import com.project.gabojago.gabojagouser.dto.user.UserDto;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -11,7 +12,6 @@ public class MyUserQnaDto {
     private String title;
     private String content;
     private String filePath;
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date postTime;
-
+    private java.util.Date postTime;
+    private UserDto user;
 }

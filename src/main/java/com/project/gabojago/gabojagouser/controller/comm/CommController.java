@@ -47,8 +47,9 @@ public class CommController {
 
     @GetMapping("/{cId}/detail.do")
     public String detail(Model model,
-                         @PathVariable int cId){
-        CommunityDto comm=communityService.detail(cId);
+                         @PathVariable int cId,
+                         @SessionAttribute(required = false) UserDto loginUser){
+        CommunityDto comm=communityService.detail(cId,loginUser);
         model.addAttribute("c",comm);
         return "/comm/detail";
     }
@@ -88,6 +89,13 @@ public class CommController {
                     }
                 }
             }
+        }else{
+            CommImgDto basicImg=new CommImgDto();
+            basicImg.setCId(commBoard.getCId());
+            basicImg.setImgMain(false);
+            basicImg.setImgPath("/public/img/comm/basic1.jpg");
+            commImgs = new ArrayList<>();
+            boolean add = commImgs.add(basicImg);
         }
         commBoard.setImgs(commImgs);
         int register = 0;
@@ -120,7 +128,7 @@ public class CommController {
             redirectAttributes.addFlashAttribute("msg",msg);
             return "redirect:/user/login.do";
         }
-        CommunityDto comm= communityService.detail(cId);
+        CommunityDto comm= communityService.detail(cId, loginUser);
         model.addAttribute("c",comm);
         return "/comm/modify";
     }

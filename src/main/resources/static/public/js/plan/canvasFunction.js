@@ -1,4 +1,11 @@
-const box = document.querySelector(".accordion-header").clientWidth-40
+let page = document.querySelector(".accordion-header");
+let box;
+if(page){
+    box = page.clientWidth-40;
+} else {
+    box = 500;
+}
+
 
 
 class CanvasCreate {
@@ -22,6 +29,11 @@ class CanvasCreate {
         this.canvas = document.createElement("canvas");
         this.ctx = this.canvas.getContext("2d")
 
+        // 서브캔버스
+        this.canvas.offCanvas = document.createElement('canvas');
+        this.canvas.offCtx = this.canvas.offCanvas.getContext('2d');
+
+
         // 캔버스 초기화
         this.init()
     }
@@ -37,17 +49,14 @@ class CanvasCreate {
         this.ctx.setLineDash([0,0])
         this.ctx.save();
 
+        // 버튼활성화 및 배경디자인 생성
+        this.pageLiner(this.canvas.width,this.canvas.height)
+
+        this.toolActivation()
+        this.colorBtn();
 
         // 레이어 데이터가 있는 경우 로딩
         this.layerLoad();
-        this.currentCanvas.src = this.canvas.toDataURL();
-        this.ctx.drawImage(this.currentCanvas,0,0)
-
-        // 버튼활성화 및 배경디자인 생성
-        this.pageLiner(this.canvas.width,this.canvas.height)
-        this.toolActivation()
-
-        this.colorBtn();
 
     }
 
@@ -60,7 +69,7 @@ class CanvasCreate {
     }
 
     shout(){
-        console.log("??")
+        console.log(this.id+ " 번 캔버스가 응답합니다")
     }
 
 
@@ -68,6 +77,8 @@ class CanvasCreate {
     pageLiner(width,height){
         let x = 0;
         let y = 0;
+        this.ctx.fillStyle = "white"
+        this.ctx.fillRect(0,0,this.canvas.width,this.canvas.height)
         while (x<=height){
             this.ctx.beginPath();
             if(x===0 || height-x===0){
@@ -114,18 +125,110 @@ class CanvasCreate {
     }
 
 
+    // 사진 등록 툴
+    imgTool(){
+
+        let co = this
+        let moveHandler;
+        let imgElem = new Image();
+        let input = document.getElementById("imgInput")
+        input.click();
+        input.addEventListener("change", (e)=>{
+            let selectedFile = input.files[0];
+            let fileReader = new FileReader();
+            fileReader.readAsDataURL(selectedFile);
+            fileReader.onload = function () {
+                imgElem.src = fileReader.result;
+
+        function drawHandler(e){
+                let startX = e.offsetX;
+                let startY= e.offsetY;
+                this.addEventListener("mousemove", moveHandler = function (e){
+                    co.ctx.beginPath();
+                    co.ctx.lineWidth=2;
+                    co.ctx.strokeStyle="grey";
+                    co.ctx.setLineDash([10, 10]);
+                    co.ctx.clearRect(0,0,co.canvas.width,co.canvas.height);
+                    co.ctx.drawImage(co.currentCanvas,0,0);
+                    co.ctx.strokeRect(
+                        co.xy(startX),
+                        co.xy(startY),
+                        co.xy(e.offsetX)-co.xy(startX),
+                        co.xy(e.offsetY)-co.xy(startY));
+                    co.ctx.stroke()
+                })
+
+                this.addEventListener("mouseup",(e)=>{
+                    this.removeEventListener("mousemove", moveHandler)
+                    co.ctx.clearRect(0,0,co.canvas.width,co.canvas.height);
+                    co.ctx.drawImage(co.currentCanvas,0,0);
+                    co.ctx.drawImage(imgElem,
+                        co.xy(startX),
+                        co.xy(startY),
+                        co.xy(e.offsetX)-co.xy(startX),
+                        co.xy(e.offsetY)-co.xy(startY));
+                    co.canvas.offCanvas.width = co.xy(e.offsetX)-co.xy(startX);
+                    co.canvas.offCanvas.height = co.xy(e.offsetY)-co.xy(startY);
+                    co.canvas.offCtx.drawImage(imgElem, 0, 0,
+                        co.xy(e.offsetX)-co.xy(startX),
+                        co.xy(e.offsetY)-co.xy(startY));
+                    co.layerPush("img",[startX,startY],[e.offsetX,e.offsetY],undefined, co.canvas.offCanvas.toDataURL("image/jpeg",0.5))
+                    co.canvas.offCtx.clearRect(0,0,1200,500)
+                    co.canvas.removeEventListener("mousedown",drawHandler)
+                    co.activatedTool = " ";
+                },{once:true});
+        }
+        co.canvas.addEventListener("mousedown",drawHandler)
+            };
+        })
+
+    };
+
+
     //스템프 툴
     stampTool() {
         let co = this
+        let moveHandler;
+        let imgElem = new Image();
+        let imgSrc = "/public/img/plan/star.png";
+        imgElem.src = imgSrc;
         function drawHandler(e){
             if(co.activatedTool!=="stamp"){
                 co.canvas.removeEventListener("mousedown",drawHandler)
             } else {
-                let imgElem = new Image();
-                let imgSrc = "../img/star.png";
-                imgElem.src = imgSrc;
-                co.ctx.drawImage(imgElem, co.xy(e.offsetX-25), co.xy(e.offsetY-25))
-                co.layerPush("img",[e.offsetX,e.offsetY],undefined,undefined, imgSrc)
+                let startX = e.offsetX;
+                let startY= e.offsetY;
+                this.addEventListener("mousemove", moveHandler = function (e){
+                    co.ctx.beginPath();
+                    co.ctx.lineWidth=2;
+                    co.ctx.strokeStyle="grey";
+                    co.ctx.setLineDash([10, 10]);
+                    co.ctx.clearRect(0,0,co.canvas.width,co.canvas.height);
+                    co.ctx.drawImage(co.currentCanvas,0,0);
+                    co.ctx.strokeRect(
+                        co.xy(startX),
+                        co.xy(startY),
+                        co.xy(e.offsetX)-co.xy(startX),
+                        co.xy(e.offsetY)-co.xy(startY));
+                    co.ctx.stroke()
+                })
+
+                // drawImage(image, dx, dy)
+                // drawImage(image, dx, dy, dWidth, dHeight)
+                // drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)
+                // s : 원본이미지 기준(스플리트) d: 기존
+
+                this.addEventListener("mouseup",(e)=>{
+                    this.removeEventListener("mousemove", moveHandler)
+                    co.ctx.clearRect(0,0,co.canvas.width,co.canvas.height);
+                    co.ctx.drawImage(co.currentCanvas,0,0);
+                    co.ctx.drawImage(imgElem,
+                        co.xy(startX),
+                        co.xy(startY),
+                        co.xy(e.offsetX)-co.xy(startX),
+                        co.xy(e.offsetY)-co.xy(startY));
+                    co.layerPush("stamp",[startX,startY],[e.offsetX,e.offsetY],undefined, imgSrc)
+                },{once:true});
             }
         }
         this.canvas.addEventListener("mousedown",drawHandler)
@@ -149,10 +252,9 @@ class CanvasCreate {
                 for(let i = co.layerArr.length-1 ; i>=0 ; i--){
                     /*
                       마우스클릭 위치(e.offset)는 pageSize을 보정하지 않았기때문에
-                      레이어의 range도 currentScale과 요소 자체 scale만 보정해서 선택여부 파악해주고
-                      나중에 그려줄때는 pageSize까지 보정해야 원하는 위치에 제대로 그려짐
+                      레이어의 range도 currentScale과 요소 자체 scale만 보정해서 범위 해당 여부 파악해주고
+                      나중에 그려줄때는 pageSize까지 보정해야 원하는 위치에 테두리가 그려짐
                      */
-
                     let scale = co.layerArr[i].scale;
                     let minX = co.layerArr[i].range[0][0]*co.currentScale/scale;
                     let minY = co.layerArr[i].range[0][1]*co.currentScale/scale;
@@ -232,13 +334,11 @@ class CanvasCreate {
             co.layerLoad(selectedLayer,true);
             co.currentCanvas.src = co.canvas.toDataURL();
 
-
             co.canvas.addEventListener("mousemove",(e)=>{
                 if(isMove){
                     co.ctx.clearRect(0,0,co.canvas.width,co.canvas.height);
                     co.ctx.drawImage(co.currentCanvas,0,0);
                     co.ctx.fillRect(e.offsetX,e.offsetY,50,50)
-
                 }
             })
 
@@ -261,6 +361,7 @@ class CanvasCreate {
     lineTool(){
         let co = this;
         let moveHandler;
+        co.currentCanvas.src = co.canvas.toDataURL()
         function drawHandler(e) {
             if(co.activatedTool!=="line"){
                 this.removeEventListener("mousedown", drawHandler)
@@ -287,7 +388,7 @@ class CanvasCreate {
                     co.ctx.moveTo(co.xy(startX),co.xy(startY));
                     co.ctx.lineTo(co.xy(e.offsetX),co.xy(e.offsetY));
                     co.ctx.stroke();
-                    co.layerPush("line",[startX,startY],[e.offsetX,e.offsetY])
+                    co.layerPush("line",[startX,startY],[e.offsetX,e.offsetY]);
                 },{once:true})
             }
         }
@@ -298,6 +399,7 @@ class CanvasCreate {
     rectTool(){
         let co = this;
         let moveHandler;
+        co.currentCanvas.src = co.canvas.toDataURL();
         function drawHandler(e) {
             if(co.activatedTool!=="rect"){
                 this.removeEventListener("mousedown", drawHandler
@@ -376,6 +478,10 @@ class CanvasCreate {
         let co = this;
         co.ctx.clearRect(0, 0, co.canvas.width, co.canvas.height);
     }
+    canvasSave(){
+        let co = this;
+        co.currentCanvas.src = co.canvas.toDataURL();
+    }
 
 
     // 경로값 저장용
@@ -391,6 +497,7 @@ class CanvasCreate {
         let tempObj = {
             type : type,
             strokeStyle : co.ctx.strokeStyle,
+            fillStyle : co.ctx.fillStyle,
             lineWidth : co.ctx.lineWidth,
             scale : co.currentScale,
             moveTo : moveTo,
@@ -398,6 +505,8 @@ class CanvasCreate {
             path : path,
             src : src,
             range : [],
+            pageSize : co.pageSize,
+
         }
         function findRange(arr){
             let maxX=0, maxY=0, minX=1200, minY=500;
@@ -416,10 +525,19 @@ class CanvasCreate {
             tempObj.range = findRange(path);
         }
 
-
+        let socket = JSON.stringify(tempObj)
+        stomp.send('/pub/plan/canvas', {}, JSON.stringify({roomId: roomId,pk:co.id, path: socket, writer: username}));
         co.currentCanvas.src = co.canvas.toDataURL()
         return co.layerArr.push(tempObj);
 
+    }
+    receiver(path) {
+        let co = this;
+        let c = JSON.parse(path);
+        co.ctx.scale(co.currentScale,co.currentScale)
+        co.loadFunction(co,c,true);
+        co.currentCanvas.src=co.canvas.toDataURL();
+        co.canvasRestore();
     }
 
 
@@ -433,45 +551,71 @@ class CanvasCreate {
 
         if(index===undefined){ arr = co.layerArr;}
         else if(index !== undefined && rest === true){ arr = co.layerArr.filter((c,i)=>{return i !== index });}
-        else if(index !== undefined && rest === false){ arr = co.layerArr.filter((c,i)=>{return i === index}); }
-
 
         arr.forEach((c)=>{
-            co.ctx.strokeStyle=c.strokeStyle;
-            co.ctx.lineWidth=c.lineWidth;
+          co.loadFunction(co,c,true);
+        })
+        co.currentCanvas.src=co.canvas.toDataURL();
+        co.canvasRestore();
+    }
+    loadFunction(co,c,receive=false){
 
-            co.ctx.beginPath();
-            co.ctx.moveTo(co.xy(c.moveTo[0])/c.scale,co.xy(c.moveTo[1])/c.scale)
-            if(c.type==="line") {
-                co.ctx.lineTo(co.xy(c.lineTo[0])/c.scale,co.xy(c.lineTo[1])/c.scale)
+        co.ctx.strokeStyle=c.strokeStyle;
+        co.ctx.fillStyle=c.fillStyle;
+        co.ctx.lineWidth=c.lineWidth;
+
+        function modi(xy){
+            if(receive === false) return xy;
+            else if(receive === true) return xy/c.pageSize;
+        }
+
+        co.ctx.beginPath();
+        co.ctx.moveTo(modi(c.moveTo[0])/c.scale,modi(c.moveTo[1])/c.scale)
+        if(c.type==="line") {
+            co.ctx.lineTo(modi(c.lineTo[0])/c.scale,modi(c.lineTo[1])/c.scale)
+            co.ctx.stroke();
+        } else if(c.type==="pen"){
+            c.path.forEach((p)=>{
+                co.ctx.lineTo(modi(p[0])/c.scale,modi(p[1])/c.scale);
                 co.ctx.stroke();
-            } else if(c.type==="pen"){
-                c.path.forEach((p)=>{
-                    co.ctx.lineTo(co.xy(p[0])/c.scale,co.xy(p[1])/c.scale);
-                    co.ctx.stroke();
-                })
-            } else if(c.type==="rect"){
-
-                co.ctx.fillRect(
-                    co.xy(c.moveTo[0])/c.scale,
-                    co.xy(c.moveTo[1])/c.scale,
-                    co.xy(c.lineTo[0])/c.scale-co.xy(c.moveTo[0])/c.scale,
-                    co.xy(c.lineTo[1])/c.scale-co.xy(c.moveTo[1])/c.scale
+            })
+        } else if(c.type==="rect"){
+            co.ctx.fillRect(
+                modi(c.moveTo[0])/c.scale,
+                modi(c.moveTo[1])/c.scale,
+                modi(c.lineTo[0])/c.scale-modi(c.moveTo[0])/c.scale,
+                modi(c.lineTo[1])/c.scale-modi(c.moveTo[1])/c.scale
+            );
+        } else if(c.type==="stamp"){
+            let img = new Image();
+            img.src = c.src;
+            img.onload = ()=>{
+                co.ctx.drawImage(img,
+                    modi(c.moveTo[0])/c.scale*co.currentScale,
+                    modi(c.moveTo[1])/c.scale*co.currentScale,
+                    modi(c.lineTo[0])/c.scale*co.currentScale-modi(c.moveTo[0])/c.scale*co.currentScale,
+                    modi(c.lineTo[1])/c.scale*co.currentScale-modi(c.moveTo[1])/c.scale*co.currentScale
                 );
             }
-        })
-
-        co.canvasRestore();
-        // console.log(JSON.stringify(this.layerArr));
-        // console.log(JSON.parse(JSON.stringify(this.layerArr)));
-
+        } else if(c.type==="img"){
+            let img = new Image();
+            img.src = c.src;
+            img.onload = ()=>{
+                co.ctx.drawImage(img,
+                    modi(c.moveTo[0])/c.scale*co.currentScale,
+                    modi(c.moveTo[1])/c.scale*co.currentScale,
+                    modi(c.lineTo[0])/c.scale*co.currentScale-modi(c.moveTo[0])/c.scale*co.currentScale,
+                    modi(c.lineTo[1])/c.scale*co.currentScale-modi(c.moveTo[1])/c.scale*co.currentScale
+                );
+            }
+        }
     }
 
 
 
     //사이드바 각 버튼에 기능부여
     toolActivation(){
-        const tools = ["stamp","pen","line","selector","rect","text","palate","post"];
+        const tools = ["stamp","pen","line","selector","rect","text","palate","post","img"];
         const colors = ["red","orange","yellow","green","blue","navy", "purple","black","white"];
 
         tools.forEach((tool)=>{
@@ -498,8 +642,8 @@ class CanvasCreate {
         });
         ///////배열 테스트용/////
         document.getElementById("loadBtn").addEventListener("click", ()=>{
-            console.log(this.layerArr)
             this.layerLoad()
+            console.log(JSON.stringify(this.layerArr))
         });
 
 
@@ -534,8 +678,6 @@ class CanvasCreate {
             let button = document.getElementById(content);
             button.style.background = content;
             button.style.color = "white";
-            button.style.width = "30px";
-            button.style.height = "30px";
             button.style.borderRadius = "5px";
             button.style.boxShadow = "1px 1px 5px grey";
 

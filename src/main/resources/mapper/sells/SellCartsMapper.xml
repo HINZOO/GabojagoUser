@@ -5,9 +5,13 @@
         <id column="u_id" property="uId"/>
         <result column="s_id" property="sId"/>
         <result column="cart_id" property="cartId"/>
+        <collection property="sellList"
+                    select="com.project.gabojago.gabojagouser.mapper.sells.SellsMapper.findBySId"
+                    column="s_id"
+                    fetchType="lazy"/>
     </resultMap>
     <insert id="insertOne">
-        INSERT INTO sell_carts (u_id, s_id) VALUE (#{uId},#{sId})
+        INSERT INTO sell_carts (u_id,s_id) VALUE (#{uId},#{sId})
     </insert>
     <delete id="deleteOne">
         DELETE FROM sell_carts WHERE cart_id=#{cartId}

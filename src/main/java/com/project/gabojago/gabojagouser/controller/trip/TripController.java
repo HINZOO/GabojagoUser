@@ -48,14 +48,13 @@ public class TripController {
         List<TripImgDto> imgDtos=null;
         int remove=0;
         try{
+            // 파라미터 tId 로 detail 정보를 db 에서 불러온다
             trip=tripService.detail(tId);
             imgDtos=trip.getImgs();
             remove=tripService.remove(tId,imgDtos);
         }catch (Exception e){
             log.error(e);
         }
-
-
         if(remove>0){
             if(imgDtos!=null){
                 for(TripImgDto ti : imgDtos){
@@ -84,19 +83,21 @@ public class TripController {
         return "/trip/modify";
     }
 
+
     @PostMapping("/modify.do")
     public String modifyAction(
             @ModelAttribute TripDto trip,
             @RequestParam (required = false)MultipartFile mainImg, // 메인이미지 파라미터
             @RequestParam(name="img", required = false) List<MultipartFile> imgs,
-            @RequestParam(value="delImgId", required = false) List<Integer> delImgIds,
-            @RequestParam(required = false) int delMainImgId,
+            @RequestParam(name="delImgId", required = false) List<Integer> delImgIds,
+            @RequestParam(name = "delMainImgId",required = false) int delMainImgId,
             RedirectAttributes redirectAttributes
-    ) {
+    ) throws IOException {
         String redirectPage = "redirect:/trip/" + trip.getTId() + "/modify.do";
         String msg="";
-        if(imgs==null && !mainImg.isEmpty()){ // imgs 가 null 이고 메인이미지가 있을때
-            imgs=new ArrayList<>();
+
+        if(!mainImg.isEmpty()){ // 메인이미지가 있을때
+            if(imgs==null)imgs=new ArrayList<>(); // 서브이미지가 없으면
             imgs.add(mainImg);
             if(delImgIds==null) {
                 delImgIds=new ArrayList<>();
@@ -118,40 +119,37 @@ public class TripController {
                 if (!img.isEmpty()) {
                     String[] contentTypes = img.getContentType().split("/");
                     if (contentTypes[0].equals("image")) {
+                        log.info(img.getOriginalFilename());
+                        System.out.println("staticPath = " + staticPath);
+                        System.out.println("img.getOriginalFilename() = " + img.getOriginalFilename());
                         String fileName = System.currentTimeMillis() + "_" + (int) (Math.random() * 10000) + "." + contentTypes[1];
                         Path path = Paths.get(staticPath + "/public/img/trip/" + fileName);
-                        try {
-                            img.transferTo(path);
-                        } catch (IOException e) {
-                            log.error(e.getMessage());
-                        }
+                        img.transferTo(path);
                         TripImgDto imgDto = new TripImgDto();
-                        if(i==imgs.size()-1)imgDto.setImgMain(true);
+                        //Users/moon/eunjeong/GabojagoUser/src/main/resources/static/public/img/trip
+                        if(!mainImg.isEmpty() && i==imgs.size()-1)imgDto.setImgMain(true);
+                        imgDto.setTId(trip.getTId());
                         imgDto.setImgPath("/public/img/trip/" + fileName);
-                        imgDtos.add(imgDto);
-//                        if (imgDtos != null && imgDtos.size() > 0) {
-//                            imgDtos.get(0).setImgMain(true);지
-//                        }
+                        imgDtos.add(imgDto); // 이미지는 마지막에 저장하기
+                        log.info(imgDto);
                     }
                 }
             }
         }
         trip.setImgs(imgDtos);
+        List<TripImgDto> delImgDtos=null; // 삭제할 이미지 리스트
         int modify = 0;
         msg="등록실패";
         try {
-            if (delImgIds != null) imgDtos = tripService.imgList(delImgIds); // 삭제할 이미지아이디가 있으면 => 수정
+            if (delImgIds != null) delImgDtos = tripService.imgList(delImgIds); // 삭제할 이미지아이디가 있으면 => 수정
             modify =  tripService.modify(trip, delImgIds); // db 에서 삭제
         } catch (Exception e) {
             log.error(e.getMessage());
             msg+="에러:"+e.getMessage();
         }
         if (modify > 0) { // 수정성공
-            if (imgDtos == null || imgDtos.size() < 1) {
-                redirectAttributes.addFlashAttribute("msg", "이미지는 최소 1개 이상이어야 합니다.");
-                return redirectPage;
-            }else { // 삭제할 이미지 있으면
-                    for (TripImgDto ti : imgDtos) {
+           if(delImgDtos!=null) { // 삭제할 이미지 있으면
+                    for (TripImgDto ti : delImgDtos) {
                         File imgFile = new File(staticPath + ti.getImgPath());
                         if (imgFile.exists()) imgFile.delete(); // 실제 삭제
                     }
@@ -159,7 +157,6 @@ public class TripController {
             msg="수정성공";
             redirectPage = "redirect:/trip/list.do";
         }
-
         redirectAttributes.addFlashAttribute("msg",msg);
         return redirectPage;
     }
@@ -191,7 +188,7 @@ public class TripController {
         String redirectPage = "redirect:/trip/register.do";
 //        if(!loginUser.getUId().equals(trip.getUId())) return redirectPage; // 다르면 다시 등록페이지로 이동
         String msg="";
-        imgs.add(mainImg);
+        imgs.add(mainImg); // 메인이미지 추가
         // 제목 입력 여부 확인
         if (trip.getTitle() == null || trip.getTitle().equals("")) {
             msg = "여행지명을 입력하세요.";
@@ -215,7 +212,7 @@ public class TripController {
                             log.error(e.getMessage());
                         }
                         TripImgDto imgDto = new TripImgDto();
-                        if(i==imgs.size()-1)imgDto.setImgMain(true);
+                        if(i==imgs.size()-1)imgDto.setImgMain(true); // 인덱스 마지막일때 이미지 => 메인 이미지
                         imgDto.setImgPath("/public/img/trip/" + fileName);
                         imgDtos.add(imgDto);
 
@@ -231,6 +228,10 @@ public class TripController {
             return redirectPage;
         }
         trip.setImgs(imgDtos);
+        if (imgDtos.size() < 1) {
+            redirectAttributes.addFlashAttribute("msg", "이미지는 최소 1개 이상이어야 합니다.");
+            return redirectPage;
+        }
         int register = 0;
         try {
             register = tripService.register(trip);
@@ -240,10 +241,10 @@ public class TripController {
             redirectAttributes.addFlashAttribute("msg",msg);
         }
         if (register > 0) { // 등록성공
-            if (imgDtos.size() < 1) {
-                redirectAttributes.addFlashAttribute("msg", "이미지는 최소 1개 이상이어야 합니다.");
-                return redirectPage;
-            }
+//            if (imgDtos.size() < 1) {
+//                redirectAttributes.addFlashAttribute("msg", "이미지는 최소 1개 이상이어야 합니다.");
+//                return redirectPage;
+//            }
             redirectPage = "redirect:/trip/list.do";
 
         } else { // 등록실패 -> 파일삭제하기

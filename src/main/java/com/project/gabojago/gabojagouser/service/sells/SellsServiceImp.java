@@ -44,7 +44,7 @@ public class SellsServiceImp implements SellsService{
     }
 
     @Override
-    public List<SellImgsDto> imgList(int[] simgId) {
+    public List<SellImgsDto> imgList(List<Integer> simgId) {
         List<SellImgsDto> imgList=null;
         if(simgId!=null){
             imgList=new ArrayList<>();
@@ -73,12 +73,30 @@ public class SellsServiceImp implements SellsService{
 
     @Override
     public int register(SellsDto sells) {
-        return this.sellsMapper.insertOne(sells);
+        int register=0;
+        System.out.println("sells11111 = " + sells);
+        register = sellsMapper.insertOne(sells);
+        System.out.println("sells1 = " + sells);
+        if (sells.getSellImgs() != null) {
+            for (SellImgsDto img : sells.getSellImgs()){
+                img.setSId(sells.getSId());
+                register += sellImgsMapper.insertOne(img);
+            }
+        }
+        if (sells.getSellOption()!=null){
+            for (SellsOptionDto optin : sells.getSellOption()){
+                optin.setSId(sells.getSId());
+                register+= sellsOptionMapper.insertOne(optin);
+            }
+        }
+
+        return register;
     }
 
     @Override
-    public int modify(SellsDto sells, int[] delImgIds, int[] delOptionIds) {
+    public int modify(SellsDto sells,List<Integer> delImgIds, int[] delOptionIds) {
         int modify=sellsMapper.updateOne(sells);
+        System.out.println("sells+delImgIds+delOptionIds = " + sells+delImgIds+delOptionIds);
         if (delImgIds!=null){
             for (int simgId: delImgIds){
                 modify+=sellImgsMapper.deleteOne(simgId);
@@ -89,6 +107,19 @@ public class SellsServiceImp implements SellsService{
                 modify+=sellsOptionMapper.deleteOne(oId);
             }
         }
+        if (sells.getSellImgs() != null) {
+            for (SellImgsDto img : sells.getSellImgs()){
+                System.out.println("img다 = " + img+sells.getSId());
+                img.setSId(sells.getSId());
+                modify += sellImgsMapper.insertOne(img);
+            }
+        }
+        if (sells.getSellOption()!=null){
+            for (SellsOptionDto option : sells.getSellOption()){
+                option.setSId(sells.getSId());
+                modify+= sellsOptionMapper.insertOne(option);
+            }
+        }
 
         return modify;
     }
@@ -96,5 +127,11 @@ public class SellsServiceImp implements SellsService{
     @Override
     public int remove(int sId) {
         return this.sellsMapper.deleteOne(sId);
+    }
+
+    @Override
+    public SellsDto findBySId(int sId) {
+        SellsDto sid = sellsMapper.findBySId(sId);
+        return sid;
     }
 }

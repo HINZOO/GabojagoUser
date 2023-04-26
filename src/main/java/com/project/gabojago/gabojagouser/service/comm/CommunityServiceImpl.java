@@ -6,6 +6,7 @@ import com.project.gabojago.gabojagouser.dto.comm.CommPageDto;
 import com.project.gabojago.gabojagouser.dto.comm.CommunityDto;
 import com.project.gabojago.gabojagouser.dto.user.UserDto;
 import com.project.gabojago.gabojagouser.mapper.comm.CommImgMapper;
+import com.project.gabojago.gabojagouser.mapper.comm.CommLikeMapper;
 import com.project.gabojago.gabojagouser.mapper.comm.CommunityMapper;
 import com.project.gabojago.gabojagouser.mapper.user.UserMapper;
 import lombok.AllArgsConstructor;
@@ -20,6 +21,7 @@ public class CommunityServiceImpl implements CommunityService{
     private CommunityMapper communityMapper;
     private CommImgMapper commImgMapper;
     private UserMapper userMapper;
+    private CommLikeMapper commLikeMapper;
     //유저맵퍼..
     @Override
     public List<CommunityDto> list(UserDto loginUser, CommPageDto pageDto) {
@@ -44,8 +46,13 @@ public class CommunityServiceImpl implements CommunityService{
     }
 
     @Override
-    public CommunityDto detail(int cId) {
+    public CommunityDto detail(int cId, UserDto loginUser) {
+        if(loginUser!=null){
+            userMapper.setLoginUserId(loginUser.getUId());
+        }
+        communityMapper.updateIncrementViewCountByCId(cId);
         CommunityDto detail=communityMapper.findByCId(cId);
+        userMapper.setLoginUserIdNull();
         return detail;
     }
 
@@ -85,4 +92,13 @@ public class CommunityServiceImpl implements CommunityService{
         int remove=communityMapper.deleteOne(cId);
         return remove;
     }
+
+    @Override
+    public List<CommunityDto> likesList(CommPageDto pageDto) {
+        PageHelper.startPage(pageDto.getPageNum(),pageDto.getPageSize(),pageDto.getOrderBy());
+        List<CommunityDto> likesList=communityMapper.countListBylikes(pageDto);
+        return likesList;
+    }
+
+
 }

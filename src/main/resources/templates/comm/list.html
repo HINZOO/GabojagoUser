@@ -4,6 +4,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout}">
 <div layout:fragment="content">
+    <script src="/public/js/CommLike.js" defer></script>
     <style>
         #mbtiChk>a{
             text-decoration: none;
@@ -93,10 +94,9 @@
                 <div class="row no-gutters">
                     <div class="col-4" th:if="${c.imgs!=null && state.index==0}"th:each="img,state:${c.imgs}">
                         <img th:src="@{'{path}'(path=${img.imgPath})}" class="col img-thumbnail w-100" alt="게시글 이미지">
-                        <div class="card-img-overlay object-fit-contain col-4">
-                            <div th:id="'likeCont'+${c.cId}">
-                                <th:block th:if="${session.loginUser!=null}" th:with="likes=${c.likes},id=${c.cId}" th:include="/comm/loginLikes"> </th:block>
-                                <th:block th:unless="${session.loginUser!=null}" th:with="likes=${c.likes}" th:include="/comm/likes"> </th:block>
+                        <div class="card-img-overlay object-fit-contain col-4" >
+                            <div th:id="'likeCont'+${c.cId}"  th:with="likes=${c.likes},id=${c.cId}">
+                                <th:block th:with="likes=${c.likes},cId=${c.cId}" th:include="/comm/Likes"> </th:block>
                             </div>
                         </div>
                     </div>
@@ -111,9 +111,8 @@
                             <p>
                                 <i class="bi bi-person fs-5"></i>
                                 <strong class="me-1" th:text="${c.user.nkName}"></strong>
-                                <small class="text-muted me-1" th:text="P.+${#dates.format(c.postTime,'yyyy-MM-dd')}"></small>
-                                <small class="text-muted me-1" th:text="M.+${#dates.format(c.updateTime,'yyyy-MM-dd')}"></small>
-                                <small class="text-muted">조회수</small> </p>
+                                <small class="text-muted me-1" th:text="작성일.+${#dates.format(c.postTime,'yyyy-MM-dd')}"></small>
+                                <small class="text-muted">조회수 <span th:text="${c.viewCount}"></span></small> </p>
                             <p class="card-text" th:utext="${c.content}">
                             </p>
 

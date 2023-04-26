@@ -1,11 +1,14 @@
 package com.project.gabojago.gabojagouser.dto.comm;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.project.gabojago.gabojagouser.dto.plan.PlanDto;
 import com.project.gabojago.gabojagouser.dto.user.UserDto;
 import lombok.Data;
 
 import java.util.List;
 
 @Data
+@JsonIgnoreProperties({"handler"})
 public class CommunityDto {
     private int cId;//PK
     private String uId;//User.u_id//FK
@@ -33,11 +36,11 @@ public class CommunityDto {
     private int entp;
     private int enfj;
     private int enfp;
+
     private UserDto user;
     private List<CommImgDto> imgs;
     private List<CommReplyDto> replies;
     private LikeStatusCntDto likes;
     private String loginUserLikeStatus;
-
 
 }

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+>
+<!--https://github.com/ultraq/thymeleaf-layout-dialect -->
+<head>
+  <meta charset="UTF-8">
+    <link rel="stylesheet" href="/webjars/bootstrap/5.2.3/dist/css/bootstrap.min.css">
+    <script src="/webjars/bootstrap/5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="/webjars/bootstrap-icons/1.10.3/font/bootstrap-icons.css">
+<!--    <link rel="stylesheet" href="/webjars/splidejs__splide/4.1.4/dist/js/splide.min.js">-->
+<!--    <script src="/webjars/splidejs__splide/4.1.4/dist/css/splide.min.css"></script>-->
+    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css" rel="stylesheet">
+    <script src="/public/js/Follow.js"></script>
+</head>
+<body>
+    <header th:replace="/headerNav"></header>
+    <main class="container-fluid d-flex">
+         <div class="w-25" th:include="/my/dropDownMenu"></div>
+         <div layout:fragment="content"></div>
+    </main>
+
+    <!--재사용 모달 창-->
+    <th:block th:if="${msg!=null || session.msg!=null}">
+        <div  id="actionModal" class="modal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">
+                            <i class="bi bi-airplane"></i>
+                            Gabojago
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p th:text="${msg}"></p><!--메세지거나 세션메세지거나..-->
+                        <p th:text="${session.msg}"></p><!--메세지거나 세션메세지거나..-->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script th:inline="javascript">
+            const actionModal=document.getElementById("actionModal");
+            new bootstrap.Modal(actionModal).show();
+        </script>
+    </th:block>
+    <script>
+        const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+        const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+    </script>
+</body>
+
+</html>
+

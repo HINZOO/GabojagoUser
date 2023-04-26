@@ -8,7 +8,7 @@
     <title>문의하기</title>
 </head>
 <div layout:fragment="content">
-    <form enctype="multipart/form-data" name="registerForm" action="./register.do" method="post" style="width: 500px;margin: 0 auto;">
+    <form enctype="multipart/form-data" name="serviceForm" action="./service.do" method="post" style="width: 500px;margin: 0 auto;">
         <h1 class="my-4">관리자에게 문의하기</h1>
         <p class="form-floating">
             <input id="uIdInput" type="text" name="uId" th:value="${session.loginUser.uId}" readonly class="form-control" placeholder="??">
@@ -26,10 +26,13 @@
             <label for="category">문의 내용 선택하기</label>
         </p>
         <p id="imgCont">
-            <button id="imgAddBtn" class="btn btn-light w-100" type="button">
-                첨부파일
-                <i class="bi bi-plus-square"></i>
-            </button>
+                <span>
+                    파일을 추가해주세요 (문의 해결에 도움이 됩니다.)
+                </span>
+        <div class="input-group mt-2">
+            <input class="form-control" type="file" name="img">
+        </div>
+
         </p>
         <p class="form-floating">
             <input id="titleInput" type="text" name="title" value="" class="form-control" placeholder="??">
@@ -39,28 +42,8 @@
             <label for="contentInput" class="form-label">문의내용</label>
             <textarea id="contentInput" name="content" rows="4" class="form-control" placeholder=""></textarea>
         </p>
-
         <p class="text-end">
-            <button type="submit" class="btn btn-danger" href="/my/service.do">취소</button>
             <button type="submit" class="btn btn-primary">등록하기</button>
         </p>
     </form>
-    <script>
-        const imgAddBtn=document.getElementById("imgAddBtn");
-        const imgCont=document.getElementById("imgCont");
-        imgAddBtn.addEventListener("click",(e)=>{
-            imgCont.insertAdjacentHTML("beforeend",imgInputComponent());
-        });
-
-        function imgInputComponent(label="이미지",name="img"){
-            return `    <div class="input-group mt-2">
-                    <label class="input-group-text">${label}</label>
-                    <input class="form-control" type="file" name="${name}">
-                    <button type="button" class="btn btn-danger" onclick="this.closest('.input-group').remove()">
-                        <i class="bi bi-x-lg"></i>
-                    </button>
-                  </div>
-              `;
-        }
-    </script>
 </div>

@@ -31,6 +31,10 @@ public class StompController {
     public void message(MessageDto message){
         template.convertAndSend("/sub/plan/room/" + message.getRoomId(), message);
     }
+    @MessageMapping(value = "/plan/canvas")
+    public void canvasData(MessageDto message){
+        template.convertAndSend("/sub/plan/path/" + message.getRoomId(), message);
+    }
 }
 
 
