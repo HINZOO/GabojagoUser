@@ -2,54 +2,85 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layoutMy}">
 <head>
-  <title>마이페이지</title>
+  <title>마이 페이지</title>
 </head>
-
-<div layout:fragment="content" class="container">
-<div class="">
-    <div>
-      <div class="card mb-5 mt-5" style="width: 500px; float: none; margin: 0 auto">
-        <div class="row g-0" th:each="u:${user}">
-          <div class="col-md-4">
-            <img th:src="@{'{path}'(path=${u.imgPath})}" class="img-fluid rounded-start card-img-top" alt="회원이미지">
+<div layout:fragment="content" class="mx-auto">
+  <div style="width: 600px;margin: 0 auto;">
+    <h5 class="my-4">
+      <i class="bi bi-person-bounding-box text-primary"></i>
+      <span th:text="${user.name}"></span>님의 기본정보 </h5>
+    <p th:hidden="${user.pw}"></p>
+    <div class="row">
+      <div class="p-3 card col">
+        <div class="d-flex align-items-center card-body col">
+          <div id="imgBox" class="me-5 m-0">
+            <img class="border rounded-circle col-12 " th:src="@{'{path}'(path=${user.imgPath})}" ></img>
           </div>
-          <div class="col-md-8">
-            <div class="card-body" >
-              <h5 class="card-title" th:text="${u.name}"></h5>
-              <p class="card-text" th:text="${u.nkName}"></p>
-              <p class="card-text"><small class="text-body-secondary" th:text="${u.prContent}"></small></p>
-              <p>팔로워:<span th:text="${(user.followers!=null)?user.followers.size():0}"></span>
-                 팔로잉:<span th:text="${(user.followings!=null)?user.followings.size():0}"></span>
-              </p>
-              <span>나의 MBTI : <p th:text="${u.mbti}"></p></span>
-              <a class="btn btn-info" href="#">쪽지함</a>
-              <a class="btn btn-secondary" th:href="@{'/user/{uId}/update.do'(uId=${session.loginUser.getUId()})}">정보수정</a>
-            </div>
+          <div class="card-text col-8">
+            <p>
+              <span class="bg-primary bg-opacity-50 text-white rounded-4 p-2 mb-2">아이디</span>
+              <span class=" ms-4" th:text="${user.uId}"></span>
+            </p>
+            <p>
+              <span class=" bg-primary bg-opacity-50  text-white rounded-4 p-2">이름</span>
+              <span class=" ms-4" th:text="${user.name}"></span><br>
+            </p>
+            <p>
+              <span class=" bg-primary bg-opacity-50  text-white rounded-4 p-2">닉네임</span>
+              <span class=" ms-4" th:text="${user.nkName}"></span><br>
+            </p>
+            <p class="mb-1">
+              <span class=" bg-primary bg-opacity-50 text-white rounded-4 p-2">이메일</span>
+              <span class=" ms-4" th:text="${user.email}"></span>
+            </p>
           </div>
         </div>
-      </div>
-
-        <div class="card-group" style="width: 70%; float: none; margin: 0 auto">
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">나의일정1</h5>
-              <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-            </div>
-          </div>
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">나의일정2</h5>
-              <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
-            </div>
-          </div>
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">나의일정3</h5>
-              <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
-            </div>
-          </div>
+        <hr>
+        <div class="d-flex justify-content-center">
+          <small class="me-3">
+            <span class="text-primary">팔로워</span>
+            <span class=" ms-1" th:text="${(user.followers!=null)?user.followers.size():0}"></span><br>
+          </small>
+          <small>
+            <span class=" text-primary ">팔로잉</span>
+            <span class=" ms-1" th:text="${(user.followings!=null)?user.followings.size():0}"></span><br>
+          </small>
+        </div>
+        <p class="text-secondary text-center mb-0 " th:text="${user.prContent}"></p>
+        <hr>
+        <p class="">
+          <span class=" bg-primary bg-opacity-50 text-white rounded-4 p-2">MBTI</span>
+          <span class=" ms-4" th:text="${user.mbti}"></span>
+        </p>
+        <p>
+          <span class=" bg-primary bg-opacity-50 text-white rounded-4 p-2">생일</span>
+          <span class=" ms-4" th:text="${user.birth}"></span>
+        </p>
+        <p>
+          <span class=" bg-primary bg-opacity-50 text-white rounded-4 p-2">핸드폰</span>
+          <span class=" ms-4" th:text="${user.phone}"></span>
+        </p>
+        <p>
+          <span class=" bg-primary bg-opacity-50 text-white rounded-4 p-2">주소</span>
+          <span class=" ms-4" th:text="${user.address}"></span>
+          <span class=" ms-1" th:text="${user.detailAddress}"></span>
+        </p>
+        <p>
+          <span class=" bg-primary bg-opacity-50 text-white rounded-4 p-2">가입일</span>
+          <span class=" ms-4" th:text="${user.postTime}"></span>
+        </p>
+        <div id="partnerInfo" th:if="${user.permission=='partner'}">
+          <p>
+            <span class=" bg-primary bg-opacity-50 text-white rounded-4 p-2">가게이름</span>
+            <span class=" ms-4" th:text="${user.storeName}"></span>
+          </p>
+          <p>
+            <span class=" bg-primary bg-opacity-50 text-white rounded-4 p-2">사업자번호</span>
+            <span class=" ms-4" th:text="${user.businessId}"></span>
+          </p>
+        </div>
       </div>
     </div>
-</div>
+  </div>
 </div>
 </html>
