@@ -8,17 +8,18 @@
 
 </head>
 <div layout:fragment="content">
-  카카오페이 결제가 정상적으로 완료되었습니다.
+  <h1>카카오페이 결제가 정상적으로 완료되었습니다.</h1>
 
-  결제일시:     [[${info.approved_at}]]<br/>
-  주문번호:    [[${info.partner_order_id}]]<br/>
-  상품명:    [[${info.item_name}]]<br/>
-  상품수량:    [[${info.quantity}]]<br/>
-  결제금액:    [[${info.amount.total}]]<br/>
-  결제방법:    [[${info.payment_method_type}]]<br/>
+  <p><strong>결제일시: <span th:text="${info.approved_at}"></span></strong></p>
+  <p><strong>결제일시: <span th:text="${info.partner_user_id}"></span></strong></p>
+  <p><strong>상품명: <span th:text="${info.item_name}"></span></strong></p>
+  <p><strong>주문번호: <span th:text="${info.partner_order_id}"></span></strong></p>
+  <p><strong>결제가격: <span th:text="${info.amount.total}"></span></strong></p>
+  <p><strong>결제종류: <span th:text="${info.payment_method_type}"></span></strong></p>
 
-
+<h2 th:text="${info.amount.getTotal()}"></h2>
 
   <h2>[[${info}]]</h2>
+  <h2 th:text="${info}"></h2>
 </div>
 </html>

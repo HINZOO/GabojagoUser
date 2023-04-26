@@ -24,9 +24,10 @@ public class KakaoPay {
     private static final String HOST = "https://kapi.kakao.com";
 
     private KakaoPayReadyVO kakaoPayReadyVO;
+    private KakaoPayApprovalVO kakaoPayApprovalVO;
 
-    public String kakaoPayReady() {
-
+    public String kakaoPayReady(KakaoPayApprovalVO kakaoPayApprovalVO) {
+        this.kakaoPayApprovalVO=kakaoPayApprovalVO;
         RestTemplate restTemplate = new RestTemplate();
 
         // 서버로 요청할 Header
@@ -39,10 +40,11 @@ public class KakaoPay {
         MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
         params.add("cid", "TC0ONETIME");
         params.add("partner_order_id", "1001");
-        params.add("partner_user_id", "gorany");
-        params.add("item_name", "갤럭시S9");
+        params.add("name", kakaoPayApprovalVO.getName());
+        params.add("partner_user_id", kakaoPayApprovalVO.getUId());
+        params.add("item_name", kakaoPayApprovalVO.getItem_name());
         params.add("quantity", "1");
-        params.add("total_amount", "2100");
+        params.add("total_amount", kakaoPayApprovalVO.getTotal());
         params.add("tax_free_amount", "100");
         params.add("approval_url", "http://localhost:7777/kakaoPaySuccess");
         params.add("cancel_url", "http://localhost:7777/kakaoPayCancel");
@@ -71,14 +73,12 @@ public class KakaoPay {
 
     public KakaoPayApprovalVO kakaoPayInfo(String pg_token) {
 
-        log.info("KakaoPayInfoVO............................................");
-        log.info("-----------------------------");
 
         RestTemplate restTemplate = new RestTemplate();
 
         // 서버로 요청할 Header
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Authorization", "KakaoAK " + "admin key를 넣어주세요~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~!");
+        headers.add("Authorization", "KakaoAK " + "96f3c77b826eb1f10d4e5ba630d7d704");
         headers.add("Accept", MediaType.APPLICATION_JSON_UTF8_VALUE);
         headers.add("Content-Type", MediaType.APPLICATION_FORM_URLENCODED_VALUE + ";charset=UTF-8");
 
@@ -87,14 +87,14 @@ public class KakaoPay {
         params.add("cid", "TC0ONETIME");
         params.add("tid", kakaoPayReadyVO.getTid());
         params.add("partner_order_id", "1001");
-        params.add("partner_user_id", "gorany");
+        params.add("partner_user_id", kakaoPayApprovalVO.getUId());
         params.add("pg_token", pg_token);
-        params.add("total_amount", "2100");
+        params.add("total_amount", kakaoPayApprovalVO.getTotal());
 
         HttpEntity<MultiValueMap<String, String>> body = new HttpEntity<MultiValueMap<String, String>>(params, headers);
 
         try {
-            KakaoPayApprovalVO kakaoPayApprovalVO = restTemplate.postForObject(new URI(HOST + "/v1/payment/approve"), body, KakaoPayApprovalVO.class);
+             kakaoPayApprovalVO = restTemplate.postForObject(new URI(HOST + "/v1/payment/approve"), body, KakaoPayApprovalVO.class);
             log.info("" + kakaoPayApprovalVO);
 
             return kakaoPayApprovalVO;
