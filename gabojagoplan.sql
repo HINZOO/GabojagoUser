@@ -82,6 +82,7 @@ CREATE TABLE `trips` (
                          `title`	varchar(255) NOT NULL COMMENT '제목',
                          `post_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '작성 시간',
                          `update_time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '최종 수정 시간',
+                         `view_count`	INT UNSIGNED DEFAULT 0 COMMENT '조회수',
                          `area`	ENUM('서울', '인천', '대전', '광주', '대구', '울산', '부산', '세종', '경기', '강원', '충북', '충남', '전북', '전남', '경북', '경남', '제주')NOT NULL COMMENT '지역',
                          `address`	varchar(255) COMMENT '주소',
                          `phone`	varchar(20) UNIQUE NOT NULL COMMENT'핸드폰',
@@ -734,7 +735,6 @@ VALUES
     (1, 'user04', '이곳은 정말 특별한 경험이었어요.', 1, 5),
     (1, 'user05', '여기는 앞으로도 자주 찾게 될 것 같아요.', 1, 3);
 
-
 #팔로우 더미
 INSERT INTO follows(to_users, from_users)
 VALUES
@@ -757,16 +757,24 @@ VALUES
     (3,'/public/img/comm/1681976587025_8955.jpeg',0);
 
 #가보자고 리뷰 댓글 데이터
-INSERT INTO trip_review_comments (tr_id, u_id, content, status, parent_trc_id)
+INSERT INTO trip_review_comments (tr_id, u_id, content, status, parent_trc_id, gabojagoPlan.trip_review_comments.img_path)
 VALUES
-    (1, 'user01', '가보자고리 재미있었어요!', 'PUBLIC', NULL),
-    (1, 'user02', '뷰가 너무 아름다웠어요!', 'PUBLIC', NULL),
-    (2, 'user03', '다음에도 꼭 가보고 싶어요!', 'PUBLIC', NULL),
-    (2, 'user04', '추천하는 가보자고리 루트가 있나요?', 'PUBLIC', NULL),
-    (2, 'user05', '가보자고리 최고!', 'PUBLIC', NULL),
-    (2, 'user06', '재밌는 추억이었어요!', 'PUBLIC', NULL),
-    (1, 'user07', '뷰가 너무 아름다워요!', 'PUBLIC', NULL),
-    (2, 'user08', '가보자고리 루트 추천해요!', 'PUBLIC', NULL),
-    (2, 'user09', '다음에도 꼭 가보고 싶어요!', 'PUBLIC', NULL),
-    (2, 'user10', '가보자고리 가는 것을 추천합니다!', 'PUBLIC', NULL);
+    (1, 'user01', '가보자고리 재미있었어요!', 'PUBLIC', NULL, NULL),
+    (1, 'user02', '뷰가 너무 아름다웠어요!', 'PUBLIC', NULL, NULL),
+    (2, 'user03', '다음에도 꼭 가보고 싶어요!', 'PUBLIC', NULL, NULL),
+    (2, 'user04', '추천하는 가보자고리 루트가 있나요?', 'PUBLIC', NULL, NULL),
+    (2, 'user05', '가보자고리 최고!', 'PUBLIC', NULL,'/public/img/trip/reviewcmt/1682306538230_44726.jpeg'),
+    (2, 'user06', '재밌는 추억이었어요!', 'PUBLIC', NULL, NULL),
+    (1, 'user07', '뷰가 너무 아름다워요!', 'PUBLIC', NULL,'/public/img/trip/reviewcmt/1682306538230_44726.jpeg'),
+    (2, 'user08', '가보자고리 루트 추천해요!', 'PUBLIC', NULL, NULL),
+    (2, 'user09', '다음에도 꼭 가보고 싶어요!', 'PUBLIC', NULL, NULL),
+    (2, 'user10', '가보자고리 가는 것을 추천합니다!', 'PUBLIC', NULL, NULL);
+
+#가보자고 리뷰 이미지 더미
+INSERT INTO  trip_review_imgs (tri_id, tr_id, img_path)
+VALUES
+    (1, 1,'/public/img/trip/review/1682515807735_21871.jpeg'),
+    (2, 1,'/public/img/trip/review/1682515807737_95047.jpeg'),
+    (3, 2,'/public/img/trip/review/1682515830783_32065.jpeg'),
+    (4, 3,'/public/img/trip/review/1682515851848_23613.jpeg');
 

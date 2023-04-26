@@ -8,9 +8,11 @@ import java.util.List;
 @JsonIgnoreProperties({"handler"})
 public class TripReviewCmtDto {
     @JsonProperty("trcId")
-    private int trcId; // pk (auto_increment)
+    private Integer trcId; // pk (auto_increment)
+    // 파라미터가 컨트롤러로 안넘어갈때, "" 공백(String)으로 넘어갈때 int 타입은 공백이 될수없어
+    // Integer 클래스타입으로 바꿔주면 없으면 null 값으로 처리된다.
     @JsonProperty("trId")
-    private int trId; // fk trip_review.tr_id 참조
+    private Integer trId; // fk trip_review.tr_id 참조
     @JsonProperty("uId")
     private String uId; // fk user.u_id 참조
     private Integer parentTrcId; // fk trip_review_comment.trc_id 참조
