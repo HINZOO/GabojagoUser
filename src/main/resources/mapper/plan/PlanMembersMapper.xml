@@ -10,7 +10,7 @@
         INSERT INTO plan_members (p_id, mu_id) VALUE (#{pId}, #{muId})
     </insert>
 
-    <select id="findByPId" resultMap="com.project.gabojago.gabojagouser.mapper.user.UserMapper.UserMap">
+    <select id="findByPId" resultMap="com.project.gabojago.gabojagouser.mapper.user.UserMapper.PureUserMap">
         SELECT u.*
         FROM plan_members m
         left join users u

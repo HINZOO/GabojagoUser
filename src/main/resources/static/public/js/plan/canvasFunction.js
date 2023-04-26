@@ -49,14 +49,16 @@ class CanvasCreate {
         this.ctx.setLineDash([0,0])
         this.ctx.save();
 
+
+
         // 버튼활성화 및 배경디자인 생성
         this.pageLiner(this.canvas.width,this.canvas.height)
 
+        // 레이어 데이터가 있는 경우 로딩
+        this.layerLoad(undefined,true,true);
+
         this.toolActivation()
         this.colorBtn();
-
-        // 레이어 데이터가 있는 경우 로딩
-        this.layerLoad();
 
     }
 
@@ -118,6 +120,9 @@ class CanvasCreate {
             this.ctx.stroke();
             y+=10;
         }
+
+
+
         this.currentCanvas.src = this.canvas.toDataURL();
         this.defaultBack.src = this.canvas.toDataURL();
         this.canvasRestore();
@@ -541,11 +546,13 @@ class CanvasCreate {
     }
 
 
-    layerLoad(index=undefined,rest=true){
+    layerLoad(index=undefined,rest=true,init=false){
         let co = this;
         let arr = [];
 
-        co.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        if(!init){
+            co.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        }
         co.ctx.scale(co.currentScale,co.currentScale)
         co.ctx.drawImage(co.defaultBack,0,0);
 

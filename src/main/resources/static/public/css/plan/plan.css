@@ -71,8 +71,8 @@ input[type='text'], input[type='text']:focus{
     position: absolute;
     width: 67.3vw;
     height: 45vh;
-    opacity: 0.9;
-    filter: contrast(70%) grayscale(50%);
+    opacity: 0.8;
+    filter: contrast(90%) grayscale(10%);
 }
 
 .listHeaderTitle{
@@ -139,13 +139,14 @@ input[type='text'], input[type='text']:focus{
     object-position: center;
     object-fit: scale-down;
 }
-#newPlanModal h1{
+#newPlanModal h1, .planModalTitle{
     margin-left: 10px;
     color: white;
     font-family: "Noto Sans KR";
     font-weight: 900;
     text-shadow: -1px 0 lightgrey, 1px 1px gray, 1px 2px gray, 0 -1px lightgrey;
 }
+
 .newPlanModalBody label{
     font-family: "Noto Sans KR";
     font-weight: 500;
@@ -162,7 +163,7 @@ input[type='text'], input[type='text']:focus{
     color: white;
     font-size: 25px;
     position: relative;
-    left: 70%;
+    left: 65%;
 }
 .statusL{
     cursor: pointer;
@@ -320,8 +321,21 @@ input[type='text'], input[type='text']:focus{
     left : 260px;
     z-index: 3;
 }
-.cardModify:hover{
+.cardModify:hover, .cardRemove:hover{
     color: black;
+}
+.cardRemove{
+    cursor: pointer;
+    text-align: center;
+    line-height: 30px;
+    border-radius: 50%;
+    padding: 5px;
+    font-size: 17px;
+    color: lightgray;
+    position: absolute;
+    top: 5px;
+    left : 230px;
+    z-index: 3;
 }
 
 
@@ -686,12 +700,15 @@ canvas{
     border: 1px solid lightgray;
     border-radius: 10px;
     padding: 3px 10px;
-    font-size: 25px;
+    font-size: 20px;
     float: right;
-    margin-right: -50px;
+    margin-right: -45px;
+}
+.scheduleSideBtn1{
+    margin-top: 20px;
 }
 .scheduleSideBtn2{
-    margin-top: 50px;
+    margin-top: 60px;
 }
 
 .sbHover:hover{

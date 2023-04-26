@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.File;
 import java.io.IOException;
@@ -81,7 +82,7 @@ public class PlanController {
         try {
             register =planService.register(planDto);
         }catch (Exception e){
-            log.error("새 플랜 등록 오류 : "+e.getMessage());
+            log.error("새 플랜 등록 오류 : " + e.getMessage());
         }
         if (register>0){
             int pId = planDto.getPId();
@@ -103,8 +104,12 @@ public class PlanController {
             return "redirect:/plan/list.do";
         }
     }
+
     @GetMapping("/{pId}/detail.do")
-    public String detail(@PathVariable int pId, Model model) throws ParseException { // 플랜 detail 보기
+    public String detail(
+            @PathVariable int pId,
+            Model model) throws ParseException
+    { // 플랜 detail 보기
         PlanDto plan = planService.detail(pId);
 
         // 여행 기간이 여러 날인 경우 분리해서 렌더링 하기 위함
@@ -116,6 +121,71 @@ public class PlanController {
         model.addAttribute("plan", plan);
         model.addAttribute("period", gap);
         return "/plan/detail";
+    }
+
+    // 플랜 수정 폼 출력을 위한 조회 및 뷰 응답
+    @GetMapping ("/{pId}/modify.do")
+    public String modifyGet(
+            @PathVariable int pId,
+            Model model)
+    {
+        PlanDto planDto = planService.detail(pId);
+        model.addAttribute("plan",planDto);
+        return "/plan/planModify";
+    }
+
+    // 플랜 수정
+    @PostMapping("/modify.do")
+    public String modify(
+            @ModelAttribute PlanDto planDto,
+            @SessionAttribute UserDto loginUser,
+            RedirectAttributes redirectAttributes,
+            @RequestParam(value ="img",required = false) MultipartFile[] img,
+            @RequestParam(value = "members", required = false) String[] members) throws IOException {
+        String msg = "";
+        if(planDto.getUId().equals(loginUser.getUId())){
+            if (img != null) {
+                File imgFile = new File(staticPath + planDto.getImgPath());
+                if (imgFile.exists()) {
+                    imgFile.delete();
+                }
+                String[] contentTypes = img[0].getContentType().split("/");
+                if (contentTypes[0].equals("image")) {
+                    String fileName = System.currentTimeMillis() + "_" + (int) (Math.random() * 10000) + "." + contentTypes[1];
+                    Path path = Paths.get(staticPath + "/public/img/plan/" + fileName);
+                    img[0].transferTo(path);
+                    planDto.setImgPath("/public/img/plan/" + fileName);
+                }
+            }
+
+            int modify = planService.modify(planDto);
+            log.info("수정수정" + planDto);
+            if(modify>0){
+                msg = "수정 성공!";
+                redirectAttributes.addFlashAttribute("msg",msg);
+            } else {
+                msg = "수정 실패!";
+                redirectAttributes.addFlashAttribute("msg",msg);
+            }
+        } else {
+            msg = "수정 권한이 없습니다!";
+            redirectAttributes.addFlashAttribute("msg",msg);
+        }
+        return "redirect:/plan/list.do";
+    };
+
+
+    // 플랜 삭제
+    @DeleteMapping("/delete.do")
+    public @ResponseBody int delete(
+            @SessionAttribute UserDto loginUser,
+            @ModelAttribute PlanDto planDto)
+    {
+        int remove = 0;
+        if(planDto.getUId().equals(loginUser.getUId())){
+            remove = planService.remove(planDto.getPId());
+        }
+        return remove;
     }
 
     @PostMapping("/checkList.do")
