@@ -39,6 +39,6 @@ public class PlanServiceImp implements PlanService {
 
     @Override
     public int remove(int pId) {
-        return 0;
+        return planMapper.deleteOne(pId);
     }
 }

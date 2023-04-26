@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.File;
 import java.io.IOException;
@@ -129,12 +130,29 @@ public class PlanController {
         model.addAttribute("plan",planDto);
         return "/plan/planModify";
     }
-    @DeleteMapping("/{pId}/delete.do")
-    public @ResponseBody int delete(
+    @DeleteMapping("/delete.do")
+    public String delete(
             @SessionAttribute UserDto loginUser,
-            @PathVariable int pId)
+            @ModelAttribute PlanDto planDto,
+            RedirectAttributes redirectAttributes)
     {
-        return 1;
+//        if(planDto.getUId().equals(loginUser.getUId())){
+//            int remove = planService.remove(planDto.getPId());
+//            if(remove>0){
+//                msg = "삭제 되었습니다!";
+//                redirectAttributes.addFlashAttribute("msg",msg);
+//                return "redirect:/user/login.do";
+//            } else {
+//                msg = "삭제 실패! 관리자에게 문의 하세요!";
+//                redirectAttributes.addFlashAttribute("msg",msg);
+//                return "redirect:/plan/list.do";
+//            }
+//        } else {
+//            msg = "삭제 권한이 없습니다!";
+//            redirectAttributes.addFlashAttribute("msg",msg);
+//            return "redirect:/plan/list.do";
+//        }
+        return "redirect:/plan/list.do";
     }
 
     @PostMapping("/checkList.do")
