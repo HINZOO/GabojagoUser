@@ -90,7 +90,7 @@
                     </div>
                     <div>
                     <a href=""><i class="bi bi-calendar-plus text-secondary me-2" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="내일정바로추가"></i></a>
-                    <a href="javascript:void(0)"  th:onclick="registerBookMark([[${c.cId}]])"><i class="bi bi-bookmark-plus text-warning me-2" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="북마크"></i></a>
+                    <a href="javascript:void(0)" th:onclick="registerBookMark([[${c.cId}]])"><i class="bi bi-bookmark-plus text-warning me-2" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="북마크"></i></a>
                     <a href="javascript:void(0)" id="commReport"><i class="bi bi-bell-fill text-danger" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="신고하기"></i></a>
                     </div>
 
@@ -141,7 +141,6 @@
                 </div>
             </div>
         </div>
-    </div>
 
     <!--😎 모달창 -->
     <th:block th:include="/comm/reportModal" th:with="uId=${c.getUId()},cId=${c.getCId()}"></th:block>
