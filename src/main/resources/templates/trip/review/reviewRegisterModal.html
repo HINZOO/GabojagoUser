@@ -12,7 +12,7 @@
       </div>
       <div class="modal-body">
         <p class="form-floating">
-          <input type="text" name="uId" th:value="${t.uId}" readonly class="form-control"
+          <input type="text" name="uId" th:value="${session.loginUser.uId}" readonly class="form-control"
                  placeholder="글쓴이">
           <!-- 로그인한 유저만 보이기 -->
           <!-- <input th:value="${session.loginUser.uId}" type="text" name="uId" readonly class="form-control" placeholder="글쓴이">-->
@@ -22,30 +22,19 @@
           평가 <span>☆☆☆☆☆</span>
         </p>
         <p>
-        <div class="form-check">
-          <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-          <label class="form-check-label" for="flexRadioDefault1">
-            Default radio
-          </label>
-        </div>
-        <div class="form-check">
-          <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
-          <label class="form-check-label" for="flexRadioDefault2">
-            Default checked radio
-          </label>
-        </div>
 
-          <label>
-            <input type="radio">
-            방문
-          </label>
-          <label>
-            <input type="radio">
-            방문전
-          </label>
+        <label>
+          <input type="radio" name="visit" value="1" checked>
+          방문
+        </label>
+        <label>
+          <input type="radio" name="visit" value="0">
+          방문전
+        </label>
 
-<!--          방문 <span> <i class="bi bi-record-circle text-danger"></i></span>-->
-<!--          방문전 <span>  <i class="bi bi-circle text-dark text-opacity-25"></i></span>-->
+
+
+
         </p>
         <p class="form-floating">
           <input type="text" name="title" th:value="${t.title}" readonly

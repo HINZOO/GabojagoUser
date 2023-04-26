@@ -5,6 +5,7 @@ import com.project.gabojago.gabojagouser.dto.trip.TripReviewDto;
 import com.project.gabojago.gabojagouser.dto.user.UserDto;
 import com.project.gabojago.gabojagouser.service.trip.TripReviewCmtService;
 import com.project.gabojago.gabojagouser.service.trip.TripReviewService;
+import com.project.gabojago.gabojagouser.service.user.UserService;
 import lombok.Data;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
@@ -39,10 +40,10 @@ public class TripReviewCmtController {
     public String list(
             @PathVariable int trId,
             Model model){
-//        List<TripReviewDto> review=tripReviewService.list(trId);
         List<TripReviewCmtDto> reviewcmt=tripReviewCmtService.list(trId);
-//        model.addAttribute("r",review);
+        TripReviewDto review=tripReviewService.detail(trId); // 리뷰 유저의 프로필이미지 받으려고
         model.addAttribute("reviewcmt",reviewcmt);
+        model.addAttribute("review",review);
         System.out.println("reviewcmt = " + reviewcmt);
         return "/trip/reviewcmt/list";
     }
@@ -50,7 +51,7 @@ public class TripReviewCmtController {
     @Data
     class HandlerDto {
         private int register;
-        private int modify;
+//        private int modify;
         private int remove;
     }
 
@@ -62,6 +63,7 @@ public class TripReviewCmtController {
             ) throws IOException {
         log.info(reviewCmt);
         log.info(img.getOriginalFilename());
+        System.out.println("reviewCmt = " + reviewCmt);
         HandlerDto handlerDto=new HandlerDto();
         if(!img.isEmpty()){
             String[] contentTypes=img.getContentType().split("/");
@@ -76,5 +78,26 @@ public class TripReviewCmtController {
         handlerDto.setRegister(register);
         return handlerDto;
     }
+
+    @DeleteMapping("/handler.do")
+    public @ResponseBody HandlerDto remove(
+            @ModelAttribute TripReviewCmtDto reviewcmt,
+            @SessionAttribute UserDto loginUser
+    ){
+        HandlerDto handlerDto=new HandlerDto();
+        int remove=0;
+        log.info(reviewcmt);
+        System.out.println("reviewcmt = " + reviewcmt);
+        try{
+
+            remove=tripReviewCmtService.remove(reviewcmt.getTrcId());
+        }catch(Exception e){
+            log.error(e.getMessage());
+        }
+        handlerDto.setRemove(remove);
+        return handlerDto;
+    }
+
+
 
 }

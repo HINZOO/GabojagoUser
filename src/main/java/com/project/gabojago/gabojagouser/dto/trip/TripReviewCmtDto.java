@@ -7,7 +7,9 @@ import java.util.List;
 @Data
 @JsonIgnoreProperties({"handler"})
 public class TripReviewCmtDto {
+    @JsonProperty("trcId")
     private int trcId; // pk (auto_increment)
+    @JsonProperty("trId")
     private int trId; // fk trip_review.tr_id 참조
     @JsonProperty("uId")
     private String uId; // fk user.u_id 참조
