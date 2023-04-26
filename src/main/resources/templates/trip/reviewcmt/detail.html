@@ -3,7 +3,7 @@
 <div> <!-- r.comments : TripReviewCmtDto 배열  - 리뷰 하나에 댓글들 -->
     <div class="mb-3 d-flex justify-content-between align-items-center">
         <div class="d-flex align-items-center"><div>
-                <img th:src="@{'{path}'(path=${r.user.imgPath})}" class="border rounded-circle" style="width: 45px; height: 45px;">
+                <img th:src="@{'{path}'(path=${user.imgPath})}" class="border rounded-circle" style="width: 45px; height: 45px;">
                 @<strong th:text="${rc.uId}"></strong>
                 <!--            <span>리뷰 6</span>-->
                 <a href="#">팔로우</a>
@@ -32,7 +32,8 @@
                 </a>
                 <a href="javascript:void(0)" class="btn btn-outline-secondary" th:onclick="reviewCmtClick([[${rc.trId}]],[[${rc.trcId}]])">댓글달기</a>
                 <!-- 작성자에게만 보이기 -->
-                <a href="javascript:void(0)"  class="btn btn-outline-dark ms-2">삭제</a>
+                <a th:onclick="removeReviewCmt([[${rc.trId}]],[[${rc.trcId}]])" class="btn btn-outline-dark ms-2">삭제</a>
+<!--                <a th:if="${session.loginUser!=null  && session.loginUser.uId==rc.uId}" th:onclick="removeReviewCmt([[${rc.trId}]],[[${rc.trcId}]])" class="btn btn-outline-dark ms-2">삭제</a>-->
             </p>
         </div>
     </div>
@@ -40,10 +41,9 @@
 </div>
     <!-- 리뷰댓글의 댓글! -->
     <ul class="list-group">
-<!--        <p th:text="${rc.parentTrcId}"></p>-->
-<!--        <p th:text="${rc.trcId}"></p>-->
         <li th:each="rc:${rc.comments}" class="list-group-item">
             <th:block th:include="/trip/reviewcmt/detail.html"></th:block>
         </li>
     </ul>
 </html>
+

@@ -14,6 +14,8 @@
 </div>
 
 <div>
+    <p>리뷰아이디 테스트</p>
+    <span th:text="${r.trId}"></span>
     <div>
         <span th:text="${r.content}"></span>
     </div>
@@ -42,7 +44,10 @@
     </div>
     <p>
         <span>☆☆☆☆☆</span>
-        <span>방문</span>
+<!--        <span>방문</span>-->
+
+        <th:block th:if="${r.visit == 1}">방문</th:block>
+        <th:block th:if="${r.visit == 0}">방문전</th:block>
     </p>
     <div class="d-flex justify-content-between align-items-center">
         <p>
@@ -60,18 +65,26 @@
             <!--            <a href="" class="text-dark text-decoration-none">댓글달기</a>-->
             <a href="javascript:void(0)" class="btn btn-outline-secondary"
                th:onclick="reviewCmtClick([[${r.trId}]],'')">댓글달기</a> <!-- 대댓글 클릭 했다가 리뷰댓글 클릭했을때, 부모댓글번호 삭제하기위해서 '' 추가 -->
+
             <!-- 작성자에게만 보이기 -->
-            <a href="javascript:void(0)" th:onclick="loadModifyReview([[${r.trId}]])"
+            <a href="javascript:void(0)"
+               th:if="${session.loginUser!=null  && session.loginUser.uId==r.uId}"
+               th:onclick="loadModifyReview([[${r.trId}]])"
                class="btn btn-outline-danger ms-2">수정</a>
         </p>
     </div>
 </div>
 
+<!--<span th:text="${t}"></span>-->
+
 <!-- 리뷰작성하기 Modal -->
 <th:block th:include="/trip/review/reviewModifyModal.html"></th:block>
+
+<!-- th:with : 해당하는 태그 안에 지역변수로 변수명을 선언하는 것! => li 태그 안에 user 변수선언 -->
 <ul class="list-group">
-    <li th:each="rc:${r.comments}" class="list-group-item" th:if="${r.comments.size()>0}" > <!-- 리뷰의 댓글이 있는 경우만! -->
+    <li th:each="rc:${r.comments}"  th:with="user=${r.user}" class="list-group-item" th:if="${r.comments.size()>0}" > <!-- 리뷰의 댓글이 있는 경우만! -->
         <th:block th:include="/trip/reviewcmt/detail.html"></th:block>
     </li>
 </ul>
+
 </html>

@@ -13,11 +13,13 @@
         가보자고</h3>
     <div id="tripContainer" class="d-flex justify-content-evenly my-4">
         <div class="card" style="width: 18rem;" th:each="t:${trip}">
-            <img src="..." class="card-img-top" alt="...">
+            <div th:if="${t.imgs!=null}" th:each="img,state:${t.imgs}">
+                <img th:if="${state.current.imgMain==true}" th:src="@{'{path}'(path=${img.imgPath})}" class="d-block w-100" style="object-fit: contain"  alt="...">
+            </div>
             <div class="card-body">
                 <h5 class="card-title" th:text="${t.title}">Card title</h5>
                 <p class="card-text"></p>
-                <a href="#" class="btn btn-primary">바로가기</a>
+                <a  th:href="@{'/trip/{tId}/detail.do'(tId=${t.tId})}" class="btn btn-primary">바로가기</a>
             </div>
         </div>
     </div>

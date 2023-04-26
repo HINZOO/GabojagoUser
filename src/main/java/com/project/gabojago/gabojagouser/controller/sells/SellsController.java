@@ -6,6 +6,7 @@ import com.project.gabojago.gabojagouser.dto.user.UserDto;
 import com.project.gabojago.gabojagouser.service.sells.SellBookMarksService;
 import com.project.gabojago.gabojagouser.service.sells.SellsService;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -14,10 +15,14 @@ import org.springframework.ui.Model;
 
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -39,7 +44,8 @@ public class SellsController {
     @Value("${static.path}")
     private String staticPath;
 
-
+    private final int MAX_IMAGE_SIZE = 1024 * 1024;
+    private final int MAX_PULL_IMAGE_SIZE = 5 * MAX_IMAGE_SIZE;
     @RequestMapping("/{title}/search.do")
     public String searchSells(@PathVariable String title,
                               Model model,
@@ -99,7 +105,6 @@ public class SellsController {
 
     @PostMapping("/modify.do")
     public String modifyAction2(@ModelAttribute SellsDto sell,
-//                               @RequestParam(name = "delImgMainId",required = false)Integer delImgMainId,
                                 @ModelAttribute SellImgsDto sellImg,
                                @RequestParam(name = "delImgId",required = false)List<Integer> delImgIds,
                                @RequestParam(name = "img",required = false)List<MultipartFile>  imgs,
@@ -109,13 +114,13 @@ public class SellsController {
                                @RequestParam(value="price",required = false) int[] price,
                                RedirectAttributes redirectAttributes
     ) throws IOException {
-//        System.out.println("delImgMainId = " + delImgMainId);
         String msg = "";
         String redirecPath = "redirect:/sells/" + sell.getSId() + "/modify.do";
-//            delImgIds.add(delImgMainId);
         List<SellImgsDto> imgDtos = null;
         List<SellsOptionDto> sellsOptions = null;
                         imgs.add(mainImg);
+
+
         if (mainImg==null){
             sell.setImgMain(sell.getImgMain());
         }
@@ -126,7 +131,7 @@ public class SellsController {
                 String[] contentTypes = img.getContentType().split("/");
                 if (contentTypes[0].equals("image")) {
                     String fileName = System.currentTimeMillis() + "_" + (int) (Math.random() * 10000) + "." + contentTypes[1];
-                    Path path = Paths.get(uploadPath + "/sell/" + fileName);
+                    Path path = Paths.get(uploadPath + "/sells/" + fileName);
                     try {
                         img.transferTo(path);
                     } catch (IOException e) {
@@ -135,11 +140,11 @@ public class SellsController {
 
                     SellImgsDto imgDto = new SellImgsDto();
                     if (i == imgs.size() - 1) {
-                        sell.setImgMain("/public/img/sell/" + fileName);
-                        imgDto.setImgPath("/public/img/sell/" + fileName);
+                        sell.setImgMain("/public/img/sells/" + fileName);
+                        imgDto.setImgPath("/public/img/sells/" + fileName);
                         imgDtos.add(imgDto);
                     } else {
-                        imgDto.setImgPath("/public/img/sell/" + fileName);
+                        imgDto.setImgPath("/public/img/sells/" + fileName);
                         imgDtos.add(imgDto);
                     }
                 }
@@ -156,7 +161,6 @@ public class SellsController {
             }
         }
             sell.setSellImgs(imgDtos);
-//        sell.setImgMain(delImgMainId);
             sell.setSellOption(sellsOptions);
             int modify = 0;
             try {
@@ -175,92 +179,9 @@ public class SellsController {
 
 
             }
-//            if (imgDtos!=null){
-//                for (SellImgsDto img : imgDtos){
-//                    File imgFile=new File(staticPath +img.getImgPath());
-//                    if (imgFile.exists()) imgFile.delete();
-//                }
-//            }
-//            if (modify > 0) { // 수정성공
-//                if (imgDtos == null || imgDtos.size() < 1) {
-//                    redirectAttributes.addFlashAttribute("msg", "이미지는 최소 1개 이상이어야 합니다.");
-//                    return redirecPath;
-//                } else { // 삭제할 이미지 있으면
-//                    for (SellImgsDto img : imgDtos) {
-//                        File imgFile = new File(staticPath + img.getImgPath());
-//                        if (imgFile.exists()) imgFile.delete(); // 실제 삭제
-//                    }
-//                }
-//                msg = "수정성공";
-//            }
-
             redirectAttributes.addFlashAttribute("msg", msg);
             return "redirect:/sells/list.do";
     }
-//    @PostMapping("/modify.do")
-//    public String modifyAction(@ModelAttribute SellsDto sell,
-//                               @RequestParam(name = "delImgId",required = false)int [] delImgIds,
-//                               @RequestParam(name = "img",required = false)MultipartFile [] imgs,
-//                               @RequestParam(name = "delOption",required = false)int [] delOptionIds,
-//                               @RequestParam(value="name",required = false) String[] name,
-//                               @RequestParam(value="price",required = false) int[] price,
-//                               RedirectAttributes redirectAttributes
-//                               ) {
-//        String redirectPage="redirect:/sells/"+sell.getSId()+"/modify.do";
-//        List<SellImgsDto> imgsDtos=null;
-//        int modify=0;
-//        String msg="";
-//        try {
-//
-//            if(delImgIds!=null)imgsDtos=sellsService.imgList(delImgIds);
-//            //삭제 전에 이미지 파일 경로를 받아옴
-//            modify=sellsService.modify(sell,delImgIds,delOptionIds);
-//            if (imgs!=null){
-//                for(MultipartFile img : imgs){
-//                    if(!img.isEmpty()) {
-//                        String[] contentTypes = img.getContentType().split("/"); // text/xml application/json image/png
-//                        if (contentTypes[0].equals("image")) {
-//                            String fileName =  +System.currentTimeMillis() + "_" + (int) (Math.random() * 10000) + "." + contentTypes[1];
-//                            Path path = Paths.get(uploadPath+"/sell/"+ fileName);
-//                            img.transferTo(path);
-//                            SellImgsDto imgDto = new SellImgsDto();
-//                            imgDto.setImgPath("/public/img/sell/" + fileName);
-//                            imgDto.setSId(sell.getSId());
-//                            sellsService.imgRegister(imgDto);
-//                        }
-//                    }
-//                }
-//            }
-//            if (name!=null && price!=null) {
-//                for (int i = 0; i < name.length; i++) {
-//                    SellsOptionDto sellsOption = new SellsOptionDto();
-//                    sellsOption.setSId(sell.getSId());
-//                    sellsOption.setName(name[i]);
-//                    sellsOption.setPrice(price[i]);
-//                    sellsService.optionRegister(sellsOption);
-//                }
-//            }
-//
-//
-//
-//
-//
-//        }catch (Exception e){
-//            log.error(e.getMessage());
-//        }
-//        if(modify>0){
-//            if (imgsDtos!=null){
-//                for (SellImgsDto i : imgsDtos){
-//                    File imgFile=new File(staticPath+i.getImgPath());
-//                    if(imgFile.exists())imgFile.delete();
-//                }
-//            }
-//            redirectAttributes.addFlashAttribute("msg","수정성공");
-//            redirectPage="redirect:/sells/list.do";
-//        }
-//        return redirectPage;
-//    }
-//
 
     @GetMapping("/register.do")
     public void insertForm(){
@@ -273,23 +194,49 @@ public class SellsController {
                                  @RequestParam(value="name",required = false) String[] name,
                                  @RequestParam(value="price",required = false) int[] price,
                                  RedirectAttributes redirectAttributes) throws IOException {
+
     String redirectPage = "redirect:/sells/register.do";
     //        if(!loginUser.getUId().equals(trip.getUId())) return redirectPage; // 다르면 다시 등록페이지로 이동
     String msg="";
+
+
     imgs.add(mainImg);
+
     List<SellImgsDto> imgDtos=null;
     List<SellsOptionDto> sellsOptions=null;
 
 
-         // 메인이미지 추가
-    // 제목 입력 여부 확인
-        if (sImg==null || sImg.isEmpty() || sImg.getSize() > 5 * 1024 * 1024){
-            msg="서브용 이미지는 1개이상 등록하셔야 합니다.";
+
+        if (name == null ||name.length==0) {
+            msg="상품명을 입력하세요";
+            redirectAttributes.addFlashAttribute("msg",msg);
+            return redirectPage;
+        }
+
+
+        if (price ==null||price.length==0) {
+            msg="상품 가격을 입력하세요";
+            redirectAttributes.addFlashAttribute("msg",msg);
+            return redirectPage;
+        }
+
+        if (mainImg==null||mainImg.isEmpty() ){
+            msg="메인 이미지는 1개 꼭 등록하셔야 합니다.";
             redirectAttributes.addFlashAttribute("msg", msg);
             return redirectPage;
         }
-        if (mainImg==null||mainImg.isEmpty() ||sImg.getSize() > 5 * 1024 * 1024){
-            msg="메인 이미지는 1개 꼭 등록하셔야 합니다.";
+
+        if (mainImg.getSize() > MAX_IMAGE_SIZE) {
+            msg="메인이미지의 최대 크기는"+MAX_IMAGE_SIZE/(1024 * 1024)+"MB 입니다";
+            redirectAttributes.addFlashAttribute("msg",msg);
+            return redirectPage;
+        }
+
+
+         // 메인이미지 추가
+    // 제목 입력 여부 확인
+        if (sImg==null || sImg.isEmpty() ){
+            msg="서브용 이미지는 1개이상 등록하셔야 합니다.";
             redirectAttributes.addFlashAttribute("msg", msg);
             return redirectPage;
         }
@@ -298,11 +245,8 @@ public class SellsController {
         redirectAttributes.addFlashAttribute("msg",msg);
         return redirectPage;
     }
-        if (imgs == null || imgs.isEmpty()) { // 이미지가 null이거나 비어있는 경우
-            msg = "이미지는 1개 이상 등록하세요.";
-            redirectAttributes.addFlashAttribute("msg", msg);
-            return redirectPage;
-        }
+
+
 
         imgDtos = new ArrayList<>();
         for (int i = 0; i < imgs.size(); i++) {
@@ -311,7 +255,7 @@ public class SellsController {
                 String[] contentTypes = img.getContentType().split("/");
                 if (contentTypes[0].equals("image")) {
                     String fileName = System.currentTimeMillis() + "_" + (int) (Math.random() * 10000) + "." + contentTypes[1];
-                    Path path = Paths.get(uploadPath + "/sell/" + fileName);
+                    Path path = Paths.get(uploadPath + "/sells/" + fileName);
                     try {
                         img.transferTo(path);
                     } catch (IOException e) {
@@ -320,21 +264,21 @@ public class SellsController {
 
                     SellImgsDto imgDto = new SellImgsDto();
                     if (i == imgs.size() - 1) {
-                        sell.setImgMain("/public/img/sell/" + fileName);
-                        imgDto.setImgPath("/public/img/sell/" + fileName);
+                        sell.setImgMain("/public/img/sells/" + fileName);
+                        imgDto.setImgPath("/public/img/sells/" + fileName);
                         imgDtos.add(imgDto);
                     } else {
-                        imgDto.setImgPath("/public/img/sell/" + fileName);
+                        imgDto.setImgPath("/public/img/sells/" + fileName);
                         imgDtos.add(imgDto);
                     }
                 }
+            }else if(img==null ||img.isEmpty()) {
+                msg = "이미지는 1개 이상 등록하세요.";
+                redirectAttributes.addFlashAttribute("msg", msg);
+                return redirectPage;
             }
         }
-        if (name==null||price==null){
-            msg="옵션은 1개이상 등록하세요";
-            redirectAttributes.addFlashAttribute("msg", msg);
-            return redirectPage;
-        }
+
             sellsOptions=new ArrayList<>();
             for (int i = 0; i < name.length; i++) {
                 SellsOptionDto sellsOption=new SellsOptionDto();
@@ -374,63 +318,36 @@ public class SellsController {
         return redirectPage;
 }
 
-//        @Transactional
-//    @PostMapping("/register.do")
-//    public String registerAction(@ModelAttribute SellsDto sell,
-//                                 @ModelAttribute SellsOptionDto sellsOptionDto,
-//                                 @RequestParam(value = "img",required = false)MultipartFile [] imgs,
-//                                 @RequestParam(value="name",required = false) String[] name,
-//                                 @RequestParam(value="price",required = false) int[] price,
-//                                 RedirectAttributes redirectAttributes) throws IOException {
-//
-//        String redirectPage="redirect:/sells/register.do";
-//        String msg="";
-//
-//        System.out.println("sell입니다 = " + sell);
-//        if(name == null || price == null) { // 옵션 없으면
-//            msg = "옵션은 최소 1개이상 추가해 주세요";
-//            redirectAttributes.addFlashAttribute("msg", msg);
-//            return redirectPage;
-//        }else if (imgs==null){ // imgs 가 null 이면 msg
-//            msg="이미지를 등록해 주세요.";
-//            redirectAttributes.addFlashAttribute("msg",msg);
-//            return redirectPage;
-//        }else {
-//            sellsService.register(sell);
-//            for(MultipartFile img : imgs){
-//                if(!img.isEmpty()) {
-//                    String[] contentTypes = img.getContentType().split("/"); // text/xml application/json image/png
-//                    if (contentTypes[0].equals("image")) {
-//                        String fileName =  +System.currentTimeMillis() + "_" + (int) (Math.random() * 10000) + "." + contentTypes[1];
-//                        Path path = Paths.get(uploadPath+"/sell/"+ fileName);
-//                        img.transferTo(path);
-//                        SellImgsDto imgDto = new SellImgsDto();
-//                        imgDto.setImgPath("/public/img/sell/" + fileName);
-//                        imgDto.setSId(sell.getSId());
-//                        sellsService.imgRegister(imgDto);
-//                    }
-//                }
-//            }
-//        }
-//
-//            // 옵션 등록
-//        for (int i = 0; i < name.length; i++) {
-//            SellsOptionDto sellsOption = new SellsOptionDto();
-//            sellsOption.setSId(sell.getSId());
-//            sellsOption.setName(name[i]);
-//            sellsOption.setPrice(price[i]);
-//            System.out.println("sellsOption = " + sellsOption);
-//            sellsService.optionRegister(sellsOption);
-//        }
-//
-//           return redirectPage="redirect:/sells/list.do";
-//
-//    }
     @GetMapping("/{sId}/remove.do")
-    public String removeAction(@PathVariable int sId){
+    public String removeAction(@PathVariable int sId,
+                               RedirectAttributes redirectAttributes){
         String redirecPath="redirect:/sells/"+sId+"/modify.do";
-        sellsService.remove(sId);
-        return "redirect:/sells/list.do";
+        String msg="";
+        SellsDto sells=null;
+        List<SellImgsDto> imgs=null;
+        int remove=0;
+        try {
+        sells=sellsService.detail(sId);
+        imgs=sells.getSellImgs();
+        remove=sellsService.remove(sId);
+
+        }catch (Exception e){
+            log.error(e.getMessage());
+        }
+        if (remove>0){
+            if (imgs!=null){
+                for (SellImgsDto img:imgs){
+                    File imgFile=new File(staticPath+img.getImgPath());
+                    if (imgFile.exists())imgFile.delete();
+                }
+            }
+            msg="삭제 성공!";
+            redirectAttributes.addFlashAttribute("msg",msg);
+            redirecPath="redirect:/sells/list.do";
+
+        }
+
+        return redirecPath;
     }
 
 
@@ -460,4 +377,6 @@ public class SellsController {
         return redirectPath;
 
     }
+
+
 }

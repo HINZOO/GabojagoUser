@@ -42,8 +42,18 @@ public class UserLoginController {
     } catch (Exception e) {
       log.error(e.getMessage());
     }
+    //이메일체크
+    if(loginUser!=null){
+      if(loginUser.getStatus()==UserDto.StatusType.EMAIL_CHECK){
+        redirectAttributes.addFlashAttribute("msg","이메일을 확인해야 가입이 완료됩니다.");
+        redirectAttributes.addAttribute("uId",loginUser.getUId());
+        return "redirect:/user/emailCheck.do";
+      }
+    }
+    ////////////////////
     if(loginUser!=null) {
       if(autoLogin!=null && autoLogin==1) {
+
         String encrypIdValue = AESEncryption.encryptValue(loginUser.getUId());
         String encrypPwValue = AESEncryption.encryptValue(loginUser.getPw());
         Cookie loginId = new Cookie("loginId", encrypIdValue);
