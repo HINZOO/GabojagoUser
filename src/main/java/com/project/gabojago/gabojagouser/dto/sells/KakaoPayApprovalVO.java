@@ -8,12 +8,12 @@ import lombok.Data;
 public class KakaoPayApprovalVO {
 
     //response
-    private String aid, tid, cid, sid,name,uId;
+    private String aid, tid, cid,name,uId;
     private String total,partner_order_id, partner_user_id, payment_method_type;
     private AmountVO amount;
     private CardVO card_info;
     private String item_name, item_code, payload;
-    private Integer quantity, tax_free_amount, vat_amount;
+    private Integer sId,quantity, tax_free_amount, vat_amount;
     private Date created_at, approved_at;
 
 
