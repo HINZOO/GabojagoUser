@@ -5,6 +5,7 @@ import com.project.gabojago.gabojagouser.dto.sells.*;
 import com.project.gabojago.gabojagouser.dto.user.UserDto;
 import com.project.gabojago.gabojagouser.service.sells.KakaoPay;
 //import com.project.gabojago.gabojagouser.service.sells.SellOrderService;
+import com.project.gabojago.gabojagouser.service.sells.SellOrderService;
 import com.project.gabojago.gabojagouser.service.sells.SellsService;
 import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
@@ -26,14 +27,15 @@ import java.util.List;
 public class SampleController {
     private KakaoPay kakaopay;
     private SellsService sellsService;
+    private SellOrderService sellOrderService;
+
     //    private SellOrderService sellOrderService;
-    @GetMapping("/kakaoPay")
-    public String kakaoPayGet() {
+//    @GetMapping("/kakaoPay")
+//    public String kakaoPayGet() {
+//        return "/sells/kakaoPay";
+//    }
 
-        return "/sells/kakaoPay";
-    }
-
-    @PostMapping("/kakaoPay")
+    @PostMapping("/kakaoPay.do")
     public String kakaoPay(@RequestParam(value = "sId")int sId,
                            @RequestParam(value = "totalPrice",required = false)String totalPrice,
                            @RequestParam(value = "optionName",required = false)List<String> optionName,
@@ -80,15 +82,30 @@ public class SampleController {
     @GetMapping("/kakaoPaySuccess")
     public String kakaoPaySuccess(@RequestParam("pg_token") String pg_token, Model model,
                                   @SessionAttribute UserDto loginUser,
-                                  HttpSession session) {
+                                  HttpSession session,
+                                RedirectAttributes redirectAttributes) {
         KakaoPayApprovalVO kakaoPayApprovalVO = (KakaoPayApprovalVO) session.getAttribute("kakaoPayApprovalVO");
         List<SellsOptionDto> sellsOptions = (List<SellsOptionDto>) session.getAttribute("option");
         System.out.println("kakaoPayApprovalVO = " + kakaoPayApprovalVO);
-//        SellOrderDto sellOrderDto=new SellOrderDto();
-//        List<optionDto> option=new ArrayList<>();
-
-        model.addAttribute("info", kakaopay.kakaoPayInfo(pg_token));
-        return "/sells/kakaoPaySuccess";
+//        List<SellOrderDto> sellOrderDtos=new ArrayList<>();
+       for (SellsOptionDto op:sellsOptions){
+           System.out.println("op = " + op);
+        SellOrderDto sellOrderDto=new SellOrderDto();
+           sellOrderDto.setSId(kakaoPayApprovalVO.getSId());
+           sellOrderDto.setUId(kakaoPayApprovalVO.getUId());
+           sellOrderDto.setOptionName(op.getName());
+           sellOrderDto.setPrice(op.getPrice());
+           sellOrderDto.setCnt(op.getStock());
+            sellOrderService.register(sellOrderDto);
+//            sellOrderDtos.add(sellOrderDto);
+       }
+//       List<SellOrderDto> sellOrderDtos=sellOrderService.findByUId(kakaoPayApprovalVO.getUId());
+//       SellsDto sellsDto= sellsService.findBySId(kakaoPayApprovalVO.getSId());
+//       model.addAttribute("sellsDto",sellsDto);
+//       model.addAttribute("sellOder",sellOrderDtos);
+        redirectAttributes.addFlashAttribute("msg", "결제 완료되었습니다.");
+       return "redirect:/sells/orderList.do";
+//        model.addAttribute("info", kakaopay.kakaoPayInfo(pg_token));
     }
 
 }

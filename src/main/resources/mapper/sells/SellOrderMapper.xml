@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.project.gabojago.gabojagouser.mapper.sells.SellOrderMapper">
+    <resultMap id="SellOrderMap" type="SellOrderDto">
+        <id column="so_id" property="soId"/>
+        <result column="u_id" property="uId"/>
+        <result column="s_id" property="sId"/>
+        <result column="option_name" property="optionName"/>
+        <result column="price" property="price"/>
+        <result column="post_time" property="postTime"/>
+    </resultMap>
+    <insert id="insertOne" parameterType="SellOrderDto">
+        INSERT INTO sell_orders (u_id,s_id,option_name,price,cnt) values
+        (#{uId},#{sId},#{optionName},#{price},#{cnt})
+    </insert>
+    <select id="findByUId" resultMap="SellOrderMap">
+        SELECT * FROM sell_orders WHERE u_id=#{uId}
+    </select>
+</mapper>
