@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+  <title>Login</title>
+</head>
+<div layout:fragment="content">
+  <form class="mx-auto" action="/user/passCheck.do" method="post" style="width: 450px;">
+    <h1 class="my-4">패스워드 수정</h1>
+    <p class="form-floating">
+      <input type="text" name="currentPw" value="" class="form-control" placeholder="ID">
+      <label>현재패스워드</label>
+    </p>
+    <p class="form-floating">
+      <input type="password" name="pw" value="" class="form-control" placeholder="PassWord">
+      <label>변경할패스워드</label>
+    </p>
+    <p class="form-floating">
+      <input type="password" name="pwCheck" value="" class="form-control" placeholder="PassWord">
+      <label>변경할패스워드 확인</label>
+    </p>
+    <p class="text-end">
+      <button class="btn btn-primary">변경</button>
+    </p>
+  </form>
+</div>
+</html>

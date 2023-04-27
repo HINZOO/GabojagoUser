@@ -30,8 +30,8 @@ public class MainController {
        TripPageDto tripPageDto=new TripPageDto();
         CommPageDto commPageDto=new CommPageDto();
         SellPageDto sellPageDto=new SellPageDto();
-        tripPageDto.setPageSize(4);
         commPageDto.setPageSize(4);
+        tripPageDto.setPageSize(4);
         sellPageDto.setPageSize(4);
         List<TripDto> tripList=tripService.list(tripPageDto);
         List<CommunityDto> commList=commService.likesList(commPageDto);
