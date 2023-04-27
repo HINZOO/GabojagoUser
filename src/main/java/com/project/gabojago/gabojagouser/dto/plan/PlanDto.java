@@ -24,5 +24,5 @@ public class PlanDto {
     private String nkName; // 작성자 정보
     private List<PlanCheckListsDto> checkLists; // 체크리스트 데이터
     private List<PlanContentsDto> contents; // 개별 스케쥴 데이터
-//    private List<UserDto> mUsers; // 여행 동반자 유저 정보
+    private List<UserDto> mUsers; // 여행 동반자 유저 정보
 }

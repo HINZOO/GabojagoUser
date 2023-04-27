@@ -27,11 +27,12 @@ public class MainController {
 
     @GetMapping("/")
     public String indexPage(Model model){
+       TripPageDto tripPageDto=new TripPageDto();
         CommPageDto commPageDto=new CommPageDto();
         SellPageDto sellPageDto=new SellPageDto();
+        tripPageDto.setPageSize(4);
         commPageDto.setPageSize(4);
         sellPageDto.setPageSize(4);
-        TripPageDto tripPageDto=new TripPageDto();
         List<TripDto> tripList=tripService.list(tripPageDto);
         List<CommunityDto> commList=commService.likesList(commPageDto);
         List<SellsDto> sellsList=sellsService.List(sellPageDto);
