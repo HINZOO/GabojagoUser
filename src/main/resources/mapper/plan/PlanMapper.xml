@@ -46,12 +46,14 @@
         SELECT * FROM plans
     </select>
     <select id="findByPId" resultMap="planMap">
-        SELECT * FROM plans
-                 WHERE p_id=#{pId}
+        SELECT *, (SELECT nk_name FROM users u WHERE p.u_id = u.u_id) as nk_name
+        FROM plans p
+        WHERE p_id=#{pId}
     </select>
     <select id="findByUId" resultMap="planMap">
-        SELECT *,(SELECT nk_name FROM users u WHERE p.u_id = u.u_id) as nk_name FROM plans p
-                 WHERE u_id = #{uId}
-                    OR p_id IN (SELECT p_id FROM plan_members WHERE mu_id=#{uId})
+        SELECT *, (SELECT nk_name FROM users u WHERE p.u_id = u.u_id) as nk_name
+        FROM plans p
+        WHERE u_id = #{uId}
+        OR p_id IN (SELECT p_id FROM plan_members WHERE mu_id=#{uId})
     </select>
 </mapper>

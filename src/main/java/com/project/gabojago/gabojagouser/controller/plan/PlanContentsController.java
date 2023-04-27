@@ -9,6 +9,7 @@ import com.project.gabojago.gabojagouser.service.plan.PlanService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -22,11 +23,17 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/plan/contents")
-@AllArgsConstructor
 @Log4j2
 public class PlanContentsController {
     private PlanContentsService planContentsService;
     private PlanContentPathsService planContentPathsService;
+    @Value("${static.path}")
+    private String staticPath;
+
+    public PlanContentsController(PlanContentsService planContentsService, PlanContentPathsService planContentPathsService) {
+        this.planContentsService = planContentsService;
+        this.planContentPathsService = planContentPathsService;
+    }
 
     @Data
     class CanvasHandlerDto{
@@ -41,6 +48,15 @@ public class PlanContentsController {
     {
             int register = planContentsService.register(content);
             return content;
+    }
+    @PutMapping("/imgUpdate.do")
+    public @ResponseBody int imgUpdate(
+           @RequestParam(value = "cId", required = false) int cId,
+           @RequestParam(value = "img", required = false) String imgURL) throws IOException
+    {
+        log.info("캔버스 업로드 " + imgURL);
+        log.info("캔버스 업로드 " + cId);
+        return 1;
     }
 
     @PostMapping ("/canvasHandler.do")
@@ -59,12 +75,6 @@ public class PlanContentsController {
         int delete = planContentPathsService.delete(Integer.parseInt(pathId));
 
         return delete;
-    }
-
-    @PostMapping ("/imgHandler.do")
-    public @ResponseBody int imgInsert(MultipartFile img) throws IOException {
-        log.info("이미지"+img);
-        return 1;
     }
 
 }
