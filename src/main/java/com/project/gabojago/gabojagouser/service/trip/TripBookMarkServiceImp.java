@@ -9,7 +9,7 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
-public class TripBookMarkServiceImpl implements TripBookMarkService{
+public class TripBookMarkServiceImp implements TripBookMarkService{
     TripBookmarkMapper bookmarkMapper;
     @Override
     public List<TripBookmarkDto> list(String uId) {

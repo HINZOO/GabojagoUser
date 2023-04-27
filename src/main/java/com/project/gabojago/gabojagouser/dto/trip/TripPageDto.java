@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class TripPageDto {
     private int pageNum=1;
-    private int pageSize=5;
+    private int pageSize=8;
 
     public enum TripsType{
         t_id,u_id,title,

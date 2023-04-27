@@ -24,6 +24,7 @@
 <div layout:fragment="content" class="container">
     <!--    <script src="/public/js/splideTest.js"></script>-->
     <h3 class="my-4">맞춤추천 상세</h3>
+    <script src="/public/js/TripLike.js" defer></script>
 
     <!--    <div class="splide">-->
     <!--        <div class="splide__track">-->
@@ -39,31 +40,39 @@
         <div class="row">
             <div class="col-5">
                 <div class="card border-dark border-opacity-25">
+
+
                     <div class="card-header p-3 bg-transparent border-dark border-opacity-25">
                         <div class="d-flex justify-content-around">
                             <p class="card-text d-flex flex-column align-items-center g-2 mb-0">
-                                <span class="bi bi-heart mb-1"></span>
-                                좋아요
+                                <div class="likeCont" th:id="'likeCont'+${t.tId}">
+                                    <th:block th:if="${session.loginUser!=null}" th:with="likes=${t.likes}, id=${t.tId}">
+                                        <a href="javascript:void(0)" th:onclick="tripLikeHandler([[${t.tId}]])"
+                                           class="mb-1 text-danger fs-3" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="좋아요">
+                                            <i class="bi fs-4" th:classappend="${(likes.likes>0)?'bi-heart-fill':'bi-heart'}"></i>
+                                            <span th:text="${likes.likes}"></span>
+                                            <span th:text="${likes}"></span>
+                                        </a>
+                                    </th:block>
+
+
+
+                                </div>
+
+
+
                                 <span>156</span>
                             </p>
                             <p class="card-text d-flex flex-column align-items-center g-2 mb-0">
-                                <span class="bi bi-heart mb-1"></span>
-                                북마크
+                                <a href="javascript:void(0)" th:onclick="" >
+                                    <i class="bi bi-bookmark-plus text-warning fs-3" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="북마크"></i>
+                                </a>
                                 <span>156</span>
                             </p>
                             <p class="card-text d-flex flex-column align-items-center g-2 mb-0">
-                                <span class="bi bi-heart mb-1"></span>
-                                리뷰
-                                <span>156</span>
-                            </p>
-                            <p class="card-text d-flex flex-column align-items-center g-2 mb-0">
-                                <span class="bi bi-heart mb-1"></span>
-                                방문
-                                <span>156</span>
-                            </p>
-                            <p class="card-text d-flex flex-column align-items-center g-2 mb-0">
-                                <span class="bi bi-heart mb-1"></span>
-                                조회수
+                                <a href="javascript:void(0)" th:onclick="">
+                                    <i class="bi bi-calendar-plus text-secondary fs-3" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="내일정바로추가"></i>
+                                </a>
                                 <span>156</span>
                             </p>
                         </div>
@@ -93,7 +102,7 @@
                             <span>https://www.visitjeju.net/kr/</span>
                         </p>
                         <p class="card-text">
-                            등록일 / 수정일
+                            등록일 / 조회수
                             <span></span>
                         </p>
                     </div> <!---->
@@ -262,6 +271,7 @@
                 `
             }
         }
+
     </script>
     <script th:inline="javascript">
         const reviewRegisterModal = new bootstrap.Modal(document.getElementById("reviewRegisterModal"), {}); // {} 이게 뭐지?
@@ -356,34 +366,6 @@
             }
         }
 
-        // if(reviewModifyModal){
-        //     // async function loadModifyReview(trId){
-        //     //     let url=`/review/${trId}/detail.do`;
-        //     //     const resp= await fetch(url);
-        //     //     if(resp.status===200){
-        //     //         const json=await resp.json();
-        //     //         console.log(json)
-        //     //         // input 의 이름 name => key 값
-        //     //         // {"trId":19,"content":"dddd 이미지 등록 삭제 테스트","visit":false,"postTime":"2023-04-20T23:05:13.000+00:00","updateTime":"2023-04-23T04:28:37.000+00:00","grade":0,"imgs":[{"triId":6,"trId":19,"imgPath":"테스트"},{"triId":43,"trId":19,"imgPath":"/public/img/trip/review/1682224117423_27386.jpeg"}],"user":{"pw":"1234","name":"김철수","nkName":"바보철수","email":"user01@example.com","birth":"1989-12-31T15:00:00.000+00:00","phone":"010-1234-5678","address":"서울특별시 강남구","detailAddress":"삼성동 123-45","prContent":"안녕하세요. 저는 철수입니다.","permission":"USER","mbti":"ISTJ","imgPath":"/public/img/trip/review/jeju1.jpeg","postTime":"2023-04-19T03:19:22.000+00:00","storeName":null,"businessId":null,"uid":"USER01"},"tId":1,"uId":"user01"}
-        //     //         reviewModifyForm.querySelectorAll("[name]").forEach((input)=>{
-        //     //             let key=input.name;
-        //     //             if(key in json) {
-        //     //                 if(key==="imgPath"){
-        //     //                     input.src=json[key];
-        //     //                 }
-        //     //                 else{
-        //     //                     input.value=json[key];
-        //     //                 }
-        //     //             }
-        //     //         })
-        //     //         reviewModifyModal.show();
-        //     //     } else{
-        //     //         alert("불러오기 실패 status: " + resp.status);
-        //     //     }
-        //     // }
-        //
-        // }
-
         // {"trId":19,"content":"dddd 이미지 등록 삭제 테스트","visit":false,"postTime":"2023-04-20T23:05:13.000+00:00","updateTime":"2023-04-23T04:28:37.000+00:00","grade":0,"imgs":[{"triId":6,"trId":19,"imgPath":"테스트"},{"triId":43,"trId":19,"imgPath":"/public/img/trip/review/1682224117423_27386.jpeg"}],"user":{"pw":"1234","name":"김철수","nkName":"바보철수","email":"user01@example.com","birth":"1989-12-31T15:00:00.000+00:00","phone":"010-1234-5678","address":"서울특별시 강남구","detailAddress":"삼성동 123-45","prContent":"안녕하세요. 저는 철수입니다.","permission":"USER","mbti":"ISTJ","imgPath":"/public/img/trip/review/jeju1.jpeg","postTime":"2023-04-19T03:19:22.000+00:00","storeName":null,"businessId":null,"uid":"USER01"},"tId":1,"uId":"user01"}
             async function loadModifyReview(trId){
                 let url=`/review/${trId}/detail.do`;
@@ -416,67 +398,6 @@
             }
 
 
-
-            // async function loadModifyReview(trId){
-            //     let url=`/review/${trId}/detail.do`;
-            //     const resp= await fetch(url);
-            //     if(resp.status===200){
-            //         const json=await resp.json();
-            //         console.log(json)
-            //         // input 의 이름 name => key 값
-            //         for(let key in json){ // json 에서 값 가져오기
-            //             if(key!=="imgs"){ // json key 이름이 이미지가 아니면
-            //                 console.log(key)
-            //                 reviewModifyForm.querySelectorAll("[name]").forEach((input)=>{
-            //                     key=input.name;
-            //                     input.value=json[key];
-            //             })
-            //             }
-            //             const imgs=json[key];
-            //             reviewModifyModalImgCont.innerHTML = "";
-            //             imgs.forEach((img,index)=>{
-            //                 if(img.imgPath)
-            //                     reviewModifyModalImgCont.insertAdjacentHTML("beforeend", reviewModifyImgComponent(img));
-            //             })
-            //
-            //         }
-            //         reviewModifyModal.show();
-            //     } else{
-            //         alert("불러오기 실패 status: " + resp.status);
-            //     }
-            // }
-
-
-        // async function loadModifyReview(trId){
-        //     let url=`/review/${trId}/detail.do`;
-        //     const resp= await fetch(url);
-        //     if(resp.status===200){
-        //         const json=await resp.json();
-        //         console.log(json)
-        //         // input 의 이름 name => key 값
-        //         for(let key in json){ // json 에서 값 가져오기
-        //             if(key!=="imgs"){ // json key 이름이 이미지가 아니면
-        //                 console.log(key)
-        //                 reviewModifyForm.querySelectorAll("[key]").value=json[key]; // json 키값을 form 에 담기
-        //             }else{ // json key 이름이 이미지면   key == imgs
-        //                 const imgs=json[key];
-        //                 reviewModifyModalImgCont.innerHTML = "";
-        //                 imgs.forEach((img,index)=>{
-        //                     if(img.imgPath)
-        //                     reviewModifyModalImgCont.insertAdjacentHTML("beforeend", reviewModifyImgComponent(img));
-        //                 })
-        //             }
-        //         }
-        //         reviewModifyModal.show();
-        //     } else{
-        //         alert("불러오기 실패 status: " + resp.status);
-        //     }
-        // }
-
-
-
-
-
         function reviewModifyImgComponent(img){
             return `
                  <label class="w-25 delImgItem"> <!-- 리뷰한개의 각 1개의 이미지 -->
@@ -486,7 +407,6 @@
                 </label>
             `
         }
-
 
         reviewRegisterForm.onsubmit = registerReview;
         async function registerReview(e) {
@@ -511,8 +431,6 @@
             }else if(resp.status===500) { // 팔로잉 했는데 한번더 팔로잉하면 db 오류 발생 or db 통신오류 // 500 에러
                 alert("이미 팔로잉되었거나 또는 오류가 발생했으니 새로고침하고 다시 시도하세요");
             }
-
-
         }
 
         if(reviewModifyModal){
@@ -551,10 +469,7 @@
         }
 
 
-
-
     </script>
-
 
 </div>
 </html>

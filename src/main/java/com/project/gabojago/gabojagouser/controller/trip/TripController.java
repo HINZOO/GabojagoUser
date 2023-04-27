@@ -190,11 +190,36 @@ public class TripController {
         String redirectPage = "redirect:/trip/register.do";
 //        if(!loginUser.getUId().equals(trip.getUId())) return redirectPage; // 다르면 다시 등록페이지로 이동
         String msg="";
-        imgs.add(mainImg); // 메인이미지 추가
+
         // 제목 입력 여부 확인
         if (trip.getTitle() == null || trip.getTitle().equals("")) {
             msg = "여행지명을 입력하세요.";
             redirectAttributes.addFlashAttribute("msg",msg);
+            return redirectPage;
+        }
+
+        if(imgs==null){ // 이미지 등록이 없을때, 이미지 리스트 배열 생성 초기화
+            imgs = new ArrayList<>();
+        }
+
+        if (mainImg.isEmpty()) {
+            msg = "메인 이미지를 등록하세요.";
+            redirectAttributes.addFlashAttribute("msg", msg);
+            return redirectPage;
+        }
+
+        if (!mainImg.isEmpty()) { // 이미지 등록하면
+            imgs.add(mainImg);
+        }
+
+        if (imgs.size()<2) {
+            msg = "서브 이미지 1개 이상 등록하세요.";
+            redirectAttributes.addFlashAttribute("msg", msg);
+            log.info(imgs);
+            System.out.println("imgs = " + imgs);
+            for(MultipartFile img : imgs){
+                System.out.println("img.getOriginalFilename() = " + img.getOriginalFilename());
+            }
             return redirectPage;
         }
 
@@ -217,38 +242,28 @@ public class TripController {
                         if(i==imgs.size()-1)imgDto.setImgMain(true); // 인덱스 마지막일때 이미지 => 메인 이미지
                         imgDto.setImgPath("/public/img/trip/" + fileName);
                         imgDtos.add(imgDto);
-
 //                        if (imgDtos != null && imgDtos.size() > 0) {
 //                            imgDtos.get(0).setImgMain(true);지
 //                        }
                     }
                 }
+
             }
-        } else { // imgs 가 null 이면
-            msg="이미지를 등록하세요.";
-            redirectAttributes.addFlashAttribute("msg",msg);
-            return redirectPage;
         }
+
         trip.setImgs(imgDtos);
-        if (imgDtos.size() < 1) {
-            redirectAttributes.addFlashAttribute("msg", "이미지는 최소 1개 이상이어야 합니다.");
-            return redirectPage;
-        }
         int register = 0;
         try {
             register = tripService.register(trip);
         } catch (Exception e) {
             log.error(e.getMessage());
-            msg=e.getMessage();
+            msg="핸드폰 번호는 중복불가. 다시 입력해주세요";
+//            msg=e.getMessage();
             redirectAttributes.addFlashAttribute("msg",msg);
         }
-        if (register > 0) { // 등록성공
-//            if (imgDtos.size() < 1) {
-//                redirectAttributes.addFlashAttribute("msg", "이미지는 최소 1개 이상이어야 합니다.");
-//                return redirectPage;
-//            }
-            redirectPage = "redirect:/trip/list.do";
 
+        if (register > 0) { // 등록성공
+            redirectPage = "redirect:/trip/list.do";
         } else { // 등록실패 -> 파일삭제하기
             if (imgDtos != null) { // 이미지가 null 이 아니면
                 for (TripImgDto imgDto : imgDtos) {
