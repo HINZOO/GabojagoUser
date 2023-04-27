@@ -11,8 +11,11 @@ public interface UserMapper {
   List<UserDto> findAll();
   UserDto findUserByUIdAndPw(UserDto user);
   UserDto findUserByUId(String user);
+  UserDto findUserByPw(String pw);
   int insertOne(UserDto user);
   int updateOne(UserDto user);
+
+  int updatePwByUId(UserDto user);
   int setLoginUserId(String uId);
   int setLoginUserIdNull();
   int deleteOne(UserDto user);

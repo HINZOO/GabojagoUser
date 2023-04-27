@@ -38,8 +38,18 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
+  public UserDto checkCurrentPw(String pw) {
+    return userMapper.findUserByPw(pw);
+  }
+
+  @Override
   public int modify(UserDto user) {
     return userMapper.updateOne(user);
+  }
+
+  @Override
+  public int modifyPw(UserDto user) {
+    return userMapper.updatePwByUId(user);
   }
 
   @Override

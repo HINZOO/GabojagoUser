@@ -92,6 +92,9 @@
   <update id="updateStatusByUIdAndEmailCheckCode">
     UPDATE users SET status=#{status} WHERE u_id=#{uId} AND email_check_code=#{emailCheckCode}
   </update>
+  <update id="updatePwByUId">
+    UPDATE users SET pw=#{pw} WHERE u_id=#{uId}
+  </update>
   <delete id="deleteOne" parameterType="UserDto">
     DELETE FROM users WHERE u_id=#{uId} AND pw=#{pw}
   </delete>
@@ -100,6 +103,9 @@
   </select>
   <select id="findUserByUId" resultMap="UserMap">
     SELECT * FROM users WHERE u_id=#{uId}
+  </select>
+  <select id="findUserByPw" resultMap="UserMap">
+    SELECT * FROM users WHERE pw=#{pw}
   </select>
   <select id="findAll" resultType="com.project.gabojago.gabojagouser.dto.user.UserDto">
       SELECT * FROM users
