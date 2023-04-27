@@ -1,5 +1,6 @@
 package com.project.gabojago.gabojagouser.controller.trip;
 
+import com.github.pagehelper.PageInfo;
 import com.project.gabojago.gabojagouser.dto.trip.TripDto;
 import com.project.gabojago.gabojagouser.dto.trip.TripImgDto;
 import com.project.gabojago.gabojagouser.dto.trip.TripPageDto;
@@ -267,6 +268,8 @@ public class TripController {
     ) {
         List<TripDto> trips;
         trips = tripService.list(pageDto);
+        PageInfo<TripDto> pageTrips=new PageInfo<>(trips);
+        model.addAttribute("page",pageTrips);
         model.addAttribute("trips", trips);
         return "/trip/list";
     }

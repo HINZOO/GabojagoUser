@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface TripService {
     // 맞춤추천 서비스 : 리스트, 상세, 등록, 수정, 삭제
-    List<TripDto> list(TripPageDto tripPageDto);
+    List<TripDto> list(TripPageDto pageDto);
     List<TripImgDto> imgList(List<Integer> tiId);
     TripDto detail(int tId);
     int register(TripDto trip);

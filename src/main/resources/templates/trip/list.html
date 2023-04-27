@@ -10,82 +10,64 @@
 </head>
 <div layout:fragment="content" class="container">
     <h1 class="my-4">맞춤추천 리스트</h1>
+    <nav aria-label="Page navigation example">
+        <form class="d-flex w-75 my-2 mx-auto" role="search">
+            <div class="input-group">
+                <label class="input-group-text bi bi-filter-square"></label>
+                <select name="order" class="form-control">
+                    <option value="">정렬기준</option>
+                    <option th:selected="(${#strings.equals(param.order,'t_id')})" value="t_id">글번호</option>
+                    <option th:selected="(${#strings.equals(param.order,'u_id')})" value="u_id">글쓴이</option>
+                    <option th:selected="(${#strings.equals(param.order,'post_time')})" value="post_time">작성일</option>
+                    <option th:selected="(${#strings.equals(param.order,'update_time')})" value="update_time">수정일</option>
+                    <option th:selected="(${#strings.equals(param.order,'title')})" value="title">제목</option>
+                    <option th:selected="(${#strings.equals(param.order,'view_count')})" value="view_count">조회수</option>
+                </select>
+
+                <select name="direct" class="form-control">
+                    <option value="">정렬방향</option>
+                    <option th:selected="(${#strings.equals(param.direct,'DESC')})" value="DESC">내림차순
+                    <option th:selected="(${#strings.equals(param.direct,'ASC')})" value="ASC">오름차순
+                </select>
+
+                <button class="input-group-text btn btn-outline-success">정렬</button>
+<!--                <button class="input-group-text bi bi-search"></button>-->
+<!--                <button class="btn btn-primary bi bi-search">검색</button>-->
+                <select name="searchField" class="form-control">
+<!--                    <option th:selected="(${#strings.equals(param.searchField,'t_id')})" value="t_id">글번호</option>-->
+                    <option th:selected="(${#strings.equals(param.searchField,'u_id')})" value="u_id">글쓴이</option>
+<!--                    <option th:selected="(${#strings.equals(param.searchField,'post_time')})" value="post_time">작성일</option>-->
+<!--                    <option th:selected="(${#strings.equals(param.searchField,'update_time')})" value="update_time">수정일</option>-->
+                    <option th:selected="(${#strings.equals(param.searchField,'title')})" value="title">제목</option>
+                    <option th:selected="(${#strings.equals(param.searchField,'content')})" value="content">내용</option>
+                    <option th:selected="(${#strings.equals(param.searchField,'category')})" value="category">테마</option>
+                    <option th:selected="(${#strings.equals(param.searchField,'area')})" value="area">지역</option>
+<!--                    option(value="status", selected=(params.field==="status")) 상태-->
+
+                </select>
+                <input class="form-control" type="text" placeholder="검색어 입력" aria-label="Search" id="searchInput" name="searchValue" th:value="${param.searchValue}">
+                <button class="btn btn-outline-success" type="submit" id="searchBtn">검색</button>
+<!--                <button class="btn btn-outline-success" type="submit"><i class="bi bi-search"></i></button>-->
+            </div>
+        </form>
+        <div class="mx-auto my-1">
+            <th:block th:include="/trip/pageNav.html"></th:block>
+        </div>
+    </nav>
+    <div class="d-flex justify-content-between">
+        <ul  id="areaCont" class="list-group d-flex align-items-center  list-group-horizontal">
+            <li class="list-group-item p-1"><a href="list.do"><i class="bi bi-geo-alt fs-5"></i></a></li>
+            <li class="list-group-item p-1"><a href=list.do?searchField=category&searchValue=힐링>힐링</a></li>
+            <li class="list-group-item p-1"><a href=list.do?searchField=category&searchValue=체험>체험</a></li>
+            <li class="list-group-item p-1"><a href=list.do?searchField=category&searchValue=반려동물>반려동물</a></li>
+            <li class="list-group-item p-1"><a href=list.do?searchField=category&searchValue=레저>레저</a></li>
+            <li class="list-group-item p-1"><a href=list.do?searchField=category&searchValue=박물관>박물관</a></li>
+        </ul>
         <div class="text-end" th:if="${session.loginUser!=null}">
-<!--        <div class="text-end">-->
             <a class="btn btn-primary" href="/trip/register.do" role="button">여행지 등록</a>
         </div>
 
-<!--    <nav aria-label="Page navigation example">-->
-<!--        <ul class="pagination">-->
-<!--            <li class="page-item">-->
-<!--                <a class="page-link"-->
-<!--                   th:href="@{''(pageNum=${page.prePage})}"-->
-<!--                   th:classappend="${page.isHasPreviousPage ? '':'disabled'}"><i class="bi bi-arrow-left"></i></a>-->
-
-<!--            </li>-->
-<!--            <li class="page-item" th:each="p:${page.navigatepageNums}">-->
-<!--                <a class="page-link"-->
-<!--                   th:href="@{''(pageNum=${p},pageSize=${6})}"-->
-<!--                   th:text="${p}"-->
-<!--                   th:classappend="${p==page.pageNum ? 'active' : ''}">-->
-<!--                </a>-->
-<!--            </li>-->
-<!--            <li class="page-item">-->
-<!--                <a class="page-link"-->
-<!--                   th:href="@{''(pageNum=${page.nextPage})}"-->
-<!--                   th:classappend="${page.isHasNextPage ? '':'disabled'}"><i class="bi bi-arrow-right"></i></a>-->
-<!--            </li>-->
-<!--        </ul>-->
-
-<!--&lt;!&ndash;        <form action="" style="width: 450px;" class="mx-auto">&ndash;&gt;-->
-<!--&lt;!&ndash;            <div class="input-group">&ndash;&gt;-->
-<!--&lt;!&ndash;                <label class="input-group-text bi bi-list-columns">정렬</label>&ndash;&gt;-->
-<!--&lt;!&ndash;                <select name="order" class="form-control">&ndash;&gt;-->
-<!--&lt;!&ndash;                    &lt;!&ndash; param : 파라미터 의미 &ndash;&gt;&ndash;&gt;-->
-<!--&lt;!&ndash;                    <option value="">칼럼</option>&ndash;&gt;-->
-<!--&lt;!&ndash;                    <option th:selected="(${#strings.equals(param.order,'t_id')})" value="t_id">글번호</option>&ndash;&gt;-->
-<!--&lt;!&ndash;                    <option th:selected="(${#strings.equals(param.order,'u_id')})" value="u_id">글쓴이</option>&ndash;&gt;-->
-<!--&lt;!&ndash;                    <option th:selected="(${#strings.equals(param.order,'post_time')})" value="post_time">작성일</option>&ndash;&gt;-->
-<!--&lt;!&ndash;                    <option th:selected="(${#strings.equals(param.order,'update_time')})" value="update_time">수정일</option>&ndash;&gt;-->
-<!--&lt;!&ndash;                    <option th:selected="(${#strings.equals(param.order,'title')})" value="title">제목</option>&ndash;&gt;-->
-<!--&lt;!&ndash;                    <option th:selected="(${#strings.equals(param.order,'view_count')})" value="view_count">조회수</option>&ndash;&gt;-->
-<!--&lt;!&ndash;                </select>&ndash;&gt;-->
-<!--&lt;!&ndash;                <select name="direct" class="form-control">&ndash;&gt;-->
-<!--&lt;!&ndash;                    <option value="">방향</option>&ndash;&gt;-->
-<!--&lt;!&ndash;                    <option th:selected="(${#strings.equals(param.direct,'DESC')})" value="DESC">내림차순&ndash;&gt;-->
-<!--&lt;!&ndash;                    <option th:selected="(${#strings.equals(param.direct,'ASC')})" value="ASC">오름차순&ndash;&gt;-->
-<!--&lt;!&ndash;                </select>&ndash;&gt;-->
-<!--&lt;!&ndash;                <button class="btn btn-primary">정렬</button>&ndash;&gt;-->
-<!--&lt;!&ndash;            </div>&ndash;&gt;-->
-
-<!--&lt;!&ndash;            <div class="input-group my-3">&ndash;&gt;-->
-<!--&lt;!&ndash;                <label class="input-group-text bi bi-search">정렬</label>&ndash;&gt;-->
-<!--&lt;!&ndash;                <select name="searchField" class="form-control">&ndash;&gt;-->
-<!--&lt;!&ndash;                    &lt;!&ndash; param : 파라미터 의미 &ndash;&gt;&ndash;&gt;-->
-<!--&lt;!&ndash;                    <option value="">칼럼</option>&ndash;&gt;-->
-<!--&lt;!&ndash;                    <option th:selected="(${#strings.equals(param.searchField,'t_id')})" value="t_id">글번호</option>&ndash;&gt;-->
-<!--&lt;!&ndash;                    <option th:selected="(${#strings.equals(param.searchField,'u_id')})" value="u_id">글쓴이</option>&ndash;&gt;-->
-<!--&lt;!&ndash;                    <option th:selected="(${#strings.equals(param.searchField,'post_time')})" value="post_time">작성일</option>&ndash;&gt;-->
-<!--&lt;!&ndash;                    <option th:selected="(${#strings.equals(param.searchField,'update_time')})" value="update_time">수정일</option>&ndash;&gt;-->
-<!--&lt;!&ndash;                    <option th:selected="(${#strings.equals(param.searchField,'title')})" value="title">제목</option>&ndash;&gt;-->
-<!--&lt;!&ndash;                    <option th:selected="(${#strings.equals(param.searchField,'content')})" value="content">내용</option>&ndash;&gt;-->
-<!--&lt;!&ndash;                </select>&ndash;&gt;-->
-<!--&lt;!&ndash;                <input type="text" class="form-control" name="searchValue" placeholder="검색어 입력"&ndash;&gt;-->
-<!--&lt;!&ndash;                       th:value="${param.searchValue}">&ndash;&gt;-->
-<!--&lt;!&ndash;                <button class="btn btn-primary">검색</button>&ndash;&gt;-->
-<!--&lt;!&ndash;            </div>&ndash;&gt;-->
-<!--&lt;!&ndash;        </form>&ndash;&gt;-->
-
-
-
-<!--&lt;!&ndash;        <th:block th:include="/pageNav.html"></th:block>&ndash;&gt;-->
-
-
-
-
-
-<!--    </nav>-->
-
+    </div>
 
 
 
@@ -111,33 +93,8 @@
                             </div>
                         </div>
 
-
-
-
-<!--                        <div th:if="${t.imgs!=null}" th:id="'carousel'+${t.tId}" class="carousel slide" data-bs-ride="carousel">-->
-<!--                            <div class="carousel-inner">-->
-<!--                                <div class="carousel-item" th:each="img,state : ${t.imgs}" th:classappend="${img.imgMain}?'active':''"> &lt;!&ndash; main 이미지를 active 로 맨앞에 위치하기 &ndash;&gt;-->
-<!--                                    &lt;!&ndash;                                <div class="carousel-item" th:each="img,state : ${t.imgs}" th:classappend="${state.first}?'active':''">&ndash;&gt;-->
-<!--                                    <img th:src="@{'{path}'(path=${img.imgPath})}" class="d-block w-100" style="object-fit: contain"  alt="...">-->
-<!--                                </div>-->
-<!--                            </div>-->
-
-<!--                            <button class="carousel-control-prev" type="button" th:data-bs-target="'#carousel'+${t.tId}" data-bs-slide="prev">-->
-<!--                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>-->
-<!--                                <span class="visually-hidden">Previous</span>-->
-<!--                            </button>-->
-<!--                            <button class="carousel-control-next" type="button" th:data-bs-target="'#carousel'+${t.tId}" data-bs-slide="next">-->
-<!--                                <span class="carousel-control-next-icon" aria-hidden="true"></span>-->
-<!--                                <span class="visually-hidden">Next</span>-->
-<!--                            </button>-->
-<!--                        </div>-->
-
-
-
-
                         <div class="card-body">
                             <div class="d-flex align-items-center">
-<!--                                <p th:text="${t.tId}"></p>-->
                                 <p class="card-title fs-6 mb-0" th:text="${t.title}"></p>
                             </div>
 
@@ -159,6 +116,19 @@
         </div>
 
     </section>
+
+    <script>
+        const searchBtn=document.getElementById("searchBtn");
+        const searchInput=document.getElementById("searchInput");
+        searchBtn.addEventListener("click",(e)=>{
+            const searchValue=searchInput.value;
+            if(!searchValue){
+                e.preventDefault();
+                alert("검색어를 입력하세요");
+            }
+        });
+
+    </script>
 
 </div>
 </html>
