@@ -4,7 +4,6 @@ import com.github.pagehelper.PageHelper;
 import com.project.gabojago.gabojagouser.dto.trip.TripDto;
 import com.project.gabojago.gabojagouser.dto.trip.TripImgDto;
 import com.project.gabojago.gabojagouser.dto.trip.TripPageDto;
-//import com.project.gabojago.gabojagouser.dto.trip.pageDto;
 import com.project.gabojago.gabojagouser.mapper.trip.TripImgMapper;
 import com.project.gabojago.gabojagouser.mapper.trip.TripMapper;
 import lombok.AllArgsConstructor;
@@ -34,7 +33,7 @@ public class TripServiceImp implements TripService {
 
     @Override
     public List<TripDto> list(TripPageDto pageDto) { // 여행정보 리스트
-//        PageHelper.startPage()
+        PageHelper.startPage(pageDto.getPageNum(),pageDto.getPageSize(),pageDto.getOrderBy());
         List<TripDto> list=tripMapper.findAll(pageDto);
         
         return list;

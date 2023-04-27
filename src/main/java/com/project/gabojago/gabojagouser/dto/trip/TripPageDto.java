@@ -1,5 +1,8 @@
 package com.project.gabojago.gabojagouser.dto.trip;
 
+import lombok.Data;
+
+@Data
 public class TripPageDto {
     private int pageNum=1;
     private int pageSize=5;
