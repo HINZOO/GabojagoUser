@@ -6,7 +6,23 @@
 <head>
     <meta charset="UTF-8">
     <title>맞춤추천 리스트</title>
-<script src=""></script>
+    <script src=""></script>
+    <style>
+        #cateCont a {
+            text-decoration: none;
+            color: #3b3b3b;
+        }
+
+        #cateCont li {
+            height: 40px;
+            line-height: 30px;
+        }
+
+        #cateCont a:hover {
+            color: #0d6efd;
+        }
+
+    </style>
 </head>
 <div layout:fragment="content" class="container">
     <h1 class="my-4">맞춤추천 리스트</h1>
@@ -54,8 +70,9 @@
             <th:block th:include="/trip/pageNav.html"></th:block>
         </div>
     </nav>
+
     <div class="d-flex justify-content-between">
-        <ul  id="areaCont" class="list-group d-flex align-items-center  list-group-horizontal">
+        <ul  id="cateCont" class="list-group d-flex align-items-center  list-group-horizontal">
             <li class="list-group-item p-1"><a href="list.do"><i class="bi bi-geo-alt fs-5"></i></a></li>
             <li class="list-group-item p-1"><a href=list.do?searchField=category&searchValue=힐링>힐링</a></li>
             <li class="list-group-item p-1"><a href=list.do?searchField=category&searchValue=체험>체험</a></li>
