@@ -40,28 +40,13 @@
         <div class="row">
             <div class="col-5">
                 <div class="card border-dark border-opacity-25">
-
-
                     <div class="card-header p-3 bg-transparent border-dark border-opacity-25">
                         <div class="d-flex justify-content-around">
                             <p class="card-text d-flex flex-column align-items-center g-2 mb-0">
                                 <div class="likeCont" th:id="'likeCont'+${t.tId}">
-                                    <th:block th:if="${session.loginUser!=null}" th:with="likes=${t.likes}, id=${t.tId}">
-                                        <a href="javascript:void(0)" th:onclick="tripLikeHandler([[${t.tId}]])"
-                                           class="mb-1 text-danger fs-3" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="좋아요">
-                                            <i class="bi fs-4" th:classappend="${(likes.likes>0)?'bi-heart-fill':'bi-heart'}"></i>
-                                            <span th:text="${likes.likes}"></span>
-                                            <span th:text="${likes}"></span>
-                                        </a>
-                                    </th:block>
-
-
-
+                                    <th:block th:include="/trip/likes.html" th:with="likes=${t.likes},id=${t.tId}"></th:block>
                                 </div>
-
-
-
-                                <span>156</span>
+<!--                                <span>156</span>-->
                             </p>
                             <p class="card-text d-flex flex-column align-items-center g-2 mb-0">
                                 <a href="javascript:void(0)" th:onclick="" >

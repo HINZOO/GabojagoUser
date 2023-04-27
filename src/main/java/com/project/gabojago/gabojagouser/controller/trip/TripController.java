@@ -191,6 +191,7 @@ public class TripController {
 //        if(!loginUser.getUId().equals(trip.getUId())) return redirectPage; // 다르면 다시 등록페이지로 이동
         String msg="";
 
+
         // 제목 입력 여부 확인
         if (trip.getTitle() == null || trip.getTitle().equals("")) {
             msg = "여행지명을 입력하세요.";
@@ -222,6 +223,9 @@ public class TripController {
             }
             return redirectPage;
         }
+
+
+
 
         List<TripImgDto> imgDtos=null;
         if (imgs != null) {
@@ -257,9 +261,8 @@ public class TripController {
             register = tripService.register(trip);
         } catch (Exception e) {
             log.error(e.getMessage());
-            msg="핸드폰 번호는 중복불가. 다시 입력해주세요";
-//            msg=e.getMessage();
-            redirectAttributes.addFlashAttribute("msg",msg);
+//            msg="핸드폰 번호는 중복불가. 다시 입력해주세요";
+//            redirectAttributes.addFlashAttribute("msg",msg);
         }
 
         if (register > 0) { // 등록성공
