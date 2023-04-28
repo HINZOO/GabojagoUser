@@ -810,13 +810,28 @@ VALUES
 INSERT INTO comm_bookmarks (c_id, u_id)
 VALUES
         (1, 'user01'),
+        (2, 'user01'),
+        (3, 'user01'),
+        (4, 'user01'),
         (1, 'user02'),
-        (1, 'user03'),
-        (1, 'user04'),
-        (2, 'user05'),
-        (2, 'user06'),
-        (3, 'user07'),
-        (3, 'user08'),
-        (4, 'user09'),
-        (4, 'user10');
+        (2, 'user02'),
+        (3, 'user02'),
+        (4, 'user02'),
+        (4, 'user03'),
+        (4, 'user04');
+
+#같이놀자 좋아요 더미
+INSERT INTO comm_likes (c_id, u_id)
+VALUES
+    (1, 'user01'),
+    (1, 'user02'),
+    (1, 'user03'),
+    (1, 'user04'),
+    (2, 'user05'),
+    (2, 'user06'),
+    (3, 'user07'),
+    (3, 'user08'),
+    (4, 'user09'),
+    (4, 'user10');
+
 
