@@ -806,3 +806,17 @@ VALUES
     (3, 2,'/public/img/trip/review/1682515830783_32065.jpeg'),
     (4, 3,'/public/img/trip/review/1682515851848_23613.jpeg');
 
+#같이놀자 북마크 더미
+INSERT INTO comm_bookmarks (c_id, u_id)
+VALUES
+        (1, 'user01'),
+        (1, 'user02'),
+        (1, 'user03'),
+        (1, 'user04'),
+        (2, 'user05'),
+        (2, 'user06'),
+        (3, 'user07'),
+        (3, 'user08'),
+        (4, 'user09'),
+        (4, 'user10');
+
