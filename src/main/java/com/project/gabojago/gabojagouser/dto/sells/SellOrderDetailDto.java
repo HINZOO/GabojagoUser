@@ -14,7 +14,9 @@ public class SellOrderDetailDto {
    private int oId;
    private int cnt;
    private Date postTime;
-   SellOrder2Dto orderList;
+    private boolean useCheck;
+    private Date useDate;
+   SellOrderDto orderList;
     List<SellsDto> sellList;
     List<SellsOptionDto> sellOption;
 }

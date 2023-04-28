@@ -40,7 +40,6 @@ public class KakaoPay {
         MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
         params.add("cid", "TC0ONETIME");
         params.add("partner_order_id", "1001");
-        params.add("name", kakaoPayApprovalVO.getName());
         params.add("partner_user_id", kakaoPayApprovalVO.getUId());
         params.add("item_name", kakaoPayApprovalVO.getItem_name());
         params.add("quantity", "1");

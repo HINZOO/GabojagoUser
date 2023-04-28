@@ -1,27 +1,28 @@
 package com.project.gabojago.gabojagouser.service.sells;
 
-
 import com.project.gabojago.gabojagouser.dto.sells.SellOrderDto;
-import com.project.gabojago.gabojagouser.mapper.sells.SellOrderMapper;
+import com.project.gabojago.gabojagouser.dto.sells.SellOrderDetailDto;
+import com.project.gabojago.gabojagouser.mapper.sells.SellOderMapper;
+import com.project.gabojago.gabojagouser.mapper.sells.SellOrderDetailMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 @AllArgsConstructor
-public class SellOrderServiceImp implements SellOrderService{
-    private SellOrderMapper sellOrderMapper;
-
-    @Override
-    public List<SellOrderDto> findByUId(String uId) {
-        List<SellOrderDto> list = sellOrderMapper.findByUId(uId);
-        return list;
-    }
-
+public class SellOrderServiceImp implements SellOrderService {
+    private SellOderMapper sellOderMapper;
+    private SellOrderDetailMapper sellOrderDetailMapper;
     @Override
     public int register(SellOrderDto sellOrderDto) {
-        int register=sellOrderMapper.insertOne(sellOrderDto);
-        return register;
+        int insertOne = sellOderMapper.insertOne(sellOrderDto);
+        System.out.println("sellOrder2Dto = " + sellOrderDto.getDetailList());
+        if (sellOrderDto.getDetailList()!=null){
+
+            for (SellOrderDetailDto detail: sellOrderDto.getDetailList()){
+                detail.setSoId(sellOrderDto.getSoId());
+                insertOne+=sellOrderDetailMapper.insertOne(detail);
+            }
+        }
+        return insertOne;
     }
 }

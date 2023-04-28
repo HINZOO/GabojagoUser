@@ -9,6 +9,8 @@
         <result property="oId" column="o_id"/>
         <result property="cnt" column="cnt"/>
         <result property="postTime" column="post_time"/>
+        <result property="useCheck" column="use_check"/>
+        <result property="useDate" column="use_date"/>
         <collection property="sellList"
                     select="com.project.gabojago.gabojagouser.mapper.sells.SellsMapper.findBySId"
                     column="s_id"
@@ -18,13 +20,13 @@
                     column="s_id"
                     fetchType="lazy"/>
         <collection property="orderList"
-                    select="com.project.gabojago.gabojagouser.mapper.sells.SellOder2Mapper.findBySoId"
+                    select="com.project.gabojago.gabojagouser.mapper.sells.SellOderMapper.findBySoId"
                     column="so_id"
                     fetchType="lazy"/>
     </resultMap>
     <insert id="insertOne">
-        INSERT INTO sell_order_details (so_id, u_id, s_id, o_id, cnt) VALUE
-        (#{soId},#{uId},#{sId},#{oId},#{cnt})
+        INSERT INTO sell_order_details ( u_id, s_id, o_id, so_id, cnt) VALUE
+        (#{uId},#{sId},#{oId},#{soId},#{cnt})
     </insert>
     <select id="findByUId" resultMap="SellOderDetailMap">
         SELECT * FROM sell_order_details WHERE u_id=#{uId}
