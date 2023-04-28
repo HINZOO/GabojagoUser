@@ -425,8 +425,7 @@ CREATE TABLE `comm_likes` (
                               CONSTRAINT c_likes UNIQUE (u_id, c_id)
 );
 #같이놀자(북마크 테이블)
-#제약조건 추가 1개만북마크 가능하게
-
+#제약조건 추가 1개만북마크 가능하게 + 북마크에 p_id 추가
 CREATE TABLE `comm_bookmarks` (
                                   `cbook_id`	int unsigned AUTO_INCREMENT PRIMARY KEY COMMENT '같이놀자북마크 아이디',
                                   `c_id`	int unsigned NOT NULL COMMENT '같이놀자커뮤니티글 아이디',
@@ -811,18 +810,18 @@ VALUES
     (4, 3,'/public/img/trip/review/1682515851848_23613.jpeg');
 
 #같이놀자 북마크 더미
-INSERT INTO comm_bookmarks (c_id, u_id)
+INSERT INTO comm_bookmarks (c_id, u_id,p_id)
 VALUES
-        (1, 'user01'),
-        (2, 'user01'),
-        (3, 'user01'),
-        (4, 'user01'),
-        (1, 'user02'),
-        (2, 'user02'),
-        (3, 'user02'),
-        (4, 'user02'),
-        (4, 'user03'),
-        (4, 'user04');
+        (1, 'user01',1),
+        (2, 'user01',1),
+        (3, 'user01',2),
+        (4, 'user01',3),
+        (1, 'user02',1),
+        (2, 'user02',1),
+        (3, 'user02',2),
+        (4, 'user02',3),
+        (4, 'user03',3),
+        (4, 'user04',3);
 
 #같이놀자 좋아요 더미
 INSERT INTO comm_likes (c_id, u_id)
