@@ -26,11 +26,11 @@
               <li><b>개당 가격:</b><span th:text="${o.getPrice()}"></span></li>
               <li><b>구매수량:</b><span th:text="${o.getCnt()}"></span></li>
               <li><b>구매일:</b><span th:text="${o.getPostTime().toLocaleString()}"></span></li>
-<!--              <li><a th:href="@{'/sells/{sId}/detail.do'(sId=${s.getSId()})}"><span>상품 보러가기</span></a></li>-->
+              <!--              <li><a th:href="@{'/sells/{sId}/detail.do'(sId=${s.getSId()})}"><span>상품 보러가기</span></a></li>-->
               <li></li>
             </ul>
             <!-- 장바구니 취소 버튼 -->
-<!--            <a th:href="@{'/cart/{cartId}/{sId}/remove.do'(cartId=${c.cartId},sId=${c.getSId()})}" type="button" class="btn btn-danger">장바구니 취소</a>-->
+            <!--            <a th:href="@{'/cart/{cartId}/{sId}/remove.do'(cartId=${c.cartId},sId=${c.getSId()})}" type="button" class="btn btn-danger">장바구니 취소</a>-->
           </div>
         </div>
       </div>

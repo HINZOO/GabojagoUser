@@ -567,9 +567,12 @@ CREATE TABLE sell_orders (
                              option_name VARCHAR(255) NOT NULL COMMENT '구매옵션 이름',
                              price INT NOT NULL COMMENT '구매옵션 가격',
                              post_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '구매 일시',
+                             cnt int comment'수량',
                              FOREIGN KEY (u_id) REFERENCES users (u_id) ON DELETE CASCADE ON UPDATE CASCADE,
                              FOREIGN KEY (s_id) REFERENCES sells (s_id) ON DELETE SET NULL ON UPDATE CASCADE
 );
+
+
 
 #유저더미
 INSERT INTO users (u_id, pw, name, nk_name, email, birth, phone, address, detail_address, pr_content, permission, mbti, img_path, store_name, business_id)

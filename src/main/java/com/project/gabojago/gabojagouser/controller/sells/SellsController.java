@@ -4,6 +4,7 @@ import com.project.gabojago.gabojagouser.dto.sells.*;
 import com.project.gabojago.gabojagouser.dto.trip.TripImgDto;
 import com.project.gabojago.gabojagouser.dto.user.UserDto;
 import com.project.gabojago.gabojagouser.service.sells.SellBookMarksService;
+import com.project.gabojago.gabojagouser.service.sells.SellOrderDetailService;
 import com.project.gabojago.gabojagouser.service.sells.SellOrderService;
 import com.project.gabojago.gabojagouser.service.sells.SellsService;
 
@@ -37,10 +38,12 @@ public class SellsController {
     private SellOrderService sellOrderService;
     private SellsService sellsService;
     private SellBookMarksService sellBookMarksService;
-    public SellsController(SellsService sellsService,SellBookMarksService sellBookMarksService,SellOrderService sellOrderService) {
+    private SellOrderDetailService sellOrderDetailService;
+    public SellsController(SellsService sellsService,SellBookMarksService sellBookMarksService,SellOrderService sellOrderService,SellOrderDetailService sellOrderDetailService) {
         this.sellBookMarksService=sellBookMarksService;
         this.sellsService = sellsService;
         this.sellOrderService=sellOrderService;
+        this.sellOrderDetailService=sellOrderDetailService;
     }
     @Value("${img.upload.path}")
     private String uploadPath;
@@ -384,10 +387,12 @@ public class SellsController {
     @GetMapping("/orderList.do")
     public String orderList(@SessionAttribute UserDto loginUser,Model model
                             ){
-        List<SellOrderDto> orderList ;
-        orderList= sellOrderService.findByUId(loginUser.getUId());
-        System.out.println("orderList = " + orderList);
-        model.addAttribute("orderList",orderList);
+//        List<SellOrderDto> orderList ;
+//        orderList= sellOrderService.findByUId(loginUser.getUId());
+//        model.addAttribute("orderList",orderList);
+        List<SellOrderDetailDto> detailList;
+        detailList=sellOrderDetailService.findByUId(loginUser.getUId());
+        model.addAttribute("detailList",detailList);
         return "/sells/orderList";
     }
 

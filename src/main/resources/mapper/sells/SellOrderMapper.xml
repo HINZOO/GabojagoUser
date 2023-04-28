@@ -8,6 +8,10 @@
         <result column="option_name" property="optionName"/>
         <result column="price" property="price"/>
         <result column="post_time" property="postTime"/>
+        <collection property="sellList"
+                    select="com.project.gabojago.gabojagouser.mapper.sells.SellsMapper.findBySId"
+                    column="s_id"
+                    fetchType="lazy"/>
     </resultMap>
     <insert id="insertOne" parameterType="SellOrderDto">
         INSERT INTO sell_orders (u_id,s_id,option_name,price,cnt) values
