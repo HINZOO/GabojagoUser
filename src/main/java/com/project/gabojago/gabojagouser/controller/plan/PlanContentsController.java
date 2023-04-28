@@ -56,28 +56,43 @@ public class PlanContentsController {
     }
     @PutMapping("/imgUpdate.do")
     public @ResponseBody int imgUpdate(
-           @RequestParam(value = "cId", required = false) int cId,
+           @RequestParam(value = "conId", required = true) int conId,
            @RequestParam(value = "img", required = false) String imgURL) throws IOException
     {
+        int update = 0;
         BufferedImage img = null;
+        PlanContentsDto contentsDto = planContentsService.detail(conId);
 
-        String[] imgURLArr = imgURL.split(","); // image/png;base64, 에서 콤마 앞 부분 버림
-        byte[] imageByte = Base64.decodeBase64(imgURLArr[1]); // base64 to byte array로 변경
+        // 기존 이미지 있는 경우 삭제
+        if (contentsDto.getImgPath() != null){
+            File imgFile = new File(staticPath + contentsDto.getImgPath());
+            if (imgFile.exists()) {
+                imgFile.delete();
+            }
+        }
 
+        // image/png;base64, 에서 콤마 앞 부분 버림
+        // base64 to byte[]로 변경하고, InputStream에 넣음
+        String[] imgURLArr = imgURL.split(",");
+        byte[] imageByte = Base64.decodeBase64(imgURLArr[1]);
         ByteArrayInputStream bis = new ByteArrayInputStream(imageByte);
+
+        // InputStream으로 들어온 바이트 데이터를 이미지 데이터로 변환하고
+        // InputStream 닫기
         img = ImageIO.read(bis);
         bis.close();
 
         String fileName = System.currentTimeMillis() + "_" + (int) (Math.random() * 10000) + "." + "png";
         Path path = Paths.get(staticPath + "/public/img/plan/" + fileName);
         File outputfile = new File("" + path);
-        ImageIO.write(img, "png", outputfile); // 파일생성
 
-//        planDto.setImgPath("/public/img/plan/" + fileName);
+        // 이미지 파일로 만들기
+        ImageIO.write(img, "png", outputfile);
 
+        contentsDto.setImgPath("/public/img/plan/" + fileName);
+        update = planContentsService.updateImg(contentsDto);
 
-
-        return 1;
+        return update;
     }
 
     @PostMapping ("/canvasHandler.do")

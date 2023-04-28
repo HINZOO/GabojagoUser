@@ -267,6 +267,7 @@
         // ############### 커뮤니티 출력용 캔버스 이미지 & 경로 데이터 업데이트 기능 ############### //
 
         let activatedCanvas;
+
         // 캔버스 인스턴스 저장용
         let canvasMap = new Map();
 
@@ -274,17 +275,17 @@
         saveBtn.addEventListener("click", canvasImgSave);
 
         function canvasImgSave(){
-            canvasMap.forEach(async (ele) => {
+            canvasMap.forEach(async (ele)=>{
                 let data = new FormData();
-                data.set("cId",ele.id);
+                data.set("conId",ele.id);
                 data.set("img",ele.canvas.toDataURL());
                 let url =`/plan/contents/imgUpdate.do`
                 const resp = await fetch(url,{method:"PUT",body:data});
                 const result = await resp.json();
-                if(resp.status===200){
-
-                }else {
-                    // alert("캔버스 생성 실패 status :"+resp.status);
+                if(resp.status===200 && result>0){
+                    console.log(ele.id + "번 캔버스 이미지 업로드 성공")
+                } else {
+                    alert("이미지 업로드 실패 status :"+resp.status);
                 }
             })
         }
@@ -308,7 +309,6 @@
                let ele = document.querySelector(`#content_${a.conId}`).lastElementChild;
                 // console.log(a.pathId)
                 newCanvas(ele,a.pathId,a.canPath);
-
             });
         });
 
@@ -525,7 +525,9 @@
                     canvasMap.get(content.pk).receiver(content.path);
                 }
             });
-
+            console.log(stomp.counter)
+            console.log(stomp.subscriptions)
+            console.log(stomp.partialData)
             // send(path, header, message)로 메세지를 보낼 수 있음
             // 최초 연결시 입장 정보 알림
             stomp.send('/pub/plan/enter', {}, JSON.stringify({roomId: roomId, writer: username, system : true}))
