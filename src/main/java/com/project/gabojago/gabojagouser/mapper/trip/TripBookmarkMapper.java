@@ -1,6 +1,7 @@
 package com.project.gabojago.gabojagouser.mapper.trip;
 
 import com.project.gabojago.gabojagouser.dto.trip.TripBookmarkDto;
+import com.project.gabojago.gabojagouser.dto.trip.TripDto;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -13,6 +14,7 @@ public interface TripBookmarkMapper {
     // 일정목록에 등록
     // 일정목록에서 삭제(수정 x)
     List<TripBookmarkDto> findByUId(String uId);
+    List<TripDto> findTripsByUId(String uId);
     int insertOne(TripBookmarkDto bookmark);
     int deleteOne(int tbId);
 }

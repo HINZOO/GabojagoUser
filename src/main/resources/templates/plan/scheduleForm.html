@@ -16,55 +16,77 @@
 
                 <div class="col-12 mb-3">
                   <div class="form-floating">
-                    <input type="text" class="form-control" name="title" id="floatingTitle" placeholder="">
-                    <label for="floatingTitle">여행지</label>
+                    <input type="text" class="form-control" name="title" id="floatingTitle" placeholder=".">
+                    <label for="floatingTitle">목적지</label>
                   </div>
                 </div>
                 <div class="col-6 mb-3">
                   <div class="form-floating">
-                    <input type="time" class="form-control" name="sTime" id="sTime" placeholder="">
+                    <input type="time" class="form-control" name="sTime" id="sTime" placeholder=".">
                     <label for="sTime">시작시간</label>
                   </div>
                 </div>
                 <div class="col-6 mb-3">
                   <div class="form-floating">
-                    <input type="time" class="form-control" name="eTime" id="eTime" placeholder="" value="">
+                    <input type="time" class="form-control" name="eTime" id="eTime" placeholder="." value="">
                     <label for="eTime">끝시간</label>
                   </div>
                 </div>
                 <div class="col-12 mb-3">
                   <div class="form-floating">
-                    <input type="text" class="form-control" name="info" id="info" placeholder="">
+                    <input type="text" class="form-control" name="info" id="info" placeholder=".">
                     <label for="info">메모</label>
                   </div>
                 </div>
               </div>
             </div>
             <div class="col-6">
+              <!-- 탭 부분 -->
               <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item" role="presentation">
                   <button class="nav-link" id="trip-tab" data-bs-toggle="tab"
-                          data-bs-target="#userinfo" type="button" role="tab" aria-controls="userinfo"
-                          aria-selected="true">가보자고</button>
+                          data-bs-target="#tripList" type="button" role="tab"
+                          aria-controls="tripList" aria-selected="true">가보자고</button>
                 </li>
                 <li class="nav-item" role="presentation">
                   <button class="nav-link  active" id="comm-tab" data-bs-toggle="tab"
-                          data-bs-target="#myreview" type="button" role="tab"
-                          aria-controls="myreview" aria-selected="false">같이놀자</button>
+                          data-bs-target="#commList" type="button" role="tab"
+                          aria-controls="commList" aria-selected="false">같이놀자</button>
                 </li>
                 <li class="nav-item" role="presentation">
                   <button class="nav-link" id="product-tab" data-bs-toggle="tab"
-                          data-bs-target="#wishlist" type="button" role="tab"
-                          aria-controls="wishlist" aria-selected="false">상품판매</button>
+                          data-bs-target="#productList" type="button" role="tab"
+                          aria-controls="productList" aria-selected="false">상품판매</button>
                 </li>
               </ul>
 
-              <!-- 내용 -->
+              <!-- 컨텐츠 부분 -->
               <div class="tab-content" id="myTabContent">
-                <div class="tab-pane fade" id="userinfo" role="tabpanel"
-                     aria-labelledby="trip-tab">가보자고 탭
+                <div class="tab-pane fade" id="tripList" role="tabpanel"
+                     aria-labelledby="trip-tab">
+
+                  <th:block th:each="trip:${bTrips}">
+                    <div class="btn-group dropend bkDiv">
+                      <button type="button" class="btn dropdown-toggle bkBtn w-100" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-check2-circle"></i> <span th:text="${trip.getTitle()}"/> /
+                        <span th:text="${trip.getCategory()}"/>
+                      </button>
+                      <ul class="dropdown-menu">
+                        <table>
+                            <tr class="dropdown-item">
+                              <td th:text="${trip.getTitle()}"/>
+                              <td>　|　</td>
+                              <td th:text="${trip.getArea()}"/>
+                              <td>　|　</td>
+                              <td th:text="${trip.getCategory()}"/>
+                            </tr>
+                        </table>
+                      </ul>
+                    </div>
+                  </th:block>
+
                 </div>
-                <div class="tab-pane fade show active" id="myreview" role="tabpanel"
+                <div class="tab-pane fade show active" id="commList" role="tabpanel"
                      aria-labelledby="comm-tab">
 
                   <th:block th:each="plan:${bPlans}">
@@ -82,7 +104,6 @@
                             <td th:text="${con.getTitle()}"/>
                             <td>　|　</td>
                             <td th:text="${con.getInfo()}"/>
-                            <span >
                           </tr>
                         </th:block>
                         </table>
@@ -90,16 +111,12 @@
                     </div>
                   </th:block>
 
-
                 </div>
-                <div class="tab-pane fade" id="wishlist" role="tabpanel"
-                     aria-labelledby="product-tab">상품판매 탭
+                <div class="tab-pane fade" id="productList" role="tabpanel"
+                     aria-labelledby="product-tab">
+                  상품판매 탭
                 </div>
               </div>
-
-
-
-
 
             </div>
           </div>
@@ -109,7 +126,6 @@
           </div>
 
       </div>
-
     </div>
   </div>
 </div>
