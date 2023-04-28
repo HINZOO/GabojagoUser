@@ -143,7 +143,7 @@ public class CommController {
         String redirectPage="redirect:/comm/"+commBoard.getCId()+"/modify.do";
         List<CommImgDto> imgDtos=null;
         int modify=0;
-        if(imgs!=null){
+        //if(imgs!=null){
             imgDtos=new ArrayList<>();
             for(MultipartFile img:imgs){
                 if(!img.isEmpty()){
@@ -153,12 +153,13 @@ public class CommController {
                         Path path = Paths.get(staticPath + "/public/img/comm/" + fileName);
                         img.transferTo(path);
                         CommImgDto imgDto=new CommImgDto();
+                        imgDto.setCId(commBoard.getCId());
                         imgDto.setImgPath("/public/img/comm/"+fileName);//서버배포경로
                         imgDtos.add(imgDto);
                     }
                 }
             }
-        }
+       // }
         commBoard.setImgs(imgDtos);
         try{
             if(delImgIds!=null) imgDtos=communityService.imgList(delImgIds);

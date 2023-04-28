@@ -25,10 +25,16 @@ public class UserIdCheckController {
     }
   }
 
-  @GetMapping("/{pw}/checkCurrentPw.do")
-  public @ResponseBody int checkCurrentPw(@PathVariable String pw) {
-    UserDto user = userService.checkCurrentPw(pw);
-    if(user.getPw().equals(pw)) {
+  @PostMapping("/checkCurrentPw.do")
+  public @ResponseBody int idAndPwCheck(
+           String uId,
+           String currentPw,
+          @SessionAttribute UserDto loginUser) {
+    UserDto user = new UserDto();
+    user.setUId(uId);
+    user.setPw(currentPw);
+    UserDto resultUser=userService.login(user);
+    if(resultUser!=null) {
       return 1;
     } else {
       return 0;

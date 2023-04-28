@@ -782,7 +782,8 @@ INSERT INTO  comm_imgs (c_id, img_path, img_main)
 VALUES
     (1,'/public/img/comm/1681969679943_2023.jpeg',0),
     (2,'/public/img/comm/1681969832415_8296.jpeg',0),
-    (3,'/public/img/comm/1681976587025_8955.jpeg',0);
+    (3,'/public/img/comm/1681976587025_8955.jpeg',0),
+    (4,'/public/img/comm/1682237197655_3190.png',0);
 
 #가보자고 리뷰 댓글 데이터
 INSERT INTO trip_review_comments (tr_id, u_id, content, status, parent_trc_id, gabojagoPlan.trip_review_comments.img_path)

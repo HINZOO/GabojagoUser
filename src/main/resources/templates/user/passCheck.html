@@ -7,8 +7,8 @@
   <title>마이페이지</title>
 </head>
 <div layout:fragment="content">
-  <form class="mx-auto" action="/user/passCheck.do" method="post" style="width: 450px;">
-    <input type="hidden" name="uId" th:value="${session.loginUser.uId}">
+  <form name="passCheckForm" class="mx-auto" action="/user/passCheck.do" method="post" style="width: 450px;">
+    <input type="hidden" id="idInput" name="uId" th:value="${session.loginUser.uId}">
     <h1 class="my-4">패스워드 수정</h1>
     <p class="form-floating">
       <input id="currentPwInput" type="password" name="currentPw" value="" class="form-control" placeholder="pw">
@@ -29,10 +29,13 @@
   </form>
 
   <script>
+    const passCheckForm=document.forms["passCheckForm"];
     const currentPwInput=document.getElementById('currentPwInput');
+    const idInput=document.getElementById('idInput')
     currentPwInput.addEventListener("change", async function () {
-      const pw = currentPwInput.value;
-      const response = await fetch(`/user/${pw}/checkCurrentPw.do`);
+      // const uId=idInput.value;
+      // const pw = currentPwInput.value;
+      const response = await fetch(`/user/checkCurrentPw.do`,{method:"POST",body:new FormData(passCheckForm)});
       const result = await response.json();
       if (result>0) {
         alert('패스워드가 일치합니다.변경할 패스워드를 입력해주세요.');

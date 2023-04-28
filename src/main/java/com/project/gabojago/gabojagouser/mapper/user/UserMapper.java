@@ -9,9 +9,8 @@ import java.util.List;
 @Mapper
 public interface UserMapper {
   List<UserDto> findAll();
-  UserDto findUserByUIdAndPw(UserDto user);
+  UserDto findUserByUIdAndPw(String uId, String pw);
   UserDto findUserByUId(String user);
-  UserDto findUserByPw(String pw);
   int insertOne(UserDto user);
   int updateOne(UserDto user);
 
@@ -20,4 +19,6 @@ public interface UserMapper {
   int setLoginUserIdNull();
   int deleteOne(UserDto user);
   int updateStatusByUIdAndEmailCheckCode(UserDto user);//이메일 체크
+
+  UserDto findUserByUIdAndPw(UserDto user);
 }

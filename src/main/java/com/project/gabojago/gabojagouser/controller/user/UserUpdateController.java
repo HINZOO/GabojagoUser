@@ -57,7 +57,7 @@ public class UserUpdateController {
                              RedirectAttributes redirectAttributes) {
     int modify=0;
     try {
-      modify=userService.modifyPw(user);
+      modify=userService.modifyIdANDPw(user);
     } catch (Exception e) {
       log.error(e.getMessage());
     }

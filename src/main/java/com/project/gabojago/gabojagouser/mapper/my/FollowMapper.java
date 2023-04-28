@@ -8,8 +8,8 @@ import java.util.List;
 
 @Mapper
 public interface FollowMapper {
-    List<UserDto> findByFromId(String uId);
-    List<UserDto> findByToId(String uId);
+    List<UserDto> findByFromId(String uId);//팔로잉리스트
+    List<UserDto> findByToId(String uId);//팔로워리스트
     int deleteByFromIdAndToId(FollowDto followDto);
     int insertOne(FollowDto followDto);
     boolean findByToIdAndFromIdIsLoginUserId(String uId);

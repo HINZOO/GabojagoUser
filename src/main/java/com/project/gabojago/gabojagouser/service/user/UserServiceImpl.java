@@ -37,10 +37,7 @@ public class UserServiceImpl implements UserService {
     return userMapper.findUserByUId(user);
   }
 
-  @Override
-  public UserDto checkCurrentPw(String pw) {
-    return userMapper.findUserByPw(pw);
-  }
+
 
   @Override
   public int modify(UserDto user) {
@@ -48,7 +45,7 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public int modifyPw(UserDto user) {
+  public int modifyIdANDPw(UserDto user) {
     return userMapper.updatePwByUId(user);
   }
 

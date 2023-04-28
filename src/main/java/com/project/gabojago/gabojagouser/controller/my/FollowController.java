@@ -9,6 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 
 @Controller
 @RequestMapping("/follow")
@@ -28,6 +30,17 @@ public class FollowController {
         model.addAttribute("user", user);
         return "/my/follow";
     }
+    @GetMapping("/{uId}/following.do")
+    public List<UserDto> followingList(@PathVariable String uId){
+        List<UserDto> followingList=followService.followingList(uId);
+        return followingList;
+    }
+    @GetMapping("/{uId}/follower.do")
+    public List<UserDto> followerList(@PathVariable String uId){
+        List<UserDto> followerList=followService.followerList(uId);
+        return followerList;
+    }
+
 
 }
 
