@@ -25,6 +25,7 @@
     </style>
 </head>
 <div layout:fragment="content" class="container">
+    <script src="/public/js/tripLike.js" defer></script>
     <h2 class="my-4">맞춤 추천</h2>
     <nav aria-label="Page navigation example">
         <form class="d-flex w-75 my-2 mx-auto" role="search">
@@ -91,7 +92,12 @@
                 <div class="card mt-4">
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <strong th:text="${t.area}"></strong>
-                        <i class="bi bi-heart text-danger"></i>
+<!--                        <i class="bi bi-heart text-danger"></i>-->
+                        <div class="likeCont" th:id="'likeCont'+${t.tId}">
+                            <th:block th:include="/trip/likes.html" th:with="likes=${t.likes},id=${t.tId}"></th:block>
+                        </div>
+
+
                     </div>
 
                     <!-- 게시글 이미지 + 내용 클릭시 상세보기 이동 -->
