@@ -27,33 +27,42 @@ public class KakaoPayController {
 
     @PostMapping("/kakaoPay.do")
     public String kakaoPay2(
-                            @RequestParam(value = "sId")int sId,
-                            @RequestParam(value = "oId")List<Integer> oId,
+                            @RequestParam(value = "sId",required = false)int sId,
+                            @RequestParam(value = "oId",required = false)List<Integer> oId,
                            @RequestParam(value = "totalPrice",required = false)String totalPrice,
                            @RequestParam(value = "cnt",required = false)List<Integer> cnt,
-                           @SessionAttribute UserDto loginUser,
+                           @SessionAttribute(required = false) UserDto loginUser,
                            RedirectAttributes redirectAttributes,
                            HttpSession session) {
-        for (Integer o:oId){
-            System.out.println("o아이디 = " + o);
+        String redirectPage="redirect:/sells/"+sId+"/detail.do";
+        String msg="";
+        if (oId==null || oId.isEmpty()){
+            msg="선택된 옵션이 존재하지 않습니다.";
+            redirectAttributes.addFlashAttribute("msg",msg);
+            return redirectPage;
         }
+       if (loginUser==null){
+           msg="로그인 하셔야 이용 가능합니다.";
+           redirectAttributes.addFlashAttribute("msg",msg);
+           return redirectPage;
+       }
 
         List<SellsOptionDto> option=new ArrayList<>();
         if (totalPrice==null || totalPrice.isEmpty()){
             redirectAttributes.addFlashAttribute("msg","결제금액이 없습니다.");
-            return "redirect:/sells/"+sId+"/detail.do";
+            return redirectPage;
         }
 
         SellsDto sells=sellsService.detail(sId);
         System.out.println("totalPrice = " + totalPrice);
         System.out.println("sells.op = " + sells.getSellOption());
 
-        KakaoPayApprovalVO kakaoPayApprovalVO=new KakaoPayApprovalVO();
-        kakaoPayApprovalVO.setItem_name(sells.getTitle());
-        kakaoPayApprovalVO.setName(loginUser.getName());
-        kakaoPayApprovalVO.setUId(loginUser.getUId());
-        kakaoPayApprovalVO.setTotal(totalPrice);
-        kakaoPayApprovalVO.setSId(sId);
+        KakaoPayApprovalDto kakaoPayApprovalDto =new KakaoPayApprovalDto();
+        kakaoPayApprovalDto.setItem_name(sells.getTitle());
+        kakaoPayApprovalDto.setName(loginUser.getName());
+        kakaoPayApprovalDto.setUId(loginUser.getUId());
+        kakaoPayApprovalDto.setTotal(totalPrice);
+        kakaoPayApprovalDto.setSId(sId);
 
 
 
@@ -63,11 +72,11 @@ public class KakaoPayController {
         sellOrderDto.setTotalPrice(Integer.parseInt(totalPrice));
         sellOrderDto.setInfo("카카오페이");
 
-        session.setAttribute("kakaoPayApprovalVO", kakaoPayApprovalVO);
+        session.setAttribute("kakaoPayApprovalVO", kakaoPayApprovalDto);
         session.setAttribute("sellOrder", sellOrderDto);
         session.setAttribute("cnt", cnt);
         session.setAttribute("oId", oId);
-        return "redirect:" + kakaopay.kakaoPayReady(kakaoPayApprovalVO);
+        return "redirect:" + kakaopay.kakaoPayReady(kakaoPayApprovalDto);
     }
 //    @PostMapping("/kakaoPay.do")
 //    public String kakaoPay(@RequestParam(value = "sId")int sId,
@@ -123,18 +132,25 @@ public class KakaoPayController {
         List<Integer> cnt= (List<Integer>) session.getAttribute("cnt");
 
         List<SellOrderDetailDto> sellOrderDetailDtos=new ArrayList<>();
-        for (int i=0;i<oId.size();i++){
+        List<SellTicketDto> sellTicketDtos=new ArrayList<>();
+        for (int i=0;i<cnt.size();i++){
             SellOrderDetailDto sellOrderDetailDto=new SellOrderDetailDto();
             sellOrderDetailDto.setCnt(cnt.get(i));
             sellOrderDetailDto.setUId(sellOrder.getUId());
             sellOrderDetailDto.setSId(sellOrder.getSId());
             sellOrderDetailDto.setOId(oId.get(i));
             sellOrderDetailDtos.add(sellOrderDetailDto);
+            SellTicketDto sellTicketDto=new SellTicketDto();
+            sellTicketDto.setTicketNum("1234sdasddgg");
+            sellTicketDtos.add(sellTicketDto);
             System.out.println("oId번호 = " + oId.get(i));
+        }
+        for (SellTicketDto ticketDto:sellTicketDtos){
+            System.out.println("ticketDto = " + ticketDto);
         }
         System.out.println("sellOrderDetailDtos = " + sellOrderDetailDtos);
         sellOrder.setDetailList(sellOrderDetailDtos);
-
+        sellOrder.setTicketList(sellTicketDtos);
         sellOrderService.register(sellOrder);
 
 

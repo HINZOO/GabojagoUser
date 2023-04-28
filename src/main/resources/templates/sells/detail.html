@@ -60,13 +60,13 @@
                         <h3 class="text-end" id="totalPrice" ></h3>
                         <hr>
                         <div class="text-end">
-                            <th:block th:if="${session.loginUser.uId == sells.uId}">
+                            <th:block th:if="${session.loginUser != null and session.loginUser.uId == sells.uId}">
                                 <a class="btn btn-secondary" th:href="@{'/sells/{sId}/modify.do'(sId=${sells.getSId()})}" >수정하기</a>
+                                <button class="btn btn-primary ">카카오페이로 결제하기</button>
                             </th:block>
-                            <!--                        <button type="submit" class="btn btn-primary ">결제하기</button>-->
-                            <!--                        <a class="btn btn-danger" id="apibtn">API 호출</a>-->
-                            <button class="btn btn-primary ">카카오페이로 결제하기</button>
-
+                            <th:block th:unless="${session.loginUser != null and session.loginUser.uId == sells.uId}">
+                                <button class="btn btn-primary ">카카오페이로 결제하기</button>
+                            </th:block>
                         </div>
                     </div>
                 </div>
@@ -96,6 +96,7 @@
         }function down(){
             quantityInput.value--
         }
+        const optionSelect=document.getElementById("optionSelect");
         const totalPriceInput = document.getElementById("totalPriceInput");
         const quantityInput = document.getElementById("quantity");
         const selectOpton = document.getElementById("selectedOption");
@@ -115,8 +116,10 @@
             const optionName = selectedOption.split("|")[0];
             const price = selectedOption.split("|")[1];
             const oId = selectedOption.split("|")[2];
+
             const total = price * quantity;
             if(!optionSet.has(optionName)){
+
                 optionSet.add(optionName)
                 selectOpton.insertAdjacentHTML("beforeend", selectOptionComponent(optionName,quantity,total,oId));
                 totalOptionPrice += total;

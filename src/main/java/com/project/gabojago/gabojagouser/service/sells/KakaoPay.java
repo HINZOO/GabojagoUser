@@ -4,8 +4,8 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 
-import com.project.gabojago.gabojagouser.dto.sells.KakaoPayApprovalVO;
-import com.project.gabojago.gabojagouser.dto.sells.KakaoPayReadyVO;
+import com.project.gabojago.gabojagouser.dto.sells.KakaoPayApprovalDto;
+import com.project.gabojago.gabojagouser.dto.sells.KakaoPayReadyDto;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -23,11 +23,11 @@ public class KakaoPay {
 
     private static final String HOST = "https://kapi.kakao.com";
 
-    private KakaoPayReadyVO kakaoPayReadyVO;
-    private KakaoPayApprovalVO kakaoPayApprovalVO;
+    private KakaoPayReadyDto kakaoPayReadyDto;
+    private KakaoPayApprovalDto kakaoPayApprovalDto;
 
-    public String kakaoPayReady(KakaoPayApprovalVO kakaoPayApprovalVO) {
-        this.kakaoPayApprovalVO=kakaoPayApprovalVO;
+    public String kakaoPayReady(KakaoPayApprovalDto kakaoPayApprovalDto) {
+        this.kakaoPayApprovalDto = kakaoPayApprovalDto;
         RestTemplate restTemplate = new RestTemplate();
 
         // 서버로 요청할 Header
@@ -40,23 +40,23 @@ public class KakaoPay {
         MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
         params.add("cid", "TC0ONETIME");
         params.add("partner_order_id", "1001");
-        params.add("partner_user_id", kakaoPayApprovalVO.getUId());
-        params.add("item_name", kakaoPayApprovalVO.getItem_name());
+        params.add("partner_user_id", kakaoPayApprovalDto.getUId());
+        params.add("item_name", kakaoPayApprovalDto.getItem_name());
         params.add("quantity", "1");
-        params.add("total_amount", kakaoPayApprovalVO.getTotal());
+        params.add("total_amount", kakaoPayApprovalDto.getTotal());
         params.add("tax_free_amount", "100");
         params.add("approval_url", "http://localhost:7777/kakaoPaySuccess");
-        params.add("cancel_url", "http://localhost:7777/sells/"+kakaoPayApprovalVO.getSId()+"/detail.do");
+        params.add("cancel_url", "http://localhost:7777/sells/"+ kakaoPayApprovalDto.getSId()+"/detail.do");
         params.add("fail_url", "http://localhost:7777/kakaoPaySuccessFail");
 
         HttpEntity<MultiValueMap<String, String>> body = new HttpEntity<MultiValueMap<String, String>>(params, headers);
 
         try {
-            kakaoPayReadyVO = restTemplate.postForObject(new URI(HOST + "/v1/payment/ready"), body, KakaoPayReadyVO.class);
+            kakaoPayReadyDto = restTemplate.postForObject(new URI(HOST + "/v1/payment/ready"), body, KakaoPayReadyDto.class);
 
-            log.info("" + kakaoPayReadyVO);
+            log.info("" + kakaoPayReadyDto);
 
-            return kakaoPayReadyVO.getNext_redirect_pc_url();
+            return kakaoPayReadyDto.getNext_redirect_pc_url();
 
         } catch (RestClientException e) {
             // TODO Auto-generated catch block
@@ -70,7 +70,7 @@ public class KakaoPay {
 
     }
 
-    public KakaoPayApprovalVO kakaoPayInfo(String pg_token) {
+    public KakaoPayApprovalDto kakaoPayInfo(String pg_token) {
 
 
         RestTemplate restTemplate = new RestTemplate();
@@ -84,19 +84,19 @@ public class KakaoPay {
         // 서버로 요청할 Body
         MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
         params.add("cid", "TC0ONETIME");
-        params.add("tid", kakaoPayReadyVO.getTid());
+        params.add("tid", kakaoPayReadyDto.getTid());
         params.add("partner_order_id", "1001");
-        params.add("partner_user_id", kakaoPayApprovalVO.getUId());
+        params.add("partner_user_id", kakaoPayApprovalDto.getUId());
         params.add("pg_token", pg_token);
-        params.add("total_amount", kakaoPayApprovalVO.getTotal());
+        params.add("total_amount", kakaoPayApprovalDto.getTotal());
 
         HttpEntity<MultiValueMap<String, String>> body = new HttpEntity<MultiValueMap<String, String>>(params, headers);
 
         try {
-             kakaoPayApprovalVO = restTemplate.postForObject(new URI(HOST + "/v1/payment/approve"), body, KakaoPayApprovalVO.class);
-            log.info("" + kakaoPayApprovalVO);
+             kakaoPayApprovalDto = restTemplate.postForObject(new URI(HOST + "/v1/payment/approve"), body, KakaoPayApprovalDto.class);
+            log.info("" + kakaoPayApprovalDto);
 
-            return kakaoPayApprovalVO;
+            return kakaoPayApprovalDto;
 
         } catch (RestClientException e) {
             // TODO Auto-generated catch block

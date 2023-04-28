@@ -5,7 +5,7 @@ import java.util.Date;
 import lombok.Data;
 
 @Data
-public class KakaoPayApprovalVO {
+public class KakaoPayApprovalDto {
 
     //response
     private String aid, tid, cid,name,uId;

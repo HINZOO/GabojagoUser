@@ -14,6 +14,6 @@ public class SellOrderDto {
 
     List<SellsDto> sellList;
     List<SellOrderDetailDto> detailList;
-
     List<SellOrderDto> orderList;
+    List<SellTicketDto> ticketList;
 }
