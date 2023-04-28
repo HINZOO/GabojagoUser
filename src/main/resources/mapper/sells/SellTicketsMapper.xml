@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.project.gabojago.gabojagouser.mapper.sells.SellTicketsMapper">
+    <insert id="insertOne">
+    INSERT INTO sell_tickets (so_id, ticket_num) VALUE (#{soId},#{ticketNum})
+    </insert>
+</mapper>
