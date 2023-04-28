@@ -32,12 +32,14 @@ public class BookMarkController {
            List<TripBookmarkDto> tripBookmarkList=tripBookMarkService.list(uId);
         return tripBookmarkList;
     }
-    @PostMapping("/comm/{cId}/handler.do")
+    @PostMapping("/comm/{cId}/{pId}/handler.do")
     public HandlerDto registerBookMark(@PathVariable int cId,
+                                @PathVariable int pId,
                                 @SessionAttribute UserDto loginUser){
         int register=0;
         CommBookmarkDto commBookmarkDto=new CommBookmarkDto();
         commBookmarkDto.setCId(cId);
+        commBookmarkDto.setPId(pId);
         commBookmarkDto.setUId(loginUser.getUId());
         register=commBookMarkService.register(commBookmarkDto);
         HandlerDto handlerDto=new HandlerDto();

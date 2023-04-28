@@ -426,12 +426,15 @@ CREATE TABLE `comm_likes` (
 );
 #같이놀자(북마크 테이블)
 #제약조건 추가 1개만북마크 가능하게
+
 CREATE TABLE `comm_bookmarks` (
                                   `cbook_id`	int unsigned AUTO_INCREMENT PRIMARY KEY COMMENT '같이놀자북마크 아이디',
                                   `c_id`	int unsigned NOT NULL COMMENT '같이놀자커뮤니티글 아이디',
                                   `u_id`	varchar(255)	NOT NULL COMMENT '유저 아이디',
+                                  `p_id`	int unsigned NOT NULL COMMENT '플랜 아이디',
                                   FOREIGN KEY (u_id) REFERENCES users (u_id) ON DELETE CASCADE ON UPDATE CASCADE,
                                   FOREIGN KEY (c_id) REFERENCES communitys (c_id) ON DELETE CASCADE ON UPDATE CASCADE,
+                                  FOREIGN KEY (p_id) REFERENCES plans (p_id) ON DELETE CASCADE ON UPDATE CASCADE,
                                   CONSTRAINT c_bookmark UNIQUE (u_id, c_id)
 );
 #같이놀자(해시태그 테이블)
