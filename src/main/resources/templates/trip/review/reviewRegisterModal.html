@@ -1,6 +1,6 @@
 <div class="modal fade" id="reviewRegisterModal" tabindex="-1">
   <div class="modal-dialog">
-    <form enctype="multipart/form-data" name="reviewRegisterForm" method="post"
+    <form enctype="multipart/form-data" id="reviewRegisterForm" name="reviewRegisterForm" method="post"
           class="modal-content">
       <!--                                    <input type="hidden" name="tId">--> <!-- 이름만 써주고, ajax 로 값 너어준거 -->
       <input type="hidden" name="trId">
@@ -12,30 +12,69 @@
       </div>
       <div class="modal-body">
         <p class="form-floating">
-          <input type="text" name="uId" th:value="${session.loginUser.uId}" readonly class="form-control"
+          <input type="text" name="uId"  th:if="${session.loginUser!=null}" th:value="${session.loginUser.uId}" readonly class="form-control"
                  placeholder="글쓴이">
           <!-- 로그인한 유저만 보이기 -->
           <!-- <input th:value="${session.loginUser.uId}" type="text" name="uId" readonly class="form-control" placeholder="글쓴이">-->
           <label>글쓴이</label>
         </p>
         <p>
-          평가 <span>☆☆☆☆☆</span>
+          <fieldset>
+            <span class="text-bold">별점을 선택해주세요</span>
+            <input type="radio" name="reviewStar" value="5" id="rate1"><label
+                  for="rate1">★</label>
+            <input type="radio" name="reviewStar" value="4" id="rate2"><label
+                  for="rate2">★</label>
+            <input type="radio" name="reviewStar" value="3" id="rate3"><label
+                  for="rate3">★</label>
+            <input type="radio" name="reviewStar" value="2" id="rate4"><label
+                  for="rate4">★</label>
+            <input type="radio" name="reviewStar" value="1" id="rate5"><label
+                  for="rate5">★</label>
+          </fieldset>
         </p>
+
+<!--        <div class="star-rating">-->
+<!--          평가-->
+<!--          <input class="d-none" id="star-1" type="radio" name="rating" value="1">-->
+<!--          <label for="star-1" title="1 star">☆</label>-->
+<!--          <input class="d-none" id="star-2" type="radio" name="rating" value="2">-->
+<!--          <label for="star-2" title="2 stars">☆</label>-->
+<!--          <input class="d-none" id="star-3" type="radio" name="rating" value="3">-->
+<!--          <label for="star-3" title="3 stars">☆</label>-->
+<!--          <input class="d-none" id="star-4" type="radio" name="rating" value="4">-->
+<!--          <label for="star-4" title="4 stars">☆</label>-->
+<!--          <input class="d-none" id="star-5" type="radio" name="rating" value="5">-->
+<!--          <label for="star-5" title="5 stars">☆</label>-->
+<!--          <input type="hidden" name="grade" id="rating-value">-->
+<!--&lt;!&ndash;          <i class="bi bi-star"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;          <i class="bi bi-star-fill"></i>&ndash;&gt;-->
+
+<!--&lt;!&ndash;          <input class="d-none" id="star-1" type="radio" name="rating" value="1">&ndash;&gt;-->
+<!--&lt;!&ndash;          <label for="star-1" title="1 star">☆</label>&ndash;&gt;-->
+<!--&lt;!&ndash;          <input class="d-none" id="star-2" type="radio" name="rating" value="2">&ndash;&gt;-->
+<!--&lt;!&ndash;          <label for="star-2" title="2 stars">☆</label>&ndash;&gt;-->
+<!--&lt;!&ndash;          <input class="d-none" id="star-3" type="radio" name="rating" value="3">&ndash;&gt;-->
+<!--&lt;!&ndash;          <label for="star-3" title="3 stars">☆</label>&ndash;&gt;-->
+<!--&lt;!&ndash;          <input class="d-none" id="star-4" type="radio" name="rating" value="4">&ndash;&gt;-->
+<!--&lt;!&ndash;          <label for="star-4" title="4 stars">☆</label>&ndash;&gt;-->
+<!--&lt;!&ndash;          <input class="d-none" id="star-5" type="radio" name="rating" value="5">&ndash;&gt;-->
+<!--&lt;!&ndash;          <label for="star-5" title="5 stars">☆</label>&ndash;&gt;-->
+
+
+<!--        </div>-->
+
         <p>
-
-        <label>
-          <input type="radio" name="visit" value="1" checked>
-          방문
-        </label>
-        <label>
-          <input type="radio" name="visit" value="0">
-          방문전
-        </label>
-
-
-
-
+          <label>
+            <input type="radio" name="visit" value="1" checked>
+            방문
+          </label>
+          <label>
+            <input type="radio" name="visit" value="0">
+            방문전
+          </label>
         </p>
+
         <p class="form-floating">
           <input type="text" name="title" th:value="${t.title}" readonly
                  class="form-control" placeholder="글쓴이">

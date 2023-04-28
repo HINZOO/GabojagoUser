@@ -5,18 +5,18 @@
     <title>마이페이지</title>
 </head>
 
-<div layout:fragment="content" class="container my-5">
-    <h2 class="my-5 ms-3" >
+<div layout:fragment="content" class="container">
+    <h2 class="my-4 ms-3" >
         <i class="bi bi-bookmark-star-fill text-warning"></i>
         북마크 리스트
     </h2>
-    <div class="categoryContainer d-flex justify-content-evenly" >
-        <div class="card" style="width: 35rem;">
+    <div class="categoryContainer d-flex justify-content-evenly row my-5" >
+        <div class="card col-5" >
             <img src="/public/img/gabojago.gif" class="card-img-top" alt="...">
             <ul class="list-group list-group-flush" id="tripbookMarkList">
                 <li class="list-group-item d-flex align-items-center justify-content-between py-1 px-8" th:each="t:${tripBookMark}">
                     <p class="p-0">
-                        <a th:href="@{'/comm/{tId}/detail.do'(tId=${t.tId})}" th:text="${t.trips.title}"></a>
+                        <a th:href="@{'/trip/{tId}/detail.do'(tId=${t.tId})}" th:text="${t.trips.title}"></a>
                     </p>
                     <p class="p-0">
                         <a href="javascript:void(0)" th:onclick="tripRemoveBookMark([[${t.tbId}]],[[${uId}]])" class="p-0 text-danger text-decoration-none">
@@ -26,7 +26,7 @@
                 </li>
             </ul>
         </div>
-        <div class="card" style="width: 35rem;">
+        <div class="card col-5" >
             <img src="/public/img/gachinolja.gif" class="card-img-top" alt="...">
             <ul class="list-group list-group-flush" id="commbookMarkList">
                 <li class="list-group-item d-flex align-items-center justify-content-between py-1 px-8" th:each="c:${commBookMark}">

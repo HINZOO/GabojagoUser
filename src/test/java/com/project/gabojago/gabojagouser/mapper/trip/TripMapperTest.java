@@ -1,6 +1,7 @@
 package com.project.gabojago.gabojagouser.mapper.trip;
 
 import com.project.gabojago.gabojagouser.dto.trip.TripDto;
+import com.project.gabojago.gabojagouser.dto.trip.TripPageDto;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -22,7 +23,8 @@ class TripMapperTest {
     private static TripDto trip;
     @Test
     void findAll() {
-        List<TripDto> tripList=tripMapper.findAll();
+        TripPageDto tripPageDto=new TripPageDto();
+        List<TripDto> tripList=tripMapper.findAll(tripPageDto);
         System.out.println("tripList = " + tripList);
         assertNotNull(tripList);
     }

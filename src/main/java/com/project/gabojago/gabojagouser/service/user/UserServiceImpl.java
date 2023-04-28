@@ -37,9 +37,16 @@ public class UserServiceImpl implements UserService {
     return userMapper.findUserByUId(user);
   }
 
+
+
   @Override
   public int modify(UserDto user) {
     return userMapper.updateOne(user);
+  }
+
+  @Override
+  public int modifyIdANDPw(UserDto user) {
+    return userMapper.updatePwByUId(user);
   }
 
   @Override

@@ -74,12 +74,12 @@
     <select id="findByCId" resultMap="CommMap">
         SELECT * FROM communitys WHERE c_id=#{cId};
     </select>
-    <select id="countListBylikes" resultMap="CommMap">
+    <select id="findByCommLikes_likes" resultMap="CommMap">
         SELECT c.*, COUNT(l.cl_id) AS likes
         FROM communitys c
                  LEFT JOIN comm_likes l ON c.c_id = l.c_id
         GROUP BY c.c_id
-        ORDER BY likes DESC;
+        ORDER BY likes DESC
     </select>
 
     <update id="updateIncrementViewCountByCId">

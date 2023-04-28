@@ -1,0 +1,116 @@
+<div class="modal fade" id="newScheduleModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header bg-primary bg-opacity-10">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">새 스케쥴 작성</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="scheduleInsertForm">
+          <div class="row">
+            <div class="col-6">
+              <div class="row">
+                <input type="text" class="form-control" name="pId"  id="floatingId" placeholder="" hidden>
+                <input type="text" class="form-control" name="tId" value="" id="tId" placeholder="" hidden>
+                <input type="text" class="form-control" name="sId" value="" id="sId" placeholder="" hidden>
+
+                <div class="col-12 mb-3">
+                  <div class="form-floating">
+                    <input type="text" class="form-control" name="title" id="floatingTitle" placeholder="">
+                    <label for="floatingTitle">여행지</label>
+                  </div>
+                </div>
+                <div class="col-6 mb-3">
+                  <div class="form-floating">
+                    <input type="time" class="form-control" name="sTime" id="sTime" placeholder="">
+                    <label for="sTime">시작시간</label>
+                  </div>
+                </div>
+                <div class="col-6 mb-3">
+                  <div class="form-floating">
+                    <input type="time" class="form-control" name="eTime" id="eTime" placeholder="" value="">
+                    <label for="eTime">끝시간</label>
+                  </div>
+                </div>
+                <div class="col-12 mb-3">
+                  <div class="form-floating">
+                    <input type="text" class="form-control" name="info" id="info" placeholder="">
+                    <label for="info">메모</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-6">
+              <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link" id="trip-tab" data-bs-toggle="tab"
+                          data-bs-target="#userinfo" type="button" role="tab" aria-controls="userinfo"
+                          aria-selected="true">가보자고</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link  active" id="comm-tab" data-bs-toggle="tab"
+                          data-bs-target="#myreview" type="button" role="tab"
+                          aria-controls="myreview" aria-selected="false">같이놀자</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link" id="product-tab" data-bs-toggle="tab"
+                          data-bs-target="#wishlist" type="button" role="tab"
+                          aria-controls="wishlist" aria-selected="false">상품판매</button>
+                </li>
+              </ul>
+
+              <!-- 내용 -->
+              <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade" id="userinfo" role="tabpanel"
+                     aria-labelledby="trip-tab">가보자고 탭
+                </div>
+                <div class="tab-pane fade show active" id="myreview" role="tabpanel"
+                     aria-labelledby="comm-tab">
+
+                  <th:block th:each="plan:${bPlans}">
+                    <div class="btn-group dropend bkDiv">
+                      <button type="button" class="btn dropdown-toggle bkBtn w-100" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-check2-circle"></i> <span th:text="${plan.getTitle()}"/> /
+                        <span th:text="${plan.getNkName()}"/>
+                      </button>
+                      <ul class="dropdown-menu">
+                        <table>
+                        <th:block th:each="con:${plan.getContents()}">
+                          <tr class="dropdown-item">
+                            <td th:text="${con.getTime()}"/>
+                            <td>　|　</td>
+                            <td th:text="${con.getTitle()}"/>
+                            <td>　|　</td>
+                            <td th:text="${con.getInfo()}"/>
+                            <span >
+                          </tr>
+                        </th:block>
+                        </table>
+                      </ul>
+                    </div>
+                  </th:block>
+
+
+                </div>
+                <div class="tab-pane fade" id="wishlist" role="tabpanel"
+                     aria-labelledby="product-tab">상품판매 탭
+                </div>
+              </div>
+
+
+
+
+
+            </div>
+          </div>
+        </form>
+          <div class="modal-footer">
+            <button class="btn btn-primary" onclick=registerSchedule()>만들기</button>
+          </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+

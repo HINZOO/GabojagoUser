@@ -10,7 +10,7 @@ import java.util.List;
 public interface PlanMapper {
     List<PlanDto> findAll();
     List<PlanDto> findByUId(String uId);
-
+    List<PlanDto> findByBookmarked(String uId);
     PlanDto findByPId(int pId);
     int insertOne(PlanDto plan);
     int updateOne(PlanDto plan);

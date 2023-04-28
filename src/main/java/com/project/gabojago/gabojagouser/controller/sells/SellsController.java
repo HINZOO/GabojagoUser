@@ -1,28 +1,22 @@
 package com.project.gabojago.gabojagouser.controller.sells;
 import com.github.pagehelper.PageInfo;
 import com.project.gabojago.gabojagouser.dto.sells.*;
-import com.project.gabojago.gabojagouser.dto.trip.TripImgDto;
 import com.project.gabojago.gabojagouser.dto.user.UserDto;
 import com.project.gabojago.gabojagouser.service.sells.SellBookMarksService;
+import com.project.gabojago.gabojagouser.service.sells.SellOrderDetailService;
+import com.project.gabojago.gabojagouser.service.sells.SellOrderService;
 import com.project.gabojago.gabojagouser.service.sells.SellsService;
 
-import jakarta.servlet.http.HttpSession;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.servlet.view.RedirectView;
 
 import java.io.*;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -35,9 +29,11 @@ import java.util.List;
 public class SellsController {
     private SellsService sellsService;
     private SellBookMarksService sellBookMarksService;
-    public SellsController(SellsService sellsService,SellBookMarksService sellBookMarksService) {
+    private SellOrderDetailService sellOrderDetailService;
+    public SellsController(SellsService sellsService,SellBookMarksService sellBookMarksService,SellOrderDetailService sellOrderDetailService) {
         this.sellBookMarksService=sellBookMarksService;
         this.sellsService = sellsService;
+        this.sellOrderDetailService=sellOrderDetailService;
     }
     @Value("${img.upload.path}")
     private String uploadPath;
@@ -115,9 +111,12 @@ public class SellsController {
                                RedirectAttributes redirectAttributes
     ) throws IOException {
         String msg = "";
-        String redirecPath = "redirect:/sells/" + sell.getSId() + "/modify.do";
+        String redirectPage = "redirect:/sells/" + sell.getSId() + "/modify.do";
         List<SellImgsDto> imgDtos = null;
         List<SellsOptionDto> sellsOptions = null;
+
+        if (imgs!=null){
+
                         imgs.add(mainImg);
 
 
@@ -151,6 +150,7 @@ public class SellsController {
             }
         }
 
+        }
         if (name != null && price != null) {
             sellsOptions = new ArrayList<>();
             for (int i = 0; i < name.length; i++) {
@@ -186,29 +186,36 @@ public class SellsController {
     @GetMapping("/register.do")
     public void insertForm(){
     }
+    @PostMapping("gi")
+    public void advs(@RequestParam(value = "img")List<MultipartFile> imgs){
+
+
+
+    }
     @PostMapping("/register.do")
     public String registerAction2(@ModelAttribute SellsDto sell,
                                   @RequestParam(required = false) MultipartFile mainImg,
-                                  @RequestParam(value = "img",required = false) MultipartFile sImg,
                                  @RequestParam(value = "img",required = false)List<MultipartFile> imgs,
                                  @RequestParam(value="name",required = false) String[] name,
                                  @RequestParam(value="price",required = false) int[] price,
-                                 RedirectAttributes redirectAttributes) throws IOException {
+                                 RedirectAttributes redirectAttributes){
 
     String redirectPage = "redirect:/sells/register.do";
     //        if(!loginUser.getUId().equals(trip.getUId())) return redirectPage; // 다르면 다시 등록페이지로 이동
     String msg="";
 
-
+    if (imgs==null){
+        msg="이미지는 1개이상 등록하여야 합니다.";
+        redirectAttributes.addFlashAttribute("msg",msg);
+        return redirectPage;
+    }
     imgs.add(mainImg);
 
     List<SellImgsDto> imgDtos=null;
     List<SellsOptionDto> sellsOptions=null;
 
-
-
         if (name == null ||name.length==0) {
-            msg="상품명을 입력하세요";
+            msg="옵션의 상품명을 입력하세요";
             redirectAttributes.addFlashAttribute("msg",msg);
             return redirectPage;
         }
@@ -225,28 +232,6 @@ public class SellsController {
             redirectAttributes.addFlashAttribute("msg", msg);
             return redirectPage;
         }
-
-        if (mainImg.getSize() > MAX_IMAGE_SIZE) {
-            msg="메인이미지의 최대 크기는"+MAX_IMAGE_SIZE/(1024 * 1024)+"MB 입니다";
-            redirectAttributes.addFlashAttribute("msg",msg);
-            return redirectPage;
-        }
-
-
-         // 메인이미지 추가
-    // 제목 입력 여부 확인
-        if (sImg==null || sImg.isEmpty() ){
-            msg="서브용 이미지는 1개이상 등록하셔야 합니다.";
-            redirectAttributes.addFlashAttribute("msg", msg);
-            return redirectPage;
-        }
-        if (sell.getTitle() == null || sell.getTitle().equals("")) {
-        msg = "상품명을 입력하세요.";
-        redirectAttributes.addFlashAttribute("msg",msg);
-        return redirectPage;
-    }
-
-
 
         imgDtos = new ArrayList<>();
         for (int i = 0; i < imgs.size(); i++) {
@@ -272,10 +257,6 @@ public class SellsController {
                         imgDtos.add(imgDto);
                     }
                 }
-            }else if(img==null ||img.isEmpty()) {
-                msg = "이미지는 1개 이상 등록하세요.";
-                redirectAttributes.addFlashAttribute("msg", msg);
-                return redirectPage;
             }
         }
 
@@ -378,5 +359,16 @@ public class SellsController {
 
     }
 
+    @GetMapping("/orderList.do")
+    public String orderList(@SessionAttribute UserDto loginUser,Model model
+                            ){
+//        List<SellOrderDto> orderList ;
+//        orderList= sellOrderService.findByUId(loginUser.getUId());
+//        model.addAttribute("orderList",orderList);
+        List<SellOrderDetailDto> detailList;
+        detailList=sellOrderDetailService.findByUId(loginUser.getUId());
+        model.addAttribute("detailList",detailList);
+        return "/sells/orderList";
+    }
 
 }

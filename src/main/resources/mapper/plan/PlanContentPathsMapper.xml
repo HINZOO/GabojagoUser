@@ -10,7 +10,9 @@
         INSERT INTO plan_content_paths (con_id) VALUE (#{conId})
     </insert>
     <update id="updateOne">
-
+        UPDATE plan_content_paths
+        SET can_path=#{canPath}
+        WHERE path_id=#{pathId}
     </update>
     <delete id="deleteOne">
         DELETE FROM plan_content_paths WHERE path_id=#{pathId}
@@ -18,6 +20,9 @@
 
     <select id="findByConId" resultMap="planContentPathMap">
         SELECT * FROM plan_content_paths WHERE con_id=#{conId}
+    </select>
+    <select id="findByPathId" resultMap="planContentPathMap">
+        SELECT * FROM plan_content_paths WHERE path_id=#{pathId}
     </select>
 </mapper>
 

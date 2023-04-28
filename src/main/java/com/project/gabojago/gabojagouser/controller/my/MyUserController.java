@@ -3,11 +3,13 @@ package com.project.gabojago.gabojagouser.controller.my;
 import com.project.gabojago.gabojagouser.dto.comm.CommBookmarkDto;
 import com.project.gabojago.gabojagouser.dto.comm.CommPageDto;
 import com.project.gabojago.gabojagouser.dto.comm.CommunityDto;
+import com.project.gabojago.gabojagouser.dto.my.MileageDto;
 import com.project.gabojago.gabojagouser.dto.plan.PlanDto;
 import com.project.gabojago.gabojagouser.dto.trip.TripBookmarkDto;
 import com.project.gabojago.gabojagouser.dto.user.UserDto;
 import com.project.gabojago.gabojagouser.service.comm.CommBookMarkService;
 import com.project.gabojago.gabojagouser.service.comm.CommunityService;
+import com.project.gabojago.gabojagouser.service.my.MileageService;
 import com.project.gabojago.gabojagouser.service.my.MyUserQnaService;
 import com.project.gabojago.gabojagouser.service.plan.PlanService;
 import com.project.gabojago.gabojagouser.service.trip.TripBookMarkService;
@@ -32,6 +34,7 @@ public class MyUserController {
     private CommBookMarkService commBookMarkService;
     private TripBookMarkService tripBookMarkService;
     private PlanService planService;
+    private MileageService mileageService;
 
     @GetMapping("/user.do")
     public String list(Model model,
@@ -60,6 +63,18 @@ public class MyUserController {
         model.addAttribute("commBookMark",commBookmarkList);
         model.addAttribute("tripBookMark",tripBookmarkList);
         return "/my/bookMark";
+    }
+    //마일리지
+    @GetMapping("/mileage.do")
+    public String mileage(
+                            Model model,
+                            @SessionAttribute UserDto loginUser
+                        ){
+        int sumMile=mileageService.sumMileage(loginUser.getUId());
+        List<MileageDto> mileage=mileageService.list(loginUser.getUId());
+        model.addAttribute("sumMile",sumMile);
+        model.addAttribute("mileage",mileage);
+        return "/my/mileages";
     }
 
 

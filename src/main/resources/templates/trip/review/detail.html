@@ -14,12 +14,9 @@
 </div>
 
 <div>
-    <p>리뷰아이디 테스트</p>
-    <span th:text="${r.trId}"></span>
     <div>
         <span th:text="${r.content}"></span>
     </div>
-
     <div class="d-flex">
         <div th:each="img:${r.imgs}">
             <img class="img-thumbnail w-20" style="max-height: 100px; object-fit: cover"
@@ -42,13 +39,27 @@
             </p>
         </div> <!-- 해시태그 반복문 -->
     </div>
-    <p>
         <span>☆☆☆☆☆</span>
-<!--        <span>방문</span>-->
 
+<!--        <input class="d-none" id="star-1" type="radio" name="rating" value="1">-->
+<!--        <label for="star-1" title="1 star">☆</label>-->
+<!--        <input class="d-none" id="star-2" type="radio" name="rating" value="2">-->
+<!--        <label for="star-2" title="2 stars">☆</label>-->
+<!--        <input class="d-none" id="star-3" type="radio" name="rating" value="3">-->
+<!--        <label for="star-3" title="3 stars">☆</label>-->
+<!--        <input class="d-none" id="star-4" type="radio" name="rating" value="4">-->
+<!--        <label for="star-4" title="4 stars">☆</label>-->
+<!--        <input class="d-none" id="star-5" type="radio" name="rating" value="5">-->
+<!--        <label for="star-5" title="5 stars">☆</label>-->
+
+
+
+    <p>
         <th:block th:if="${r.visit == 1}">방문</th:block>
         <th:block th:if="${r.visit == 0}">방문전</th:block>
     </p>
+
+
     <div class="d-flex justify-content-between align-items-center">
         <p>
              <span class="me-2">
@@ -68,14 +79,12 @@
 
             <!-- 작성자에게만 보이기 -->
             <a href="javascript:void(0)"
-               th:if="${session.loginUser!=null  && session.loginUser.uId==r.uId}"
                th:onclick="loadModifyReview([[${r.trId}]])"
                class="btn btn-outline-danger ms-2">수정</a>
+<!--               th:if="${session.loginUser!=null  && session.loginUser.uId==r.uId}"-->
         </p>
     </div>
 </div>
-
-<!--<span th:text="${t}"></span>-->
 
 <!-- 리뷰작성하기 Modal -->
 <th:block th:include="/trip/review/reviewModifyModal.html"></th:block>

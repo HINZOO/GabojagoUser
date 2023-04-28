@@ -19,58 +19,81 @@
             accent-color: orangered;
         }
 
+        /*.star-rating input[type="radio"] {*/
+        /*    display: none;*/
+        /*}*/
+
+        /* .star-rating label {*/
+        /*     display: inline-block;*/
+        /*     font-size: 24px;*/
+        /*     color: #ccc;*/
+        /*     cursor: pointer;*/
+        /* }*/
+
+        /*.star-rating label:hover,*/
+        /*.star-rating label:hover~label,*/
+        /*.star-rating input[type="radio"]:checked~label{*/
+        /*    color: #ffcc00;*/
+        /*}*/
+
+
+        #reviewRegisterForm fieldset{
+            display: inline-block;
+            direction: rtl;
+            border:0;
+        }
+        #reviewRegisterForm fieldset legend{
+            text-align: right;
+        }
+        #reviewRegisterForm input[type=radio]{
+            display: none;
+        }
+        #reviewRegisterForm label{
+            font-size: 3em;
+            color: transparent;
+            text-shadow: 0 0 0 #f0f0f0;
+        }
+        #reviewRegisterForm label:hover{
+            text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+        }
+        #reviewRegisterForm label:hover ~ label{
+            text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+        }
+        #reviewRegisterForm input[type=radio]:checked ~ label{
+            text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+        }
+
+
+
     </style>
 </head>
 <div layout:fragment="content" class="container">
     <!--    <script src="/public/js/splideTest.js"></script>-->
     <h3 class="my-4">맞춤추천 상세</h3>
-
-    <!--    <div class="splide">-->
-    <!--        <div class="splide__track">-->
-    <!--            <ul class="splide__list">-->
-    <!--                <li class="splide__slide"><img src="image1.jpg"></li>-->
-    <!--                <li class="splide__slide"><img src="image2.jpg"></li>-->
-    <!--                <li class="splide__slide"><img src="image3.jpg"></li>-->
-    <!--            </ul>-->
-    <!--        </div>-->
-    <!--    </div>-->
-
+    <script src="/public/js/tripLike.js" defer></script>
     <section id="tripCont">
         <div class="row">
             <div class="col-5">
                 <div class="card border-dark border-opacity-25">
-                    <div class="card-header p-3 bg-transparent border-dark border-opacity-25">
-                        <div class="d-flex justify-content-around">
-                            <p class="card-text d-flex flex-column align-items-center g-2 mb-0">
-                                <span class="bi bi-heart mb-1"></span>
-                                좋아요
-                                <span>156</span>
+                    <div class="card-header bg-transparent border-dark border-opacity-25">
+                        <div class="d-flex align-items-center justify-content-end">
+                            <p class="card-text p-0 align-items-center">
+                                <div class="likeCont" th:id="'likeCont'+${t.tId}">
+                                    <th:block th:include="/trip/likes.html" th:with="likes=${t.likes},id=${t.tId}"></th:block>
+                                </div>
                             </p>
-                            <p class="card-text d-flex flex-column align-items-center g-2 mb-0">
-                                <span class="bi bi-heart mb-1"></span>
-                                북마크
-                                <span>156</span>
+
+                            <p class="card-text mb-0">
+                                <a href="javascript:void(0)" th:onclick="registerBookMark([[${t.tId}]],this)" >
+                                    <i class="bi bi-bookmark-plus text-warning fs-4 me-2" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="북마크"></i>
+                                </a>
                             </p>
-                            <p class="card-text d-flex flex-column align-items-center g-2 mb-0">
-                                <span class="bi bi-heart mb-1"></span>
-                                리뷰
-                                <span>156</span>
-                            </p>
-                            <p class="card-text d-flex flex-column align-items-center g-2 mb-0">
-                                <span class="bi bi-heart mb-1"></span>
-                                방문
-                                <span>156</span>
-                            </p>
-                            <p class="card-text d-flex flex-column align-items-center g-2 mb-0">
-                                <span class="bi bi-heart mb-1"></span>
-                                조회수
-                                <span>156</span>
-                            </p>
+
                         </div>
                     </div> <!-- // 좋아요,북마크,리뷰,방문,조회수 -->
 
-                    <div class="card-body text-success">
-                        <h5 class="card-title">제주도에서 즐기는 봄꽃 여행</h5>
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${t.title}"></h5>
                         <p class="card-text">
                             <span>☆☆☆☆☆</span>
                             <small>156</small>
@@ -82,19 +105,22 @@
                         <h6>기본정보</h6>
                         <p class="card-text">
                             주소
-                            <span>서귀포</span>
+                            <span th:text="${t.address}"></span>
                         </p>
                         <p class="card-text">
                             연락처
-                            <span>01011112222</span>
+                            <span th:text="${t.phone}"></span>
                         </p>
                         <p class="card-text">
                             홈페이지
-                            <span>https://www.visitjeju.net/kr/</span>
+                            <a th:href="@{${urlAddress}}" th:text="${t.urlAddress}"></a>
+
                         </p>
                         <p class="card-text">
-                            등록일 / 수정일
-                            <span></span>
+                            <i class="bi bi-eye"></i>
+
+                            조회수
+                            <span th:text="${t.viewCount}"></span>
                         </p>
                     </div> <!---->
 
@@ -103,6 +129,11 @@
                         <textarea name="" id="" rows="4" class="form-control" th:text="${t.content}"></textarea>
                     </div>
                 </div>
+
+
+                <div>추천 여행지</div>
+
+
             </div> <!-- 게시글 상세 (왼쪽) -->
 
 
@@ -138,7 +169,7 @@
                             <span>
                                 여행가의 리뷰 <strong>52</strong>
                             </span>
-                            <a class="btn btn-danger" href="javascript:void(0)" id="loadReviewRegister">
+                            <a th:if="${session.loginUser!=null}" class="btn btn-danger" href="javascript:void(0)" id="loadReviewRegister">
                                 리뷰 작성하기
                             </a>
                         </p>
@@ -173,12 +204,11 @@
                          >
 <!--                         th:if="${session.loginUser!=null}">-->
                         <!-- 리뷰댓글 입력폼 -->
-                        <form enctype="multipart/form-data" name="reviewCmtInsertForm" method="post" action=""
+                        <form th:if="${session.loginUser!=null}" enctype="multipart/form-data" name="reviewCmtInsertForm" method="post" action=""
                              >
                             <div class="row align-items-center">
-                                <input type="hidden" name="uId">
-<!--                                <input type="hidden" name="uId" th:value="${session.loginUser.uId}">-->
-                                <input type="hidden" name="trcId"> <!-- 리뷰댓글 삭제시 필요한 pk -->
+                                <input type="hidden" name="uId"  th:value="${session.loginUser.uId}">
+                                <input type="hidden" name="trcId" > <!-- 리뷰댓글 삭제시 필요한 pk -->
                                 <div class="col-2">
                                     <input name="trId" placeholder="리뷰댓글" type="text" readonly class="form-control">
                                 </div>
@@ -263,6 +293,7 @@
                 `
             }
         }
+
     </script>
     <script th:inline="javascript">
         const reviewRegisterModal = new bootstrap.Modal(document.getElementById("reviewRegisterModal"), {}); // {} 이게 뭐지?
@@ -275,6 +306,9 @@
         const reviewCmtInsertForm=document.forms["reviewCmtInsertForm"];
         const reviewCont = document.getElementById("reviewCont");
         const removeReviewBtn=document.getElementById("removeReviewBtn");
+
+        // 리뷰수정 모달창 이미지 영역
+        const reviewModifyModalImgCont=document.getElementById("reviewModifyModalImgCont");
 
         // 리뷰 등록 버튼 => 리뷰등록 모달창 보이기
         const loadReviewRegister=document.getElementById("loadReviewRegister");
@@ -293,7 +327,7 @@
                         const json=await resp.json(); // json 객체
                         if(json.remove>0){
                             alert("삭제 성공");
-                            loadReviews(reviewModifyForm.tId.value);
+                            await loadReviews(reviewModifyForm.tId.value);
                         } else{
                             alert("삭제 실패(삭제된 레코드)");
                         }
@@ -333,7 +367,6 @@
         async function removeReviewCmt(trId,trcId){
             reviewCmtInsertForm.trId.value=trId;
             reviewCmtInsertForm.trcId.value=trcId;
-
             let c = confirm("삭제 하시겠습니까?"); // confirm 함수 => 확인 : true // 취소 : false
             // console.log(c);
             let url = "/reviewcmt/handler.do";
@@ -355,59 +388,47 @@
             }
         }
 
-        // if(reviewModifyModal){
-        //     // async function loadModifyReview(trId){
-        //     //     let url=`/review/${trId}/detail.do`;
-        //     //     const resp= await fetch(url);
-        //     //     if(resp.status===200){
-        //     //         const json=await resp.json();
-        //     //         console.log(json)
-        //     //         // input 의 이름 name => key 값
-        //     //         // {"trId":19,"content":"dddd 이미지 등록 삭제 테스트","visit":false,"postTime":"2023-04-20T23:05:13.000+00:00","updateTime":"2023-04-23T04:28:37.000+00:00","grade":0,"imgs":[{"triId":6,"trId":19,"imgPath":"테스트"},{"triId":43,"trId":19,"imgPath":"/public/img/trip/review/1682224117423_27386.jpeg"}],"user":{"pw":"1234","name":"김철수","nkName":"바보철수","email":"user01@example.com","birth":"1989-12-31T15:00:00.000+00:00","phone":"010-1234-5678","address":"서울특별시 강남구","detailAddress":"삼성동 123-45","prContent":"안녕하세요. 저는 철수입니다.","permission":"USER","mbti":"ISTJ","imgPath":"/public/img/trip/review/jeju1.jpeg","postTime":"2023-04-19T03:19:22.000+00:00","storeName":null,"businessId":null,"uid":"USER01"},"tId":1,"uId":"user01"}
-        //     //         reviewModifyForm.querySelectorAll("[name]").forEach((input)=>{
-        //     //             let key=input.name;
-        //     //             if(key in json) {
-        //     //                 if(key==="imgPath"){
-        //     //                     input.src=json[key];
-        //     //                 }
-        //     //                 else{
-        //     //                     input.value=json[key];
-        //     //                 }
-        //     //             }
-        //     //         })
-        //     //         reviewModifyModal.show();
-        //     //     } else{
-        //     //         alert("불러오기 실패 status: " + resp.status);
-        //     //     }
-        //     // }
-        //
-        // }
-
-        async function loadModifyReview(trId){
-            let url=`/review/${trId}/detail.do`;
-            const resp= await fetch(url);
-            if(resp.status===200){
-                const json=await resp.json();
-                console.log(json)
-                // input 의 이름 name => key 값
-                // {"trId":19,"content":"dddd 이미지 등록 삭제 테스트","visit":false,"postTime":"2023-04-20T23:05:13.000+00:00","updateTime":"2023-04-23T04:28:37.000+00:00","grade":0,"imgs":[{"triId":6,"trId":19,"imgPath":"테스트"},{"triId":43,"trId":19,"imgPath":"/public/img/trip/review/1682224117423_27386.jpeg"}],"user":{"pw":"1234","name":"김철수","nkName":"바보철수","email":"user01@example.com","birth":"1989-12-31T15:00:00.000+00:00","phone":"010-1234-5678","address":"서울특별시 강남구","detailAddress":"삼성동 123-45","prContent":"안녕하세요. 저는 철수입니다.","permission":"USER","mbti":"ISTJ","imgPath":"/public/img/trip/review/jeju1.jpeg","postTime":"2023-04-19T03:19:22.000+00:00","storeName":null,"businessId":null,"uid":"USER01"},"tId":1,"uId":"user01"}
-                reviewModifyForm.querySelectorAll("[name]").forEach((input)=>{
-                    let key=input.name;
-                    if(key in json) {
-                        if(key==="imgPath"){
-                            input.src=json[key];
-                        }
-                        else{
-                            input.value=json[key];
+        // {"trId":19,"content":"dddd 이미지 등록 삭제 테스트","visit":false,"postTime":"2023-04-20T23:05:13.000+00:00","updateTime":"2023-04-23T04:28:37.000+00:00","grade":0,"imgs":[{"triId":6,"trId":19,"imgPath":"테스트"},{"triId":43,"trId":19,"imgPath":"/public/img/trip/review/1682224117423_27386.jpeg"}],"user":{"pw":"1234","name":"김철수","nkName":"바보철수","email":"user01@example.com","birth":"1989-12-31T15:00:00.000+00:00","phone":"010-1234-5678","address":"서울특별시 강남구","detailAddress":"삼성동 123-45","prContent":"안녕하세요. 저는 철수입니다.","permission":"USER","mbti":"ISTJ","imgPath":"/public/img/trip/review/jeju1.jpeg","postTime":"2023-04-19T03:19:22.000+00:00","storeName":null,"businessId":null,"uid":"USER01"},"tId":1,"uId":"user01"}
+            async function loadModifyReview(trId){
+                let url=`/review/${trId}/detail.do`;
+                const resp= await fetch(url);
+                if(resp.status===200){
+                    const json=await resp.json();
+                    console.log(json)
+                    // input 의 이름 name => key 값
+                    for(let key in json){ // json 에서 값 가져오기
+                        if(key!=="imgs"){ // json key 이름이 이미지가 아니면
+                            console.log(key)
+                            // querySelectorAll 은 배열이라서, forEach 로 반복문 돌려서 요소를 빼냄
+                            reviewModifyForm.querySelectorAll("[name]").forEach((input)=>{
+                                key=input.name;
+                                input.value=json[key];
+                            })
+                        } else{ // json key 이름 == imgs
+                            const imgs=json[key];
+                            reviewModifyModalImgCont.innerHTML = "";
+                            imgs.forEach((img,index)=>{
+                                if(img.imgPath)
+                                    reviewModifyModalImgCont.insertAdjacentHTML("beforeend", reviewModifyImgComponent(img));
+                            })
                         }
                     }
-                })
-                reviewModifyModal.show();
-            } else{
-                alert("불러오기 실패 status: " + resp.status);
+                    reviewModifyModal.show();
+                } else{
+                    alert("불러오기 실패 status: " + resp.status);
+                }
             }
-        }
 
+
+        function reviewModifyImgComponent(img){
+            return `
+                 <label class="w-25 delImgItem"> <!-- 리뷰한개의 각 1개의 이미지 -->
+                    <i class="bi bi-x"></i>
+                    <input type="checkbox" class="delImgInput" name="delImgId" value="${img.triId}">
+                    <img name="imgPath" src="${img.imgPath}" class="img-thumbnail" alt="">
+                </label>
+            `
+        }
 
         reviewRegisterForm.onsubmit = registerReview;
         async function registerReview(e) {
@@ -432,8 +453,6 @@
             }else if(resp.status===500) { // 팔로잉 했는데 한번더 팔로잉하면 db 오류 발생 or db 통신오류 // 500 에러
                 alert("이미 팔로잉되었거나 또는 오류가 발생했으니 새로고침하고 다시 시도하세요");
             }
-
-
         }
 
         if(reviewModifyModal){
@@ -448,7 +467,7 @@
                     const json=await resp.json();
                     if(json.modify>0) {
                         alert("수정성공");
-                        loadReviews(reviewModifyForm.tId.value);
+                        await loadReviews(reviewRegisterForm.tId.value);
                     }
                 }else{
                     alert("수정 실패 status : " + resp.status);
@@ -472,10 +491,41 @@
         }
 
 
+        // 북마크 등록
+        async function registerBookMark(tId,btn){
+            let check=confirm("북마크를 등록하시겠습니까?");
+            let url=`/bookmark/trip/${tId}/handler.do`;
+            if(check){
+                const resp=await fetch(url,{method:"POST"});
+                if(resp.status===200){
+                    const json=await resp.json();
+                    if(json.handler>0){
+                        alert("북마크 등록 성공");
+                    }else {
+                        alert("북마크 등록 실패. 다시 시도하세요");
+                    }
+                } else if (resp.status===400) {
+                    alert("로그인 하셔야 이용할 수 있는 서비스 입니다.");
+                }else if(resp.status===500){
+                    alert("이미 북마크되었거나 오류가 발생했으니 새로고침하고 다시 시도하세요~");
+                }
+            }
+        }
+
+
+        // 별점 등록
+        const stars = document.querySelectorAll(".star-rating input[type='radio']");
+        const ratingValue = document.querySelector("#rating-value");
+
+        for (let i = 0; i < stars.length; i++) {
+            stars[i].addEventListener("click", function() {
+                ratingValue.value = stars[i].value;
+            });
+        }
+
 
 
     </script>
-
 
 </div>
 </html>
