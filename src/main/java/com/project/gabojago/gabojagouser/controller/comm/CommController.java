@@ -62,6 +62,16 @@ public class CommController {
             redirectAttributes.addFlashAttribute("msg",msg);
             return "redirect:/user/login.do";
         }
+        if(loginUser.getPlans()==null){
+            String msg="일정을 만들어야지만 글을 쓸 수 있습니다!";
+            redirectAttributes.addFlashAttribute("msg",msg);
+            return "redirect:/plan/list.do";
+        }
+        if(loginUser.getPermission().equals("PARTNER")){
+            String msg="USER만 글을 쓸 수 있습니다.";
+            redirectAttributes.addFlashAttribute("msg",msg);
+            return "redirect:/comm/list.do";
+        }
         return "/comm/register";
     }
     @PostMapping("/register.do")
