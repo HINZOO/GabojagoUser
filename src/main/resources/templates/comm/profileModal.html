@@ -10,18 +10,44 @@
       <div class="modal-body">
         <div class="text-center p-0">
           <p><img class="profile img-thumbnail rounded-circle w-25 h-25" style="image-size:cover"
-                  src="https://taegon.kim/wp-content/uploads/2018/05/image-5.png"></p>
+                  th:src="@{'{path}'(path=${c.user.imgPath})}"></p>
           <h5 th:text="${c.user.getNkName()}" class="mb-0"></h5>
           (<small  class="text-muted" th:text="${c.user.getUId()}"></small>)
+          <div class="d-flex justify-content-center">
+            <small class="me-3">
+              <span class="text-primary">팔로워</span>
+              <span class=" ms-1" th:text="${(c.user.followers!=null)?c.user.followers.size():0}"></span><br>
+            </small>
+            <small>
+              <span class=" text-primary ">팔로잉</span>
+              <span class=" ms-1" th:text="${(c.user.followings!=null)?c.user.followings.size():0}"></span><br>
+            </small>
+          </div>
           <p class="mt-1">
-            <a class="btn btn-outline-success btn-sm me-2">팔로우</a>
+            <button  type="button"
+                     th:onclick="toggleFollowing([[${c.uId}]],this)"
+                     class="btn btn-outline-success active btn-sm">팔로잉</button>
             <a class="btn btn-outline-success btn-sm">쪽지</a>
           </p>
         </div>
         <hr>
         <div class="">
-          <h5><span th:text="${c.user.nkName}"></span>님의 일정</h5>
-          <p>일정들어가는곳</p>
+
+            <div class="list-group">
+              <a href="#" class="list-group-item list-group-item-action active bg-success" aria-current="true">
+                <h6>
+                  <i class="bi bi-calendar me-2"></i>
+                  <span th:text="${c.user.nkName}"></span> 님의 일정
+                </h6>
+              </a>
+              <th:block  th:each="p:${c.user.plans}">
+                <div class="list-group-item list-group-item-action">
+                  <i class="bi bi-clipboard me-2"></i>
+                  <a  class="text-dark link-primary" href="#"  th:text="${p.title}"></a>
+                </div>
+              </th:block>
+            </div>
+
         </div>
 
       </div>

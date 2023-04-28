@@ -20,8 +20,8 @@
     <result column="business_id" property="businessId"/>
     <result column="status" property="status"/>
     <result column="email_check_code" property="emailCheckCode"/>
-    <association property="following"
-                 select="com.project.gabojago.gabojagouser.mapper.my.FollowMapper.findByToIdAndFromIdIsLoginUserId"
+    <association property="mileages"
+                 select="com.project.gabojago.gabojagouser.mapper.my.MileageMapper.findByUId"
                  column="u_id"
                  fetchType="eager"/>
     <collection property="followings"

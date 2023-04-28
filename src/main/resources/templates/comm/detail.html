@@ -20,13 +20,13 @@
                 <div  class="col-1 me-1" >
                     <a href="" class="profile">
                         <img class="profile img-thumbnail rounded-circle w-100 h-100" style="image-size:cover"
-                         src="https://taegon.kim/wp-content/uploads/2018/05/image-5.png">
+                         th:src="@{'{path}'(path=${c.user.imgPath})}">
                     </a>
 <!--                         th:src="@{'{path}'(path=${c.user.imgPath})}">-->
                 </div>
                 <div class="col-2 text-center" >
-                    <a href="#" th:text="${c.user.nkName}" class="profile"></a><br>
-                    (@<span th:text="${c.user.uId}"></span>)
+                    <a href="#" th:text="${c.user.nkName}" class="profile pb-0 text-decoration-none fw-bold"></a><br>
+                    (@<small th:text="${c.user.uId}"></small>)
                 </div>
                 <h4 class="card-title col-7" th:text="${c.title}"></h4>
                 <div class="col-2 d-flex">
