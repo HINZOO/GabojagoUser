@@ -12,7 +12,7 @@
         <div class="row">
 
             <!--    사이드바 -->
-            <div class="col-md-2" ></div>
+            <div class="col-md-2" id="forModal"></div>
 
             <div class="col-md-8 mainSection px-0">
                 <div class="row mainHeader px-0 ">
@@ -164,7 +164,7 @@
                         </div> <!--col 9-->
 
                     <div class="col-md-2 scheduleInputBox">
-                        <div id="newScheduleBtn">
+                        <div id="newScheduleBtn" onclick=scheduleInsert()>
                             <i class="bi bi-plus-circle"></i>
                         </div>
                     </div>
@@ -197,67 +197,6 @@
 
     </div> <!--그리드 row 닫기-->
 
-<!--새 플랜 모달 부분-->
-    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
-            <div class="modal-content">
-                <div class="modal-header bg-primary bg-opacity-10">
-                    <h1 class="modal-title fs-5" id="staticBackdropLabel">새 스케쥴 작성</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form  method="post" id="scheduleInsertForm">
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="row">
-                                    <input type="text" class="form-control" name="pId" th:value="${plan.getPId()}"  id="floatingId" placeholder="" hidden>
-                                    <input type="text" class="form-control" name="tId" value="" id="tId" placeholder="" hidden>
-                                    <input type="text" class="form-control" name="sId" value="" id="sId" placeholder="" hidden>
-
-                                    <div class="col-12 mb-3">
-                                        <div class="form-floating">
-                                            <input type="text" class="form-control" name="title" id="floatingTitle" placeholder="">
-                                            <label for="floatingTitle">여행지</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-6 mb-3">
-                                        <div class="form-floating">
-                                            <input type="time" class="form-control" name="sTime" id="sTime" placeholder="">
-                                            <label for="sTime">시작시간</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-6 mb-3">
-                                        <div class="form-floating">
-                                            <input type="time" class="form-control" name="eTime" id="eTime" placeholder="" value="">
-                                            <label for="eTime">끝시간</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 mb-3">
-                                        <div class="form-floating">
-                                            <input type="text" class="form-control" name="info" id="info" placeholder="">
-                                            <label for="info">경유지 & 메모</label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="form-floating">
-                                    <input type="" class="form-control" name="" id="floatingImg" placeholder="">
-                                    <label for="floatingImg">북마크넣을부분</label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary">만들기</button>
-                        </div>
-                    </form>
-                </div>
-
-            </div>
-        </div>
-    </div>
-
     <!--      채팅방      -->
     <i class="bi bi-chat-dots-fill chatBtn" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling"></i>
     <th:block th:include="/plan/chatting"></th:block>
@@ -268,18 +207,36 @@
 
         let activatedCanvas;
 
-        // 캔버스 인스턴스 저장용
+        // 캔버스 인스턴스 저장용 맵
         let canvasMap = new Map();
 
+        // 캔버스 현재 상태 이미지로 업로드
         const saveBtn = document.getElementById("saveBtn");
         saveBtn.addEventListener("click", canvasImgSave);
 
         function canvasImgSave(){
             canvasMap.forEach(async (ele)=>{
                 let data = new FormData();
-                data.set("conId",ele.id);
+                data.set("conId",ele.conId);
                 data.set("img",ele.canvas.toDataURL());
                 let url =`/plan/contents/imgUpdate.do`
+                const resp = await fetch(url,{method:"PUT",body:data});
+                const result = await resp.json();
+                if(resp.status===200 && result>0){
+                    console.log(ele.conId + " 번 캔버스 이미지 업로드 성공!")
+                } else {
+                    alert(ele.conId + " 번 캔버스 이미지 업로드 실패! status :"+resp.status);
+                }
+            })
+        }
+
+        // 캔버스 현재 상태 layer 데이터로 업로드
+        function canvaslayerSave(){
+            canvasMap.forEach(async (ele)=>{
+                let data = new FormData();
+                data.set("pathId",ele.pathId);
+                data.set("layer",JSON.stringify(ele.layerArr));
+                let url =`/plan/contents/layerUpdate.do`
                 const resp = await fetch(url,{method:"PUT",body:data});
                 const result = await resp.json();
                 if(resp.status===200 && result>0){
@@ -290,13 +247,12 @@
             })
         }
 
+        window.onbeforeunload = function (){
+            canvaslayerSave();
+        }
 
 
-
-
-
-
-        // ############### 페이지 기본 CRUD 기능 ############### //
+        // ############### 개별 스케쥴 CRUD ############### //
 
         // 게시글을 로드 할 때 화면 초기화 스케쥴이 추가되고 그림판까지 만든 경우와, 그림판은 만들지 않은 경우를 구분하여 처리
         document.addEventListener("DOMContentLoaded",()=>{
@@ -308,38 +264,10 @@
             initArr.forEach((a)=>{
                let ele = document.querySelector(`#content_${a.conId}`).lastElementChild;
                 // console.log(a.pathId)
-                newCanvas(ele,a.pathId,a.canPath);
+                // console.log(a.conId)
+                newCanvas(ele, a.conId, a.pathId, a.canPath);
             });
         });
-
-
-        // 새 스케쥴 생성하는 경우
-        const newScheduleBtn = document.querySelector("#newScheduleBtn");
-        const newScheduleBtnM = new bootstrap.Modal(document.getElementById('staticBackdrop'),{});
-        newScheduleBtn.addEventListener("click",()=>{
-            newScheduleBtnM.show();
-        });
-
-        const scheduleInsertForm = document.getElementById("scheduleInsertForm");
-        scheduleInsertForm.onsubmit=registerSchedule;
-
-        async function registerSchedule(e){
-            e.preventDefault();
-            const data=new FormData(scheduleInsertForm);
-            let sTime = !data.get("sTime") ? "--:--" : data.get("sTime");
-            let eTime = !data.get("eTime") ? "--:--" : data.get("eTime");
-            data.append("time", sTime + " ~ " + eTime)
-
-            let url="/plan/contents/insert.do"
-            const resp=await fetch(url,{method:"POST",body:data});
-            if(resp.status===200){
-                const json=await resp.json();
-                document.getElementById("accordionSection").insertAdjacentHTML("beforeend",accordionInsert(json.conId,json.time,json.title,json.info))
-                newScheduleBtnM.hide();
-            }else {
-                alert("등록 실패 status :"+resp.status);
-            }
-        }
 
         // 화이트보드를 추가 하는 경우
         async function newCanvasReg(ele){
@@ -349,9 +277,8 @@
             let url =`/plan/contents/canvasHandler.do`
             const resp = await fetch(url,{method:"POST",body:data});
             const result = await resp.json();
-
             if(resp.status===200){
-                newCanvas(ele, result.pathId);
+                newCanvas(ele, result.conId, result.pathId);
             }else {
                 alert("캔버스 생성 실패 status :"+resp.status);
             }
@@ -375,6 +302,87 @@
                 }
             }
         }
+
+        // 캔버스 인스턴스 생성용
+        function newCanvas(ele, conId, pathId, path=null){
+            let w = document.querySelector(".accordion-item").clientWidth;
+            let h = 500/1200*w+16; //16은 부트스트랩 아코디언바디에 설정된 상하 패딩값을 보정해준 것
+            ele.style.height = h +"px";
+            let newCanvas = new CanvasCreate(conId, pathId, path);
+            let canvas = newCanvas.canvas;
+            canvas.setAttribute("id",pathId)
+            ele.lastElementChild.style.display = "none"
+            ele.append(canvas);
+            canvasMap.set(pathId, newCanvas);
+        }
+
+        function accordionInsert(conId, time, title, info){
+            return `<div class="accordion-item">
+                        <h2 class="accordion-header">
+                          <button class="accordion-button collapsed scheduleBtn" type="button" data-bs-toggle="collapse"
+                           data-bs-target="#content_${conId}" aria-expanded="false" aria-controls="#content_${conId}">
+                             <div class="scheduleTime">${time}</div>
+                              <div class="scheduleLeft"><br><i class="bi bi-three-dots-vertical"></i></div>
+                              <div class="scheduleContainer">
+                                  <p class="scheduleCenter">
+                                      <span class="scheduleTitle">${title}</span>
+                                      <span class="scheduleContent">${info}</span>
+                                  </p>
+                              </div>
+                          </button>
+                        </h2>
+                        <div id="content_${conId}" class="accordion-collapse collapse " data-bs-parent="#accordionSection">
+                            <p class="scheduleSideBtn1 sbHover"><i class="bi bi-three-dots"></i></p>
+                            <p class="scheduleSideBtn2 sbHover" onclick=newCanvasDel(this)><i class="bi bi-trash3"></i></p>
+                            <div class="accordion-body">
+                                <p class="newCanvasBtn" onclick=newCanvasReg(this.parentElement)><i class="bi bi-plus-circle"></i></p>
+                            </div>
+                        </div>
+                    </div>`;
+        }
+
+        // 새 스케쥴 생성하는 경우
+        const forModal = document.getElementById("forModal");
+        let scheduleModal;
+
+        // 새 스케쥴 폼 불러오기
+        async function scheduleInsert(){
+            let url = "/plan/contents/scheduleForm.do"
+            const resp = await fetch(url,{method:"GET"});
+            const result = await resp.text();
+            if(resp.status===200){
+                forModal.insertAdjacentHTML("beforeend",result)
+                scheduleModal = new bootstrap.Modal(document.getElementById('newScheduleModal'), {});
+                scheduleModal.show();
+            }else {
+                alert("입력 폼 로딩 실패 :"+resp.status);
+            }
+
+        }
+
+        // 새 스케쥴 등록 후 아코디언 생성
+        async function registerSchedule(e){
+            const scheduleInsertForm = document.getElementById("scheduleInsertForm");
+            const data=new FormData(scheduleInsertForm);
+            let sTime = !data.get("sTime") ? "--:--" : data.get("sTime");
+            let eTime = !data.get("eTime") ? "--:--" : data.get("eTime");
+            data.append("time", sTime + " ~ " + eTime);
+            data.set("pId", [[${plan.getPId()}]]);
+
+            let url= "/plan/contents/insert.do";
+            const resp = await fetch(url,{method:"POST", body:data});
+            if(resp.status===200){
+                const json=await resp.json();
+                document.getElementById("accordionSection").insertAdjacentHTML("beforeend",accordionInsert(json.conId,json.time,json.title,json.info))
+                scheduleModal.hide();
+                forModal.innerHTML=' ';
+            }else {
+                alert("등록 실패 status :"+resp.status);
+            }
+
+        }
+
+        // ############### 체크리스트 CRUD ############### //
 
         // 체크리스트 폼 생성 하는 경우
         function tdlInsert(pId){
@@ -448,43 +456,6 @@
             }
         }
 
-        // 캔버스 인스턴스 생성용
-        function newCanvas(ele,pathId,path=null){
-            let w = document.querySelector(".accordion-item").clientWidth;
-            let h = 500/1200*w+16; //16은 부트스트랩 아코디언바디에 설정된 상하 패딩값을 보정해준 것
-            ele.style.height = h +"px";
-            let newCanvas = new CanvasCreate(pathId, path);
-            let canvas = newCanvas.canvas;
-            canvas.setAttribute("id",pathId)
-            ele.lastElementChild.style.display = "none"
-            ele.append(canvas);
-            canvasMap.set(pathId,newCanvas);
-        }
-
-        function accordionInsert(conId, time, title, info){
-            return `<div class="accordion-item">
-                        <h2 class="accordion-header">
-                          <button class="accordion-button collapsed scheduleBtn" type="button" data-bs-toggle="collapse"
-                           data-bs-target="#content_${conId}" aria-expanded="false" aria-controls="#content_${conId}">
-                             <div class="scheduleTime">${time}</div>
-                              <div class="scheduleLeft"><br><i class="bi bi-three-dots-vertical"></i></div>
-                              <div class="scheduleContainer">
-                                  <p class="scheduleCenter">
-                                      <span class="scheduleTitle">${title}</span>
-                                      <span class="scheduleContent">${info}</span>
-                                  </p>
-                              </div>
-                          </button>
-                        </h2>
-                        <div id="content_${conId}" class="accordion-collapse collapse " data-bs-parent="#accordionSection">
-                            <p class="scheduleSideBtn1 sbHover"><i class="bi bi-three-dots"></i></p>
-                            <p class="scheduleSideBtn2 sbHover" onclick=newCanvasDel(this)><i class="bi bi-trash3"></i></p>
-                            <div class="accordion-body">
-                                <p class="newCanvasBtn" onclick=newCanvasReg(this.parentElement)><i class="bi bi-plus-circle"></i></p>
-                            </div>
-                        </div>
-                    </div>`;
-        }
 
         // ############### 채팅방 관련 기능 ############### //
 
@@ -500,6 +471,7 @@
 
         // stomp.connect로 접속하고 구독 상태를 유지
         stomp.connect({}, function (){
+            stomp.unsubscribe()
             // subscribe(path, callback) => path 경로로 메세지가 들어오면 콜백 함수를 실행
             stomp.subscribe("/sub/plan/room/" + roomId, function (chat) {
                 let content = JSON.parse(chat.body);
@@ -525,9 +497,7 @@
                     canvasMap.get(content.pk).receiver(content.path);
                 }
             });
-            console.log(stomp.counter)
-            console.log(stomp.subscriptions)
-            console.log(stomp.partialData)
+
             // send(path, header, message)로 메세지를 보낼 수 있음
             // 최초 연결시 입장 정보 알림
             stomp.send('/pub/plan/enter', {}, JSON.stringify({roomId: roomId, writer: username, system : true}))
@@ -546,6 +516,8 @@
                      <b>${writer}:${msg}</b>
                     </div>`
         }
+
+
 
 
 

@@ -46,14 +46,22 @@ public class PlanContentsController {
         private int modify;
         private int remove;
     }
+    @GetMapping("/scheduleForm.do")
+    public String insertForm(
+            Model model)
+    {
+        return "/plan/scheduleForm";
+    }
 
     @PostMapping("/insert.do")
     public @ResponseBody PlanContentsDto insert(
-            @ModelAttribute PlanContentsDto content) throws IOException
+            @ModelAttribute PlanContentsDto content)
     {
+        log.info("테스트123" + content);
             int register = planContentsService.register(content);
             return content;
     }
+
     @PutMapping("/imgUpdate.do")
     public @ResponseBody int imgUpdate(
            @RequestParam(value = "conId", required = true) int conId,
@@ -94,10 +102,20 @@ public class PlanContentsController {
 
         return update;
     }
+    @PutMapping("/layerUpdate.do")
+    public @ResponseBody int layerUpdate(
+            @RequestParam(value = "pathId", required = true) int pathId,
+            @RequestParam(value = "layer", required = false) String layer)
+    {
+        PlanContentPathsDto pathsDto = planContentPathsService.detail(pathId);
+        pathsDto.setCanPath(layer);
+        int update = planContentPathsService.updatePath(pathsDto);
+        return  update;
+    }
 
     @PostMapping ("/canvasHandler.do")
     public @ResponseBody PlanContentPathsDto register(
-            @ModelAttribute PlanContentPathsDto path) throws IOException
+            @ModelAttribute PlanContentPathsDto path)
     {
         planContentPathsService.register(path);
         return path;
@@ -106,7 +124,7 @@ public class PlanContentsController {
     // 캔버스 삭제시
     @DeleteMapping ("/canvasHandler.do")
     public @ResponseBody int delete(
-            @RequestBody String pathId) throws IOException
+            @RequestBody String pathId)
     {
         int delete = planContentPathsService.delete(Integer.parseInt(pathId));
 

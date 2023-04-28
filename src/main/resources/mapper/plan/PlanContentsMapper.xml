@@ -39,4 +39,5 @@
     <select id="findByConId" resultMap="planContentsMap">
         SELECT * FROM plan_contents WHERE con_id=#{conId}
     </select>
+
 </mapper>

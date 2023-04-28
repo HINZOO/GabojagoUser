@@ -1,0 +1,60 @@
+<div class="modal fade" id="newScheduleModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header bg-primary bg-opacity-10">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">새 스케쥴 작성</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="scheduleInsertForm">
+          <div class="row">
+            <div class="col-6">
+              <div class="row">
+                <input type="text" class="form-control" name="pId"  id="floatingId" placeholder="" hidden>
+                <input type="text" class="form-control" name="tId" value="" id="tId" placeholder="" hidden>
+                <input type="text" class="form-control" name="sId" value="" id="sId" placeholder="" hidden>
+
+                <div class="col-12 mb-3">
+                  <div class="form-floating">
+                    <input type="text" class="form-control" name="title" id="floatingTitle" placeholder="">
+                    <label for="floatingTitle">여행지</label>
+                  </div>
+                </div>
+                <div class="col-6 mb-3">
+                  <div class="form-floating">
+                    <input type="time" class="form-control" name="sTime" id="sTime" placeholder="">
+                    <label for="sTime">시작시간</label>
+                  </div>
+                </div>
+                <div class="col-6 mb-3">
+                  <div class="form-floating">
+                    <input type="time" class="form-control" name="eTime" id="eTime" placeholder="" value="">
+                    <label for="eTime">끝시간</label>
+                  </div>
+                </div>
+                <div class="col-12 mb-3">
+                  <div class="form-floating">
+                    <input type="text" class="form-control" name="info" id="info" placeholder="">
+                    <label for="info">경유지 & 메모</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="form-floating">
+                <input type="" class="form-control" name="" id="floatingImg" placeholder="">
+                <label for="floatingImg">북마크넣을부분</label>
+              </div>
+            </div>
+          </div>
+        </form>
+          <div class="modal-footer">
+            <button class="btn btn-primary" onclick=registerSchedule()>만들기</button>
+          </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
