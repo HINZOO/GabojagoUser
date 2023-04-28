@@ -143,8 +143,9 @@ public class CommController {
         String redirectPage="redirect:/comm/"+commBoard.getCId()+"/modify.do";
         List<CommImgDto> imgDtos=null;
         int modify=0;
-        //if(imgs!=null){
+        if(imgs!=null){
             imgDtos=new ArrayList<>();
+
             for(MultipartFile img:imgs){
                 if(!img.isEmpty()){
                     String[] contentTypes=img.getContentType().split("/");
@@ -159,7 +160,7 @@ public class CommController {
                     }
                 }
             }
-       // }
+        }
         commBoard.setImgs(imgDtos);
         try{
             if(delImgIds!=null) imgDtos=communityService.imgList(delImgIds);
