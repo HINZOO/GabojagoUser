@@ -9,7 +9,8 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface PlanContentPathsMapper {
 
-    int insert(PlanContentPathsDto conId);
-//    int updateOne(PlanContentPathsDto planContentPathsDto);
+    PlanContentPathsDto findByPathId(int pathId);
+    int insert(PlanContentPathsDto pathsDto);
+    int updateOne(PlanContentPathsDto pathsDto);
     int deleteOne(int pathId);
 }

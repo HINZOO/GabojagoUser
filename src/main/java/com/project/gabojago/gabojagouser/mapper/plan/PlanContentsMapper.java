@@ -8,10 +8,10 @@ import java.util.List;
 @Mapper
 public interface PlanContentsMapper {
     List<PlanContentsDto> findAll();
-//    List<PlanContentsDto> findByUId(String uId);
-//    PlanDto findByPId(int pId);
     List<PlanContentsDto> findByPId(int pId);
+    PlanContentsDto findByConId(int conId);
     int insertOne(PlanContentsDto planContent);
     int updateOne(PlanContentsDto planContent);
+    int updateImg(PlanContentsDto planContent);
     int deleteOne(PlanContentsDto conId);
 }

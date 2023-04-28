@@ -56,4 +56,10 @@
         WHERE u_id = #{uId}
         OR p_id IN (SELECT p_id FROM plan_members WHERE mu_id=#{uId})
     </select>
+    <select id="findByBookmarked" resultMap="planMap">
+        SELECT *
+        FROM plans
+        INNER JOIN (SELECT * FROM comm_bookmarks WHERE u_id=#{uId}) AS com
+        USING (p_id)
+    </select>
 </mapper>
