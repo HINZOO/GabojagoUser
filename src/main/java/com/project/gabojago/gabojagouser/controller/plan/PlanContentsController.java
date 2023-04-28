@@ -1,8 +1,11 @@
 package com.project.gabojago.gabojagouser.controller.plan;
 
+import com.project.gabojago.gabojagouser.dto.comm.CommBookmarkDto;
 import com.project.gabojago.gabojagouser.dto.plan.PlanContentPathsDto;
 import com.project.gabojago.gabojagouser.dto.plan.PlanContentsDto;
 import com.project.gabojago.gabojagouser.dto.plan.PlanDto;
+import com.project.gabojago.gabojagouser.dto.user.UserDto;
+import com.project.gabojago.gabojagouser.service.comm.CommBookMarkService;
 import com.project.gabojago.gabojagouser.service.plan.PlanContentPathsService;
 import com.project.gabojago.gabojagouser.service.plan.PlanContentsService;
 import com.project.gabojago.gabojagouser.service.plan.PlanService;
@@ -32,12 +35,17 @@ import java.util.List;
 public class PlanContentsController {
     private PlanContentsService planContentsService;
     private PlanContentPathsService planContentPathsService;
+    private PlanService planService;
     @Value("${static.path}")
     private String staticPath;
 
-    public PlanContentsController(PlanContentsService planContentsService, PlanContentPathsService planContentPathsService) {
+    public PlanContentsController(PlanContentsService planContentsService,
+                                  PlanContentPathsService planContentPathsService,
+                                  PlanService planService)
+    {
         this.planContentsService = planContentsService;
         this.planContentPathsService = planContentPathsService;
+        this.planService = planService;
     }
 
     @Data
@@ -48,8 +56,12 @@ public class PlanContentsController {
     }
     @GetMapping("/scheduleForm.do")
     public String insertForm(
+            @SessionAttribute UserDto loginUser,
             Model model)
     {
+
+        List<PlanDto> dto = planService.list(loginUser.getUId());
+        model.addAttribute("bPlans",dto);
         return "/plan/scheduleForm";
     }
 

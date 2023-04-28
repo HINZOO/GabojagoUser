@@ -23,6 +23,11 @@ public class PlanServiceImp implements PlanService {
     }
 
     @Override
+    public List<PlanDto> bookmarkedList(String uId) {
+        return planMapper.findByBookmarked(uId);
+    }
+
+    @Override
     public PlanDto detail(int pId) {
         return planMapper.findByPId(pId);
     }

@@ -584,6 +584,14 @@ canvas{
 #newScheduleBtn:hover{
     background-color: #595959;
 }
+.bkDiv{
+    width: 100%;
+}
+.bkBtn {
+    text-align: left;
+    width: 100% ;
+    background-color: whitesmoke;
+}
 
 
 
@@ -760,4 +768,5 @@ canvas{
     text-align: left;
     font-size: 12px;
 }
+
 
