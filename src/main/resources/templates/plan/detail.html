@@ -263,11 +263,33 @@
     <th:block th:include="/plan/chatting"></th:block>
 
     <script th:inline="javascript">
+
+        // ############### 커뮤니티 출력용 캔버스 이미지 & 경로 데이터 업데이트 기능 ############### //
+
         let activatedCanvas;
         // 캔버스 인스턴스 저장용
-        let canvasMap=new Map();
+        let canvasMap = new Map();
 
-        document.getElementById("saveBtn");
+        const saveBtn = document.getElementById("saveBtn");
+        saveBtn.addEventListener("click", canvasImgSave);
+
+        function canvasImgSave(){
+            canvasMap.forEach(async (ele) => {
+                let data = new FormData();
+                data.set("cId",ele.id);
+                data.set("img",ele.canvas.toDataURL());
+                let url =`/plan/contents/imgUpdate.do`
+                const resp = await fetch(url,{method:"PUT",body:data});
+                const result = await resp.json();
+                if(resp.status===200){
+
+                }else {
+                    // alert("캔버스 생성 실패 status :"+resp.status);
+                }
+            })
+        }
+
+
 
 
 
@@ -318,16 +340,6 @@
                 alert("등록 실패 status :"+resp.status);
             }
         }
-
-        // 스케쥴 수정.삭제 버튼
-        Array.from(document.getElementsByClassName("scheduleSideBtn2")).forEach((ele)=>{
-            let conId
-            ele.addEventListener("click",()=>{
-
-            })
-        })
-
-
 
         // 화이트보드를 추가 하는 경우
         async function newCanvasReg(ele){
@@ -400,6 +412,7 @@
                 alert("체크리스트 등록 실패 status :"+resp.status);
             }
         }
+
         // 체크리스트 상태 수정 하는 경우
         async function tdlModify(ele){
             const form = ele.parentElement;
@@ -434,7 +447,6 @@
                 alert("체크리스트 삭제 실패 status :"+resp.status);
             }
         }
-
 
         // 캔버스 인스턴스 생성용
         function newCanvas(ele,pathId,path=null){

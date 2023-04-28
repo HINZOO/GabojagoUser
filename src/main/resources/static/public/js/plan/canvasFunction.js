@@ -181,6 +181,7 @@ class CanvasCreate {
                     co.canvas.offCtx.clearRect(0,0,1200,500)
                     co.canvas.removeEventListener("mousedown",drawHandler)
                     co.activatedTool = " ";
+                    co.canvasRestore();
                 },{once:true});
         }
         co.canvas.addEventListener("mousedown",drawHandler)

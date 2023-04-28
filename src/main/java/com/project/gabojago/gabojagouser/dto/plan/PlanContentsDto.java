@@ -16,7 +16,6 @@ public class PlanContentsDto {
     private String info; // 부가정보
     private String time; // 시간정보
     private String imgPath; // 내보내기용 이미지 경로
-
-    private PlanContentPathsDto path;
+    private PlanContentPathsDto path; // 그리기용 경로 데이터
 
 }
