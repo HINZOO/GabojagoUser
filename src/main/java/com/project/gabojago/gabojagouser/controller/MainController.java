@@ -33,7 +33,7 @@ public class MainController {
         tripPageDto.setPageSize(4);
         commPageDto.setPageSize(4);
         sellPageDto.setPageSize(4);
-        List<TripDto> tripList=tripService.list(tripPageDto);
+        List<TripDto> tripList=tripService.likesList(tripPageDto);
         List<CommunityDto> commList=commService.likesList(commPageDto);
         List<SellsDto> sellsList=sellsService.List(sellPageDto);
         model.addAttribute("trip",tripList);

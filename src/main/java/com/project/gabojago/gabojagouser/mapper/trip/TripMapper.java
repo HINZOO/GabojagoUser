@@ -1,5 +1,7 @@
 package com.project.gabojago.gabojagouser.mapper.trip;
 
+import com.project.gabojago.gabojagouser.dto.comm.CommPageDto;
+import com.project.gabojago.gabojagouser.dto.comm.CommunityDto;
 import com.project.gabojago.gabojagouser.dto.trip.TripDto;
 import com.project.gabojago.gabojagouser.dto.trip.TripPageDto;
 import org.apache.ibatis.annotations.Mapper;
@@ -15,4 +17,7 @@ public interface TripMapper {
     int updateOne(TripDto trip);
     int deleteOne(int tId);
     int updateIncrementViewCountByTId(int tId);
+
+    List<TripDto> countListBylikes(TripPageDto pageDto);
+
 }

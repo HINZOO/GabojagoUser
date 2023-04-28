@@ -46,6 +46,8 @@ public class TripDto {
 
     private TripLikeStatusCntDto likes;
 
-//    private String loginUserLike
+    private TripBookMarkCntDto bookmarks;
+
+
 
 }

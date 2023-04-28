@@ -45,7 +45,9 @@ public class TripReviewController {
 
     @GetMapping("/{trId}/detail.do")
     public @ResponseBody TripReviewDto detail(
-            @PathVariable int trId){
+            @PathVariable int trId,
+            @SessionAttribute(required = false) UserDto loginUser) {
+
         TripReviewDto tripReview=tripReviewService.detail(trId);
         System.out.println("tripReview = " + tripReview);
         log.info(tripReview);
@@ -56,9 +58,10 @@ public class TripReviewController {
     @GetMapping("/{tId}/list.do")
     public String list(
             @PathVariable int tId,
+            @SessionAttribute UserDto loginUser,
             Model model) {
         List<TripReviewDto> reviews=tripReviewService.list(tId);
-        TripDto trip=tripService.detail(tId);
+        TripDto trip=tripService.detail(tId, loginUser);
         model.addAttribute("t",trip);
         model.addAttribute("reviews",reviews);
         System.out.println("reviews = " + reviews);
@@ -203,8 +206,8 @@ public class TripReviewController {
 
     @DeleteMapping("/handler.do")
     public @ResponseBody HandlerDto remove(
-            @ModelAttribute TripReviewDto review // 폼으로 등록한 dto 를 파라미터로 맵핑해서 받아오겠다.
-//            @SessionAttribute UserDto loginUser
+            @ModelAttribute TripReviewDto review,// 폼으로 등록한 dto 를 파라미터로 맵핑해서 받아오겠다.
+            @SessionAttribute UserDto loginUser
     ){
         HandlerDto handlerDto=new HandlerDto();
         List<TripReviewImgDto> imgDtos=null;
