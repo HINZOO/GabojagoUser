@@ -106,7 +106,7 @@ CREATE TABLE `trips` (
                          `enfp`	boolean	COMMENT 'MBTI',
                          `category`	enum('힐링','체험','반려동물','레저','박물관')	NOT NULL COMMENT '카테고리',
                          FOREIGN KEY (u_id) REFERENCES users (u_id) ON DELETE SET NULL ON UPDATE CASCADE
-);
+                     );
 
 #가보자고(리뷰 페이지)
 CREATE TABLE `trip_reviews` (
@@ -713,16 +713,21 @@ INSERT INTO trips (u_id, title, area, address, phone, url_address, content,
                    istj, istp, isfj, isfp, intj, intp, infj, infp, estj, estp, esfj,
                    esfp, entj, entp, enfj, enfp, category)
 VALUES
-    ('user01', '제주에서 즐기는 봄꽃 여행', '제주', '서귀포', '01011112222', 'https://www.visitjeju.net/kr/','제주의 아름다운 벚꽃을 감상하며 봄을 느껴보세요.', 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '힐링'),
-    ('user02', '서울에서 즐기는 봄꽃 여행', '서울', '여의도', '01011123222', 'https://www.visitjeju.net/kr/','서울의 아름다운 벚꽃을 감상하며 봄을 느껴보세요.', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, '힐링'),
-    ('user03', '대전에서 즐기는 봄꽃 여행', '대전', '동구', '01013145222', 'https://www.visitjeju.net/kr/','대전의 아름다운 벚꽃을 감상하며 봄을 느껴보세요.', 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, '힐링'),
-    ('user04', '강원도에서 즐기는 봄꽃 여행', '강원', '속초', '01022115522', 'https://www.visitjeju.net/kr/','강원도의 아름다운 벚꽃을 감상하며 봄을 느껴보세요.', 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, '힐링'),
-    ('user05', '인천에서 즐기는 봄꽃 여행', '인천', '강화도', '01014312222', 'https://www.visitjeju.net/kr/','인천의 아름다운 벚꽃을 감상하며 봄을 느껴보세요.', 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, '힐링'),
-    ('user06', '부산에서 즐기는 봄꽃 여행', '부산', '목포', '01055115322', 'https://www.visitjeju.net/kr/','부산의 아름다운 벚꽃을 감상하며 봄을 느껴보세요.', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, '힐링');
+    ('user01', '제주에서 즐기는 봄꽃 여행', '제주', '서귀포', '010-1234-5648', 'https://www.visitjeju.net/kr/','제주의 아름다운 벚꽃을 감상하며 봄을 느껴보세요.', 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '힐링'),
+    ('user02', '서울에서 즐기는 봄꽃 여행', '서울', '여의도', '010-1111-2262', 'https://www.visitjeju.net/kr/','서울의 아름다운 벚꽃을 감상하며 봄을 느껴보세요.', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, '체험'),
+    ('user03', '대전에서 즐기는 봄꽃 여행', '대전', '동구', '010-1234-5689', 'https://www.visitjeju.net/kr/','대전의 아름다운 벚꽃을 감상하며 봄을 느껴보세요.', 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, '박물관'),
+    ('user04', '강원도에서 즐기는 봄꽃 여행', '강원', '속초', '010-5555-5355', 'https://www.visitjeju.net/kr/','강원도의 아름다운 벚꽃을 감상하며 봄을 느껴보세요.', 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, '힐링'),
+    ('user05', '인천에서 즐기는 봄꽃 여행', '인천', '강화도', '010-8888-8688', 'https://www.visitjeju.net/kr/','인천의 아름다운 벚꽃을 감상하며 봄을 느껴보세요.', 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, '반려동물'),
+    ('user06', '부산에서 즐기는 봄꽃 여행', '부산', '목포', '010-2222-3233', 'https://www.visitjeju.net/kr/','부산의 아름다운 벚꽃을 감상하며 봄을 느껴보세요.', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, '레저'),
+    ('user07', '대전에서 즐기는 봄꽃 여행', '대전', '동구', '010-7777-7767', 'https://www.visitjeju.net/kr/','대전의 아름다운 벚꽃을 감상하며 봄을 느껴보세요.', 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, '레저'),
+    ('user08', '강원도에서 즐기는 봄꽃 여행', '강원', '속초', '010-1234-5577', 'https://www.visitjeju.net/kr/','강원도의 아름다운 벚꽃을 감상하며 봄을 느껴보세요.', 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, '체험'),
+    ('user09', '인천에서 즐기는 봄꽃 여행', '인천', '강화도', '010-9999-1999', 'https://www.visitjeju.net/kr/','인천의 아름다운 벚꽃을 감상하며 봄을 느껴보세요.', 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, '반려동물'),
+    ('user10', '부산에서 즐기는 봄꽃 여행', '부산', '목포', '010-7777-7676', 'https://www.visitjeju.net/kr/','부산의 아름다운 벚꽃을 감상하며 봄을 느껴보세요.', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, '힐링');
+
 
 #가보자고 이미지 더미
 INSERT INTO trip_imgs (t_id,img_path,img_main)
-VALUES  (1,'/public/img/trip/default.jpeg',0),
+VALUES     (1,'/public/img/trip/default.jpeg',0),
            (1,'/public/img/trip/default.jpeg',1),
            (2,'/public/img/trip/default.jpeg',0),
            (2,'/public/img/trip/default.jpeg',1),
@@ -733,7 +738,19 @@ VALUES  (1,'/public/img/trip/default.jpeg',0),
            (5,'/public/img/trip/default.jpeg',0),
            (5,'/public/img/trip/default.jpeg',1),
            (6,'/public/img/trip/default.jpeg',0),
-           (6,'/public/img/trip/default.jpeg',1)
+           (6,'/public/img/trip/default.jpeg',1),
+           (7,'/public/img/trip/default.jpeg',0),
+           (7,'/public/img/trip/default.jpeg',1),
+           (8,'/public/img/trip/default.jpeg',0),
+           (8,'/public/img/trip/default.jpeg',1),
+           (9,'/public/img/trip/default.jpeg',0),
+           (9,'/public/img/trip/default.jpeg',1),
+           (10,'/public/img/trip/default.jpeg',0),
+           (10,'/public/img/trip/default.jpeg',1)
+
+
+
+
        ;
 
 

@@ -65,5 +65,18 @@ public class BookMarkController {
     }
 
     //등록은 여기에서~
+    @PostMapping("/trip/{tId}/handler.do")
+    public HandlerDto registerBookMarkTrip(
+            @PathVariable int tId,
+            @SessionAttribute UserDto loginUser){
+        int register=0;
+        TripBookmarkDto tripBookmarkDto=new TripBookmarkDto();
+        tripBookmarkDto.setTId(tId);
+        tripBookmarkDto.setUId(loginUser.getUId());
+        register=tripBookMarkService.register(tripBookmarkDto);
+        HandlerDto handlerDto=new HandlerDto();
+        handlerDto.setHandler(register);
+        return handlerDto;
+    }
 
 }

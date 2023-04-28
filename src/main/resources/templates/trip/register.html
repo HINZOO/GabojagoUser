@@ -18,8 +18,8 @@
     </style>
 </head>
 <div layout:fragment="content">
-    <script src="/public/js/tripInsert.js" defer></script>
-    <form name="tripInsertFrom" enctype="multipart/form-data" action="./register.do" method="post" style="width: 500px; margin: 0 auto;">
+<!--    <script src="/public/js/tripInsert.js" defer></script>-->
+    <form novalidate id="tripInsertFrom" enctype="multipart/form-data" action="./register.do" method="post" style="width: 500px; margin: 0 auto;">
         <h1 class="my-4">여행지 등록</h1>
         <p class="form-floating">
             <input readonly type="text" id="" name="uId" th:value="${session.loginUser.uId}" class="form-control" placeholder="??">
@@ -64,11 +64,13 @@
         <p class="form-floating">
             <input type="text" name="title" value="" class="form-control" placeholder="??">
             <label>여행지명</label>
+            <p id="titleMsg"></p>
         </p>
 
         <p class="form-floating">
             <input type="text" name="address" value="" class="form-control" placeholder="??">
             <label>주소</label>
+            <p id="addressMsg"></p>
         </p>
 
         <p class="form-floating">
@@ -85,6 +87,7 @@
         <p>
             <label>소개글</label>
             <textarea name="content" rows="4" class="form-control"></textarea>
+            <p id="contentMsg"></p>
         </p>
 
         <p class="form-floating">
@@ -94,7 +97,9 @@
 
         <p class="input-group">
             <label class="input-group-text">메인이미지</label>
-            <input class="form-control" type="file" name="mainImg">
+            <input class="form-control" type="file" id="mainImg" name="mainImg" required>
+            <p id="mainImgMsg"></p>
+
         </p>
 
         <p id="imgCont">
@@ -131,9 +136,10 @@
 
         <div class="text-end my-5">
             <a href="/trip/list.do" class="btn btn-outline-dark">취소</a>
-            <button type="submit" class="btn btn-outline-danger">등록</button>
+            <button id="submitBtn" type="submit" class="btn btn-outline-danger">등록</button>
         </div>
     </form>
+
     <script>
         const imgAddBtn = document.getElementById("imgAddBtn");
         const imgCont = document.getElementById("imgCont");
@@ -158,12 +164,6 @@
             `
 
         }
-
-
-        // document.querySelector('.click').addEventListener('click', function() {
-        //     const radioBtn = document.querySelector('.radioBtn');
-        //     radioBtn.checked = true;
-        // });
 
     </script>
 </div>

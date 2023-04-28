@@ -39,11 +39,13 @@ public class TripDto {
     private boolean enfp;
     private String category;
 
-
     // TripDto 와 조인하는 Dto 선언! - 이미지 - 출력할때 조인하기! -> Mapper 지연로딩
-
     private List<TripImgDto> imgs;
 
     private List<TripReviewDto> reviews; // 리뷰 // 1:N // trip 게시글 : reviews
+
+    private TripLikeStatusCntDto likes;
+
+//    private String loginUserLike
 
 }
