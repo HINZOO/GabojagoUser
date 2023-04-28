@@ -27,8 +27,8 @@ public class UserIdCheckController {
 
   @GetMapping("/{pw}/checkCurrentPw.do")
   public @ResponseBody int checkCurrentPw(@PathVariable String pw) {
-    UserDto result = userService.checkCurrentPw(pw);
-    if(result!=null) {
+    UserDto user = userService.checkCurrentPw(pw);
+    if(user.getPw().equals(pw)) {
       return 1;
     } else {
       return 0;
