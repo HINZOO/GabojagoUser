@@ -29,8 +29,16 @@
         <result column="enfj" property="enfj"/>
         <result column="enfp" property="enfp"/>
         <result column="category" property="category"/>
+        <result column="view_count" property="viewCount"/>
+
 
         <!-- 조인) 리뷰, 좋아요한 유저, 이미지, 북마크, 좋아요, 조회수 -->
+        <!-- association 은 collection 위에 -->
+        <association property="likes"
+                     select="com.project.gabojago.gabojagouser.mapper.trip.TripLikeMapper.countStatusByTId"
+                     column="t_id"
+                     fetchType="eager"/> <!-- 카운트는 집계결과가 1개라서. 결과 인덱스 1 에 likes, t_id 값 나온다. -->
+
         <collection property="reviews"
                     select="com.project.gabojago.gabojagouser.mapper.trip.TripReviewMapper.findByTId"
                     column="t_id"
@@ -41,7 +49,9 @@
                     select="com.project.gabojago.gabojagouser.mapper.trip.TripImgMapper.findByTId"
                     column="t_id"
                     fetchType="lazy"/>
+
     </resultMap>
+
     <insert useGeneratedKeys="true" keyProperty="tId" id="insertOne" parameterType="TripDto">
         INSERT INTO trips
         (u_id, title, area, address, phone, url_address, content,
@@ -82,16 +92,24 @@
             category=#{category}
         WHERE t_id=#{tId}
     </update>
+
+    <update id="updateIncrementViewCountByTId">
+        UPDATE trips SET view_count=(view_count+1) WHERE t_id=#{tId}
+    </update>
+
     <delete id="deleteOne" parameterType="TripDto">
         DELETE FROM trips WHERE t_id=#{tId}
     </delete>
+
     <select id="findAll" resultMap="TripMap">
         SELECT * FROM trips
+        <if test="searchField!=null and searchValue!=null">
+            WHERE ${searchField} LIKE CONCAT('%',#{searchValue},'%')
+        </if>
     </select>
+
     <select id="findByTId" resultMap="TripMap">
         SELECT * FROM trips WHERE t_id=#{tId}
     </select>
-    <select id="findByPhone" resultType="TripDto">
-        SELECT * FROM trips WHERE phone=#{phone}
-    </select>
+
 </mapper>

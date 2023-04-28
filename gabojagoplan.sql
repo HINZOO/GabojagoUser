@@ -82,6 +82,7 @@ CREATE TABLE `trips` (
                          `title`	varchar(255) NOT NULL COMMENT '제목',
                          `post_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '작성 시간',
                          `update_time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '최종 수정 시간',
+                         `view_count`	INT UNSIGNED DEFAULT 0 COMMENT '조회수',
                          `area`	ENUM('서울', '인천', '대전', '광주', '대구', '울산', '부산', '세종', '경기', '강원', '충북', '충남', '전북', '전남', '경북', '경남', '제주')NOT NULL COMMENT '지역',
                          `address`	varchar(255) COMMENT '주소',
                          `phone`	varchar(20) UNIQUE NOT NULL COMMENT'핸드폰',
@@ -105,7 +106,7 @@ CREATE TABLE `trips` (
                          `enfp`	boolean	COMMENT 'MBTI',
                          `category`	enum('힐링','체험','반려동물','레저','박물관')	NOT NULL COMMENT '카테고리',
                          FOREIGN KEY (u_id) REFERENCES users (u_id) ON DELETE SET NULL ON UPDATE CASCADE
-);
+                     );
 
 #가보자고(리뷰 페이지)
 CREATE TABLE `trip_reviews` (
@@ -424,13 +425,15 @@ CREATE TABLE `comm_likes` (
                               CONSTRAINT c_likes UNIQUE (u_id, c_id)
 );
 #같이놀자(북마크 테이블)
-#제약조건 추가 1개만북마크 가능하게
+#제약조건 추가 1개만북마크 가능하게 + 북마크에 p_id 추가
 CREATE TABLE `comm_bookmarks` (
                                   `cbook_id`	int unsigned AUTO_INCREMENT PRIMARY KEY COMMENT '같이놀자북마크 아이디',
                                   `c_id`	int unsigned NOT NULL COMMENT '같이놀자커뮤니티글 아이디',
                                   `u_id`	varchar(255)	NOT NULL COMMENT '유저 아이디',
+                                  `p_id`	int unsigned NOT NULL COMMENT '플랜 아이디',
                                   FOREIGN KEY (u_id) REFERENCES users (u_id) ON DELETE CASCADE ON UPDATE CASCADE,
                                   FOREIGN KEY (c_id) REFERENCES communitys (c_id) ON DELETE CASCADE ON UPDATE CASCADE,
+                                  FOREIGN KEY (p_id) REFERENCES plans (p_id) ON DELETE CASCADE ON UPDATE CASCADE,
                                   CONSTRAINT c_bookmark UNIQUE (u_id, c_id)
 );
 #같이놀자(해시태그 테이블)
@@ -557,6 +560,17 @@ CREATE TABLE `notes` (
                          `note_keb`	boolean COMMENT '보관 상태',
                          FOREIGN KEY (to_users) REFERENCES users (u_id) ON DELETE SET NULL ON UPDATE CASCADE
 
+);
+#주문정보
+CREATE TABLE sell_orders (
+                             so_id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY COMMENT '주문번호',
+                             u_id VARCHAR(255) NOT NULL COMMENT '유저정보',
+                             s_id INT UNSIGNED COMMENT '판매글번호',
+                             option_name VARCHAR(255) NOT NULL COMMENT '구매옵션 이름',
+                             price INT NOT NULL COMMENT '구매옵션 가격',
+                             post_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '구매 일시',
+                             FOREIGN KEY (u_id) REFERENCES users (u_id) ON DELETE CASCADE ON UPDATE CASCADE,
+                             FOREIGN KEY (s_id) REFERENCES sells (s_id) ON DELETE SET NULL ON UPDATE CASCADE
 );
 
 #유저더미
@@ -701,16 +715,21 @@ INSERT INTO trips (u_id, title, area, address, phone, url_address, content,
                    istj, istp, isfj, isfp, intj, intp, infj, infp, estj, estp, esfj,
                    esfp, entj, entp, enfj, enfp, category)
 VALUES
-    ('user01', '제주에서 즐기는 봄꽃 여행', '제주', '서귀포', '01011112222', 'https://www.visitjeju.net/kr/','제주의 아름다운 벚꽃을 감상하며 봄을 느껴보세요.', 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '힐링'),
-    ('user02', '서울에서 즐기는 봄꽃 여행', '서울', '여의도', '01011123222', 'https://www.visitjeju.net/kr/','서울의 아름다운 벚꽃을 감상하며 봄을 느껴보세요.', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, '힐링'),
-    ('user03', '대전에서 즐기는 봄꽃 여행', '대전', '동구', '01013145222', 'https://www.visitjeju.net/kr/','대전의 아름다운 벚꽃을 감상하며 봄을 느껴보세요.', 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, '힐링'),
-    ('user04', '강원도에서 즐기는 봄꽃 여행', '강원', '속초', '01022115522', 'https://www.visitjeju.net/kr/','강원도의 아름다운 벚꽃을 감상하며 봄을 느껴보세요.', 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, '힐링'),
-    ('user05', '인천에서 즐기는 봄꽃 여행', '인천', '강화도', '01014312222', 'https://www.visitjeju.net/kr/','인천의 아름다운 벚꽃을 감상하며 봄을 느껴보세요.', 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, '힐링'),
-    ('user06', '부산에서 즐기는 봄꽃 여행', '부산', '목포', '01055115322', 'https://www.visitjeju.net/kr/','부산의 아름다운 벚꽃을 감상하며 봄을 느껴보세요.', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, '힐링');
+    ('user01', '제주에서 즐기는 봄꽃 여행', '제주', '서귀포', '010-1234-5648', 'https://www.visitjeju.net/kr/','제주의 아름다운 벚꽃을 감상하며 봄을 느껴보세요.', 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '힐링'),
+    ('user02', '서울에서 즐기는 봄꽃 여행', '서울', '여의도', '010-1111-2262', 'https://www.visitjeju.net/kr/','서울의 아름다운 벚꽃을 감상하며 봄을 느껴보세요.', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, '체험'),
+    ('user03', '대전에서 즐기는 봄꽃 여행', '대전', '동구', '010-1234-5689', 'https://www.visitjeju.net/kr/','대전의 아름다운 벚꽃을 감상하며 봄을 느껴보세요.', 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, '박물관'),
+    ('user04', '강원도에서 즐기는 봄꽃 여행', '강원', '속초', '010-5555-5355', 'https://www.visitjeju.net/kr/','강원도의 아름다운 벚꽃을 감상하며 봄을 느껴보세요.', 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, '힐링'),
+    ('user05', '인천에서 즐기는 봄꽃 여행', '인천', '강화도', '010-8888-8688', 'https://www.visitjeju.net/kr/','인천의 아름다운 벚꽃을 감상하며 봄을 느껴보세요.', 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, '반려동물'),
+    ('user06', '부산에서 즐기는 봄꽃 여행', '부산', '목포', '010-2222-3233', 'https://www.visitjeju.net/kr/','부산의 아름다운 벚꽃을 감상하며 봄을 느껴보세요.', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, '레저'),
+    ('user07', '대전에서 즐기는 봄꽃 여행', '대전', '동구', '010-7777-7767', 'https://www.visitjeju.net/kr/','대전의 아름다운 벚꽃을 감상하며 봄을 느껴보세요.', 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, '레저'),
+    ('user08', '강원도에서 즐기는 봄꽃 여행', '강원', '속초', '010-1234-5577', 'https://www.visitjeju.net/kr/','강원도의 아름다운 벚꽃을 감상하며 봄을 느껴보세요.', 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, '체험'),
+    ('user09', '인천에서 즐기는 봄꽃 여행', '인천', '강화도', '010-9999-1999', 'https://www.visitjeju.net/kr/','인천의 아름다운 벚꽃을 감상하며 봄을 느껴보세요.', 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, '반려동물'),
+    ('user10', '부산에서 즐기는 봄꽃 여행', '부산', '목포', '010-7777-7676', 'https://www.visitjeju.net/kr/','부산의 아름다운 벚꽃을 감상하며 봄을 느껴보세요.', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, '힐링');
+
 
 #가보자고 이미지 더미
 INSERT INTO trip_imgs (t_id,img_path,img_main)
-VALUES  (1,'/public/img/trip/default.jpeg',0),
+VALUES     (1,'/public/img/trip/default.jpeg',0),
            (1,'/public/img/trip/default.jpeg',1),
            (2,'/public/img/trip/default.jpeg',0),
            (2,'/public/img/trip/default.jpeg',1),
@@ -721,7 +740,19 @@ VALUES  (1,'/public/img/trip/default.jpeg',0),
            (5,'/public/img/trip/default.jpeg',0),
            (5,'/public/img/trip/default.jpeg',1),
            (6,'/public/img/trip/default.jpeg',0),
-           (6,'/public/img/trip/default.jpeg',1)
+           (6,'/public/img/trip/default.jpeg',1),
+           (7,'/public/img/trip/default.jpeg',0),
+           (7,'/public/img/trip/default.jpeg',1),
+           (8,'/public/img/trip/default.jpeg',0),
+           (8,'/public/img/trip/default.jpeg',1),
+           (9,'/public/img/trip/default.jpeg',0),
+           (9,'/public/img/trip/default.jpeg',1),
+           (10,'/public/img/trip/default.jpeg',0),
+           (10,'/public/img/trip/default.jpeg',1)
+
+
+
+
        ;
 
 
@@ -733,7 +764,6 @@ VALUES
     (1, 'user03', '다음에도 꼭 다시 방문하고 싶은 곳이에요!', 1, 4),
     (1, 'user04', '이곳은 정말 특별한 경험이었어요.', 1, 5),
     (1, 'user05', '여기는 앞으로도 자주 찾게 될 것 같아요.', 1, 3);
-
 
 #팔로우 더미
 INSERT INTO follows(to_users, from_users)
@@ -754,19 +784,57 @@ INSERT INTO  comm_imgs (c_id, img_path, img_main)
 VALUES
     (1,'/public/img/comm/1681969679943_2023.jpeg',0),
     (2,'/public/img/comm/1681969832415_8296.jpeg',0),
-    (3,'/public/img/comm/1681976587025_8955.jpeg',0);
+    (3,'/public/img/comm/1681976587025_8955.jpeg',0),
+    (4,'/public/img/comm/1682237197655_3190.png',0);
 
 #가보자고 리뷰 댓글 데이터
-INSERT INTO trip_review_comments (tr_id, u_id, content, status, parent_trc_id)
+INSERT INTO trip_review_comments (tr_id, u_id, content, status, parent_trc_id, gabojagoPlan.trip_review_comments.img_path)
 VALUES
-    (1, 'user01', '가보자고리 재미있었어요!', 'PUBLIC', NULL),
-    (1, 'user02', '뷰가 너무 아름다웠어요!', 'PUBLIC', NULL),
-    (2, 'user03', '다음에도 꼭 가보고 싶어요!', 'PUBLIC', NULL),
-    (2, 'user04', '추천하는 가보자고리 루트가 있나요?', 'PUBLIC', NULL),
-    (2, 'user05', '가보자고리 최고!', 'PUBLIC', NULL),
-    (2, 'user06', '재밌는 추억이었어요!', 'PUBLIC', NULL),
-    (1, 'user07', '뷰가 너무 아름다워요!', 'PUBLIC', NULL),
-    (2, 'user08', '가보자고리 루트 추천해요!', 'PUBLIC', NULL),
-    (2, 'user09', '다음에도 꼭 가보고 싶어요!', 'PUBLIC', NULL),
-    (2, 'user10', '가보자고리 가는 것을 추천합니다!', 'PUBLIC', NULL);
+    (1, 'user01', '가보자고리 재미있었어요!', 'PUBLIC', NULL, NULL),
+    (1, 'user02', '뷰가 너무 아름다웠어요!', 'PUBLIC', NULL, NULL),
+    (2, 'user03', '다음에도 꼭 가보고 싶어요!', 'PUBLIC', NULL, NULL),
+    (2, 'user04', '추천하는 가보자고리 루트가 있나요?', 'PUBLIC', NULL, NULL),
+    (2, 'user05', '가보자고리 최고!', 'PUBLIC', NULL,'/public/img/trip/reviewcmt/1682306538230_44726.jpeg'),
+    (2, 'user06', '재밌는 추억이었어요!', 'PUBLIC', NULL, NULL),
+    (1, 'user07', '뷰가 너무 아름다워요!', 'PUBLIC', NULL,'/public/img/trip/reviewcmt/1682306538230_44726.jpeg'),
+    (2, 'user08', '가보자고리 루트 추천해요!', 'PUBLIC', NULL, NULL),
+    (2, 'user09', '다음에도 꼭 가보고 싶어요!', 'PUBLIC', NULL, NULL),
+    (2, 'user10', '가보자고리 가는 것을 추천합니다!', 'PUBLIC', NULL, NULL);
+
+#가보자고 리뷰 이미지 더미
+INSERT INTO  trip_review_imgs (tri_id, tr_id, img_path)
+VALUES
+    (1, 1,'/public/img/trip/review/1682515807735_21871.jpeg'),
+    (2, 1,'/public/img/trip/review/1682515807737_95047.jpeg'),
+    (3, 2,'/public/img/trip/review/1682515830783_32065.jpeg'),
+    (4, 3,'/public/img/trip/review/1682515851848_23613.jpeg');
+
+#같이놀자 북마크 더미
+INSERT INTO comm_bookmarks (c_id, u_id,p_id)
+VALUES
+        (1, 'user01',1),
+        (2, 'user01',1),
+        (3, 'user01',2),
+        (4, 'user01',3),
+        (1, 'user02',1),
+        (2, 'user02',1),
+        (3, 'user02',2),
+        (4, 'user02',3),
+        (4, 'user03',3),
+        (4, 'user04',3);
+
+#같이놀자 좋아요 더미
+INSERT INTO comm_likes (c_id, u_id)
+VALUES
+    (1, 'user01'),
+    (1, 'user02'),
+    (1, 'user03'),
+    (1, 'user04'),
+    (2, 'user05'),
+    (2, 'user06'),
+    (3, 'user07'),
+    (3, 'user08'),
+    (4, 'user09'),
+    (4, 'user10');
+
 

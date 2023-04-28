@@ -113,7 +113,7 @@
                                 <strong class="me-1" th:text="${c.user.nkName}"></strong>
                                 <small class="text-muted me-1" th:text="작성일.+${#dates.format(c.postTime,'yyyy-MM-dd')}"></small>
                                 <small class="text-muted">조회수 <span th:text="${c.viewCount}"></span></small> </p>
-                            <p class="card-text" th:utext="${c.content}">
+                            <p class="card-text" id="contantBox" th:utext="${c.content}">
                             </p>
 
                         </div>
@@ -150,7 +150,6 @@
                 </div>
             </div>
         </div>
-
     </section>
 </div>
 </html>

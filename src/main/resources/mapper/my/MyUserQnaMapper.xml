@@ -7,7 +7,7 @@
         <result property="title" column="title"/>
         <result property="content" column="content"/>
         <result property="filePath" column="file_path"/>
-        <result property="postPath" column="post_path"/>
+        <result property="postTime" column="post_time"/>
     </resultMap>
     <insert id="insertOne" useGeneratedKeys="true" keyProperty="qId" parameterType="MyUserQnaDto">
         INSERT INTO qnas (u_id, title, content, file_path) VALUE

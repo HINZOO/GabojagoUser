@@ -1,7 +1,9 @@
 package com.project.gabojago.gabojagouser.service.trip;
 
+import com.github.pagehelper.PageHelper;
 import com.project.gabojago.gabojagouser.dto.trip.TripDto;
 import com.project.gabojago.gabojagouser.dto.trip.TripImgDto;
+import com.project.gabojago.gabojagouser.dto.trip.TripPageDto;
 import com.project.gabojago.gabojagouser.mapper.trip.TripImgMapper;
 import com.project.gabojago.gabojagouser.mapper.trip.TripMapper;
 import lombok.AllArgsConstructor;
@@ -17,11 +19,6 @@ public class TripServiceImp implements TripService {
     private TripImgMapper tripImgMapper;
 
     @Override
-    public TripDto phoneCheck(String phone) throws Exception {
-        return tripMapper.findByPhone(phone);
-    }
-
-    @Override
     public List<TripImgDto> imgList(List<Integer> tiId) { // 이미지 리스트
         List<TripImgDto> imgList=null;
         if(tiId!=null){
@@ -35,8 +32,10 @@ public class TripServiceImp implements TripService {
     }
 
     @Override
-    public List<TripDto> list() { // 여행정보 리스트
-        List<TripDto> list=tripMapper.findAll();
+    public List<TripDto> list(TripPageDto pageDto) { // 여행정보 리스트
+        PageHelper.startPage(pageDto.getPageNum(),pageDto.getPageSize(),pageDto.getOrderBy());
+        List<TripDto> list=tripMapper.findAll(pageDto);
+        
         return list;
     }
 

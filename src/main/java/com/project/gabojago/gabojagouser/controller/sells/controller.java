@@ -32,7 +32,7 @@ public class controller {
     }
     @RequestMapping("/kakaopay.do")
     @ResponseBody
-    public String pat() {
+    public String pay() {
         try {
             URL adress = new URL("https://kapi.kakao.com/v1/payment/ready");
             HttpURLConnection connection = (HttpURLConnection) adress.openConnection();

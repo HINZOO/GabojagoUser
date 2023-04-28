@@ -20,8 +20,8 @@
     <result column="business_id" property="businessId"/>
     <result column="status" property="status"/>
     <result column="email_check_code" property="emailCheckCode"/>
-    <association property="following"
-                 select="com.project.gabojago.gabojagouser.mapper.my.FollowMapper.findByToIdAndFromIdIsLoginUserId"
+    <association property="mileages"
+                 select="com.project.gabojago.gabojagouser.mapper.my.MileageMapper.findByUId"
                  column="u_id"
                  fetchType="eager"/>
     <collection property="followings"
@@ -92,6 +92,9 @@
   <update id="updateStatusByUIdAndEmailCheckCode">
     UPDATE users SET status=#{status} WHERE u_id=#{uId} AND email_check_code=#{emailCheckCode}
   </update>
+  <update id="updatePwByUId">
+    UPDATE users SET pw=#{pw} WHERE u_id=#{uId}
+  </update>
   <delete id="deleteOne" parameterType="UserDto">
     DELETE FROM users WHERE u_id=#{uId} AND pw=#{pw}
   </delete>
@@ -101,6 +104,7 @@
   <select id="findUserByUId" resultMap="UserMap">
     SELECT * FROM users WHERE u_id=#{uId}
   </select>
+
   <select id="findAll" resultType="com.project.gabojago.gabojagouser.dto.user.UserDto">
       SELECT * FROM users
   </select>

@@ -1,18 +1,14 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
+<html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{/layout}">
+      layout:decorate="~{layoutMy}">
 <head>
     <meta charset="UTF-8">
     <title>북마크</title>
     <script src="/public/js/sells/abc.js"></script>
 </head>
-<div layout:fragment="content">
+<div layout:fragment="content" style="width: 1000px;margin:0;">
     <div class="container">
         <main role="main" class="container">
-            <div>
-               <a class="btn btn-outline-info" href="/my/user.do"> 마이페이지 가기</a>
-            </div>
             <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
                 <h1 class="display-4">북마크</h1>
 
@@ -35,7 +31,7 @@
                             <li></li>
                         </ul>
                         <!-- 장바구니 취소 버튼 -->
-                        <a th:href="@{'/sells/{sbId}/{sId}/remove.do'(sbId=${c.getSbId()},sId=${c.getSId()})}"  type="button" class="btn btn-danger">
+                        <a th:href="@{'/sells/{sbId}/{sId}/remove.do'(sbId=${c.getSbId()},sId=${c.getSId()})}"   class="btn btn-primary">
                             북마크 취소</a>
                     </div>
                 </div>
