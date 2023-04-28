@@ -9,6 +9,7 @@ import com.project.gabojago.gabojagouser.service.plan.PlanService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.extern.log4j.Log4j2;
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +17,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -54,8 +59,24 @@ public class PlanContentsController {
            @RequestParam(value = "cId", required = false) int cId,
            @RequestParam(value = "img", required = false) String imgURL) throws IOException
     {
-        log.info("캔버스 업로드 " + imgURL);
-        log.info("캔버스 업로드 " + cId);
+        BufferedImage img = null;
+
+        String[] imgURLArr = imgURL.split(","); // image/png;base64, 에서 콤마 앞 부분 버림
+        byte[] imageByte = Base64.decodeBase64(imgURLArr[1]); // base64 to byte array로 변경
+
+        ByteArrayInputStream bis = new ByteArrayInputStream(imageByte);
+        img = ImageIO.read(bis);
+        bis.close();
+
+        String fileName = System.currentTimeMillis() + "_" + (int) (Math.random() * 10000) + "." + "png";
+        Path path = Paths.get(staticPath + "/public/img/plan/" + fileName);
+        File outputfile = new File("" + path);
+        ImageIO.write(img, "png", outputfile); // 파일생성
+
+//        planDto.setImgPath("/public/img/plan/" + fileName);
+
+
+
         return 1;
     }
 
