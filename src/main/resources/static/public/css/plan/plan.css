@@ -266,7 +266,7 @@ input[type='text'], input[type='text']:focus{
 }
 .card-img-top{
     object-fit: cover;
-    max-height: 200px;
+    max-height: 250px;
 }
 
 .cardInfo{
@@ -593,33 +593,68 @@ canvas{
 }
 
 .sFormSection{
+    padding: 5px 10px;
+    border-radius: 10px;
+    background-color: rgba(200, 226, 255, 0.15);
     font-weight: bold;
     font-size: 15px;
     color: gray;
 }
+
 #scheduleInsertForm label{
     color: gray;
     font-weight: bold;
 }
 #scheduleInsertForm input{
-    border: 1px solid whitesmoke;
+    border: 1px solid #e9f3ff;
     color: dodgerblue;
     font-weight: bold;
 }
 .bkDiv{
     width: 50%;
     background-color: #c6e7ff;
-    border-bottom: 1px solid lightgray;
+    border-bottom: 1px solid whitesmoke;
 }
 
 .bkBtn {
+    font-size: 13px;
     display: flex;
     justify-content: space-between;
     text-align: left;
     background-color: white;
+}
+.bkLi{
+    display: flex;
+    justify-content: space-between;
+}
+.bkTime{
+    font-family: Russo One;
+    font-size: 13px;
+    color: gray;
+}
+#bookmarkTab button{
+    padding: 5px 8px;
+    color: gray;
+    font-weight: bold;
+    font-size: 12px;
+}
+#bookmarkTabDiv{
+    background-color: rgba(200, 226, 255, 0.15);
+    display: flex;
+    justify-content: space-between;
     border-bottom: 1px solid whitesmoke;
 }
+#bookmarkTabDiv ul, #bookmarkTabDiv li{
+    display: inline-block;
+}
+#bookmarkTabDiv ul{
+    line-height: 25px;
+}
 
+#bookmarkTab .nav-link.active{
+    color: dodgerblue;
+    background-color: transparent;
+}
 #bookmarkTabContent{
     padding: 5px;
 }
@@ -651,6 +686,7 @@ canvas{
 .bkTxt {
     color: #696969;
 }
+
 
 
 
