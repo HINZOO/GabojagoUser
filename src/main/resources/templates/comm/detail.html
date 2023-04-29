@@ -75,7 +75,9 @@
                             </h2>
                             <div th:id="'flush-collapse-' + ${p.conId}" class="accordion-collapse collapse"  th:data-bs-parent="'#accordionFlushExample'+${p.conId}" >
                                 <div class="accordion-body">
-                                    <p>if=${p.imgPath!=null} th:text=${p.imgPath}</p>
+                                    <p th:if="${p.imgPath!=null}">
+                                        <img th:src="@{'{path}'(path=${p.imgPath})}" alt="">
+                                    </p>
                                 </div>
                             </div>
                         </div>
