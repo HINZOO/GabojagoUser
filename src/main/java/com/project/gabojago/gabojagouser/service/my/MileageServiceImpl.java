@@ -27,4 +27,10 @@ public class MileageServiceImpl implements MileageService{
         int register=mileageMapper.insertOne(mileageDto);
         return register;
     }
+
+    @Override
+    public int modify(MileageDto mileageDto) {
+        int modify = mileageMapper.updateOne(mileageDto);
+        return modify;
+    }
 }

@@ -12,5 +12,6 @@ public interface MileageMapper {
 
     int sumByUId(String uId);
     int insertOne(MileageDto mileageDto);
+    int updateOne(MileageDto mileageDto);
 
 }

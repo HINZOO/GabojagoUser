@@ -9,4 +9,6 @@ public interface MileageService {
     int sumMileage(String uId);
     int register(MileageDto mileageDto);
 
+    int modify(MileageDto mileageDto);
+
 }
