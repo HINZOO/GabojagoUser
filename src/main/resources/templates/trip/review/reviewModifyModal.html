@@ -47,11 +47,13 @@
                         방문전
                     </label>
                 </p>
-                <p class="form-floating"> <!-- trip 게시글 제목은. review 에 없는 데이터라서, th:value 로 가져옴 -->
-                    <input type="text" readonly th:value="${t.title}"
-                           class="form-control" placeholder="장소이름">
-                    <label>장소이름</label>
-                </p>
+
+                <!--                <p class="form-floating"> &lt;!&ndash; trip 게시글 제목은. review 에 없는 데이터라서, th:value 로 가져옴 &ndash;&gt;-->
+<!--                    <input type="text" readonly th:value="${t.title}"-->
+<!--                           class="form-control" placeholder="장소이름">-->
+<!--                    <label>장소이름</label>-->
+<!--                </p>-->
+
                 <div id="imgDelCont"> <!-- imgs 의 img 들의  imgPath -->
                     <label>이미지 삭제(체크)</label>
                     <div   class="d-flex form-control mb-2" id="reviewModifyModalImgCont">
