@@ -5,17 +5,26 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout}">
 
-    <div layout:fragment="content">
+    <div layout:fragment="content" class="container">
         <style>
             a{
                 text-decoration: none;
             }
+            .body{
+               font-family: 'Noto Sans KR', sans-serif;
+            }
         </style>
 
-        <h1 class="mt-3">Gabojago</h1>
-
-
-    <h3 clas="my-4">
+<!--        도입부이미지-->
+    <div class="carousel-inner h-25 my-5 ">
+        <div class="carousel-item active" data-bs-interval="10000">
+            <img src="/public/img/gabojagoMain.jpg" class="d-block w-100 img-fluid" alt="...">
+            <div class="carousel-caption d-none d-md-block">
+                <p class="bg-dark bg-opacity-50 fw-lighter fs-4"> 함께 계획하고 꾸미는 플랜으로 더 특별한 국내여행! </p>
+            </div>
+        </div>
+    </div>
+    <h3 class="my-4">
         <i class="bi bi-car-front"></i>
         가보자고</h3>
     <div id="tripContainer" class="d-flex justify-content-evenly my-4">
