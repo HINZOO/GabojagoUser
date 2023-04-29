@@ -93,13 +93,12 @@ public class SellsController {
     public String detail(Model model,@PathVariable int sId
 //    @SessionAttribute(required = false) UserDto loginUser
     ){
-//        int mileage;
-//        mileage=mileageService.sumMileage(loginUser.getUId());
+
             SellsDto sells=sellsService.detail(sId);
 //        List<SellsDto> sells;
 //        sells=sellsService.List();
         model.addAttribute("sells",sells);
-//        model.addAttribute("mileage",mileage);
+
         return "/sells/detail";
     }
     @GetMapping("/{sId}/modify.do")

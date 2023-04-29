@@ -17,4 +17,7 @@
     <select id="sumByUId" resultType="Integer">
         SELECT SUM(mileage) FROM mileages WHERE u_id=#{uId}
     </select>
+    <update id="updateOne" >
+        UPDATE mileages SET mileage=#{mileage} WHERE u_id=#{UId}
+    </update>
 </mapper>

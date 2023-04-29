@@ -39,20 +39,29 @@
             </p>
         </div> <!-- 해시태그 반복문 -->
     </div>
-        <span>☆☆☆☆☆</span>
 
-<!--        <input class="d-none" id="star-1" type="radio" name="rating" value="1">-->
-<!--        <label for="star-1" title="1 star">☆</label>-->
-<!--        <input class="d-none" id="star-2" type="radio" name="rating" value="2">-->
-<!--        <label for="star-2" title="2 stars">☆</label>-->
-<!--        <input class="d-none" id="star-3" type="radio" name="rating" value="3">-->
-<!--        <label for="star-3" title="3 stars">☆</label>-->
-<!--        <input class="d-none" id="star-4" type="radio" name="rating" value="4">-->
-<!--        <label for="star-4" title="4 stars">☆</label>-->
-<!--        <input class="d-none" id="star-5" type="radio" name="rating" value="5">-->
-<!--        <label for="star-5" title="5 stars">☆</label>-->
-
-
+    <div class="d-flex align-items-center">
+        <small>평가</small>
+        <div class="star-ratings ms-1" id="reviewStar">
+            <div class="star-ratings-fill space-x-2 text-lg">
+            <span class="star">
+                <i class="bi" th:classappend="${(r.grade>=1)? 'bi-star-fill' : 'bi-star'}"></i>
+            </span>
+                <span class="star">
+                <i class="bi" th:classappend="${(r.grade>=2)? 'bi-star-fill' : 'bi-star'}"></i>
+            </span>
+                <span class="star">
+                <i class="bi" th:classappend="${(r.grade>=3)? 'bi-star-fill' : 'bi-star'}"></i>
+            </span>
+                <span class="star">
+                <i class="bi" th:classappend="${(r.grade>=4)? 'bi-star-fill' : 'bi-star'}"></i>
+            </span>
+                <span class="star">
+                <i class="bi" th:classappend="${(r.grade>=5)? 'bi-star-fill' : 'bi-star'}"></i>
+            </span>
+            </div>
+        </div>
+    </div>
 
     <p>
         <th:block th:if="${r.visit == 1}">방문</th:block>
