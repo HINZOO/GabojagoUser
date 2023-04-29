@@ -4,7 +4,7 @@
       <a class="page-link"
          th:href="@{''(pageNum=1,pageSize=8,order=${param.order},direct=${param.direct},searchField=${param.searchField},searchValue=${param.searchValue})}"
          th:classappend="${!page.isFirstPage?'':'disabled'}"
-      >F</a>
+      ><<</a>
     </li>
     <li class="page-item">
       <a class="page-link"
@@ -29,7 +29,7 @@
       <a class="page-link"
          th:href="@{''(pageNum=${page.pages},pageSize=8,order=${param.order},direct=${param.direct},searchField=${param.searchField},searchValue=${param.searchValue})}"
          th:classappend="${!page.isLastPage?'':'disabled'}"
-      >L</a>
+      >>></a>
     </li>
   </ul>
 </nav>

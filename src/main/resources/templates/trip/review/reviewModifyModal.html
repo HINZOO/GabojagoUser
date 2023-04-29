@@ -15,9 +15,28 @@
                      <input th:if="${session.loginUser!=null}" th:value="${session.loginUser.uId}" type="text" name="uId" readonly class="form-control" placeholder="글쓴이">
                     <label>글쓴이</label>
                 </p>
-                <p>
-                    평가 <span>☆☆☆☆☆</span>
-                </p>
+
+
+                <div id="gradeCont" class="star-rating d-flex align-items-center mb-2">
+                    <span>평가</span>
+                    <p class="mb-0" style="direction:rtl">
+                        <input class="d-none" id="mstar-1" type="radio" value="1">
+                        <label for="mstar-1" title="1 star">☆</label>
+                        <input class="d-none" id="mstar-2" type="radio" value="2">
+                        <label for="mstar-2" title="2 stars">☆</label>
+                        <input class="d-none" id="mstar-3" type="radio" value="3">
+                        <label for="mstar-3" title="3 stars">☆</label>
+                        <input class="d-none" id="mstar-4" type="radio" value="4">
+                        <label for="mstar-4" title="4 stars">☆</label>
+                        <input class="d-none" id="mstar-5" type="radio" value="5">
+                        <label for="mstar-5" title="5 stars">☆</label>
+                        <input type="hidden" name="grade" id="rating-value">
+                    </p>
+                </div>
+
+
+
+
                 <p>
                     <label>
                         <input type="radio" name="visit" value="1" th:checked="${r.visit==true}">
@@ -35,7 +54,7 @@
                 </p>
                 <div id="imgDelCont"> <!-- imgs 의 img 들의  imgPath -->
                     <label>이미지 삭제(체크)</label>
-                    <div class="d-flex form-control mb-2" id="reviewModifyModalImgCont">
+                    <div   class="d-flex form-control mb-2" id="reviewModifyModalImgCont">
                     </div>
 
                     <p id="modifyImgCont">
