@@ -22,46 +22,56 @@
             color: orangered;
         }
     </style>
-    <section id="commListContainer" class="row">
-        <h2>가보자고(Community)</h2>
+    <div class="carousel-inner  h-25 ">
+        <div class="carousel-item active" data-bs-interval="10000">
+            <img src="/public/img/comm/commMain.jpeg" class="d-block w-100 img-fluid" alt="...">
+            <div class="carousel-caption d-none d-md-block">
+                <h1 class="display-2 fw-bold ">같이놀자</h1>
+                <form class="d-flex w-75 my-2 mx-auto" role="search">
+                    <div class="input-group me-3" >
+                        <label class="input-group-text bi bi-filter-square text-warning"></label>
+                        <select name="order" class="form-control">
+                            <option value=" ">정렬기준</option>
+                            <option th:selected="(${#strings.equals(param.order,'c_id')})" value="c_id">글번호</option>
+                            <option th:selected="(${#strings.equals(param.order,'u_id')})" value="u_id">글쓴이</option>
+                            <option th:selected="(${#strings.equals(param.order,'post_time')})" value="post_time">작성일</option>
+                            <option th:selected="(${#strings.equals(param.order,'update_time')})" value="update_time">수정일</option>
+                            <option th:selected="(${#strings.equals(param.order,'title')})" value="title">제목</option>
+                            <option th:selected="(${#strings.equals(param.order,'view_count')})" value="view_count">조회수</option>
+                        </select>
+                        <select name="direct" id="" class="form-control">
+                            <option value=" ">정렬방향</option>
+                            <option th:selected="(${#strings.equals(param.direct,'DESC')})" value="DESC">내림차순</option>
+                            <option th:selected="(${#strings.equals(param.direct,'ASC')})" value="ASC">오름차순</option>
+                        </select>
+                        <button class="btn btn-warning">정렬</button>
+                    </div>
+                        <div class="input-group" >
+                        <select name="searchField" class="form-control">
+                            <option th:selected="(${#strings.equals(param.searchField,'c_id')})" value="c_id">글번호</option>
+                            <option th:selected="(${#strings.equals(param.searchField,'u_id')})" value="u_id">아이디</option>
+                            <option th:selected="(${#strings.equals(param.searchField,'title')})" value="title">제목</option>
+                            <option th:selected="(${#strings.equals(param.searchField,'content')})" value="content">내용</option>
+                        </select>
+                        <input class="form-control me-2" type="text" placeholder="Search" aria-label="Search"  name="searchValue" th:value="${param.searchValue}">
+                        <button class="btn btn-warning" type="submit"><i class="bi bi-search"></i></button>
 
-        <!--검색창-->
-        <form class="d-flex w-75 my-2 mx-auto" role="search">
-            <div class="input-group" >
-                <label class="input-group-text bi bi-filter-square"></label>
-                <select name="order" class="form-control">
-                    <option value=" ">정렬기준</option>
-                    <option th:selected="(${#strings.equals(param.order,'c_id')})" value="c_id">글번호</option>
-                    <option th:selected="(${#strings.equals(param.order,'u_id')})" value="u_id">글쓴이</option>
-                    <option th:selected="(${#strings.equals(param.order,'post_time')})" value="post_time">작성일</option>
-                    <option th:selected="(${#strings.equals(param.order,'update_time')})" value="update_time">수정일</option>
-                    <option th:selected="(${#strings.equals(param.order,'title')})" value="title">제목</option>
-                    <option th:selected="(${#strings.equals(param.order,'view_count')})" value="view_count">조회수</option>
-                </select>
-                <select name="direct" id="" class="form-control">
-                    <option value=" ">정렬방향</option>
-                    <option th:selected="(${#strings.equals(param.direct,'DESC')})" value="DESC">내림차순</option>
-                    <option th:selected="(${#strings.equals(param.direct,'ASC')})" value="ASC">오름차순</option>
-                </select>
-                <button class="btn btn-primary">정렬</button>
-                <select name="searchField" class="form-control">
-                    <option th:selected="(${#strings.equals(param.searchField,'c_id')})" value="c_id">글번호</option>
-                    <option th:selected="(${#strings.equals(param.searchField,'u_id')})" value="u_id">아이디</option>
-                    <option th:selected="(${#strings.equals(param.searchField,'title')})" value="title">제목</option>
-                    <option th:selected="(${#strings.equals(param.searchField,'content')})" value="content">내용</option>
-                </select>
-            <input class="form-control me-2" type="text" placeholder="Search" aria-label="Search"  name="searchValue" th:value="${param.searchValue}">
-            <button class="btn btn-outline-success" type="submit"><i class="bi bi-search"></i></button>
+                    </div>
+                </form>
             </div>
-        </form>
-        <div class= "mx-auto my-1">
+        </div>
+    </div>
+    <section id="commListContainer" class="row">
+        <!--검색창-->
+
+        <div class= "mx-auto mt-3">
             <th:block th:include="/comm/pageNav"></th:block>
         </div>
 
 <!--   지역으로 검색 +     글쓰기-->
 <!--        http://localhost:7777/comm/list.do?searchField=area&searchValue=%EC%84%9C%EC%9A%B8-->
         <div class="my-2 d-flex justify-content-between">
-            <div>
+            <div class="ms-4">
                 <ul  id="areaCont" class="list-group d-flex align-items-center  list-group-horizontal">
                     <li class="list-group-item p-1"><a href="list.do"><i class="bi bi-geo-alt fs-5"></i></a></li>
                     <li class="list-group-item p-1"><a href=list.do?searchField=area&searchValue=서울>서울</a></li>
@@ -88,8 +98,8 @@
                 <a class="btn btn-outline-success me-5" href="/comm/register.do">글쓰기</a>
             </div>
         </div>
-        <hr>
-        <div class="col-11 my-2" th:each="c:${communities}">
+
+        <div class="col-11 mx-auto my-2 " th:each="c:${communities}">
             <div class="card" >
                 <div class="row no-gutters">
                     <div class="col-4" th:if="${c.imgs!=null && state.index==0}"th:each="img,state:${c.imgs}">
@@ -102,7 +112,7 @@
                     </div>
 
 
-                    <div class="col-8">
+                    <div class="col-8  d-flex flex-column mb-2">
                         <div class="card-body">
                             <h4 class="card-title" >
                                 <i class="bi bi-clipboard text-success"></i>
@@ -117,7 +127,7 @@
                             </p>
 
                         </div>
-                        <div class="LastCont d-flex justify-content-between">
+                        <div class="LastCont d-flex justify-content-between align-content-center">
                             <div class="card-body">
                                 <p id="mbtiChk">
                                     <!--http://localhost:7777/comm/list.do?searchField=istp&searchValue=1-->
@@ -146,6 +156,7 @@
                                    th:href="@{'/comm/{cId}/remove.do'(cId=${c.cId})}" class="btn btn-danger btn-sm">삭제</a>
                             </div>
                         </div>
+
                     </div>
                 </div>
             </div>
