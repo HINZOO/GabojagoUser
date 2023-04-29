@@ -17,14 +17,20 @@ public class MileageServiceImpl implements MileageService{
     }
 
     @Override
-    public int sumMileage(String uId) {
-        int sumMileage=mileageMapper.sumByUId(uId);
-        return sumMileage;
+    public Integer sumMileage(String uId) {
+        Integer sumMileage=mileageMapper.sumByUId(uId);
+        return sumMileage!=null?sumMileage:0;
     }
 
     @Override
     public int register(MileageDto mileageDto) {
         int register=mileageMapper.insertOne(mileageDto);
         return register;
+    }
+
+    @Override
+    public int modify(MileageDto mileageDto) {
+        int modify = mileageMapper.updateOne(mileageDto);
+        return modify;
     }
 }

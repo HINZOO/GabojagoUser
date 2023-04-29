@@ -19,49 +19,81 @@
             accent-color: orangered;
         }
 
-        /*.star-rating input[type="radio"] {*/
-        /*    display: none;*/
-        /*}*/
 
-        /* .star-rating label {*/
-        /*     display: inline-block;*/
-        /*     font-size: 24px;*/
-        /*     color: #ccc;*/
-        /*     cursor: pointer;*/
-        /* }*/
-
-        /*.star-rating label:hover,*/
-        /*.star-rating label:hover~label,*/
-        /*.star-rating input[type="radio"]:checked~label{*/
-        /*    color: #ffcc00;*/
-        /*}*/
-
-
-        #reviewRegisterForm fieldset{
-            display: inline-block;
-            direction: rtl;
-            border:0;
-        }
-        #reviewRegisterForm fieldset legend{
-            text-align: right;
-        }
-        #reviewRegisterForm input[type=radio]{
+        .star-rating input[type="radio"] {
             display: none;
         }
-        #reviewRegisterForm label{
-            font-size: 3em;
-            color: transparent;
-            text-shadow: 0 0 0 #f0f0f0;
+
+         .star-rating label {
+             display: inline-block;
+             font-size: 24px;
+             color: #ccc;
+             cursor: pointer;
+         }
+
+        .star-rating label:hover,
+        .star-rating label:hover~label,
+        .star-rating input[type="radio"]:checked~label{
+            /*color: #ffcc00;*/
+            color: orangered;
+
         }
-        #reviewRegisterForm label:hover{
-            text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+
+
+        /*#reviewStar {*/
+        /*    position: relative;*/
+        /*}*/
+
+        /*#reviewStar .star-ratings-fill {*/
+        /*    padding: 0;*/
+        /*    !*position: absolute;*!*/
+        /*    z-index: 1;*/
+        /*    display: flex;*/
+        /*    top: 0;*/
+        /*    left: 0;*/
+        /*    overflow: hidden;*/
+        /*    color: orangered;*/
+        /*}*/
+
+        /*#reviewStar .star-ratings-base {*/
+        /*    z-index: 0;*/
+        /*    padding: 0;*/
+        /*}*/
+        /*#reviewStar .star {*/
+        /*    cursor: pointer;*/
+        /*    font-size: 13px;*/
+        /*}*/
+
+        /*#reviewStar .bi-star {*/
+        /*    color: #aaa !important;*/
+        /*}*/
+
+
+
+        .star-ratings-fill {
+            padding: 0;
+            /*position: absolute;*/
+            z-index: 1;
+            display: flex;
+            top: 0;
+            left: 0;
+            overflow: hidden;
+            color: orangered;
         }
-        #reviewRegisterForm label:hover ~ label{
-            text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+
+        .star-ratings-base {
+            z-index: 0;
+            padding: 0;
         }
-        #reviewRegisterForm input[type=radio]:checked ~ label{
-            text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+        .star {
+            cursor: pointer;
+            font-size: 13px;
         }
+
+        .bi-star {
+            color: #aaa !important;
+        }
+
 
 
 
@@ -91,6 +123,10 @@
 
                         </div>
                     </div> <!-- // 좋아요,북마크,리뷰,방문,조회수 -->
+
+<!--                    <p th:text="${t}"></p>-->
+<!--                    <p th:text="${review}"></p>-->
+
 
                     <div class="card-body">
                         <h5 class="card-title" th:text="${t.title}"></h5>
@@ -237,6 +273,7 @@
                 <th:block th:include="/trip/review/reviewRegisterModal.html"></th:block>
                 <!--                <th:block th:include="/trip/review/reviewModifyModal.html"></th:block>-->
 
+<!--                <p th:text="${t.reviews.grade}"></p>-->
             </div> <!-- 오른쪽 그리드 -->
         </div> <!-- // 그리드 row -->
     </section>
@@ -404,7 +441,8 @@
                                 key=input.name;
                                 input.value=json[key];
                             })
-                        } else{ // json key 이름 == imgs
+                        }
+                        else { // json key 이름 == imgs
                             const imgs=json[key];
                             reviewModifyModalImgCont.innerHTML = "";
                             imgs.forEach((img,index)=>{
@@ -418,7 +456,6 @@
                     alert("불러오기 실패 status: " + resp.status);
                 }
             }
-
 
         function reviewModifyImgComponent(img){
             return `
@@ -524,6 +561,28 @@
         }
 
 
+        // 별점 수정
+
+        // const mstars = reviewModifyForm.querySelectorAll("#gradeCont input[type='radio']");
+        // const mratingValue = reviewModifyForm.querySelector("#gradeCont #rating-value");
+        //
+        // for (let i = 0; i < mstars.length; i++) {
+        //     mstars[i].addEventListener("click", function() {
+        //         mratingValue.value = mstars[i].value;
+        //         console.log(mratingValue.value);
+        //     });
+        // }
+
+        // const mstars = reviewModifyForm.querySelectorAll("#gradeCont input[type='radio']");
+        // const mratingValue = reviewModifyForm.querySelector("#gradeCont #rating-value");
+        //
+        // for (let i = 0; i < mstars.length; i++) {
+        //     mstars[i].addEventListener("click", function() {
+        //         mratingValue.value = mstars[i].value;
+        //         const gradeValue = mratingValue.value;
+        //         console.log(gradeValue);
+        //     });
+        // }
 
     </script>
 

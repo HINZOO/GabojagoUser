@@ -24,7 +24,7 @@
                     column="so_id"
                     fetchType="lazy"/>
     </resultMap>
-    <insert id="insertOne">
+    <insert id="insertOne" useGeneratedKeys="true" keyProperty="sodId">
         INSERT INTO sell_order_details ( u_id, s_id, o_id, so_id, cnt) VALUE
         (#{uId},#{sId},#{oId},#{soId},#{cnt})
     </insert>

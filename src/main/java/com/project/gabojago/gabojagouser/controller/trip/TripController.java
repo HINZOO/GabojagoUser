@@ -4,7 +4,9 @@ import com.github.pagehelper.PageInfo;
 import com.project.gabojago.gabojagouser.dto.trip.TripDto;
 import com.project.gabojago.gabojagouser.dto.trip.TripImgDto;
 import com.project.gabojago.gabojagouser.dto.trip.TripPageDto;
+import com.project.gabojago.gabojagouser.dto.trip.TripReviewDto;
 import com.project.gabojago.gabojagouser.dto.user.UserDto;
+import com.project.gabojago.gabojagouser.service.trip.TripReviewService;
 import com.project.gabojago.gabojagouser.service.trip.TripService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
@@ -33,7 +35,7 @@ public class TripController {
     private String staticPath;
 
 
-    public TripController(TripService tripService) {
+        public TripController(TripService tripService) {
         this.tripService = tripService;
     }
 
@@ -180,9 +182,7 @@ public class TripController {
 
     @GetMapping("/register.do")
     public void registerForm(
-            @SessionAttribute UserDto loginUser
-    ) {
-    }
+            @SessionAttribute UserDto loginUser) {}
 
     @PostMapping("/register.do")
     public String registerAction(
@@ -227,9 +227,6 @@ public class TripController {
             }
             return redirectPage;
         }
-
-
-
 
         List<TripImgDto> imgDtos=null;
         if (imgs != null) {

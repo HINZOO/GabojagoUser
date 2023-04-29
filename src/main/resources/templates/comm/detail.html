@@ -74,8 +74,10 @@
                                 </button>
                             </h2>
                             <div th:id="'flush-collapse-' + ${p.conId}" class="accordion-collapse collapse"  th:data-bs-parent="'#accordionFlushExample'+${p.conId}" >
-                                <div class="accordion-body">
-                                    <p>if=${p.imgPath!=null} th:text=${p.imgPath}</p>
+                                <div class="accordion-body w-100">
+                                    <div th:if="${p.imgPath!=null}" >
+                                        <img th:src="@{'{path}'(path=${p.imgPath})}" class="img-fluid" alt="일정꾸미는이미지">
+                                    </div>
                                 </div>
                             </div>
                         </div>
