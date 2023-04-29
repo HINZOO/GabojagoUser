@@ -11,6 +11,9 @@
     font-weight: 700;
     font-style: normal;
 }
+*{
+    font-family: "Noto Sans KR";
+}
 body{
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -261,6 +264,10 @@ input[type='text'], input[type='text']:focus{
     width: 100%;
     padding: 20px;
 }
+.card-img-top{
+    object-fit: cover;
+    max-height: 200px;
+}
 
 .cardInfo{
     font-family: "Yu Gothic";
@@ -389,7 +396,7 @@ canvas{
     color: white;
 }
 .titleInnerBox{
-    width:400px;
+    width:450px;
     padding: 10px 30px;
     border-radius: 15px;
     /*background-color: rgba(0, 0, 0, 0.3);*/
@@ -584,13 +591,56 @@ canvas{
 #newScheduleBtn:hover{
     background-color: #595959;
 }
+
+.sFormSection{
+    font-weight: bold;
+    font-size: 15px;
+    color: darkgrey;
+}
 .bkDiv{
+    width: 50%;
+    background-color: #c6e7ff;
+    border-bottom: 1px solid lightgray;
+}
+
+.bkBtn {
+    display: flex;
+    justify-content: space-between;
+    text-align: left;
+    background-color: white;
+    border-bottom: 1px solid whitesmoke;
+}
+
+#bookmarkTabContent{
+    padding: 5px;
+}
+#bookmarkTabContent .dropdown-menu{
     width: 100%;
 }
-.bkBtn {
-    text-align: left;
-    width: 100% ;
-    background-color: whitesmoke;
+#bookmarkTabContent .dropdown-toggle::after {
+    display: none !important;
+}
+
+#bookmarkTabContent h5 {
+    color: dodgerblue;
+    font-weight: bold;
+}
+.tripBookmarkIBtn{
+
+    color: white;
+    line-height: 10px;
+    font-size: 18px;
+
+    height: 35px;
+    border: 1px solid transparent;
+    background-color: lightgray;
+    border-radius: 5px;
+}
+.tripBookmarkIBtn:hover{
+    color: black;
+}
+.bkTxt {
+    color: #696969;
 }
 
 

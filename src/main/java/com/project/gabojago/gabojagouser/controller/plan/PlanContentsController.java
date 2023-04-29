@@ -72,8 +72,12 @@ public class PlanContentsController {
     {
         List<PlanDto> planDtos = planService.list(loginUser.getUId());
         List<TripDto> bookmarkedTripDtos = tripBookMarkService.bookmarkedTripList(loginUser.getUId());
+        List<SellsDto> bookmarkedSellDtos = sellBookMarksService.bookmarkedSellList(loginUser.getUId());
+
         model.addAttribute("bPlans",planDtos);
         model.addAttribute("bTrips",bookmarkedTripDtos);
+        model.addAttribute("bSells",bookmarkedSellDtos);
+
         return "/plan/scheduleForm";
     }
 

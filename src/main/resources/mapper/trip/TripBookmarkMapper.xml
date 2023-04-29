@@ -19,7 +19,7 @@
     <select id="findByUId" resultMap="tripBookMarkMap">
         SELECT * FROM trip_bookmarks WHERE u_id=#{uId};
     </select>
-    <select id="findTripsByUId" resultType="com.project.gabojago.gabojagouser.dto.trip.TripDto">
+    <select id="findTripsByUId" resultMap="com.project.gabojago.gabojagouser.mapper.trip.TripMapper.TripMap">
         SELECT * FROM trips
         left join trip_bookmarks tb using (t_id)
         where tb.u_id=#{uId};

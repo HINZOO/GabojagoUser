@@ -19,4 +19,10 @@
     <select id="findByUId" resultMap="sellBookMap">
         SELECT * FROM sell_bookmarks WHERE u_id=#{uId}
     </select>
+    <!-- 플래너에서 북마크 불러올 때 사용 -->
+    <select id="findSellsByUId" resultMap="com.project.gabojago.gabojagouser.mapper.sells.SellsMapper.sellsMap">
+            SELECT * FROM sells
+            left join sell_bookmarks sb using (s_id)
+            where sb.u_id=#{uId};
+     </select>
 </mapper>
