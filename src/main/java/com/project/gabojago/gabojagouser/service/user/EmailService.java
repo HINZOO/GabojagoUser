@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class EmailService {
     private JavaMailSender javaMailSender;
-
     public EmailService(JavaMailSender javaMailSender) {
         this.javaMailSender = javaMailSender;
     }

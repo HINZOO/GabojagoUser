@@ -560,7 +560,7 @@ CREATE TABLE sell_orders (
 
 
 CREATE TABLE sell_order_details (
-                                    sol_id INT unsigned NOT NULL AUTO_INCREMENT,
+                                    sod_id INT unsigned NOT NULL AUTO_INCREMENT,
                                     u_id VARCHAR(255),
                                     s_id INT unsigned,
                                     o_id int unsigned,
@@ -568,7 +568,7 @@ CREATE TABLE sell_order_details (
                                     cnt int comment '수량',
                                     post_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP  COMMENT '구매일시',
 #                                     used_check boolean default false comment '사용여부',
-                                    PRIMARY KEY (sol_id),
+                                    PRIMARY KEY (sod_id),
                                     FOREIGN KEY (u_id) REFERENCES users (u_id) ON DELETE CASCADE ON UPDATE CASCADE,
                                     FOREIGN KEY (o_id) REFERENCES sell_options (o_id) ON DELETE CASCADE ON UPDATE CASCADE,
                                     FOREIGN KEY (s_id) REFERENCES sells (s_id) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -577,11 +577,11 @@ CREATE TABLE sell_order_details (
 
 CREATE TABLE sell_tickets (
                               st_id INT AUTO_INCREMENT PRIMARY KEY COMMENT'티켓아이디',
-                              so_id INT UNSIGNED NOT NULL COMMENT'구매옵션아이디',
+                              sod_id INT UNSIGNED NOT NULL COMMENT'구매옵션아이디',
                               ticket_num VARCHAR(20) NOT NULL COMMENT'티켓번호',
                               use_check BOOLEAN DEFAULT FALSE COMMENT'사용여부',
                               used_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '사용시간',
-                              FOREIGN KEY (so_id) REFERENCES sell_orders(so_id) ON DELETE CASCADE ON UPDATE CASCADE
+                              FOREIGN KEY (sod_id) REFERENCES sell_order_details(sod_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 

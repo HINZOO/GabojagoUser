@@ -132,7 +132,6 @@ public class KakaoPayController {
         List<Integer> cnt= (List<Integer>) session.getAttribute("cnt");
 
         List<SellOrderDetailDto> sellOrderDetailDtos=new ArrayList<>();
-        List<SellTicketDto> sellTicketDtos=new ArrayList<>();
         for (int i=0;i<cnt.size();i++){
             SellOrderDetailDto sellOrderDetailDto=new SellOrderDetailDto();
             sellOrderDetailDto.setCnt(cnt.get(i));
@@ -140,17 +139,12 @@ public class KakaoPayController {
             sellOrderDetailDto.setSId(sellOrder.getSId());
             sellOrderDetailDto.setOId(oId.get(i));
             sellOrderDetailDtos.add(sellOrderDetailDto);
-            SellTicketDto sellTicketDto=new SellTicketDto();
-            sellTicketDto.setTicketNum("1234sdasddgg");
-            sellTicketDtos.add(sellTicketDto);
+
             System.out.println("oId번호 = " + oId.get(i));
         }
-        for (SellTicketDto ticketDto:sellTicketDtos){
-            System.out.println("ticketDto = " + ticketDto);
-        }
+
         System.out.println("sellOrderDetailDtos = " + sellOrderDetailDtos);
         sellOrder.setDetailList(sellOrderDetailDtos);
-        sellOrder.setTicketList(sellTicketDtos);
         sellOrderService.register(sellOrder);
 
 

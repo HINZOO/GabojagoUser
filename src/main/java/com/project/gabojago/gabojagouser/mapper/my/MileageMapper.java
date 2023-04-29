@@ -9,7 +9,9 @@ import java.util.List;
 public interface MileageMapper {
     //유저별 마일리지 이력조회 //한유저의 마일리지총합 //마일리지 생성(-로 등록시 삭제)
     List<MileageDto> findByUId(String uId);
-    Integer sumByUId(String uId);
+
+    int sumByUId(String uId);
+
     int insertOne(MileageDto mileageDto);
 
 }

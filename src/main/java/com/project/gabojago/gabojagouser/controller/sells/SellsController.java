@@ -1,7 +1,10 @@
 package com.project.gabojago.gabojagouser.controller.sells;
 import com.github.pagehelper.PageInfo;
+import com.project.gabojago.gabojagouser.dto.my.MileageDto;
 import com.project.gabojago.gabojagouser.dto.sells.*;
 import com.project.gabojago.gabojagouser.dto.user.UserDto;
+import com.project.gabojago.gabojagouser.mapper.sells.SellTicketsMapper;
+import com.project.gabojago.gabojagouser.service.my.MileageService;
 import com.project.gabojago.gabojagouser.service.sells.SellBookMarksService;
 import com.project.gabojago.gabojagouser.service.sells.SellOrderDetailService;
 import com.project.gabojago.gabojagouser.service.sells.SellOrderService;
@@ -30,10 +33,14 @@ public class SellsController {
     private SellsService sellsService;
     private SellBookMarksService sellBookMarksService;
     private SellOrderDetailService sellOrderDetailService;
-    public SellsController(SellsService sellsService,SellBookMarksService sellBookMarksService,SellOrderDetailService sellOrderDetailService) {
+    private MileageService mileageService;
+    private SellTicketsMapper sellTicketsMapper;
+    public SellsController(MileageService mileageService,SellTicketsMapper sellTicketsMapper,SellsService sellsService,SellBookMarksService sellBookMarksService,SellOrderDetailService sellOrderDetailService) {
         this.sellBookMarksService=sellBookMarksService;
         this.sellsService = sellsService;
         this.sellOrderDetailService=sellOrderDetailService;
+        this.sellTicketsMapper=sellTicketsMapper;
+        this.mileageService=mileageService;
     }
     @Value("${img.upload.path}")
     private String uploadPath;
@@ -83,11 +90,16 @@ public class SellsController {
 
     }
     @GetMapping("/{sId}/detail.do")
-    public String detail(Model model,@PathVariable int sId){
+    public String detail(Model model,@PathVariable int sId
+//    @SessionAttribute(required = false) UserDto loginUser
+    ){
+//        int mileage;
+//        mileage=mileageService.sumMileage(loginUser.getUId());
             SellsDto sells=sellsService.detail(sId);
 //        List<SellsDto> sells;
 //        sells=sellsService.List();
         model.addAttribute("sells",sells);
+//        model.addAttribute("mileage",mileage);
         return "/sells/detail";
     }
     @GetMapping("/{sId}/modify.do")
@@ -369,6 +381,13 @@ public class SellsController {
         detailList=sellOrderDetailService.findByUId(loginUser.getUId());
         model.addAttribute("detailList",detailList);
         return "/sells/orderList";
+    }
+    @GetMapping("/{sodId}/ticket.do")
+    public String ticketList(@PathVariable int sodId,Model model){
+       List<SellTicketDto> sellTicketDto;
+       sellTicketDto= sellTicketsMapper.findBySodId(sodId);
+       model.addAttribute("ticketList",sellTicketDto);
+        return "/sells/ticketList";
     }
 
 }
