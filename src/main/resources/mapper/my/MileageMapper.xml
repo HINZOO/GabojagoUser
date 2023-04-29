@@ -14,7 +14,7 @@
     <select id="findByUId" resultMap="mileageMap">
         SELECT * FROM mileages WHERE u_id=#{uId} ORDER BY post_time DESC
     </select>
-    <select id="sumByUId" resultType="int">
+    <select id="sumByUId" resultType="Integer">
         SELECT SUM(mileage) FROM mileages WHERE u_id=#{uId}
     </select>
 </mapper>
