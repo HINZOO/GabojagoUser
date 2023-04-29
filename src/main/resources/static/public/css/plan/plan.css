@@ -142,12 +142,12 @@ input[type='text'], input[type='text']:focus{
     object-position: center;
     object-fit: scale-down;
 }
-#newPlanModal h1, .planModalTitle{
+#newPlanModal h5, .planModalTitle{
     margin-left: 10px;
-    color: white;
+    color: lightgrey;
     font-family: "Noto Sans KR";
-    font-weight: 900;
-    text-shadow: -1px 0 lightgrey, 1px 1px gray, 1px 2px gray, 0 -1px lightgrey;
+    font-weight: 400;
+    /*text-shadow: -1px 0 lightgrey, 1px 1px lightgrey, 1px 2px lightgrey, 0 -1px lightgrey;*/
 }
 
 .newPlanModalBody label{
@@ -524,13 +524,30 @@ canvas{
     height: 35px;
     letter-spacing: 2px;
     margin-left: 35px;
-    border-radius: 15px;
+    border-radius: 10px;
     font-size: 20px;
     background-color: rgba(176, 211, 255, 0.66);
     color: white;
     text-shadow: -1px 0 lightgrey, 1px 1px gray, 1px 2px gray, 0 -1px lightgrey;
 }
+.catBtn{
+    font-family: "Noto Sans KR";
+    height: 35px;
+    letter-spacing: 2px;
+    margin-left: 35px;
+    border-radius: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    background-color: rgba(176, 211, 255, 0.66);
+    color: white;
+    text-shadow: -1px 0 lightgrey, 1px 1px lightgrey, 1px 2px lightgrey, 0 -1px lightgrey;
+}
 
+.catBtnC{
+    background-color: lightgrey;
+    width: 85%;
+    font-size: 15px;
+}
 
 .btnLine{
     height: 35px;
@@ -595,20 +612,34 @@ canvas{
 .sFormSection{
     padding: 5px 10px;
     border-radius: 10px;
-    background-color: rgba(200, 226, 255, 0.15);
+    background-color: rgba(200, 226, 255, 0.4);
     font-weight: bold;
     font-size: 15px;
-    color: gray;
+    color: #595959;
+
 }
 
 #scheduleInsertForm label{
+    font-family: Do hyeon;
     color: gray;
     font-weight: bold;
+    font-size: 20px;
+    line-height: 10px;
+}
+#scheduleInsertForm label i {
+    text-shadow: -1px 0 lightgrey, 1px 1px lightgrey, 1px 2px lightgrey, 0 -1px lightgrey;
+    margin-right: 2px;
 }
 #scheduleInsertForm input{
-    border: 1px solid #e9f3ff;
+    border: 3px solid rgba(200, 226, 255, 0.48);
     color: dodgerblue;
     font-weight: bold;
+    border-radius: 15px;
+    font-size: 17px;
+}
+.form-floating>.form-control-plaintext~label, .form-floating>.form-control:focus~label, .form-floating>.form-control:not(:placeholder-shown)~label, .form-floating>.form-select~label {
+    opacity: 0.4;
+    transform: scale(.65) translateY(-0.5rem) translateX(0.15rem);
 }
 .bkDiv{
     width: 50%;
@@ -617,7 +648,8 @@ canvas{
 }
 
 .bkBtn {
-    font-size: 13px;
+    font-family: "Do hyeon";
+    font-size: 14px;
     display: flex;
     justify-content: space-between;
     text-align: left;
@@ -639,7 +671,7 @@ canvas{
     font-size: 12px;
 }
 #bookmarkTabDiv{
-    background-color: rgba(200, 226, 255, 0.15);
+    background-color: rgba(200, 226, 255, 0.4);
     display: flex;
     justify-content: space-between;
     border-bottom: 1px solid whitesmoke;
@@ -862,6 +894,11 @@ canvas{
     color: black;
     text-align: left;
     font-size: 12px;
+}
+
+.cB{
+    font-size: 15px;
+    cursor: pointer;
 }
 
 
