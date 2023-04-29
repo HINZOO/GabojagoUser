@@ -2,6 +2,7 @@ package com.project.gabojago.gabojagouser.service.sells;
 
 import com.project.gabojago.gabojagouser.dto.sells.SellBookmarksDto;
 import com.project.gabojago.gabojagouser.dto.sells.SellCartDto;
+import com.project.gabojago.gabojagouser.dto.sells.SellsDto;
 import com.project.gabojago.gabojagouser.mapper.sells.SellBookMarksMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,12 @@ public class SellBookMarksServiceImp implements SellBookMarksService{
     @Override
     public List<SellBookmarksDto> List(String uId) {
         List<SellBookmarksDto> list = sellBookMarksMapper.findByUId(uId);
+        return list;
+    }
+
+    @Override
+    public List<SellsDto> bookmarkedSellList(String uId) {
+        List<SellsDto> list = sellBookMarksMapper.findSellsByUId(uId);
         return list;
     }
 

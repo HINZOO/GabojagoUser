@@ -4,11 +4,16 @@ import com.project.gabojago.gabojagouser.dto.comm.CommBookmarkDto;
 import com.project.gabojago.gabojagouser.dto.plan.PlanContentPathsDto;
 import com.project.gabojago.gabojagouser.dto.plan.PlanContentsDto;
 import com.project.gabojago.gabojagouser.dto.plan.PlanDto;
+import com.project.gabojago.gabojagouser.dto.sells.SellBookmarksDto;
+import com.project.gabojago.gabojagouser.dto.sells.SellsDto;
+import com.project.gabojago.gabojagouser.dto.trip.TripDto;
 import com.project.gabojago.gabojagouser.dto.user.UserDto;
 import com.project.gabojago.gabojagouser.service.comm.CommBookMarkService;
 import com.project.gabojago.gabojagouser.service.plan.PlanContentPathsService;
 import com.project.gabojago.gabojagouser.service.plan.PlanContentsService;
 import com.project.gabojago.gabojagouser.service.plan.PlanService;
+import com.project.gabojago.gabojagouser.service.sells.SellBookMarksService;
+import com.project.gabojago.gabojagouser.service.trip.TripBookMarkService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.extern.log4j.Log4j2;
@@ -36,16 +41,22 @@ public class PlanContentsController {
     private PlanContentsService planContentsService;
     private PlanContentPathsService planContentPathsService;
     private PlanService planService;
+    private SellBookMarksService sellBookMarksService;
+    private TripBookMarkService tripBookMarkService;
     @Value("${static.path}")
     private String staticPath;
 
     public PlanContentsController(PlanContentsService planContentsService,
                                   PlanContentPathsService planContentPathsService,
-                                  PlanService planService)
+                                  PlanService planService,
+                                  SellBookMarksService sellBookMarksService,
+                                  TripBookMarkService tripBookMarkService)
     {
         this.planContentsService = planContentsService;
         this.planContentPathsService = planContentPathsService;
         this.planService = planService;
+        this.sellBookMarksService = sellBookMarksService;
+        this.tripBookMarkService = tripBookMarkService;
     }
 
     @Data
@@ -59,9 +70,14 @@ public class PlanContentsController {
             @SessionAttribute UserDto loginUser,
             Model model)
     {
+        List<PlanDto> planDtos = planService.list(loginUser.getUId());
+        List<TripDto> bookmarkedTripDtos = tripBookMarkService.bookmarkedTripList(loginUser.getUId());
+        List<SellsDto> bookmarkedSellDtos = sellBookMarksService.bookmarkedSellList(loginUser.getUId());
 
-        List<PlanDto> dto = planService.list(loginUser.getUId());
-        model.addAttribute("bPlans",dto);
+        model.addAttribute("bPlans",planDtos);
+        model.addAttribute("bTrips",bookmarkedTripDtos);
+        model.addAttribute("bSells",bookmarkedSellDtos);
+
         return "/plan/scheduleForm";
     }
 
@@ -70,8 +86,8 @@ public class PlanContentsController {
             @ModelAttribute PlanContentsDto content)
     {
         log.info("테스트123" + content);
-            int register = planContentsService.register(content);
-            return content;
+        int register = planContentsService.register(content);
+        return content;
     }
 
     @PutMapping("/imgUpdate.do")

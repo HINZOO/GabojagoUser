@@ -2,6 +2,7 @@ package com.project.gabojago.gabojagouser.service.trip;
 
 import com.project.gabojago.gabojagouser.dto.trip.TripBookMarkCntDto;
 import com.project.gabojago.gabojagouser.dto.trip.TripBookmarkDto;
+import com.project.gabojago.gabojagouser.dto.trip.TripDto;
 import com.project.gabojago.gabojagouser.mapper.trip.TripBookmarkMapper;
 import com.project.gabojago.gabojagouser.mapper.user.UserMapper;
 import lombok.AllArgsConstructor;
@@ -38,6 +39,12 @@ public class TripBookMarkServiceImp implements TripBookMarkService{
     @Override
     public List<TripBookmarkDto> list(String uId) {
         List<TripBookmarkDto> list=bookmarkMapper.findByUId(uId);
+        return list;
+    }
+
+    @Override
+    public List<TripDto> bookmarkedTripList(String uId) {
+        List<TripDto> list = bookmarkMapper.findTripsByUId(uId);
         return list;
     }
 

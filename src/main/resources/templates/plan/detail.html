@@ -357,8 +357,20 @@
             }else {
                 alert("입력 폼 로딩 실패 :"+resp.status);
             }
-
         }
+
+        // 북마크한 자료를 스케쥴 입력 폼에 삽입
+        function tripBookMarkInsert(tId,title) {
+            const scheduleForm = document.getElementById("scheduleInsertForm")
+            scheduleForm.title.value = title;
+            scheduleForm.tId.value = tId;
+        }
+        function sellBookMarkInsert(sId,title) {
+            const scheduleForm = document.getElementById("scheduleInsertForm")
+            scheduleForm.title.value = title;
+            scheduleForm.sId.value = sId;
+        }
+
 
         // 새 스케쥴 등록 후 아코디언 생성
         async function registerSchedule(e){
