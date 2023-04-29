@@ -31,7 +31,7 @@
         <form class="d-flex w-75 my-2 mx-auto" role="search">
             <div class="input-group">
                 <label class="input-group-text bi bi-filter-square"></label>
-                <select name="order" class="form-control">
+                <select name="order" class="form-control form-select">
                     <option value="">정렬기준</option>
                     <option th:selected="(${#strings.equals(param.order,'t_id')})" value="t_id">글번호</option>
                     <option th:selected="(${#strings.equals(param.order,'u_id')})" value="u_id">글쓴이</option>
@@ -41,7 +41,7 @@
                     <option th:selected="(${#strings.equals(param.order,'view_count')})" value="view_count">조회수</option>
                 </select>
 
-                <select name="direct" class="form-control">
+                <select name="direct" class="form-control form-select">
                     <option value="">정렬방향</option>
                     <option th:selected="(${#strings.equals(param.direct,'DESC')})" value="DESC">내림차순
                     <option th:selected="(${#strings.equals(param.direct,'ASC')})" value="ASC">오름차순
@@ -50,9 +50,9 @@
                 <button class="input-group-text btn btn-outline-success">정렬</button>
 <!--                <button class="input-group-text bi bi-search"></button>-->
 <!--                <button class="btn btn-primary bi bi-search">검색</button>-->
-                <select name="searchField" class="form-control">
+                <select name="searchField" class="form-control form-select">
 <!--                    <option th:selected="(${#strings.equals(param.searchField,'t_id')})" value="t_id">글번호</option>-->
-                    <option th:selected="(${#strings.equals(param.searchField,'u_id')})" value="u_id">글쓴이</option>
+                    <option th:selected="(${#strings.equals(param.searchField,'u_id')})" value="u_id" >글쓴이</option>
 <!--                    <option th:selected="(${#strings.equals(param.searchField,'post_time')})" value="post_time">작성일</option>-->
 <!--                    <option th:selected="(${#strings.equals(param.searchField,'update_time')})" value="update_time">수정일</option>-->
                     <option th:selected="(${#strings.equals(param.searchField,'title')})" value="title">제목</option>

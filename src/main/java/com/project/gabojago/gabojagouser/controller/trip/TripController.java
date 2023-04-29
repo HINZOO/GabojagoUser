@@ -4,7 +4,9 @@ import com.github.pagehelper.PageInfo;
 import com.project.gabojago.gabojagouser.dto.trip.TripDto;
 import com.project.gabojago.gabojagouser.dto.trip.TripImgDto;
 import com.project.gabojago.gabojagouser.dto.trip.TripPageDto;
+import com.project.gabojago.gabojagouser.dto.trip.TripReviewDto;
 import com.project.gabojago.gabojagouser.dto.user.UserDto;
+import com.project.gabojago.gabojagouser.service.trip.TripReviewService;
 import com.project.gabojago.gabojagouser.service.trip.TripService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,16 +28,21 @@ import java.util.List;
 @Log4j2
 public class TripController {
     private TripService tripService;
+    private TripReviewService tripReviewService;
 
     @Value("${img.upload.path}")
     private String uploadPath;
     @Value("${static.path}")
     private String staticPath;
 
-
-    public TripController(TripService tripService) {
+    public TripController(TripService tripService, TripReviewService tripReviewService) {
         this.tripService = tripService;
+        this.tripReviewService = tripReviewService;
     }
+
+    //    public TripController(TripService tripService) {
+//        this.tripService = tripService;
+//    }
 
 
     @GetMapping("/{tId}/remove.do") // db 정보 삭제 + 이미지 실제 삭제
@@ -169,8 +176,17 @@ public class TripController {
     @GetMapping("/{tId}/detail.do")
     public String detail(Model model,
                          @PathVariable int tId,
+//                         int trId,
                          @SessionAttribute(required = false) UserDto loginUser) {
         TripDto trip = tripService.detail(tId,loginUser);
+
+//        List<TripReviewDto> reviews =trip.getReviews();
+//        for(TripReviewDto review : reviews){
+//            int trId=review.getTrId();
+//            TripReviewDto tripReview=tripReviewService.detail(trId);
+//            model.addAttribute("review",tripReview);
+//        }
+
         String urlAddress=trip.getUrlAddress();
         model.addAttribute("t", trip);
         model.addAttribute("urlAddress",urlAddress);
@@ -180,9 +196,7 @@ public class TripController {
 
     @GetMapping("/register.do")
     public void registerForm(
-            @SessionAttribute UserDto loginUser
-    ) {
-    }
+            @SessionAttribute UserDto loginUser) {}
 
     @PostMapping("/register.do")
     public String registerAction(
@@ -227,9 +241,6 @@ public class TripController {
             }
             return redirectPage;
         }
-
-
-
 
         List<TripImgDto> imgDtos=null;
         if (imgs != null) {
