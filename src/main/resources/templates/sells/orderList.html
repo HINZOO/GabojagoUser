@@ -15,13 +15,14 @@
         <!-- 장바구니 항목 -->
         <div class="card mb-4 box-shadow" th:each="o:${d.getSellList()}" >
           <div class="d-flex justify-content-between card-header d-flex justify-content-between">
-            <p><b>티켓사용:</b><span th:text="${d.isUseCheck() ? '사용' : '미사용'}"></span></p>
+<!--            <p><b>티켓사용:</b><span th:text="${d.isUseCheck() ? '사용' : '미사용'}"></span></p>-->
+            <a th:href="@{'/sells/{sodId}/ticket.do'(sodId=${d.getSodId()})}">티켓보러가기</a>
             <h4 class="my-0 font-weight-normal"  th:text="${o.title}"></h4>
             <p></p>
           </div>
           <div class="card-body d-flex" >
 
-            <a th:href="@{'/sells/{sId}/detail.do'(sId=${d.getSId()})}"  th:if="${d.getSId()==o.getSId()}" >
+            <a th:href="@{'/sells/{sodId}/ticket.do'(sodId=${d.getSodId()})}"   >
               <img class="btn " style="width: 500px;height: 300px;" th:src="@{'{path}'(path=${o.imgMain})}" >
             </a>
 
@@ -31,6 +32,9 @@
               <li><b>개당 가격:</b><span th:text="${option.getPrice()}"></span></li>
               <li><b>구매수량:</b><span th:text="${d.getCnt()}"></span></li>
               <li><b>구매수량:</b><span th:text="${o.getPostTime().toLocaleString()}"></span></li>
+              <li>
+                <a th:href="@{'/sells/{sId}/detail.do'(sId=${d.getSId()})}"  th:if="${d.getSId()==o.getSId()}" >상품보러가기</a>
+              </li>
             </ul>
           </div>
 

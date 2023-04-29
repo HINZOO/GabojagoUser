@@ -6,7 +6,7 @@ import java.util.Date;
 @Data
 public class SellTicketDto {
     private int stId;
-    private int soId;
+    private int sodId;
     private String ticketNum;
     private boolean useCheck;
     private Date useDate;

@@ -9,6 +9,8 @@ import com.project.gabojago.gabojagouser.mapper.sells.SellTicketsMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Random;
+
 @Service
 @AllArgsConstructor
 public class SellOrderServiceImp implements SellOrderService {
@@ -24,12 +26,24 @@ public class SellOrderServiceImp implements SellOrderService {
             for (SellOrderDetailDto detail: sellOrderDto.getDetailList()){
                 detail.setSoId(sellOrderDto.getSoId());
                 insertOne+=sellOrderDetailMapper.insertOne(detail);
-            }
-        }
-        if (sellOrderDto.getTicketList()!=null){
-            for (SellTicketDto ticket: sellOrderDto.getTicketList()){
-                ticket.setSoId(sellOrderDto.getSoId());
-                insertOne+=sellTicketsMapper.insertOne(ticket);
+//                    if (sellOrderDto.getTicketList()!=null){
+                         int cnt=detail.getCnt();
+                        System.out.println("cnt갯수 = " + cnt);
+//                        for (SellTicketDto ticket: sellOrderDto.getTicketList()){
+                         for (int i=0;i<cnt;i++){
+                             String ticketNum = "GB";
+                             Random random = new Random();
+                             for (int j = 0; j < 10; j++) {
+                                 int digit = random.nextInt(5); // 0부터 9까지의 숫자 중 하나를 랜덤하게 선택
+                                 ticketNum += digit; // 선택된 숫자를 문자열에 추가
+                             }
+                             ticketNum += "JGO";                             SellTicketDto sellTicketDto=new SellTicketDto();
+                             sellTicketDto.setTicketNum(ticketNum);
+                            sellTicketDto.setSodId(detail.getSodId());
+                            insertOne+=sellTicketsMapper.insertOne(sellTicketDto);
+                        }
+//                    }
+//                }
             }
         }
         return insertOne;
