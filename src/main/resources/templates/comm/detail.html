@@ -20,13 +20,13 @@
                 <div  class="col-1 me-1" >
                     <a href="" class="profile">
                         <img class="profile img-thumbnail rounded-circle w-100 h-100" style="image-size:cover"
-                         src="https://taegon.kim/wp-content/uploads/2018/05/image-5.png">
+                         th:src="@{'{path}'(path=${c.user.imgPath})}">
                     </a>
 <!--                         th:src="@{'{path}'(path=${c.user.imgPath})}">-->
                 </div>
                 <div class="col-2 text-center" >
-                    <a href="#" th:text="${c.user.nkName}" class="profile"></a><br>
-                    (@<span th:text="${c.user.uId}"></span>)
+                    <a href="#" th:text="${c.user.nkName}" class="profile pb-0 text-decoration-none fw-bold"></a><br>
+                    (@<small th:text="${c.user.uId}"></small>)
                 </div>
                 <h4 class="card-title col-7" th:text="${c.title}"></h4>
                 <div class="col-2 d-flex">
@@ -63,23 +63,26 @@
 
             <div class="card-body">
                 <h5 class="card-title" >일정</h5>
-                <div class="accordion accordion-flush" id="accordionFlushExample">
-                    <div class="accordion-item" th:each="p:${c.user.plans[0].contents}">
-                        <h2 class="accordion-header">
-                            <!--onclick 이벤트 생각해보기: 하나씩 눌렀을때 하나씩 뜨게...-->
-                            <button  class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-                                <span th:text="${p.time}" class="text-bg-warning me-4 p-2  border-warning rounded-5"></span>
-                                <span th:text="${p.title}"></span>
-                            </button>
-                        </h2>
-                        <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-                            <div class="accordion-body">
-                                <p>if=${p.imgPath!=null} th:text=${p.imgPath}</p>
+                <th:block  th:each="p:${c.user.plans[0].contents}">
+                    <div class="accordion accordion-flush" th:id="'accordionFlushExample'+${p.conId}">
+                        <div class="accordion-item" >
+                            <h2 class="accordion-header">
+                                <!--onclick 이벤트 생각해보기: 하나씩 눌렀을때 하나씩 뜨게...-->
+                                <button  class="accordion-button collapsed" type="button" data-bs-toggle="collapse" th:data-bs-target="'#flush-collapse-' + ${p.conId}"  aria-expanded="false" aria-controls="flush-collapseOne">
+                                    <span th:text="${p.time}" class="text-bg-warning me-4 p-2  border-warning rounded-5"></span>
+                                    <span th:text="${p.title}"></span>
+                                </button>
+                            </h2>
+                            <div th:id="'flush-collapse-' + ${p.conId}" class="accordion-collapse collapse"  th:data-bs-parent="'#accordionFlushExample'+${p.conId}" >
+                                <div class="accordion-body w-100">
+                                    <div th:if="${p.imgPath!=null}" >
+                                        <img th:src="@{'{path}'(path=${p.imgPath})}" class="img-fluid" alt="일정꾸미는이미지">
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-
-                </div>
+                </th:block>
                 </div>
             </div>
             <hr>
@@ -90,7 +93,7 @@
                     </div>
                     <div>
                     <a href=""><i class="bi bi-calendar-plus text-secondary me-2" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="내일정바로추가"></i></a>
-                    <a href="javascript:void(0)" th:onclick="registerBookMark([[${c.cId}]])"><i class="bi bi-bookmark-plus text-warning me-2" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="북마크"></i></a>
+                    <a href="javascript:void(0)" th:onclick="registerBookMark([[${c.cId}]],[[${c.pId}]])"><i class="bi bi-bookmark-plus text-warning me-2" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="북마크"></i></a>
                     <a href="javascript:void(0)" id="commReport"><i class="bi bi-bell-fill text-danger" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="신고하기"></i></a>
                     </div>
 
@@ -231,9 +234,9 @@
         }
     //북마크 클릭시 등록
 
-     async function registerBookMark(cId){
+     async function registerBookMark(cId,pId){
          let check=confirm("북마크를 등록하시겠습니까?");
-         let url="/bookmark/comm/"+cId+"/handler.do";
+         let url="/bookmark/comm/"+cId+"/"+pId+"/handler.do";
          if(check){
              const resp= await fetch(url,{method:"POST"});
              if(resp.status===200){

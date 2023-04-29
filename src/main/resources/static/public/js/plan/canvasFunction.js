@@ -9,7 +9,7 @@ if(page){
 
 
 class CanvasCreate {
-    id; canvas; ctx;
+    conId; pathId; canvas; ctx;
     layerArr = []; // 레이어 구현용 배열
     activatedTool; //활성화 툴 체크용
     pageSize = box/1200; // 페이지 사이즈 변화에 따른 배율 조졍용(아직)
@@ -17,9 +17,10 @@ class CanvasCreate {
     currentCanvas = new Image(); // 배율 조정시 리로드용
     defaultBack = new Image(); // 초기 배경화면 저장용
 
-    constructor(id, path) {
+    constructor(conId, pathId, path) {
         // 캔버스 불러올 때
-        this.id = id; //conId 받아서 넣음.. 나중에 소켓 연동할 때 필요할거같음
+        this.conId = conId;
+        this.pathId = pathId;
         if (path!==null){
         this.layerArr = JSON.parse(path); // JSON 경로 받아서 다시 js로 변환
         }
@@ -49,14 +50,16 @@ class CanvasCreate {
         this.ctx.setLineDash([0,0])
         this.ctx.save();
 
+
+
         // 버튼활성화 및 배경디자인 생성
         this.pageLiner(this.canvas.width,this.canvas.height)
 
+        // 레이어 데이터가 있는 경우 로딩
+        this.layerLoad(undefined,true,true);
+
         this.toolActivation()
         this.colorBtn();
-
-        // 레이어 데이터가 있는 경우 로딩
-        this.layerLoad();
 
     }
 
@@ -118,6 +121,9 @@ class CanvasCreate {
             this.ctx.stroke();
             y+=10;
         }
+
+
+
         this.currentCanvas.src = this.canvas.toDataURL();
         this.defaultBack.src = this.canvas.toDataURL();
         this.canvasRestore();
@@ -176,6 +182,7 @@ class CanvasCreate {
                     co.canvas.offCtx.clearRect(0,0,1200,500)
                     co.canvas.removeEventListener("mousedown",drawHandler)
                     co.activatedTool = " ";
+                    co.canvasRestore();
                 },{once:true});
         }
         co.canvas.addEventListener("mousedown",drawHandler)
@@ -541,11 +548,13 @@ class CanvasCreate {
     }
 
 
-    layerLoad(index=undefined,rest=true){
+    layerLoad(index=undefined,rest=true,init=false){
         let co = this;
         let arr = [];
 
-        co.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        if(!init){
+            co.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        }
         co.ctx.scale(co.currentScale,co.currentScale)
         co.ctx.drawImage(co.defaultBack,0,0);
 

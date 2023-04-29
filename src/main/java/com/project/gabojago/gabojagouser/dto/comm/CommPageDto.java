@@ -8,7 +8,7 @@ public class CommPageDto {
     private int pageSize=5;
 
     public enum CommsType{
-        c_id,u_id,post_time,update_time,title,view_count,content,nkName,area,
+        c_id,u_id,post_time,update_time,title,view_count,content,nk_name,area,
         istj,istp,isfj,isfp,intj,intp,infj,infp,
         estj,estp,esfj,sefp,entj,entp,enfj,enfp
     }
@@ -32,4 +32,5 @@ public class CommPageDto {
         }
         return CommsType.post_time+" " +DirectType.DESC;
     }
+
 }

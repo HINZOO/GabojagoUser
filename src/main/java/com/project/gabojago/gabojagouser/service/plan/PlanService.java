@@ -7,7 +7,7 @@ import java.util.List;
 public interface PlanService {
     List<PlanDto> list();
     List<PlanDto> list(String uId);
-
+    List<PlanDto> bookmarkedList(String uId);
     PlanDto detail(int pId);
     int register(PlanDto plan);
     int modify(PlanDto plan);

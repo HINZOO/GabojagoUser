@@ -1,6 +1,7 @@
 package com.project.gabojago.gabojagouser.controller.my;
 
 import com.project.gabojago.gabojagouser.dto.comm.CommBookmarkDto;
+import com.project.gabojago.gabojagouser.dto.trip.TripBookMarkCntDto;
 import com.project.gabojago.gabojagouser.dto.trip.TripBookmarkDto;
 import com.project.gabojago.gabojagouser.dto.user.UserDto;
 import com.project.gabojago.gabojagouser.service.comm.CommBookMarkService;
@@ -32,12 +33,14 @@ public class BookMarkController {
            List<TripBookmarkDto> tripBookmarkList=tripBookMarkService.list(uId);
         return tripBookmarkList;
     }
-    @PostMapping("/comm/{cId}/handler.do")
+    @PostMapping("/comm/{cId}/{pId}/handler.do")
     public HandlerDto registerBookMark(@PathVariable int cId,
+                                @PathVariable int pId,
                                 @SessionAttribute UserDto loginUser){
         int register=0;
         CommBookmarkDto commBookmarkDto=new CommBookmarkDto();
         commBookmarkDto.setCId(cId);
+        commBookmarkDto.setPId(pId);
         commBookmarkDto.setUId(loginUser.getUId());
         register=commBookMarkService.register(commBookmarkDto);
         HandlerDto handlerDto=new HandlerDto();
@@ -65,5 +68,43 @@ public class BookMarkController {
     }
 
     //등록은 여기에서~
+    @PostMapping("/trip/{tId}/handler.do")
+    public HandlerDto registerBookMarkTrip(
+            @PathVariable int tId,
+            @SessionAttribute UserDto loginUser){
+        int register=0;
+        HandlerDto handlerDto=new HandlerDto();
+        TripBookmarkDto tripBookmarkDto=new TripBookmarkDto();
+
+//        boolean bookmarked=tripBookMarkService.detail(tId,loginUser.getUId());
+        tripBookmarkDto.setTId(tId);
+        tripBookmarkDto.setUId(loginUser.getUId());
+        register=tripBookMarkService.register(tripBookmarkDto);
+        handlerDto.setHandler(register);
+        return handlerDto;
+    }
+
+
+    @GetMapping("/{tId}/read.do")
+    public String readBookMartTripCnt(
+            @PathVariable int tId,
+            @SessionAttribute(required = false) UserDto loginUser,
+            Model model ){
+        TripBookMarkCntDto bookmarks;
+        model.addAttribute("tId",tId);
+        if(loginUser!=null){
+            bookmarks=tripBookMarkService.read(tId, loginUser.getUId());
+        }else {
+            bookmarks=tripBookMarkService.read(tId);
+        }
+        model.addAttribute("bookmarks",bookmarks);
+        return "/trip/bookmarks";
+    }
+
+
+
+
+
+
 
 }

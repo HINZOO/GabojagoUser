@@ -62,6 +62,16 @@ public class CommController {
             redirectAttributes.addFlashAttribute("msg",msg);
             return "redirect:/user/login.do";
         }
+        if(loginUser.getPlans()==null){
+            String msg="일정을 만들어야지만 글을 쓸 수 있습니다!";
+            redirectAttributes.addFlashAttribute("msg",msg);
+            return "redirect:/plan/list.do";
+        }
+        if(loginUser.getPermission().equals("PARTNER")){
+            String msg="USER만 글을 쓸 수 있습니다.";
+            redirectAttributes.addFlashAttribute("msg",msg);
+            return "redirect:/comm/list.do";
+        }
         return "/comm/register";
     }
     @PostMapping("/register.do")
@@ -145,6 +155,7 @@ public class CommController {
         int modify=0;
         if(imgs!=null){
             imgDtos=new ArrayList<>();
+
             for(MultipartFile img:imgs){
                 if(!img.isEmpty()){
                     String[] contentTypes=img.getContentType().split("/");
@@ -153,6 +164,7 @@ public class CommController {
                         Path path = Paths.get(staticPath + "/public/img/comm/" + fileName);
                         img.transferTo(path);
                         CommImgDto imgDto=new CommImgDto();
+                        imgDto.setCId(commBoard.getCId());
                         imgDto.setImgPath("/public/img/comm/"+fileName);//서버배포경로
                         imgDtos.add(imgDto);
                     }

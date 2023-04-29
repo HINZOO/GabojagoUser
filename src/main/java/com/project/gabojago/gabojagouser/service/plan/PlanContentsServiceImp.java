@@ -14,4 +14,14 @@ public class PlanContentsServiceImp implements PlanContentsService {
     public int register(PlanContentsDto planContentsDto) {
         return planContentsMapper.insertOne(planContentsDto);
     }
+
+    @Override
+    public PlanContentsDto detail(int conId) {
+        return planContentsMapper.findByConId(conId);
+    }
+
+    @Override
+    public int updateImg(PlanContentsDto planContentsDto) {
+        return planContentsMapper.updateImg(planContentsDto);
+    }
 }

@@ -1,6 +1,7 @@
 package com.project.gabojago.gabojagouser.dto.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.project.gabojago.gabojagouser.dto.my.MileageDto;
 import com.project.gabojago.gabojagouser.dto.plan.PlanDto;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -42,4 +43,5 @@ public class UserDto {
     private List<UserDto> followings;
     private List<UserDto> followers;
     private List<PlanDto> plans;
+    private List<MileageDto> mileages;
 }

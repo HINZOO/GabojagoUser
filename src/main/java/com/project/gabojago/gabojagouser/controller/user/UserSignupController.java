@@ -65,6 +65,8 @@ public class UserSignupController {
         img.transferTo(path);
         user.setImgPath("/public/img/user/" + fileName);
       }
+    }else{
+      user.setImgPath("/public/img/user/profile.jpg");
     }
     int signupResult=0;
     //이메일체크

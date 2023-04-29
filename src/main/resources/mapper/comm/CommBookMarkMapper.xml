@@ -5,13 +5,14 @@
         <id column="cbook_id" property="cbookId"/>
         <result column="c_id" property="cId"/>
         <result column="u_id" property="uId"/>
+        <result column="p_id" property="pId"/>
         <association property="comm"
                     select="com.project.gabojago.gabojagouser.mapper.comm.CommunityMapper.findByCId"
                     column="c_id"
                     fetchType="lazy"/>
     </resultMap>
     <insert id="insertOne" parameterType="commBookmarkDto" useGeneratedKeys="true" keyProperty="cbookId">
-        INSERT INTO comm_bookmarks (c_id, u_id) VALUE (#{cId},#{uId})
+        INSERT INTO comm_bookmarks (c_id,u_id,p_id) VALUE (#{cId},#{uId},#{pId})
     </insert>
     <delete id="deleteOne">
         DELETE FROM comm_bookmarks WHERE cbook_id=#{cbookId}

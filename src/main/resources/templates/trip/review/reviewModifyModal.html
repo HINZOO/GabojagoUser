@@ -2,10 +2,8 @@
     <div class="modal-dialog">
         <form enctype="multipart/form-data" name="reviewModifyForm" method="post"
               class="modal-content">
-            <input type="hidden" name="trId">
-            <input type="hidden" name="tId">
-<!--            <input type="hidden" name="imgs">-->
-
+            <!-- input 의 value 값들은 /trip/detail 뷰에서 자바스크립트로 넣어줌 -->
+            <input type="hidden" name="trId" value="">
             <div class="modal-header">
                 <h1 class="modal-title fs-5" id="exampleModalLabel">리뷰 수정</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"
@@ -13,48 +11,32 @@
             </div>
             <div class="modal-body">
                 <p class="form-floating">
-                    <input type="text" name="uId" readonly class="form-control" placeholder="글쓴이">
-                    <!-- 로그인한 유저만 보이기 -->
-                    <!-- <input th:value="${session.loginUser.uId}" type="text" name="uId" readonly class="form-control" placeholder="글쓴이">-->
+                    <!-- 로그인 안해도 내역 리뷰리스트 볼수있게 if 문처리 // review/detail 안에 리뷰수정모달창이 th:value="${session.loginUser.uId} 값을 줘서 로그인 안하면 값이 안불러와짐  -->
+                     <input th:if="${session.loginUser!=null}" th:value="${session.loginUser.uId}" type="text" name="uId" readonly class="form-control" placeholder="글쓴이">
                     <label>글쓴이</label>
                 </p>
                 <p>
                     평가 <span>☆☆☆☆☆</span>
                 </p>
                 <p>
-                    <p th:text="${r}"></p>
-                    <p th:text="${r.visit}"></p>
                     <label>
-<!--                        <input type="radio" name="visit" th:value="${r.visit==1}" th:checked="${#strings.equals(r.visit,1)}">-->
-<!--                        <input type="radio" name="visit" value="1" th:checked="${r.visit==1}">-->
                         <input type="radio" name="visit" value="1" th:checked="${r.visit==true}">
                         방문
                     </label>
                     <label>
-<!--                        <input type="radio" name="visit" th:value="${r.visit==0}" th:checked="${#strings.equals(r.visit,0)}">-->
-<!--                        <input type="radio" name="visit" value="0" th:checked="${r.visit==0}">-->
                         <input type="radio" name="visit" value="0" th:checked="${r.visit==flase}">
                         방문전
                     </label>
                 </p>
-
-                <p class="form-floating">
-                    <input type="text" name="title" readonly th:value="${t.title}"
+                <p class="form-floating"> <!-- trip 게시글 제목은. review 에 없는 데이터라서, th:value 로 가져옴 -->
+                    <input type="text" readonly th:value="${t.title}"
                            class="form-control" placeholder="장소이름">
                     <label>장소이름</label>
                 </p>
                 <div id="imgDelCont"> <!-- imgs 의 img 들의  imgPath -->
-                    <h4>이미지 삭제(체크)</h4>
-                    <p th:text="${r.trId}"></p>
-                    <div class="d-flex">
-                        <label th:each="img:${r.imgs}" class="w-25 delImgItem"> <!-- 리뷰한개의 각 1개의 이미지 -->
-<!--                            <input type="hidden" name="imgPath">-->
-                            <i class="bi bi-x"></i>
-                            <input type="checkbox" class="delImgInput" name="delImgId" th:value="${img.triId}">
-                            <img th:src="@{'{path}'(path=${img.imgPath})}" class="img-thumbnail" alt="">
-                        </label>
+                    <label>이미지 삭제(체크)</label>
+                    <div class="d-flex form-control mb-2" id="reviewModifyModalImgCont">
                     </div>
-
 
                     <p id="modifyImgCont">
                         <button id="modifyImgAddBtn" class="btn btn-danger w-100" type="button">

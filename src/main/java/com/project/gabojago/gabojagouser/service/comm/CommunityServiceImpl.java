@@ -95,8 +95,8 @@ public class CommunityServiceImpl implements CommunityService{
 
     @Override
     public List<CommunityDto> likesList(CommPageDto pageDto) {
-        PageHelper.startPage(pageDto.getPageNum(),pageDto.getPageSize(),pageDto.getOrderBy());
-        List<CommunityDto> likesList=communityMapper.countListBylikes(pageDto);
+        PageHelper.startPage(pageDto.getPageNum(),pageDto.getPageSize());
+        List<CommunityDto> likesList=communityMapper.findByCommLikes_likes(pageDto);
         return likesList;
     }
 
