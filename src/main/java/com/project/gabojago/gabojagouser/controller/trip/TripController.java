@@ -28,21 +28,16 @@ import java.util.List;
 @Log4j2
 public class TripController {
     private TripService tripService;
-    private TripReviewService tripReviewService;
 
     @Value("${img.upload.path}")
     private String uploadPath;
     @Value("${static.path}")
     private String staticPath;
 
-    public TripController(TripService tripService, TripReviewService tripReviewService) {
-        this.tripService = tripService;
-        this.tripReviewService = tripReviewService;
-    }
 
-    //    public TripController(TripService tripService) {
-//        this.tripService = tripService;
-//    }
+        public TripController(TripService tripService) {
+        this.tripService = tripService;
+    }
 
 
     @GetMapping("/{tId}/remove.do") // db 정보 삭제 + 이미지 실제 삭제
@@ -176,17 +171,8 @@ public class TripController {
     @GetMapping("/{tId}/detail.do")
     public String detail(Model model,
                          @PathVariable int tId,
-//                         int trId,
                          @SessionAttribute(required = false) UserDto loginUser) {
         TripDto trip = tripService.detail(tId,loginUser);
-
-//        List<TripReviewDto> reviews =trip.getReviews();
-//        for(TripReviewDto review : reviews){
-//            int trId=review.getTrId();
-//            TripReviewDto tripReview=tripReviewService.detail(trId);
-//            model.addAttribute("review",tripReview);
-//        }
-
         String urlAddress=trip.getUrlAddress();
         model.addAttribute("t", trip);
         model.addAttribute("urlAddress",urlAddress);
