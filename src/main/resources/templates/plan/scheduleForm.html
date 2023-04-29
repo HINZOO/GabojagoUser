@@ -113,22 +113,30 @@
                   <th:block th:each="plan:${bPlans}">
                     <div class="btn-group dropend bkDiv">
                       <button type="button" class="btn dropdown-toggle bkBtn w-100" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="bi bi-check2-circle"></i> <span th:text="${plan.getTitle()}"/> /
-                        <span th:text="${plan.getNkName()}"/>
+
+                        <span class="bkTxt">
+                          <i class="bi bi-dot"></i>
+                          [<span th:text="${plan.getNkName()} + '의 일정'"></span>]
+                        </span>
+
+                        <span class="bkTxt"  th:text="${plan.getTitle()}"></span>
+                        <i class="bi bi-arrow-right-short"></i>
+
                       </button>
-                      <ul class="dropdown-menu">
+                      <ul class="dropdown-menu p-0">
                         <table>
-                        <th:block th:each="con:${plan.getContents()}">
-                          <tr class="dropdown-item">
-                            <td th:text="${con.getTime()}"/>
-                            <td>　|　</td>
-                            <td th:text="${con.getTitle()}"/>
-                            <td>　|　</td>
-                            <td th:text="${con.getInfo()}"/>
-                          </tr>
-                        </th:block>
+                          <th:block th:each="con:${plan.getContents()}">
+                            <tr class="dropdown-item">
+                              <td th:text="${con.getTime()}"/>
+                              <td>　|　</td>
+                              <td th:text="${con.getTitle()}"/>
+                              <td>　|　</td>
+                              <td th:text="${con.getInfo()}"/>
+                            </tr>
+                          </th:block>
                         </table>
                       </ul>
+
                     </div>
                   </th:block>
 
@@ -164,12 +172,12 @@
                               </button>
                             </p>
                           </div>
-                        </div>
-
                       </ul>
+
                     </div>
                   </th:block>
                 </div>
+
               </div>
             <div class="col-6"> </div>
 

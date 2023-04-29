@@ -595,7 +595,16 @@ canvas{
 .sFormSection{
     font-weight: bold;
     font-size: 15px;
-    color: darkgrey;
+    color: gray;
+}
+#scheduleInsertForm label{
+    color: gray;
+    font-weight: bold;
+}
+#scheduleInsertForm input{
+    border: 1px solid whitesmoke;
+    color: dodgerblue;
+    font-weight: bold;
 }
 .bkDiv{
     width: 50%;

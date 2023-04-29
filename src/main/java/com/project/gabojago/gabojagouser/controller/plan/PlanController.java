@@ -38,7 +38,10 @@ public class PlanController {
     @Value("${static.path}")
     private String staticPath;
 
-    public PlanController(PlanService planService, PlanCheckListsService planCheckListsService, PlanMembersService planMembersService) {
+    public PlanController(PlanService planService,
+                          PlanCheckListsService planCheckListsService,
+                          PlanMembersService planMembersService)
+    {
         this.planService = planService;
         this.planCheckListsService = planCheckListsService;
         this.planMembersService = planMembersService;
@@ -47,6 +50,7 @@ public class PlanController {
     @GetMapping("/list.do")
     public String list(
             @SessionAttribute(required = false) UserDto loginUser,
+            RedirectAttributes redirectAttributes,
             Model model)
     {
         if (loginUser!=null){
@@ -54,7 +58,9 @@ public class PlanController {
             model.addAttribute("plans", plans);
             return "/plan/list";
         } else {
-            return "/plan/list";
+            String msg = "로그인 한 유저만 이용 가능합니다.";
+            redirectAttributes.addFlashAttribute("msg",msg);
+            return "redirect:/user/login.do";
         }
     }
 
