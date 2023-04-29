@@ -124,19 +124,17 @@
 
                       </button>
                       <ul class="dropdown-menu p-0">
-                        <table>
                           <th:block th:each="con:${plan.getContents()}">
-                            <tr class="dropdown-item">
-                              <td th:text="${con.getTime()}"/>
-                              <td>　|　</td>
-                              <td th:text="${con.getTitle()}"/>
-                              <td>　|　</td>
-                              <td th:text="${con.getInfo()}"/>
-                            </tr>
+                            <li class="dropdown-item">
+                              <span>
+                                <i class="bi bi-stopwatch"></i>
+                                <span th:text="${con.getTime()}"></span>
+                              </span>
+                              <span th:text="${con.getTitle()}"></span>
+                              <i class="bi bi-plus"></i>
+                            </li>
                           </th:block>
-                        </table>
                       </ul>
-
                     </div>
                   </th:block>
 
