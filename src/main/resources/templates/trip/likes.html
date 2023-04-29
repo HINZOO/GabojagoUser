@@ -1,17 +1,15 @@
 <!--    <div  class="fs-3" th:text="${id}"></div>-->
 <div class="">
-    <a href="javascript:void(0)" th:if="${session.loginUser!=null}" th:onclick="tripLikeHandler([[${likes.tId}]])"
-       class="mb-1 text-danger d-flex flex-column text-decoration-none align-items-center" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="">
+    <a href="javascript:void(0)" th:if="${session.loginUser!=null}" th:onclick="tripLikeHandler([[${id}]])"
+       class="mb-1 text-danger text-decoration-none me-2" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="">
         <i class="bi fs-4" th:classappend="${(likes.status)?'bi-heart-fill':'bi-heart'}"></i>
-        <small class="text-dark fs-5" th:text="${likes.likes}"></small> <!-- 좋아요개수 -->
+<!--        <small class="text-dark fs-5" th:text="${likes.likes}"></small> &lt;!&ndash; 좋아요개수 &ndash;&gt;-->
         <!--        <div  class="fs-3" th:text="${likes}"></div>-->
     </a>
-    <a href="javascript:void(0)" th:unless="${session.loginUser!=null}"
-       class="mb-1 text-danger fs-3 disabled" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="">
+    <a href="javascript:void(0)" th:unless="${session.loginUser!=null}" onclick="loginAlert()"
+       class="mb-1 text-danger fs-4 text-decoration-none me-2" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="">
         <i class="bi fs-4 bi-heart"></i>
-        <span th:text="${likes.likes}"></span> <!-- 좋아요개수 -->
+<!--        <span th:text="${likes.likes}"></span> &lt;!&ndash; 좋아요개수 &ndash;&gt;-->
     </a>
-
-
 </div>
 

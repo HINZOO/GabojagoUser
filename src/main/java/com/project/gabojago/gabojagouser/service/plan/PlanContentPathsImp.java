@@ -9,6 +9,17 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class PlanContentPathsImp implements PlanContentPathsService {
     private PlanContentPathsMapper planContentPathsMapper;
+
+    @Override
+    public PlanContentPathsDto detail(int pathId) {
+        return planContentPathsMapper.findByPathId(pathId);
+    }
+
+    @Override
+    public int updatePath(PlanContentPathsDto pathsDto) {
+        return planContentPathsMapper.updateOne(pathsDto);
+    }
+
     @Override
     public int register(PlanContentPathsDto pathsDto) {
         return planContentPathsMapper.insert(pathsDto);

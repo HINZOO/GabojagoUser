@@ -62,13 +62,14 @@ public class SellCartsController {
     }
     @GetMapping("/{sId}/register.do")
      public String regist(@PathVariable int sId,
-                       @SessionAttribute UserDto loginUser,
+                       @SessionAttribute(required = false) UserDto loginUser,
                        RedirectAttributes redirectAttributes){
-        System.out.println("sId+loginUser.getUId() = " + sId+loginUser.getUId());
-        int register=0;
+        String redirectPage="redirect:/sells/list.do";
         String msg="";
+        try {
+
         if (loginUser!=null){
-            msg="장바구니(찜)등록 완료!";
+            msg="찜바구니 등록 완료!";
         SellCartDto sellCartDto=new SellCartDto();
         sellCartDto.setSId(sId);
         sellCartDto.setUId(loginUser.getUId());
@@ -76,8 +77,14 @@ public class SellCartsController {
         }else {
             msg="로그인 하셔야 이용가능합니다";
         }
+        }catch (Exception e){
+            log.error(e.getMessage());
+            msg="이미 찜 등록이 되어있습니다!!";
+            redirectAttributes.addFlashAttribute("msg",msg);
+            return redirectPage;
+        }
 
         redirectAttributes.addFlashAttribute("msg",msg);
-        return "redirect:/sells/list.do";
+        return redirectPage;
     }
 }

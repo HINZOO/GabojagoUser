@@ -11,9 +11,8 @@
             </div>
             <div class="modal-body">
                 <p class="form-floating">
-                    <input type="text" name="uId" readonly class="form-control" placeholder="글쓴이">
-                    <!-- 로그인한 유저만 보이기 -->
-                    <!-- <input th:value="${session.loginUser.uId}" type="text" name="uId" readonly class="form-control" placeholder="글쓴이">-->
+                    <!-- 로그인 안해도 내역 리뷰리스트 볼수있게 if 문처리 // review/detail 안에 리뷰수정모달창이 th:value="${session.loginUser.uId} 값을 줘서 로그인 안하면 값이 안불러와짐  -->
+                     <input th:if="${session.loginUser!=null}" th:value="${session.loginUser.uId}" type="text" name="uId" readonly class="form-control" placeholder="글쓴이">
                     <label>글쓴이</label>
                 </p>
                 <p>

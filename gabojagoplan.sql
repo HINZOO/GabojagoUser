@@ -318,23 +318,6 @@ CREATE TABLE `plan_members` (
                                 FOREIGN KEY (p_id) REFERENCES plans (p_id) ON DELETE CASCADE ON UPDATE CASCADE,
                                 FOREIGN KEY (mu_id) REFERENCES users (u_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
-#상품판매(주문상세 테이블)
-#카드정보 sale_date 는 보안상 데이터 베이스에 저장하는건 위험해서 따로 인증절차 방법으로
-#카드정보말고 결제를 무엇으로 했는지만 알수있게 info 추가.
-CREATE TABLE `sell_details` (
-                                `oder_id`	int unsigned AUTO_INCREMENT PRIMARY KEY COMMENT '주문번호 아이디',
-                                `u_id`	varchar(255)NOT NULL COMMENT '유저 아이디',
-                                `m_id`	int unsigned NOT NULL COMMENT '마일리지 아이디',
-                                `s_id`  int unsigned  COMMENT '판매글 아이디',
-                                `price`	varchar(255)	COMMENT '결제 금액',
-                                `sale_date`	TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '결제일',
-                                `info` varchar(255) COMMENT '결제 정보',
-                                `use_date`	TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '사용일자',
-                                `use_check`	BOOLEAN DEFAULT FALSE COMMENT '사용여부',
-                                FOREIGN KEY (u_id) REFERENCES users (u_id) ON DELETE CASCADE ON UPDATE CASCADE,
-                                FOREIGN KEY (m_id) REFERENCES mileages (m_id) ON DELETE CASCADE ON UPDATE CASCADE,
-                                FOREIGN KEY (s_id) REFERENCES sells(s_id)ON DELETE SET NULL ON UPDATE CASCADE
-);
 #같이가자(그림판경로데이터 테이블)
 CREATE TABLE `plan_content_paths` (
                                       `path_id`	int unsigned AUTO_INCREMENT PRIMARY KEY COMMENT '같이가자그림판경로 아이디',
@@ -491,21 +474,22 @@ CREATE TABLE `sell_bookmarks` (
 
 
 
-#환불 페이지
-CREATE TABLE `sell_refunds` (
-                                `refund_id`	int unsigned AUTO_INCREMENT PRIMARY KEY COMMENT '환불 아이디',
-                                `oder_id`	int unsigned NOT NULL COMMENT '주문번호 아이디',
-                                `u_id`	varchar(255) NOT NULL COMMENT '유저 아이디',
-                                `refund_check` BOOLEAN COMMENT '환불여부',
-                                `refund_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '환불일자',
-                                FOREIGN KEY (oder_id) REFERENCES sell_details (oder_id)ON UPDATE CASCADE ON DELETE CASCADE ,
-                                FOREIGN KEY (u_id) REFERENCES users (u_id)  ON UPDATE CASCADE ON DELETE CASCADE
-);
+# #환불 페이지
+# CREATE TABLE `sell_refunds` (
+#                                 `refund_id`	int unsigned AUTO_INCREMENT PRIMARY KEY COMMENT '환불 아이디',
+#                                 `oder_id`	int unsigned NOT NULL COMMENT '주문번호 아이디',
+#                                 `u_id`	varchar(255) NOT NULL COMMENT '유저 아이디',
+#                                 `refund_check` BOOLEAN COMMENT '환불여부',
+#                                 `refund_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '환불일자',
+#                                 FOREIGN KEY (oder_id) REFERENCES sell_details (oder_id)ON UPDATE CASCADE ON DELETE CASCADE ,
+#                                 FOREIGN KEY (u_id) REFERENCES users (u_id)  ON UPDATE CASCADE ON DELETE CASCADE
+# );
 #장바구니
 CREATE TABLE `sell_carts` (
                               `cart_id`	int unsigned AUTO_INCREMENT PRIMARY KEY COMMENT '장바구니 아이디',
                               `u_id`	varchar(255) NOT NULL COMMENT '작성자 아이디',
                               `s_id`	int unsigned NOT NULL COMMENT '옵션 아이디',
+                              UNIQUE (u_id, s_id),
                               FOREIGN KEY (u_id) REFERENCES users (u_id) ON DELETE CASCADE ON UPDATE CASCADE,
                               FOREIGN KEY (s_id) REFERENCES sells (s_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
@@ -562,16 +546,45 @@ CREATE TABLE `notes` (
 
 );
 #주문정보
+
 CREATE TABLE sell_orders (
                              so_id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY COMMENT '주문번호',
                              u_id VARCHAR(255) NOT NULL COMMENT '유저정보',
                              s_id INT UNSIGNED COMMENT '판매글번호',
-                             option_name VARCHAR(255) NOT NULL COMMENT '구매옵션 이름',
-                             price INT NOT NULL COMMENT '구매옵션 가격',
+                             total_price INT NOT NULL COMMENT '총구매 가격',
+                             `info` varchar(255) COMMENT '결제 정보',
                              post_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '구매 일시',
                              FOREIGN KEY (u_id) REFERENCES users (u_id) ON DELETE CASCADE ON UPDATE CASCADE,
                              FOREIGN KEY (s_id) REFERENCES sells (s_id) ON DELETE SET NULL ON UPDATE CASCADE
 );
+
+
+CREATE TABLE sell_order_details (
+                                    sol_id INT unsigned NOT NULL AUTO_INCREMENT,
+                                    u_id VARCHAR(255),
+                                    s_id INT unsigned,
+                                    o_id int unsigned,
+                                    so_id INT unsigned,
+                                    cnt int comment '수량',
+                                    post_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP  COMMENT '구매일시',
+#                                     used_check boolean default false comment '사용여부',
+                                    PRIMARY KEY (sol_id),
+                                    FOREIGN KEY (u_id) REFERENCES users (u_id) ON DELETE CASCADE ON UPDATE CASCADE,
+                                    FOREIGN KEY (o_id) REFERENCES sell_options (o_id) ON DELETE CASCADE ON UPDATE CASCADE,
+                                    FOREIGN KEY (s_id) REFERENCES sells (s_id) ON DELETE CASCADE ON UPDATE CASCADE,
+                                    FOREIGN KEY (so_id) REFERENCES sell_orders (so_id) ON DELETE SET NULL ON UPDATE CASCADE
+);
+
+CREATE TABLE sell_tickets (
+                              st_id INT AUTO_INCREMENT PRIMARY KEY COMMENT'티켓아이디',
+                              so_id INT UNSIGNED NOT NULL COMMENT'구매옵션아이디',
+                              ticket_num VARCHAR(20) NOT NULL COMMENT'티켓번호',
+                              use_check BOOLEAN DEFAULT FALSE COMMENT'사용여부',
+                              used_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '사용시간',
+                              FOREIGN KEY (so_id) REFERENCES sell_orders(so_id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+
 
 #유저더미
 INSERT INTO users (u_id, pw, name, nk_name, email, birth, phone, address, detail_address, pr_content, permission, mbti, img_path, store_name, business_id)

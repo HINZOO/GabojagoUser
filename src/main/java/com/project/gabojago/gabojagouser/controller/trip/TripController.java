@@ -51,7 +51,7 @@ public class TripController {
         int remove=0;
         try{
             // 파라미터 tId 로 detail 정보를 db 에서 불러온다
-            trip=tripService.detail(tId);
+            trip=tripService.detail(tId,loginUser);
             imgDtos=trip.getImgs();
             remove=tripService.remove(tId,imgDtos);
         }catch (Exception e){
@@ -80,7 +80,7 @@ public class TripController {
     ) {
         log.info(staticPath);
         System.out.println("staticPath = " + staticPath);
-        TripDto trip = tripService.detail(tId);
+        TripDto trip = tripService.detail(tId,loginUser);
         model.addAttribute("t", trip);
         return "/trip/modify";
     }
@@ -95,6 +95,8 @@ public class TripController {
             @RequestParam(name = "delMainImgId",required = false) int delMainImgId,
             RedirectAttributes redirectAttributes
     ) throws IOException {
+        // requestParam : name 이 맞다. value 는 value 값을 미리 지정하는것.
+
         String redirectPage = "redirect:/trip/" + trip.getTId() + "/modify.do";
         String msg="";
 
@@ -168,8 +170,10 @@ public class TripController {
     public String detail(Model model,
                          @PathVariable int tId,
                          @SessionAttribute(required = false) UserDto loginUser) {
-        TripDto trip = tripService.detail(tId);
+        TripDto trip = tripService.detail(tId,loginUser);
+        String urlAddress=trip.getUrlAddress();
         model.addAttribute("t", trip);
+        model.addAttribute("urlAddress",urlAddress);
         return "/trip/detail";
     }
 
@@ -285,7 +289,7 @@ public class TripController {
                        TripPageDto pageDto
     ) {
         List<TripDto> trips;
-        trips = tripService.list(pageDto);
+        trips = tripService.list(loginUser,pageDto);
         PageInfo<TripDto> pageTrips=new PageInfo<>(trips);
         model.addAttribute("page",pageTrips);
         model.addAttribute("trips", trips);

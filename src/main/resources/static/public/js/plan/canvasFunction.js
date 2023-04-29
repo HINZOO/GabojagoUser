@@ -9,7 +9,7 @@ if(page){
 
 
 class CanvasCreate {
-    id; canvas; ctx;
+    conId; pathId; canvas; ctx;
     layerArr = []; // 레이어 구현용 배열
     activatedTool; //활성화 툴 체크용
     pageSize = box/1200; // 페이지 사이즈 변화에 따른 배율 조졍용(아직)
@@ -17,9 +17,10 @@ class CanvasCreate {
     currentCanvas = new Image(); // 배율 조정시 리로드용
     defaultBack = new Image(); // 초기 배경화면 저장용
 
-    constructor(id, path) {
+    constructor(conId, pathId, path) {
         // 캔버스 불러올 때
-        this.id = id; //conId 받아서 넣음.. 나중에 소켓 연동할 때 필요할거같음
+        this.conId = conId;
+        this.pathId = pathId;
         if (path!==null){
         this.layerArr = JSON.parse(path); // JSON 경로 받아서 다시 js로 변환
         }

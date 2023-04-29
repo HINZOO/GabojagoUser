@@ -1,6 +1,9 @@
+function loginAlert(){
+    alert("로그인 하셔야 이용 가능한 서비스 입니다.");
+}
+
 async function tripLikeHandler(tId) {
     const likeCont = document.getElementById("likeCont" + tId);
-    // console.log("안녕");
     let url = `/trip/like/${tId}/handler.do`
     const resp = await fetch(url);
     if (resp.status === 200) {
@@ -12,8 +15,9 @@ async function tripLikeHandler(tId) {
                 likeCont.innerHTML = html;
             }
         }
+
     } else if (resp.status === 400) {
-        alert("로그인 하셔야 이용 가능한 서비스 입니다.(잘못된 요청)");
+        alert("잠시후 다시 시도해주세요.");
     } else { // 실패
         alert("실패 status:" + resp.status);
     }

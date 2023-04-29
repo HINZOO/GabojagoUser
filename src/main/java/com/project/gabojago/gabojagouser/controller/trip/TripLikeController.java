@@ -58,7 +58,6 @@ public class TripLikeController {
          handler=tripLikeService.register(like); // 좋아요 likeDto (tId, uId, tlId) 등록 (성공 1, 실패 0)
       }
 
-
       tripLikeHandlerDto.setHandler(handler);
       return tripLikeHandlerDto;
    }

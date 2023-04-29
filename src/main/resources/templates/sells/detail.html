@@ -41,7 +41,7 @@
                             <div class="form-group">
                                 <label for="optionSelect">옵션</label>
                                 <select class="form-control" id="optionSelect" name="option">
-                                    <option th:each="op:${sells.getSellOption()}" th:value="${op.getName()+'|'+op.getPrice()}" th:text="${op.getName() + ' - ' + op.getPrice() + '원'}"></option>
+                                    <option th:each="op:${sells.getSellOption()}" th:value="${op.getName()+'|'+op.getPrice()+'|'+op.getOId()}" th:text="${op.getName() + ' - ' + op.getPrice() + '원'}"></option>
                                 </select>
                             </div>
                             <div class="form-group">
@@ -60,13 +60,13 @@
                         <h3 class="text-end" id="totalPrice" ></h3>
                         <hr>
                         <div class="text-end">
-                            <th:block th:if="${session.loginUser.uId == sells.uId}">
+                            <th:block th:if="${session.loginUser != null and session.loginUser.uId == sells.uId}">
                                 <a class="btn btn-secondary" th:href="@{'/sells/{sId}/modify.do'(sId=${sells.getSId()})}" >수정하기</a>
+                                <button class="btn btn-primary ">카카오페이로 결제하기</button>
                             </th:block>
-                            <!--                        <button type="submit" class="btn btn-primary ">결제하기</button>-->
-                            <!--                        <a class="btn btn-danger" id="apibtn">API 호출</a>-->
-                            <button class="btn btn-primary ">카카오페이로 결제하기</button>
-
+                            <th:block th:unless="${session.loginUser != null and session.loginUser.uId == sells.uId}">
+                                <button class="btn btn-primary ">카카오페이로 결제하기</button>
+                            </th:block>
                         </div>
                     </div>
                 </div>
@@ -96,6 +96,7 @@
         }function down(){
             quantityInput.value--
         }
+        const optionSelect=document.getElementById("optionSelect");
         const totalPriceInput = document.getElementById("totalPriceInput");
         const quantityInput = document.getElementById("quantity");
         const selectOpton = document.getElementById("selectedOption");
@@ -114,10 +115,13 @@
             const selectedOption = document.getElementById("optionSelect").value;
             const optionName = selectedOption.split("|")[0];
             const price = selectedOption.split("|")[1];
+            const oId = selectedOption.split("|")[2];
+
             const total = price * quantity;
             if(!optionSet.has(optionName)){
+
                 optionSet.add(optionName)
-                selectOpton.insertAdjacentHTML("beforeend", selectOptionComponent(optionName,quantity,total));
+                selectOpton.insertAdjacentHTML("beforeend", selectOptionComponent(optionName,quantity,total,oId));
                 totalOptionPrice += total;
                 totalPrice.textContent = `총 결제금액: ${totalOptionPrice}원`;
                 totalPriceInput.value = totalOptionPrice;
@@ -126,11 +130,12 @@
             }
         });
 
-        function selectOptionComponent(optionName,quantity,price){
+        function selectOptionComponent(optionName,quantity,price,oId){
 
             return `<div class="card mb-3">
     <div class="card-body d-flex justify-content-between align-items-center">
       <div>
+      <input type="hidden" name="oId" value="${oId}">
         <p  class="card-text mb-0"><strong>옵션:</strong> <span>${optionName}</span></p>
         <input type="hidden" name="optionName" value="${optionName}">
         <p  class="card-text"><strong>수량:</strong> <span>${quantity}</span></p>

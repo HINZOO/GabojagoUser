@@ -19,52 +19,81 @@
             accent-color: orangered;
         }
 
+        /*.star-rating input[type="radio"] {*/
+        /*    display: none;*/
+        /*}*/
+
+        /* .star-rating label {*/
+        /*     display: inline-block;*/
+        /*     font-size: 24px;*/
+        /*     color: #ccc;*/
+        /*     cursor: pointer;*/
+        /* }*/
+
+        /*.star-rating label:hover,*/
+        /*.star-rating label:hover~label,*/
+        /*.star-rating input[type="radio"]:checked~label{*/
+        /*    color: #ffcc00;*/
+        /*}*/
+
+
+        #reviewRegisterForm fieldset{
+            display: inline-block;
+            direction: rtl;
+            border:0;
+        }
+        #reviewRegisterForm fieldset legend{
+            text-align: right;
+        }
+        #reviewRegisterForm input[type=radio]{
+            display: none;
+        }
+        #reviewRegisterForm label{
+            font-size: 3em;
+            color: transparent;
+            text-shadow: 0 0 0 #f0f0f0;
+        }
+        #reviewRegisterForm label:hover{
+            text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+        }
+        #reviewRegisterForm label:hover ~ label{
+            text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+        }
+        #reviewRegisterForm input[type=radio]:checked ~ label{
+            text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+        }
+
+
+
     </style>
 </head>
 <div layout:fragment="content" class="container">
     <!--    <script src="/public/js/splideTest.js"></script>-->
     <h3 class="my-4">맞춤추천 상세</h3>
-    <script src="/public/js/TripLike.js" defer></script>
-
-    <!--    <div class="splide">-->
-    <!--        <div class="splide__track">-->
-    <!--            <ul class="splide__list">-->
-    <!--                <li class="splide__slide"><img src="image1.jpg"></li>-->
-    <!--                <li class="splide__slide"><img src="image2.jpg"></li>-->
-    <!--                <li class="splide__slide"><img src="image3.jpg"></li>-->
-    <!--            </ul>-->
-    <!--        </div>-->
-    <!--    </div>-->
-
+    <script src="/public/js/tripLike.js" defer></script>
     <section id="tripCont">
         <div class="row">
             <div class="col-5">
                 <div class="card border-dark border-opacity-25">
-                    <div class="card-header p-3 bg-transparent border-dark border-opacity-25">
-                        <div class="d-flex justify-content-around">
-                            <p class="card-text d-flex flex-column align-items-center g-2 mb-0">
+                    <div class="card-header bg-transparent border-dark border-opacity-25">
+                        <div class="d-flex align-items-center justify-content-end">
+                            <p class="card-text p-0 align-items-center">
                                 <div class="likeCont" th:id="'likeCont'+${t.tId}">
                                     <th:block th:include="/trip/likes.html" th:with="likes=${t.likes},id=${t.tId}"></th:block>
                                 </div>
-<!--                                <span>156</span>-->
                             </p>
-                            <p class="card-text d-flex flex-column align-items-center g-2 mb-0">
-                                <a href="javascript:void(0)" th:onclick="" >
-                                    <i class="bi bi-bookmark-plus text-warning fs-3" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="북마크"></i>
+
+                            <p class="card-text mb-0">
+                                <a href="javascript:void(0)" th:onclick="registerBookMark([[${t.tId}]],this)" >
+                                    <i class="bi bi-bookmark-plus text-warning fs-4 me-2" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="북마크"></i>
                                 </a>
-                                <span>156</span>
                             </p>
-                            <p class="card-text d-flex flex-column align-items-center g-2 mb-0">
-                                <a href="javascript:void(0)" th:onclick="">
-                                    <i class="bi bi-calendar-plus text-secondary fs-3" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="내일정바로추가"></i>
-                                </a>
-                                <span>156</span>
-                            </p>
+
                         </div>
                     </div> <!-- // 좋아요,북마크,리뷰,방문,조회수 -->
 
-                    <div class="card-body text-success">
-                        <h5 class="card-title">제주도에서 즐기는 봄꽃 여행</h5>
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${t.title}"></h5>
                         <p class="card-text">
                             <span>☆☆☆☆☆</span>
                             <small>156</small>
@@ -76,19 +105,22 @@
                         <h6>기본정보</h6>
                         <p class="card-text">
                             주소
-                            <span>서귀포</span>
+                            <span th:text="${t.address}"></span>
                         </p>
                         <p class="card-text">
                             연락처
-                            <span>01011112222</span>
+                            <span th:text="${t.phone}"></span>
                         </p>
                         <p class="card-text">
                             홈페이지
-                            <span>https://www.visitjeju.net/kr/</span>
+                            <a th:href="@{${urlAddress}}" th:text="${t.urlAddress}"></a>
+
                         </p>
                         <p class="card-text">
-                            등록일 / 조회수
-                            <span></span>
+                            <i class="bi bi-eye"></i>
+
+                            조회수
+                            <span th:text="${t.viewCount}"></span>
                         </p>
                     </div> <!---->
 
@@ -97,6 +129,11 @@
                         <textarea name="" id="" rows="4" class="form-control" th:text="${t.content}"></textarea>
                     </div>
                 </div>
+
+
+                <div>추천 여행지</div>
+
+
             </div> <!-- 게시글 상세 (왼쪽) -->
 
 
@@ -132,7 +169,7 @@
                             <span>
                                 여행가의 리뷰 <strong>52</strong>
                             </span>
-                            <a class="btn btn-danger" href="javascript:void(0)" id="loadReviewRegister">
+                            <a th:if="${session.loginUser!=null}" class="btn btn-danger" href="javascript:void(0)" id="loadReviewRegister">
                                 리뷰 작성하기
                             </a>
                         </p>
@@ -167,10 +204,10 @@
                          >
 <!--                         th:if="${session.loginUser!=null}">-->
                         <!-- 리뷰댓글 입력폼 -->
-                        <form enctype="multipart/form-data" name="reviewCmtInsertForm" method="post" action=""
+                        <form th:if="${session.loginUser!=null}" enctype="multipart/form-data" name="reviewCmtInsertForm" method="post" action=""
                              >
                             <div class="row align-items-center">
-                                <input type="hidden" name="uId" th:value="${session.loginUser.uId}">
+                                <input type="hidden" name="uId"  th:value="${session.loginUser.uId}">
                                 <input type="hidden" name="trcId" > <!-- 리뷰댓글 삭제시 필요한 pk -->
                                 <div class="col-2">
                                     <input name="trId" placeholder="리뷰댓글" type="text" readonly class="form-control">
@@ -452,6 +489,40 @@
                 // alert("변경");
             }
         }
+
+
+        // 북마크 등록
+        async function registerBookMark(tId,btn){
+            let check=confirm("북마크를 등록하시겠습니까?");
+            let url=`/bookmark/trip/${tId}/handler.do`;
+            if(check){
+                const resp=await fetch(url,{method:"POST"});
+                if(resp.status===200){
+                    const json=await resp.json();
+                    if(json.handler>0){
+                        alert("북마크 등록 성공");
+                    }else {
+                        alert("북마크 등록 실패. 다시 시도하세요");
+                    }
+                } else if (resp.status===400) {
+                    alert("로그인 하셔야 이용할 수 있는 서비스 입니다.");
+                }else if(resp.status===500){
+                    alert("이미 북마크되었거나 오류가 발생했으니 새로고침하고 다시 시도하세요~");
+                }
+            }
+        }
+
+
+        // 별점 등록
+        const stars = document.querySelectorAll(".star-rating input[type='radio']");
+        const ratingValue = document.querySelector("#rating-value");
+
+        for (let i = 0; i < stars.length; i++) {
+            stars[i].addEventListener("click", function() {
+                ratingValue.value = stars[i].value;
+            });
+        }
+
 
 
     </script>

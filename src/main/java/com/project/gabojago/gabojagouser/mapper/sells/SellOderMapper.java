@@ -6,8 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import java.util.List;
 
 @Mapper
-public interface SellOrderMapper {
-    List<SellOrderDto> findByUId(String sId);
+public interface SellOderMapper {
+    List<SellOrderDto> findBySoId(int soId);
     int insertOne(SellOrderDto sellOrderDto);
-
 }
