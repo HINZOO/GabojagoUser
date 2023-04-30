@@ -173,6 +173,7 @@ public class TripController {
                          @PathVariable int tId,
                          @SessionAttribute(required = false) UserDto loginUser) {
         TripDto trip = tripService.detail(tId,loginUser);
+
         String urlAddress=trip.getUrlAddress();
         model.addAttribute("t", trip);
         model.addAttribute("urlAddress",urlAddress);

@@ -1,19 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <div class="mb-3 d-flex justify-content-between align-items-center">
-    <div class="d-flex align-items-center">
-        <div>
-            <!--            <span th:text="${r.user}"></span>-->
-            <img th:src="@{'{path}'(path=${r.user.imgPath})}" class="border rounded-circle"
-                 style="width: 45px; height: 45px;">
-            @<strong th:text="${r.uId}"></strong>
-            <!--            <span>리뷰 6</span>-->
-            <a href="#">팔로우</a>
-        </div>
+    <div th:onclick="showProfile([[${r.trId}]])">
+<!--    <div onclick="showProfile()">-->
+        <th:block th:include="/trip/profile.html"></th:block>
     </div>
 </div>
 
 <div>
+    <p>u는어디에</p>
+    <p th:text="${r.user.uId}"></p>
     <div>
         <span th:text="${r.content}"></span>
     </div>
@@ -39,7 +35,6 @@
             </p>
         </div> <!-- 해시태그 반복문 -->
     </div>
-
     <div class="d-flex align-items-center">
         <small>평가</small>
         <div class="star-ratings ms-1" id="reviewStar">
@@ -98,11 +93,14 @@
 <!-- 리뷰작성하기 Modal -->
 <th:block th:include="/trip/review/reviewModifyModal.html"></th:block>
 
+
+
 <!-- th:with : 해당하는 태그 안에 지역변수로 변수명을 선언하는 것! => li 태그 안에 user 변수선언 -->
 <ul class="list-group">
     <li th:each="rc:${r.comments}"  th:with="user=${r.user}" class="list-group-item" th:if="${r.comments.size()>0}" > <!-- 리뷰의 댓글이 있는 경우만! -->
         <th:block th:include="/trip/reviewcmt/detail.html"></th:block>
     </li>
 </ul>
+
 
 </html>
