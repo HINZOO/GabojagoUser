@@ -6,6 +6,7 @@ import com.project.gabojago.gabojagouser.service.comm.CommReportService;
 import lombok.Data;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @RestController
 @RequestMapping("/comm/report")
@@ -23,7 +24,8 @@ public class CommReportController {
     @PostMapping("/handler.do")
     public @ResponseBody HandlerDto reportRegisterHandler(
             @SessionAttribute UserDto loginUser,
-            @ModelAttribute CommReportDto commReportDto
+            @ModelAttribute CommReportDto commReportDto,
+            RedirectAttributes redirectAttributes
             ){
         log.info(commReportDto);
         HandlerDto handlerDto=new HandlerDto();
