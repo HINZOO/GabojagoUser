@@ -533,7 +533,7 @@ class CanvasCreate {
         }
 
         let socket = JSON.stringify(tempObj)
-        stomp.send('/pub/plan/canvas', {}, JSON.stringify({roomId: roomId,pk:co.id, path: socket, writer: username}));
+        stomp.send('/pub/plan/canvas', {}, JSON.stringify({roomId: roomId,pk:co.pathId, path: socket, writer: username}));
         co.currentCanvas.src = co.canvas.toDataURL()
         return co.layerArr.push(tempObj);
 
