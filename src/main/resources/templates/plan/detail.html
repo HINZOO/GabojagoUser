@@ -528,6 +528,7 @@
                 let content = JSON.parse(path.body);
                 let writer = content.writer;
                 if(writer !== username ) {
+                    // console.log(canvasMap.get(content.pk))
                     canvasMap.get(content.pk).receiver(content.path);
                 }
             });

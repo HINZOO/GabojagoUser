@@ -538,9 +538,9 @@ canvas{
     border-radius: 10px;
     font-size: 20px;
     font-weight: bold;
-    background-color: rgba(176, 211, 255, 0.66);
+    background-color: rgb(175, 210, 255);
     color: white;
-    text-shadow: -1px 0 lightgrey, 1px 1px lightgrey, 1px 2px lightgrey, 0 -1px lightgrey;
+    text-shadow: -1px 0 lightgrey, 1px 1px gray, 0px 1px gray, 0 -1px lightgrey;
 }
 
 .catBtnC{
@@ -594,6 +594,7 @@ canvas{
 }
 
 #newScheduleBtn{
+    cursor: pointer;
     margin-right: 20px;
     float: right;
     text-align: center;
@@ -601,21 +602,25 @@ canvas{
     height: 30px;
     padding: 0px;
     font-size: 30px;
-    color: white;
+    color: gray;
     border-radius: 50%;
-    text-shadow: -1px 0 lightgrey, 1px 1px gray, 1px 2px gray, 0 -1px lightgrey;
+    text-shadow: -1px 0 gray, 1px 1px gray, 1px 1px gray, 0 -1px gray;
 }
 #newScheduleBtn:hover{
     background-color: #595959;
+    color: white;
+    text-shadow: -1px 0 white, 1px 1px white, 1px 1px white, 0 -1px white;
 }
 
 .sFormSection{
     padding: 5px 10px;
+    padding-left: 0px;
     border-radius: 10px;
-    background-color: rgba(200, 226, 255, 0.4);
+    background-color: rgb(203, 224, 255);
     font-weight: bold;
-    font-size: 15px;
-    color: #595959;
+    font-size: 18px;
+    color: gray;
+    /*text-shadow: -1px 0 lightgray, 1px 1px lightgray, 1px 1px lightgray, 0 -1px lightgray;*/
 
 }
 
@@ -671,7 +676,9 @@ canvas{
     font-size: 12px;
 }
 #bookmarkTabDiv{
-    background-color: rgba(200, 226, 255, 0.4);
+    padding-left: 10px;
+    border-radius: 10px;
+    background-color: rgb(203, 224, 255);
     display: flex;
     justify-content: space-between;
     border-bottom: 1px solid whitesmoke;
