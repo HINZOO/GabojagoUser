@@ -1,6 +1,6 @@
-package com.project.gabojago.gabojagouser.mapper.my;
+package com.project.gabojago.gabojagouser.mapper;
 
-import com.project.gabojago.gabojagouser.dto.my.HashTagDto;
+import com.project.gabojago.gabojagouser.dto.HashTagDto;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

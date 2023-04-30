@@ -12,7 +12,7 @@
     <delete id="deleteOne">
         DELETE FROM trip_hashtags WHERE t_id=#{tId} AND tag=#{tag}
     </delete>
-    <select id="findTId" resultMap="TripHashTagMap">
+    <select id="findByTId" resultMap="TripHashTagMap">
         SELECT * FROM trip_hashtags WHERE t_id=#{tId}
     </select>
     <select id="countByTag" resultType="java.lang.Integer">

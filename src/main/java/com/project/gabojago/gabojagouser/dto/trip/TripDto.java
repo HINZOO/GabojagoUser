@@ -48,6 +48,7 @@ public class TripDto {
 
     private TripBookMarkCntDto bookmarks;
 
+    private List<TripHashTagDto> tags;
 
 
 }

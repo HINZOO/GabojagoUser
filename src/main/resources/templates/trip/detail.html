@@ -228,11 +228,6 @@
                                 </li>
                             </ul>
                         </div> <!-- // reviewCont -->
-
-                        <div th:each="r:${t.reviews}">
-                            <th:block th:include="/trip/profileModal.html"></th:block>
-                        </div>
-
                     </div>
 <!--                    <p th:text="${t}"></p>-->
                     <div class="card-footer position-sticky bottom-0 bg-light" style="border: 1px solid #ddd;"
@@ -270,10 +265,6 @@
                 </div>
                 <!-- 리뷰작성하기 Modal -->
                 <th:block th:include="/trip/review/reviewRegisterModal.html"></th:block>
-<!--                <div>-->
-<!--                    <th:block th:include="/trip/profileModal.html"></th:block>-->
-<!--                </div>-->
-
 
             </div> <!-- 오른쪽 그리드 -->
         </div> <!-- // 그리드 row -->
@@ -353,104 +344,6 @@
         loadReviewRegister.addEventListener("click",function(){
             reviewRegisterModal.show();
         });
-
-        let profileModal;
-        const profileCont = document.getElementById("profileCont");
-        if (document.getElementById("profileModal")) {
-            profileModal = new bootstrap.Modal(document.getElementById("profileModal"), {});
-        }
-        // function showProfile() {
-        //     profileModal.show();
-        // }
-        //
-
-        const planCont=document.getElementById("planCont");
-        async function showProfile(trId) {
-            let url = `/review/${trId}/detail.do`;
-            const resp = await fetch(url);
-            if (resp.status === 200) {
-                const json = await resp.json();
-                console.log(json);
-                console.log(trId);
-
-                const user=json.user;
-                profileCont.innerHTML = "";
-                profileCont.insertAdjacentHTML("beforeend", reviewProfileComponent(user));
-                const plans=user.plans;
-                plans.forEach((plan,index)=>{
-                    // planCont.innerHTML="";
-                    planCont.insertAdjacentHTML("beforeend", planComponent(plan));
-                })
-                profileModal.show();
-            }
-        }
-
-        function planComponent(plan){
-            return `
-                <div class="list-group-item list-group-item-action">
-                            <i class="bi bi-clipboard me-2"></i>
-                            <a class="text-dark link-primary" href="#">${plan.title}</a>
-                </div>
-
-            `;
-        }
-
-        function reviewProfileComponent(user){
-            return `
-                   <div class="text-center p-0">
-                    <p><img class="profile img-thumbnail rounded-circle w-25 h-25" style="image-size:cover"
-                            src="${user.imgPath}"></p>
-                    <h5 class="mb-0">${user.nkName}</h5>
-                    (<small class="text-muted">${user.uid}</small>)
-                    <div class="d-flex justify-content-center">
-                        <small class="me-3">
-                            <span class="text-primary">팔로워</span>
-                            <span class=" ms-1">${(user.followers!=null)?user.followers.length:0}</span><br>
-                        </small>
-                        <small>
-                            <span class=" text-primary ">팔로잉</span>
-                            <span class=" ms-1">${(user.followings!=null)?user.followings.length:0}</span><br>
-                        </small>
-                    </div>
-                    <p class="mt-1">
-                        <button type="button"
-                                onclick="toggleFollowing(${user.uId},this)"
-                                class="btn btn-outline-success active btn-sm">팔로잉
-                        </button>
-                        <a class="btn btn-outline-success btn-sm">쪽지</a>
-                    </p>
-                </div>
-                <hr>
-                <div class="">
-                <div class="list-group">
-                    <a href="#" class="list-group-item list-group-item-action active bg-success"
-                       aria-current="true">
-                        <h6>
-                            <i class="bi bi-calendar me-2"></i>
-                            <span>${user.nkName}</span> 님의 일정
-                        </h6>
-                    </a>
-                </div>
-            </div>
-        `;
-        }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
         if(reviewModifyModal){

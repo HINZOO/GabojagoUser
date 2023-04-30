@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <div class="mb-3 d-flex justify-content-between align-items-center">
-    <div th:onclick="showProfile([[${r.trId}]])">
-<!--    <div onclick="showProfile()">-->
+    <a th:onclick="profileModal([[${r.trId}]])">
         <th:block th:include="/trip/profile.html"></th:block>
-    </div>
+    </a>
 </div>
 
 <div>
@@ -90,10 +89,11 @@
     </div>
 </div>
 
+<!-- 프로필 Modal -->
+<th:block th:include="/trip/review/profileModal.html" th:with="r=${r}"></th:block>
+
 <!-- 리뷰작성하기 Modal -->
 <th:block th:include="/trip/review/reviewModifyModal.html"></th:block>
-
-
 
 <!-- th:with : 해당하는 태그 안에 지역변수로 변수명을 선언하는 것! => li 태그 안에 user 변수선언 -->
 <ul class="list-group">
@@ -102,5 +102,12 @@
     </li>
 </ul>
 
+<!--프로필 모달창-->
+<script th:inline="javascript">
+    function profileModal(id){
+        const modalId=new bootstrap.Modal(document.getElementById(`profileModal${id}`,{}));
+        modalId.show();
+    }
+</script>
 
 </html>

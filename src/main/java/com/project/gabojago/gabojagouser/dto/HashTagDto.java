@@ -1,4 +1,4 @@
-package com.project.gabojago.gabojagouser.dto.my;
+package com.project.gabojago.gabojagouser.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
