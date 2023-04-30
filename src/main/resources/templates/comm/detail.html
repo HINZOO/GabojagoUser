@@ -3,7 +3,7 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout}">
-<div layout:fragment="content">
+<div layout:fragment="content" class="py-5">
     <script src="/public/js/CommLike.js" defer></script>
 <style>
     #mbtiChk>a{
@@ -93,7 +93,8 @@
                     </div>
                     <div>
                     <a href=""><i class="bi bi-calendar-plus text-secondary me-2" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="내일정바로추가"></i></a>
-                    <a href="javascript:void(0)" th:onclick="registerBookMark([[${c.cId}]],[[${c.pId}]])"><i class="bi bi-bookmark-plus text-warning me-2" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="북마크"></i></a>
+                    <a href="javascript:void(0)" th:if="${session.loginUser.uId!=c.uId}" th:onclick="registerBookMark([[${c.cId}]],[[${c.pId}]])"><i class="bi bi-bookmark-plus text-warning me-2" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="북마크"></i></a>
+                    <a href="javascript:void(0)" th:unless="${session.loginUser.uId!=c.uId}" th:onclick="alert('본인이 쓴 글은 신고할 수 없습니다.')"><i class="bi bi-bookmark-plus text-warning me-2" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="북마크"></i></a>
                     <a href="javascript:void(0)" id="commReport"><i class="bi bi-bell-fill text-danger" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="신고하기"></i></a>
                     </div>
 
@@ -143,6 +144,9 @@
                     </div>
                 </div>
             </div>
+        <div class="text-end">
+            <a class="btn btn-outline-warning my-2" href="/comm/list.do"> 목록으로</a>
+        </div>
         </div>
 
     <!--😎 모달창 -->
@@ -245,7 +249,7 @@
                      alert("북마크 등록 성공!");
                  }
              }else{
-                 alert("북마크 등록 실패");
+                 alert("이미 북마크를 하셨습니다!");
              }
          }
      }

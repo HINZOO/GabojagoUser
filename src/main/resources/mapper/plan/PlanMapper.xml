@@ -22,10 +22,6 @@
                     select="com.project.gabojago.gabojagouser.mapper.plan.PlanCheckListsMapper.findByPId"
                     column="p_id"
                     fetchType="lazy"/>
-        <collection property="mUsers"
-                    select="com.project.gabojago.gabojagouser.mapper.plan.PlanMembersMapper.findByPId"
-                    column="p_id"
-                    fetchType="lazy"/>
 
     </resultMap>
     <insert id="insertOne" useGeneratedKeys="true" keyProperty="pId"  parameterType="PlanDto">
