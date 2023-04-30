@@ -9,7 +9,7 @@
 </head>
 <div layout:fragment="content">
 
-    <form  method="post" action="/kakaoPay.do">
+    <form  method="post" action="/orderReady.do">
         <div class="container">
             <div class="container my-5">
                 <div class="row">
@@ -57,9 +57,6 @@
                         </form>
                         <div id="selectedOption"></div>
                         <hr>
-                        <input id="mileage" type="text" th:value="${mileage}">
-                        <a id="mileageBtn" class="btn btn-primary">사용하기
-                        </a>
                         <input type="hidden" name="totalPrice" id="totalPriceInput">
                         <h3 class="text-end" id="totalPrice" ></h3>
                         <hr>
@@ -69,8 +66,10 @@
                                 <button class="btn btn-primary ">카카오페이로 결제하기</button>
                             </th:block>
                             <th:block th:unless="${session.loginUser != null and session.loginUser.uId == sells.uId}">
-                                <button class="btn btn-primary ">카카오페이로 결제하기</button>
+                                <button class="btn btn-primary ">결제하기</button>
+
                             </th:block>
+
                         </div>
                     </div>
                 </div>
@@ -105,8 +104,8 @@
         const quantityInput = document.getElementById("quantity");
         const selectOpton = document.getElementById("selectedOption");
         const totalPrice = document.getElementById("totalPrice");
-        const mileageBtn=document.getElementById("mileageBtn");
-        const mileage=document.getElementById("mileage")
+
+
         const addBtn= document.getElementById("addBtn");
         const optionSet=new Set;
         let totalOptionPrice = 0;
@@ -126,15 +125,11 @@
             const oId = selectedOption.split("|")[2];
             const total = price * quantity;
             if(!optionSet.has(optionName)){
-                let totalMileage=0;
-                mileageBtn.addEventListener("click",()=>{
 
-                })
 
                 optionSet.add(optionName)
                 selectOpton.insertAdjacentHTML("beforeend", selectOptionComponent(optionName,quantity,total,oId));
                 totalOptionPrice += total;
-                totalPrice.textContent = `마일리지: ${totalMileage} -`;
                 totalPrice.innerHTML += `<br>총 결제금액: ${totalOptionPrice}원`;
                 totalPriceInput.value = totalOptionPrice;
             }else {
