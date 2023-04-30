@@ -39,7 +39,6 @@
                                 <span>CHECKLIST</span>
                                 <span><span class="tdlPBtn" th:onclick="'tdlInsert('+${plan.getPId()}+')'" style="margin-right: 5px">+</span></span>
                             </div>
-
                             <div class="tdlContent">
                                 <th:block th:each="checkList:${plan.getCheckLists()}">
 <!--                                    <span th:text="${checkList}"></span>-->
@@ -109,7 +108,7 @@
                                 <i class="bi bi-square"></i>
                             </button>
                             <!--텍스트입력-->
-                            <button type="button"  id="textBtn" style="background-color: #5d5d5d" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="텍스트">
+                            <button type="button"  id="textBtn" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="텍스트">
                                 <i class="bi bi-fonts"></i>
                             </button>
                             </button>
