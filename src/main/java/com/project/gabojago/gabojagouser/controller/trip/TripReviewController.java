@@ -68,7 +68,7 @@ public class TripReviewController {
             @SessionAttribute UserDto loginUser,
             Model model) {
         List<TripReviewDto> reviews=tripReviewService.list(tId);
-        TripDto trip=tripService.detail(tId, loginUser);
+        TripDto trip=tripService.detail(tId);
 
 
 //        UserDto user=null;
