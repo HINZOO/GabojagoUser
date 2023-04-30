@@ -96,13 +96,10 @@
                         <div class="likeCont" th:id="'likeCont'+${t.tId}">
                             <th:block th:include="/trip/likes.html" th:with="likes=${t.likes},id=${t.tId}"></th:block>
                         </div>
-
-
                     </div>
 
                     <!-- 게시글 이미지 + 내용 클릭시 상세보기 이동 -->
                     <a class="text-dark text-decoration-none" th:href="@{'/trip/{tId}/detail.do'(tId=${t.tId})}">
-
                         <!-- imgs 가 null 이 아니면 보이기! null 이면 안보이기! // id 는 유일한 값을 주기 위해서 tId 를 붙임 -->
                         <div th:if="${t.imgs!=null}">
                             <div >
@@ -113,17 +110,14 @@
                                 </div>
                             </div>
                         </div>
-
                         <div class="card-body">
                             <div class="d-flex align-items-center">
                                 <p class="card-title fs-6 mb-0" th:text="${t.title}"></p>
                             </div>
-
                             <p class="card-text">
                                 <span></span>
                                 #enfj#enfp#istj
                             </p>
-
                             <div class="card-text d-flex justify-content-between">
                                 <p class="m-0">
                                     <span>☆☆☆☆☆</span>
