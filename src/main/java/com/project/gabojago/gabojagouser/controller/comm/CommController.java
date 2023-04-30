@@ -1,6 +1,8 @@
 package com.project.gabojago.gabojagouser.controller.comm;
 
 import com.github.pagehelper.PageInfo;
+import com.project.gabojago.gabojagouser.controller.my.BookMarkController;
+import com.project.gabojago.gabojagouser.dto.comm.CommBookmarkDto;
 import com.project.gabojago.gabojagouser.dto.comm.CommImgDto;
 import com.project.gabojago.gabojagouser.dto.comm.CommPageDto;
 import com.project.gabojago.gabojagouser.dto.comm.CommunityDto;
@@ -204,4 +206,6 @@ public class CommController {
         redirectAttributes.addFlashAttribute("msg",msg);
         return redirectPage;
     }
+
+
 }

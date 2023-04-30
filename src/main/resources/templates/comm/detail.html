@@ -63,26 +63,30 @@
 
             <div class="card-body">
                 <h5 class="card-title" >일정</h5>
-                <th:block  th:each="p:${c.user.plans[0].contents}">
-                    <div class="accordion accordion-flush" th:id="'accordionFlushExample'+${p.conId}">
-                        <div class="accordion-item" >
-                            <h2 class="accordion-header">
-                                <!--onclick 이벤트 생각해보기: 하나씩 눌렀을때 하나씩 뜨게...-->
-                                <button  class="accordion-button collapsed" type="button" data-bs-toggle="collapse" th:data-bs-target="'#flush-collapse-' + ${p.conId}"  aria-expanded="false" aria-controls="flush-collapseOne">
-                                    <span th:text="${p.time}" class="text-bg-warning me-4 p-2  border-warning rounded-5"></span>
-                                    <span th:text="${p.title}"></span>
-                                </button>
-                            </h2>
-                            <div th:id="'flush-collapse-' + ${p.conId}" class="accordion-collapse collapse"  th:data-bs-parent="'#accordionFlushExample'+${p.conId}" >
-                                <div class="accordion-body w-100">
-                                    <div th:if="${p.imgPath!=null}" >
-                                        <img th:src="@{'{path}'(path=${p.imgPath})}" class="img-fluid" alt="일정꾸미는이미지">
+                <th:block th:each="plan,index:${c.user.plans}">
+                    <th:block th:if="${plan.pId==c.pId}">
+                        <th:block  th:each="p:${plan.contents}">
+                            <div class="accordion accordion-flush" th:id="'accordionFlushExample'+${p.conId}">
+                                <div class="accordion-item" >
+                                    <h2 class="accordion-header">
+                                        <button  class="accordion-button collapsed" type="button" data-bs-toggle="collapse" th:data-bs-target="'#flush-collapse-' + ${p.conId}"  aria-expanded="false" aria-controls="flush-collapseOne">
+                                            <span th:text="${p.time}" class="text-bg-warning me-4 p-2  border-warning rounded-5"></span>
+                                            <span th:text="${p.title}"></span>
+                                        </button>
+                                    </h2>
+                                    <div th:id="'flush-collapse-' + ${p.conId}" class="accordion-collapse collapse"  th:data-bs-parent="'#accordionFlushExample'+${p.conId}" >
+                                        <div class="accordion-body w-100">
+                                            <div th:if="${p.imgPath!=null}" >
+                                                <img th:src="@{'{path}'(path=${p.imgPath})}" class="img-fluid" alt="일정꾸미는이미지">
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
+                        </th:block>
+                    </th:block>
                 </th:block>
+
                 </div>
             </div>
             <hr>
@@ -92,10 +96,10 @@
                         <th:block th:with="likes=${c.likes},cId=${c.cId}" th:include="/comm/Likes"> </th:block>
                     </div>
                     <div>
-                    <a href=""><i class="bi bi-calendar-plus text-secondary me-2" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="내일정바로추가"></i></a>
+                    <a href="javascript:void(0)" id="myPlanAdd" th:onclick="registerPlan([[${c.pId}]])"><i class="bi bi-calendar-plus text-secondary me-2" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="내일정바로추가"></i></a>
                     <a href="javascript:void(0)" th:if="${session.loginUser.uId!=c.uId}" th:onclick="registerBookMark([[${c.cId}]],[[${c.pId}]])"><i class="bi bi-bookmark-plus text-warning me-2" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="북마크"></i></a>
                     <a href="javascript:void(0)" th:unless="${session.loginUser.uId!=c.uId}" th:onclick="alert('본인이 쓴 글은 신고할 수 없습니다.')"><i class="bi bi-bookmark-plus text-warning me-2" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="북마크"></i></a>
-                    <a href="javascript:void(0)" id="commReport"><i class="bi bi-bell-fill text-danger" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="신고하기"></i></a>
+                    <a href="javascript:void(0)" id="commReport" ><i class="bi bi-bell-fill text-danger" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="신고하기"></i></a>
                     </div>
 
                 </div>
@@ -159,6 +163,7 @@
         const profileModal=new bootstrap.Modal(document.getElementById('profileModal',{}));
         const profile=document.getElementsByClassName("profile");
         const commReport=document.getElementById("commReport");
+        const myPlanAdd=document.getElementById("myPlanAdd");
         const bookMarkCheck=document.getElementById("bookMarkCheck");
         const replyContainer=document.getElementById("replyCont");
         const replyInsertForm=document.forms["replyInsertForm"];
@@ -253,6 +258,23 @@
              }
          }
      }
+
+     //내일정 추가
+        async function registerPlan(pId){
+            let check=confirm("내 일정에 추가하시겠습니까?")
+            let url="/comm/plan/"+pId+"/handler.do";
+            if(check){
+                const resp= await fetch(url,{method:"POST"});
+                if(resp.status===200){
+                    const json=await resp.json();
+                    if(json.handler>0) {
+                        alert("일정 등록 성공!");
+                    }
+                }else{
+                    alert("이미 등록한 일정입니다.!");
+                }
+            }
+        }
 
     </script>
 </div>
