@@ -42,13 +42,19 @@
                 </th:block>
                 <th:block th:if="${session.loginUser!=null}">
                     <li class="nav-item">
-                        <i class="bi bi-person fs-3"></i>
-                        <a th:href="@{'/user/{uId}/detail.do'(uId=${session.loginUser.uId})}"
-                                class="link-primary fs-5 me-3" >
-                            <span th:text="${session.loginUser.name}"></span> 님
-                            (<span th:text="${session.loginUser.uId}"></span>)
-                        </a>
-                        <a class="btn btn-outline-danger" href="/user/logout.do">로그아웃</a>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="d-flex align-items-center">
+
+                                     <i class="bi bi-person fs-3"></i>
+                                 <a th:href="@{'/user/{uId}/detail.do'(uId=${session.loginUser.uId})}"
+                                    class="text-decoration-none text-center text-dark link-primary fs-5 me-3 d-flex align-items-center" >
+                                     <p th:text="${session.loginUser.name}" class="mb-0"> 님</p>
+                                     <p th:text="'('+${session.loginUser.uId}+')'" class="mb-0"></p>
+                                 </a>
+                            </div>
+                                <a class="btn btn-outline-danger mb-0" href="/user/logout.do">로그아웃</a>
+                        </div>
+
                     </li>
                 </th:block>
             </ul>

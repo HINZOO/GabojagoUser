@@ -112,7 +112,7 @@
                     </div>
 
 
-                    <div class="col-8  d-flex flex-column mb-2">
+                    <div class="col-8  d-flex flex-column mb-2" style="">
                         <div class="card-body">
                             <h4 class="card-title" >
                                 <i class="bi bi-clipboard text-success"></i>
@@ -120,11 +120,14 @@
                             </h4>
                             <p>
                                 <i class="bi bi-person fs-5"></i>
-                                <strong class="me-1" th:text="${c.user.nkName}"></strong>
+                                <a href="#" class="profile text-decoration-none link-warning text-dark">
+                                    <strong class="me-1" th:text="${c.user.nkName}"></strong>
+                                </a>
                                 <small class="text-muted me-1" th:text="작성일.+${#dates.format(c.postTime,'yyyy-MM-dd')}"></small>
                                 <small class="text-muted">조회수 <span th:text="${c.viewCount}"></span></small> </p>
-                            <p class="card-text" id="contantBox" th:utext="${c.content}">
-                            </p>
+                            <div class="card-text w-75 h-25" style="overflow: hidden; white-space:nowrap; text-overflow: ellipsis;" id="contantBox">
+                                <span th:utext="${c.content}"></span>
+                            </div>...
 
                         </div>
                         <div class="LastCont d-flex justify-content-between align-content-center">
