@@ -55,8 +55,10 @@
                     column="t_id"
                     fetchType="lazy"/>
 
-
-
+        <collection property="tags"
+                    select="com.project.gabojago.gabojagouser.mapper.trip.TripHashTagMapper.findByTId"
+                    column="t_id"
+                    fetchType="lazy"/>
     </resultMap>
 
     <insert useGeneratedKeys="true" keyProperty="tId" id="insertOne" parameterType="TripDto">
@@ -126,6 +128,12 @@
                  LEFT JOIN trip_likes l ON t.t_id = l.t_id
         GROUP BY t.t_id
         ORDER BY likes DESC;
+    </select>
+
+    <select id="findByTag" resultMap="TripMap">
+        SELECT trips.* FROM trips INNER JOIN trip_hashtags
+            USING(t_id)
+            WHERE tag=#{tag}
     </select>
 
 </mapper>

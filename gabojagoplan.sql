@@ -41,6 +41,12 @@ CREATE TABLE `hashtags` (
                             `tag_name`	varchar(255) UNICODE NOT NULL COMMENT '태그이름'
 );
 
+CREATE TABLE hashtags_new
+(
+    tag VARCHAR(255) PRIMARY KEY COMMENT '태그 내용'
+);
+
+
 #공지사항 테이블
 CREATE TABLE `notices` (
                            `n_id`	int unsigned AUTO_INCREMENT PRIMARY KEY COMMENT '공지사항 아이디',
@@ -187,14 +193,18 @@ CREATE TABLE `trip_review_likes` (
                                      FOREIGN KEY (tr_id) REFERENCES trip_reviews (tr_id) ON DELETE CASCADE ON UPDATE CASCADE,
                                      CONSTRAINT tr_likes UNIQUE (u_id, tr_id)
 );
-#가보자고( 해시태그 테이블)
-CREATE TABLE `trip_hashtags` (
-                                 `th_id`	 int unsigned AUTO_INCREMENT PRIMARY KEY COMMENT '가보자고해시태그 아이디',
-                                 `t_id`	int unsigned NOT NULL COMMENT '맞춤추천 아이디',
-                                 `tag_id`	int unsigned NOT NULL COMMENT '태그 아이디',
-                                 FOREIGN KEY (t_id) REFERENCES trips (t_id) ON DELETE CASCADE ON UPDATE CASCADE,
-                                 FOREIGN KEY (tag_id) REFERENCES hashtags (tag_id) ON DELETE CASCADE ON UPDATE CASCADE
+
+#가보자고 해시태그
+CREATE TABLE trip_hashtags
+(
+    th_id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT COMMENT '보드 해시태그 pk',
+    t_id  INT UNSIGNED COMMENT '게시글 아이디',
+    tag   VARCHAR(255) NOT NULL COMMENT '태그 내용',
+    UNIQUE (t_id, tag) COMMENT '게시글에 똑같은 태그가 등록되지 않도록',
+    FOREIGN KEY (t_id) REFERENCES trips (t_id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (tag) REFERENCES hashtags_new (tag) ON DELETE CASCADE ON UPDATE CASCADE
 );
+
 #가보자고( 리뷰 신고 테이블)
 CREATE TABLE `trip_review_reports` (
                                        `trr_id`	int unsigned AUTO_INCREMENT PRIMARY KEY COMMENT '가보자고신고글 아이디',
