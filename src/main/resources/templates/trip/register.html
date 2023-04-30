@@ -7,15 +7,6 @@
 <head>
     <meta charset="UTF-8">
     <title>여행지 등록</title>
-    <style>
-        .radioBtn + div {
-
-        }
-
-        .radioBtn:checked + label  {
-            background-color: yellow;
-        }
-    </style>
 </head>
 <div layout:fragment="content">
 <!--    <script src="/public/js/tripInsert.js" defer></script>-->
@@ -23,7 +14,6 @@
         <h1 class="my-4">여행지 등록</h1>
         <p class="form-floating">
             <input readonly type="text" id="" name="uId" th:value="${session.loginUser.uId}" class="form-control" placeholder="??">
-<!--            <input readonly type="text" id="" name="uId" th:value="${session.loginUser.uId}" class="form-control" placeholder="??">-->
             <label for="">아이디(글쓴이)</label>
         </p>
 
@@ -91,10 +81,9 @@
             <p id="contentMsg"></p>
         </p>
 
-        <p class="form-floating">
-            <input type="text" name="tagId" value="" class="form-control" placeholder="??">
-            <label>해시태그 입력</label>
-        </p>
+        <div class="mb-3">
+            <th:block th:include="/trip/tagsinput.html"></th:block>
+        </div>
 
         <p class="input-group">
             <label class="input-group-text">메인이미지</label>
