@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="en"
-      xmlns:th="http://www.thymeleaf.org"
+<html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout}">
+      layout:decorate="~{layoutMy}">
 <head>
   <title>탈퇴하기</title>
 </head>
-<div layout:fragment="content">
+<div layout:fragment="content" class="mx-auto">
   <form class="mx-auto" action="/user/dropout.do" method="post" style="width: 450px;">
-    <h1 class="my-4">탈퇴 확인 폼</h1>
+    <h1 class="my-4">탈퇴 확인</h1>
+    <p class="text-danger">아이디와 비밀번호 확인이 필요합니다.</p>
     <p class="form-floating">
       <input type="text" name="uId" value="" class="form-control" placeholder="ID를 입력해주세요.">
       <label>ID</label>
