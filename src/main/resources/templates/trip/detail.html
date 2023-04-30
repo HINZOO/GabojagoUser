@@ -127,7 +127,6 @@
 <!--                    <p th:text="${t}"></p>-->
 <!--                    <p th:text="${review}"></p>-->
 
-
                     <div class="card-body">
                         <h5 class="card-title" th:text="${t.title}"></h5>
                         <p class="card-text">
@@ -165,13 +164,8 @@
                         <textarea name="" id="" rows="4" class="form-control" th:text="${t.content}"></textarea>
                     </div>
                 </div>
-
-
                 <div>추천 여행지</div>
-
-
             </div> <!-- 게시글 상세 (왼쪽) -->
-
 
             <div class="col-7">
                 <div class="card mb-3" style="border:none; height:80vh; overflow-y: auto">
@@ -229,7 +223,7 @@
                         <div id="reviewCont">
                             <ul class="list-group">
                                 <li class="list-group-item" th:each="r:${t.reviews}">
-                                    <!--                                    <span th:text="${r}"></span>-->
+                                    <!-- <span th:text="${r}"></span>-->
                                     <th:block th:include="/trip/review/detail.html"></th:block>
                                 </li>
                             </ul>
@@ -271,9 +265,7 @@
                 </div>
                 <!-- 리뷰작성하기 Modal -->
                 <th:block th:include="/trip/review/reviewRegisterModal.html"></th:block>
-                <!--                <th:block th:include="/trip/review/reviewModifyModal.html"></th:block>-->
 
-<!--                <p th:text="${t.reviews.grade}"></p>-->
             </div> <!-- 오른쪽 그리드 -->
         </div> <!-- // 그리드 row -->
     </section>
@@ -352,6 +344,7 @@
         loadReviewRegister.addEventListener("click",function(){
             reviewRegisterModal.show();
         });
+
 
         if(reviewModifyModal){
             async function removeReview(){

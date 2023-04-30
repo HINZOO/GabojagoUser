@@ -1,16 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <div class="mb-3 d-flex justify-content-between align-items-center">
-    <div class="d-flex align-items-center">
-        <div>
-            <!--            <span th:text="${r.user}"></span>-->
-            <img th:src="@{'{path}'(path=${r.user.imgPath})}" class="border rounded-circle"
-                 style="width: 45px; height: 45px;">
-            @<strong th:text="${r.uId}"></strong>
-            <!--            <span>리뷰 6</span>-->
-            <a href="#">팔로우</a>
-        </div>
-    </div>
+    <a th:onclick="profileModal([[${r.trId}]])">
+        <th:block th:include="/trip/profile.html"></th:block>
+    </a>
 </div>
 
 <div>
@@ -39,7 +32,6 @@
             </p>
         </div> <!-- 해시태그 반복문 -->
     </div>
-
     <div class="d-flex align-items-center">
         <small>평가</small>
         <div class="star-ratings ms-1" id="reviewStar">
@@ -95,6 +87,9 @@
     </div>
 </div>
 
+<!-- 프로필 Modal -->
+<th:block th:include="/trip/review/profileModal.html" th:with="r=${r}"></th:block>
+
 <!-- 리뷰작성하기 Modal -->
 <th:block th:include="/trip/review/reviewModifyModal.html"></th:block>
 
@@ -104,5 +99,13 @@
         <th:block th:include="/trip/reviewcmt/detail.html"></th:block>
     </li>
 </ul>
+
+<!--프로필 모달창-->
+<script th:inline="javascript">
+    function profileModal(id){
+        const modalId=new bootstrap.Modal(document.getElementById(`profileModal${id}`,{}));
+        modalId.show();
+    }
+</script>
 
 </html>

@@ -41,6 +41,12 @@ CREATE TABLE `hashtags` (
                             `tag_name`	varchar(255) UNICODE NOT NULL COMMENT '태그이름'
 );
 
+CREATE TABLE hashtags_new
+(
+    tag VARCHAR(255) PRIMARY KEY COMMENT '태그 내용'
+);
+
+
 #공지사항 테이블
 CREATE TABLE `notices` (
                            `n_id`	int unsigned AUTO_INCREMENT PRIMARY KEY COMMENT '공지사항 아이디',
@@ -187,14 +193,18 @@ CREATE TABLE `trip_review_likes` (
                                      FOREIGN KEY (tr_id) REFERENCES trip_reviews (tr_id) ON DELETE CASCADE ON UPDATE CASCADE,
                                      CONSTRAINT tr_likes UNIQUE (u_id, tr_id)
 );
-#가보자고( 해시태그 테이블)
-CREATE TABLE `trip_hashtags` (
-                                 `th_id`	 int unsigned AUTO_INCREMENT PRIMARY KEY COMMENT '가보자고해시태그 아이디',
-                                 `t_id`	int unsigned NOT NULL COMMENT '맞춤추천 아이디',
-                                 `tag_id`	int unsigned NOT NULL COMMENT '태그 아이디',
-                                 FOREIGN KEY (t_id) REFERENCES trips (t_id) ON DELETE CASCADE ON UPDATE CASCADE,
-                                 FOREIGN KEY (tag_id) REFERENCES hashtags (tag_id) ON DELETE CASCADE ON UPDATE CASCADE
+
+#가보자고 해시태그
+CREATE TABLE trip_hashtags
+(
+    th_id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT COMMENT '보드 해시태그 pk',
+    t_id  INT UNSIGNED COMMENT '게시글 아이디',
+    tag   VARCHAR(255) NOT NULL COMMENT '태그 내용',
+    UNIQUE (t_id, tag) COMMENT '게시글에 똑같은 태그가 등록되지 않도록',
+    FOREIGN KEY (t_id) REFERENCES trips (t_id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (tag) REFERENCES hashtags_new (tag) ON DELETE CASCADE ON UPDATE CASCADE
 );
+
 #가보자고( 리뷰 신고 테이블)
 CREATE TABLE `trip_review_reports` (
                                        `trr_id`	int unsigned AUTO_INCREMENT PRIMARY KEY COMMENT '가보자고신고글 아이디',
@@ -849,3 +859,86 @@ VALUES
     (4, 'user09'),
     (4, 'user10');
 
+#해시태그
+INSERT INTO hashtags_new(tag)
+VALUES ('홍대'),
+       ('홍대놀이터'),
+       ('홍대맛집'),
+       ('홍대입구'),
+       ('홍대카페'),
+       ('홍대애견'),
+       ('food'),
+       ('travel'),
+       ('music'),
+       ('fashion'),
+       ('photography'),
+       ('한국'),
+       ('일본'),
+       ('미국'),
+       ('유럽'),
+       ('인테리어'),
+       ('뷰티'),
+       ('운동'),
+       ('영화'),
+       ('꽃'),
+       ('동물'),
+       ('일상'),
+       ('여름'),
+       ('가을'),
+       ('겨울'),
+       ('봄'),
+       ('풍경'),
+       ('먹방'),
+       ('먹심'),
+       ('먹보'),
+       ('먹짱'),
+       ('카페'),
+       ('선팔'),
+       ('소통'),
+       ('셀카'),
+       ('스타일'),
+       ('축구'),
+       ('야구'),
+       ('농구'),
+       ('배구'),
+       ('테니스'),
+       ('골프'),
+       ('스키'),
+       ('수영'),
+       ('춤'),
+       ('노래'),
+       ('기타'),
+       ('피아노'),
+       ('드라마'),
+       ('해외여행'),
+       ('국내여행'),
+       ('육아'),
+       ('공부'),
+       ('일'),
+       ('금요일'),
+       ('토요일'),
+       ('일요일'),
+       ('월요일'),
+       ('화요일'),
+       ('수요일'),
+       ('에이콘아카데미'),
+       ('에이콘'),
+       ('acornacademy'),
+       ('목요일');
+
+INSERT INTO trip_hashtags (t_id, tag)
+VALUES (1, '홍대'),
+       (2, '홍대'),
+       (3, '홍대'),
+       (4, '홍대'),
+       (5, '홍대'),
+       (7, '홍대'),
+       (10, '홍대'),
+       (1, '홍대맛집'),
+       (1, '한국'),
+       (1, 'food'),
+       (1, 'travel'),
+       (1, '먹심'),
+       (2, '홍대놀이터'),
+       (2, '홍대맛집'),
+       (2, '수요일');

@@ -85,14 +85,32 @@
             <textarea name="content" th:text="${t.content}" rows="4" class="form-control"></textarea>
         </p>
 
-        <p class="form-floating">
-            <input type="text" name="tagId" value="" class="form-control" placeholder="??">
-            <label>해시태그 입력</label>
+        <div class="mb-3">
+            <label class="form-label">태그 삭제</label>
+            <div class="form-control">
+                <th:block th:each="t:${t.tags}">
+                    <!--                    delTag 누른게 t.tag 값으로 넘어간다. -->
+                    <input th:id="${t.tag}" name="delTag" th:value="${t.tag}" type="checkbox" class="btn-check" autocomplete="off">
+                    <label th:for="${t.tag}" class="btn btn-outline-secondary btn-sm rounded-5 m-1">
+                        <span th:text="${t.tag}"></span>
+                        <i class="bi bi-x"></i>
+                    </label>
+                </th:block>
+            </div>
+        </div>
+        <p class="mb-3">
+            <label class="form-label">태그등록</label>
+            <th:block th:include="/trip/tagsinput.html"></th:block>
         </p>
+
+
+
+
+
 
         <p>
             <label for="">메인이미지 변경</label>
-            <div class="form-control">
+            <div class="form-control mb-3">
                 <label th:each="img:${t.imgs}" class="w-25 delImgItem" th:if="${img.imgMain==true}">
 <!--                    <i class="bi bi-x"></i>-->
                     <input type="hidden" class="delImgInput" name="delMainImgId" th:value="${img.tiId}">
