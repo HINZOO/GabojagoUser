@@ -1,0 +1,16 @@
+<div class="body p-1 row" >
+  <div class="col">
+    <div th:id="defaultFromCont+${r.qrId}">
+      <span th:text="${r.content}"></span>
+      <span th:value="${r}"></span>
+    </div>
+    <div>
+      <form action="" onsubmit="event.preventDefault(); modifyReply(this);"
+            th:name="'modifyInsertForm'+${r.qrId}"
+            class="d-flex align-items-center visually-hidden">
+        <input type="hidden" name="ccId" th:value="${r.crId}">
+        <input type="text" name="content" th:value="${r.content}" class="input-group col">
+      </form>
+    </div>
+  </div>
+</div>
