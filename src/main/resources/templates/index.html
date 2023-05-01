@@ -30,19 +30,19 @@
         <i class="bi bi-car-front"></i>
         가보자고</h3>
     <div id="tripContainer" class="d-flex justify-content-evenly my-4 row  row-cols-1">
-        <div class="card row-cols-1" style="width: 18rem; height: 350px" th:each="t:${trip}">
-            <div class="card-body" style="height:200px">
+        <div class="card row-cols-1 p-0" style="width: 18rem; height: 350px; overflow: hidden" th:each="t:${trip}">
+            <div class="card-body p-0" style="height:200px">
                 <div th:id="'carousel'+${t.tId}" class="carousel slide" data-bs-ride="carousel">
                     <div th:if="${t.imgs != null}"  class="carousel-inner">
                         <div class="carousel-item" th:each="img,state:${t.imgs}" th:classappend="${(state.first)?'active':''}">
                             <img th:src="@{'{path}'(path=${img.imgPath})}" class="d-block w-100" alt="게시글 이미지">
                         </div>
                     </div>
-                    <button class="carousel-control-prev" type="button" th:data-bs-target="'#carousel'+${t.tId}" data-bs-slide="prev">
+                    <button class="carousel-control-prev visually-hidden" type="button" th:data-bs-target="'#carousel'+${t.tId}" data-bs-slide="prev">
                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                         <span class="visually-hidden">Previous</span>
                     </button>
-                    <button class="carousel-control-next" type="button" th:data-bs-target="'#carousel'+${t.tId}" data-bs-slide="next">
+                    <button class="carousel-control-next visually-hidden" type="button" th:data-bs-target="'#carousel'+${t.tId}" data-bs-slide="next">
                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
                         <span class="visually-hidden">Next</span>
                     </button>
@@ -62,21 +62,21 @@
         <i class="bi bi-people"></i>
         같이놀자</h3>
     <div id="commContainer" class="d-flex justify-content-evenly my-4 row row-cols-1 ">
-        <div class="card row-cols-1" style="width: 18rem; height: 350px" th:each="c:${comm}">
-            <div class="card-body" style="height:200px">
+        <div class="card row-cols-1 p-0" style="width: 18rem; height: 350px; overflow: hidden" th:each="c:${comm}">
+            <div class="card-body p-0" style="height:200px">
                 <div th:id="'carousel'+${c.cId}" class="carousel slide" data-bs-ride="carousel">
                     <div th:if="${c.imgs != null}"  class="carousel-inner">
                         <div class="carousel-item" th:each="img,state:${c.imgs}" th:classappend="${(state.first)?'active':''}">
                             <img th:src="@{'{path}'(path=${img.imgPath})}" class="d-block w-100" alt="게시글 이미지">
                         </div>
                     </div>
-                    <button class="carousel-control-prev" type="button" th:data-bs-target="'#carousel'+${c.cId}" data-bs-slide="prev">
+                    <button class="carousel-control-prev visually-hidden" type="button" th:data-bs-target="'#carousel'+${c.cId}" data-bs-slide="prev" >
                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
+                        <span class="visually-hidden"></span>
                     </button>
-                    <button class="carousel-control-next" type="button" th:data-bs-target="'#carousel'+${c.cId}" data-bs-slide="next">
+                    <button class="carousel-control-next visually-hidden" type="button" th:data-bs-target="'#carousel'+${c.cId}" data-bs-slide="next">
                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
+                        <span class="visually-hidden"></span>
                     </button>
                 </div>
             </div>
@@ -113,7 +113,7 @@
         <i class="bi bi-cart"></i>
         상품판매</h3>
     <div id="sellContainer" class="d-flex justify-content-evenly my-4 row row-cols-1">
-        <div class="card" style="width: 18rem; height: 350px;" th:each="s:${sells}">
+        <div class="card row-cols-1 p-0" style="width: 18rem; height: 350px; overflow: hiddens" th:each="s:${sells}">
             <div class="card-body" style="height:200px">
                 <div th:id="'carousel'+${s.sId}" class="carousel slide" data-bs-ride="carousel">
                     <div th:if="${s.sellImgs != null}"  class="carousel-inner">
