@@ -3,12 +3,14 @@ package com.project.gabojago.gabojagouser.controller.my;
 import com.project.gabojago.gabojagouser.dto.comm.CommBookmarkDto;
 import com.project.gabojago.gabojagouser.dto.comm.CommPageDto;
 import com.project.gabojago.gabojagouser.dto.comm.CommunityDto;
+import com.project.gabojago.gabojagouser.dto.my.AttendanceChkDto;
 import com.project.gabojago.gabojagouser.dto.my.MileageDto;
 import com.project.gabojago.gabojagouser.dto.plan.PlanDto;
 import com.project.gabojago.gabojagouser.dto.trip.TripBookmarkDto;
 import com.project.gabojago.gabojagouser.dto.user.UserDto;
 import com.project.gabojago.gabojagouser.service.comm.CommBookMarkService;
 import com.project.gabojago.gabojagouser.service.comm.CommunityService;
+import com.project.gabojago.gabojagouser.service.my.AttendanceChkService;
 import com.project.gabojago.gabojagouser.service.my.MileageService;
 import com.project.gabojago.gabojagouser.service.my.MyUserQnaService;
 import com.project.gabojago.gabojagouser.service.plan.PlanService;
@@ -21,6 +23,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -35,7 +38,7 @@ public class MyUserController {
     private TripBookMarkService tripBookMarkService;
     private PlanService planService;
     private MileageService mileageService;
-
+    private AttendanceChkService attendanceChkService;
     @GetMapping("/user.do")
     public String list(Model model,
                        @SessionAttribute UserDto loginUser){
@@ -75,6 +78,17 @@ public class MyUserController {
         model.addAttribute("sumMile",sumMile);
         model.addAttribute("mileage",mileage);
         return "/my/mileages";
+    }
+    //출석체크
+    @GetMapping("/calendar.do")
+    public String calendar(
+            Model model,
+            @SessionAttribute UserDto loginUser
+    ) {
+        Date date=new Date();
+        AttendanceChkDto attendanceChkDto=attendanceChkService.detail(loginUser.getUId(),date);
+        model.addAttribute("attendance",attendanceChkDto);
+        return "/my/calendar";
     }
 
 
