@@ -908,4 +908,15 @@ canvas{
     cursor: pointer;
 }
 
+.cTextArea{
+    resize: both;
+    position: absolute;
+    background-color: transparent;
+    border: 2px dashed dodgerblue;
+}
+.cTextArea:focus{
+    outline: none;
+    border: 2px dashed dodgerblue;
+}
+
 
