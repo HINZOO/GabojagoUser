@@ -11,9 +11,10 @@ import java.util.List;
 @AllArgsConstructor
 public class MyUserQnaReplyServiceImp implements MyUserQnaReplyService{
     private MyUserQnaReplyMapper myUserQnaReplyMapper;
+
     @Override
     public List<MyUserQnaReplyDto> list(int qId) {
-        List<MyUserQnaReplyDto> list=myUserQnaReplyMapper.findAll();
+        List<MyUserQnaReplyDto> list=myUserQnaReplyMapper.findByQIdAndParentQrIdIsNull(qId);
         return list;
     }
 }

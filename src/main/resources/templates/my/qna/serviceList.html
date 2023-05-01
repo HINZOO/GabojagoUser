@@ -22,14 +22,13 @@
                     <th scope="col">답변상태</th>
                 </tr>
                 </thead>
-
                 <tbody>
                     <tr th:each="q:${qnaList}">
                         <th scope="row">
-                            <a class="" th:text="${q.qId}" th:href="@{'/my/qna/{qId}/detail.do'(qId=${q.qId})}"></a>
+                            <span th:text="${q.qId}"></span>
                         </th>
                         <th scope="row">
-                            <a class="" th:text="${q.title}" th:href="@{'/my/qna/{qId}/detail.do'(qId=${q.qId})}"></a>
+                            <a th:text="${q.title}" th:href="@{'/my/qna/{qId}/detail.do'(qId=${q.qId})}"></a>
                         </th>
                             <td>
                                 <span th:text="${#dates.format(q.postTime,'yyyy-MM-dd')}"></span>
@@ -40,6 +39,6 @@
             </table>
         </div>
     </div>
-</body>
+
 </html>
 

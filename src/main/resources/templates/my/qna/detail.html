@@ -28,7 +28,6 @@
           </div>
         </div>
         <hr>
-
         <div>
           <p class="card-text">
             <sapn th:text="${q.content}"></sapn>
@@ -37,6 +36,7 @@
         </div>
         </div>
       </div>
+      <th:block th:include="/my/qna/replyList.html" th:with="replys=${q.replys}"></th:block>
   </section>
 </div>
 </body>
