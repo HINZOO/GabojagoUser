@@ -31,6 +31,7 @@ public class KakaoPayController {
     private SellsOptionMapper sellsOptionMapper;
     private MileageService mileageService;
 
+
 @PostMapping("/orderReady.do")
 public String orderReady(
         @RequestParam(value = "sId",required = false)int sId,

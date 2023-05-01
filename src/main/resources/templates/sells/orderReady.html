@@ -9,7 +9,7 @@
 </head>
 <div layout:fragment="content">
     <div class="container mt-5">
-        <div class="row">
+        <div class="row mb-5">
             <div class="col-md-6 offset-md-3">
                 <div class="card">
 
@@ -22,7 +22,7 @@
                         <form method="post" action="/kakaoPay.do">
                             <div class="form-group">
                                 <input type="hidden" name="sId" th:value="${sells.getSId()}">
-                                <p for="product-name"><strong>상품명</strong> <span th:text="${sells.title}"></span></p>
+                                <p for="product-name"><strong>상품명 :</strong> <span th:text="${sells.title}"></span></p>
                             </div>
                             <hr>
                             <th:block th:each="o:${sellOption}">
@@ -43,7 +43,9 @@
                                 <p><label for="mileage">마일리지: </label><input type="number" id="mileage" name="mileage" value="0"><strong>사용가능:</strong><span id="mile" th:value="${mileage}" th:text="${mileage}"></span></p>
                                 <input type="hidden" name="lastMile" id="lastMile">
                                 <a class="btn btn-primary" id="mileageBtn" >사용하기</a>
-                                <p><strong>결제 가격 :</strong> <span id="totalPriceSpan" th:text="${totalPrice}"> </span></p>
+                                <hr>
+                                <p><strong>결제 가격 :</strong>  <br><span id="totalPriceSpan" th:text="${totalPrice}"> </span>원</p>
+
                                 <input type="hidden" name="totalPrice" id="totalPriceInput" th:value="${totalPrice}">
                             </div>
                             <button type="submit" class="btn btn-primary btn-block">카카오 결제하기</button>
@@ -69,8 +71,12 @@
         let totalPrice = parseInt(totalPriceSpan.textContent);
 
         // 사용 가능 마일리지보다 입력한 마일리지가 높을 경우 경고창을 띄우고 함수 종료
-        if (parseInt(mileageInput.value) > parseInt(mile.textContent)) {
+        if (mileageInput.value >mile.textContent) {
             alert("사용 가능 마일리지를 넘기셨습니다.");
+            return;
+        }
+        if (mileageInput.value===""|| isNaN(mileageInput.value)|| mileageInput.value.includes("-")){
+            alert("정수를 입력 하세요");
             return;
         }
 

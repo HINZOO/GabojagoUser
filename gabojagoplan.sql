@@ -687,10 +687,51 @@ VALUES
     ('user04', '전남', '판매글 제목14', '판매글 내용14', '레저', 7, '/public/img/sells/1682065508712_4507.jpeg'),
     ('user05', '경북', '판매글 제목15', '판매글 내용15', '박물관', 2, '/public/img/sells/1682065508720_8121.jpeg'),
     ('user06', '경남', '판매글 제목16', '판매글 내용16', '워터', 5, '/public/img/sells/1682065508723_666.jpeg'),
-    ('user07', '제주', '판매글 제목17', '판매글 내용17', '테마', 1, '/public/img/sells/1682152239247_5163.png'),
-    ('user07', '제주', '판매글 제목17', '판매글 내용17', '키즈', 1, '/public/img/sells/1682234090230_1592.png'),
-    ('user07', '제주', '판매글 제목171', '판매글 내용17', '레저', 1, '/public/img/sells/1682234803268_3166.png'),
-    ('user07', '제주', '판매글 제목171', '판매글 내용17', '테마', 1, '/public/img/sells/1682234803271_4526.png');
+    ('user10', '제주', '[쿠폰할인] 신화월드 테마파크&워터파크', '<p><img alt="" src="https://tourimg.wonderscdn.app/admin/20221230/7/5c8af2f7-572f-4546-a67d-23305ae47f2d.jpg" style="height:1246px; width:1000px" /><img alt="" src="https://tourimg.wonderscdn.app/admin/20230317/3/4a5d7b28-3bc4-411d-aa25-9e716f791fb8.jpg" />&nbsp;&nbsp;*</p>
+', '워터', 5, '/public/img/sells/1682912360964_9730.jpeg'),
+    ('user10', '경기', '[일산] 원마운트 종일권', '<p><img alt="" src="https://tour.wd.wemakeprice.com/activity/direct/detail/GD230000000080552" /><img alt="" src="https://tourimg.wonderscdn.app/admin/20230331/8/498a457c-3455-486e-a9d9-fde1d86270dc.jpg" style="height:1395px; width:1000px" /></p>
+
+<p><img alt="" src="https://tourimg.wonderscdn.app/admin/20230331/4/141da0c8-48f0-422d-8b27-a613c175167c.jpg" style="height:1339px; width:1000px" /> *</p>', '워터', 1, '/public/img/sells/1682911883176_2180.jpeg'),
+    ('user10', '경기', '[특가] 테르메덴 풀앤스파 미들시즌(~6/30)', '<p><img alt="" src="https://tourimg.wonderscdn.app/admin/20230428/3/8f32a283-e840-4e42-b75c-c4dc202ed0f6.jpg" style="height:23375px; width:1000px" /></p>
+
+<p>*</p>
+', '레저', 1, '/public/img/sells/1682911459818_3088.jpeg'),
+    ('user10', '경기', '[일산]행유행유 프리미엄 야외수영장', '<p><img alt="" src="https://tourimg.wonderscdn.app/admin/20220614/1/8558a09a-7e34-4de1-9ce2-c8a63de85de2.jpg" style="height:1633px; width:1000px" /></p>
+
+<p>&nbsp;</p>
+
+<h1>이용방법 [티켓 이용 안내]</h1>
+
+<p>1) 가보자고에서 이용날짜 옵션 선택 후 구매</p>
+
+<p>2) 예약일 현장 방문</p>
+
+<p>3) 구매인증 확인후 입장</p>
+
+<p>4) 행휴행유 즐기기!</p>
+
+<p>&nbsp;</p>
+
+<p>* 당일 예약의 경우 오전 9시 이후 가보자고를 통한 예약이 불가합니다.</p>
+
+<p>* 이용을 원하실경우 02-111-2222 으로 연락 부탁드립니다.</p>
+
+<p>* 본 티켓은 좌석예약 티켓으로 입장권은 별도 구매해 주셔야 합니다.</p>
+
+<p>* 1인당 입장권 별도 부과됩니다. (슬라이드 등 이용 시 현장문의) * 좌석 구매 후 당일 현장방문시 티켓 사용처리</p>
+
+<p>* 재판매시 전액 환불 불가 및 이용 불가 하오니 이점 양해 부탁드립니다.</p>
+
+<p>* 5/5~6/18 기간에는 유아풀과 중간풀(0.9m)는 미온수 / 자쿠지는 온수로 운영됩니다.</p>
+
+<p>* 5/5~6/18 기간에는 대수영장 온수 공급이 불가하여 얕은 수심으로 시간대별 보트를 운영합니다.</p>
+
+<p>* 내부사정으로 인해 5/5~5/7 일자는 공사 완료 시 오픈 예정입니다. 환불규정 취소가능여부 : 취소가능 환불규정에 따라 수수료가 발생할 수 있으니 확인해주시기 바랍니다. [환불규정] ▪ 이용 3일전까지 취소 요청시, 100% 환불이 가능합니다.</p>
+
+<p>▪ 현장 중복할인 불가합니다.</p>
+
+<p>▪ 사용한 티켓 환불 불가합니다. ▪ 부분환불 불가합니다. - 당일 취소는 불가합니다. - 일정변경은 이용3일전까지 취소후 재구매 하셔야 합니다. - 취소는 평일기준(월~금) 이용일 3일전 까지 가능하며, 이후 취소는 불가합니다. (티켓 사용처리 후에는 환불불가하며, 휴일의 경우 취소 응대가 불가합니다.) [우천으로 인한 취소 및 날짜변경] - 고양시 기준 호우 강풍 경보 사항을 제외하고는 우천시에도 영업을 하므로, 3일전 환불 규정에 따라 환불 및 날짜변경 불가 합니다.</p>
+', '워터', 1, '/public/img/sells/1682907222171_9307.jpeg');
 
 #판매글 북마크 더미
 INSERT INTO sell_bookmarks (sb_id, s_id, u_id) VALUES (11, 5, 'USER02');
@@ -705,14 +746,29 @@ INSERT INTO sell_bookmarks (sb_id, s_id, u_id) VALUES (3, 3, 'USER01');
 INSERT INTO sell_bookmarks (sb_id, s_id, u_id) VALUES (2, 2, 'USER01');
 INSERT INTO sell_bookmarks (sb_id, s_id, u_id) VALUES (1, 1, 'USER01');
 
-
+INSERT INTO sell_imgs (s_id, img_path)
+VALUES
+    (20,'/public/img/sells/1682911049003_3666.jpeg'),
+    (20,'/public/img/sells/1682911049002_495.jpeg'),
+    (20,'/public/img/sells/1682911049000_4141.jpeg'),
+    (20,'/public/img/sells/1682911048997_8303.jpeg'),
+    (17,'/public/img/sells/1682912360962_3101.jpeg'),
+    (17,'/public/img/sells/1682912360964_9730.jpeg'),
+    (18,'/public/img/sells/1682911883176_2180.jpeg'),
+    (18,'/public/img/sells/1682911883175_7243.jpeg'),
+    (19,'/public/img/sells/1682911459817_7471.jpeg'),
+    (19,'/public/img/sells/1682911459818_3088.jpeg');
 
 INSERT INTO `sell_options` (`s_id`, `name`, `price`, `stock`)
 
 VALUES
-    (1, '성인', '10000', 20),
-    (1, '청소년', '8000', 30),
-    (1, '소인', '5000', 10);
+    (20, '행유행유 성인권', '15000', 999),
+    (20, '행유행유 청소년권', '10000', 999),
+    (20, '행유행유 유아권(36개월이상)', '5000', 999),
+    (17, '신화월드 테마파크 자유이용권', '30000', 999),
+    (17, '신화월드 워터파크 종일권', '40000', 999),
+    (18, '종일권 1인(대소공통)', '25900', 999),
+    (19, '종일권 1인(대소공통)', '26800', 999);
 
 #가보자고 게시글 더미
 INSERT INTO trips (u_id, title, area, address, phone, url_address, content,

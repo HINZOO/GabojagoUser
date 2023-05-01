@@ -3,6 +3,8 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{/layout}">
 <head>
+  <script src="https://cdn.ckeditor.com/4.16.1/standard/ckeditor.js"></script>
+
   <meta charset="UTF-8">
   <title>판매글 수정</title>
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
@@ -114,6 +116,7 @@
 
 </form>
 <script>
+  CKEDITOR.replace('content');
   function removeBtn() {
     swal({
       title: "정말 삭제 하시겠습니까?",

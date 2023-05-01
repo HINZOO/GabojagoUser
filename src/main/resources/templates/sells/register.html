@@ -3,6 +3,8 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{/layout}">
 <head>
+  <script src="https://cdn.ckeditor.com/4.16.1/standard/ckeditor.js"></script>
+
   <meta charset="UTF-8">
   <title>판매글 작성</title>
 </head>
@@ -79,6 +81,7 @@
   </p>
 </form>
 <script>
+  CKEDITOR.replace('content');
   const contentInput=document.getElementById("contentInput");
   const titleInput=document.getElementById("titleInput");
   const category=document.getElementById("category");
