@@ -596,7 +596,6 @@ CREATE TABLE sell_tickets (
 );
 
 #출석체크 테이블
-DROP TABLE  attendance_check;
 CREATE TABLE attendance_check (
                               d_id INT AUTO_INCREMENT PRIMARY KEY COMMENT'출석체크인덱스',
                               u_id VARCHAR(255) NOT NULL COMMENT'유저아이디',

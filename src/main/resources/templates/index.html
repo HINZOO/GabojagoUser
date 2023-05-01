@@ -4,24 +4,21 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout}">
-<head>
-
     <div layout:fragment="content" class="container pb-5">
-    <script src="/public/js/CommLike.js" defer ></script>
-
-    <style>
-        a{
-            text-decoration: none;
-        }
-        body{
-            font-family: 'Noto Sans KR', sans-serif;
-        }
-        .ginfo{
-            font-family: 'Do Hyeon', sans-serif;
-        }
-    </style>
-</head>
-    <div layout:fragment="content" class="container pb-5">
+        <script src="/public/js/CommLike.js" defer ></script>
+        <head>
+            <style>
+                a{
+                    text-decoration: none;
+                }
+                body{
+                    font-family: 'Noto Sans KR', sans-serif;
+                }
+                .ginfo{
+                    font-family: 'Do Hyeon', sans-serif;
+                }
+            </style>
+        </head>
 <!--        도입부이미지-->
     <div class="carousel-inner h-25 my-2 ">
         <div class="carousel-item active" data-bs-interval="10000">
@@ -123,17 +120,12 @@
         <i class="bi bi-cart"></i>
         상품판매</h3>
     <div id="sellContainer" class="d-flex justify-content-evenly my-4 row row-cols-1">
-        <div class="card row-cols-1 p-0" style="width: 18rem; height: 350px; overflow: hiddens" th:each="s:${sells}">
-            <div class="card-body" style="height:200px">
+        <div class="card row-cols-1 p-0" style="width: 18rem; height: 400px; overflow: hidden" th:each="s:${sells}">
+            <div class="card-body p-0" style="height:300px">
                 <div th:id="'carousel'+${s.sId}" class="carousel slide" data-bs-ride="carousel">
                     <div th:if="${s.sellImgs != null}"  class="carousel-inner">
                         <div class="carousel-item" th:each="sellImgs,state:${s.sellImgs}" th:classappend="${(state.first)?'active':''}">
                             <img th:src="@{'{path}'(path=${sellImgs.imgPath})}" class="d-block w-100" alt="게시글 이미지">
-                        </div>
-                    </div>
-                    <div th:unless="${s.sellImgs != null}" class="carousel-inner">
-                        <div class="carousel-item">
-                            <img src="/public/img/comm/1681717713661_1319.jpeg" class="d-block w-100 active" alt="기본이미지">
                         </div>
                     </div>
                     <button class="carousel-control-prev" type="button" th:data-bs-target="'#carousel'+${s.sId}" data-bs-slide="prev">
@@ -146,16 +138,16 @@
                     </button>
                 </div>
             </div>
-            <div class="card-body" style="margin-top: 40px;" >
+            <div class="card-body p-1" style="height: 100px;" >
                 <a th:href="@{'/sells/{sId}/detail.do'(sId=${s.getSId()})}"
-                   class="link-dark"
-                ><h5 class="card-title link-primary" th:text="${#strings.substring(s.title, 0, 13)}+..."></h5></a>
+                   class="link-dark">
+                    <h5 class="card-title link-primary" th:text="${s.title}"></h5>
+                    <!--th:text="${#strings.substring(s.title, 0, 6)}+..."-->
+                </a>
             </div>
-            <p th:text="${#dates.format(s.postTime, 'yyyy.MM.dd')}"></p>
+            <div class="card-body"  style="height:50px"  th:text="${#dates.format(s.postTime, 'yyyy.MM.dd')}"></div>
         </div>
     </div>
-
-
 </div>
 
 </html>
