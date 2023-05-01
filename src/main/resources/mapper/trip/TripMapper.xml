@@ -44,6 +44,16 @@
                     column="t_id"
                     fetchType="eager"/>
 
+        <association property="averageGrade"
+                        select="com.project.gabojago.gabojagouser.mapper.trip.TripReviewMapper.averageGradeByTId"
+                        column="t_id"
+                        fetchType="lazy"/>
+
+        <association property="totalGradeCnt"
+                        select="com.project.gabojago.gabojagouser.mapper.trip.TripReviewMapper.countGradeByTId"
+                        column="t_id"
+                        fetchType="lazy"/>
+
         <collection property="reviews"
                     select="com.project.gabojago.gabojagouser.mapper.trip.TripReviewMapper.findByTId"
                     column="t_id"
@@ -135,5 +145,6 @@
             USING(t_id)
             WHERE tag=#{tag}
     </select>
+
 
 </mapper>

@@ -1,10 +1,10 @@
-<!--    <div  class="fs-3" th:text="${id}"></div>-->
 <div class="">
-    <a href="javascript:void(0)" th:if="${session.loginUser!=null}" th:onclick="tripLikeHandler([[${id}]])"
+    <a href="javascript:void(0)" th:if="${session.loginUser!=null}" th:onclick="tripLikeHandler([[${(likes.tId==null)?id:likes.tId}]])"
        class="mb-1 text-danger text-decoration-none me-2" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="좋아요">
         <i class="bi fs-4" th:classappend="${(likes.status)?'bi-heart-fill':'bi-heart'}"></i>
-<!--        <small class="text-dark fs-5" th:text="${likes.likes}"></small> &lt;!&ndash; 좋아요개수 &ndash;&gt;-->
-        <!--        <div  class="fs-3" th:text="${likes}"></div>-->
+        <small class="text-dark fs-5" th:text="${likes.likes}"></small> <!-- 좋아요개수 -->
+<!--        <th:block th:text="${id}"></th:block>-->
+<!--        <th:block th:text="${likes.tId}"></th:block>-->
     </a>
     <a href="javascript:void(0)" th:unless="${session.loginUser!=null}" onclick="loginAlert()"
        class="mb-1 text-danger fs-4 text-decoration-none me-2" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="좋아요">

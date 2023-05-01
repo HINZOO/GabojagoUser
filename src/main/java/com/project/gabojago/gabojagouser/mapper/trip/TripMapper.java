@@ -21,4 +21,7 @@ public interface TripMapper {
 
     List<TripDto> countListBylikes(TripPageDto pageDto);
 
+
+
+
 }
