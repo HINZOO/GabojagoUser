@@ -26,7 +26,11 @@
         SET img_path = #{imgPath}
         WHERE con_id = #{conId}
     </update>
-    <update id="updateOne"></update>
+    <update id="updateOne">
+        UPDATE plan_contents
+        SET title = #{title}, info = #{info}, time = #{time}
+        WHERE con_id = #{conId}
+    </update>
     <delete id="deleteOne">
         DELETE FROM plan_contents WHERE con_id=#{conId}
     </delete>

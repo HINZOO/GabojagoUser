@@ -13,5 +13,5 @@ public interface PlanContentsMapper {
     int insertOne(PlanContentsDto planContent);
     int updateOne(PlanContentsDto planContent);
     int updateImg(PlanContentsDto planContent);
-    int deleteOne(PlanContentsDto conId);
+    int deleteOne(int conId);
 }

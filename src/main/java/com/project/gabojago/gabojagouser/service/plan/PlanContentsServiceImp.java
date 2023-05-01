@@ -21,6 +21,16 @@ public class PlanContentsServiceImp implements PlanContentsService {
     }
 
     @Override
+    public int remove(int conId) {
+        return planContentsMapper.deleteOne(conId);
+    }
+
+    @Override
+    public int modify(PlanContentsDto planContentsDto) {
+        return planContentsMapper.updateOne(planContentsDto);
+    }
+
+    @Override
     public int updateImg(PlanContentsDto planContentsDto) {
         return planContentsMapper.updateImg(planContentsDto);
     }

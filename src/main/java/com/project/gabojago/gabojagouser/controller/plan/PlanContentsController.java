@@ -83,12 +83,27 @@ public class PlanContentsController {
 
     @PostMapping("/insert.do")
     public @ResponseBody PlanContentsDto insert(
-            @ModelAttribute PlanContentsDto content)
+            @ModelAttribute PlanContentsDto dto)
     {
-        log.info("테스트123" + content);
-        int register = planContentsService.register(content);
-        return content;
+        int register = planContentsService.register(dto);
+        return dto;
     }
+    @PutMapping("/{conId}/update.do")
+    public @ResponseBody PlanContentsDto update(
+            @ModelAttribute PlanContentsDto dto,
+            @PathVariable(value = "conId") int conId)
+    {
+        dto.setConId(conId);
+        int update = planContentsService.modify(dto);
+        return dto;
+    }
+    @DeleteMapping("/{conId}/delete.do")
+    public @ResponseBody int delete(
+            @PathVariable(value = "conId") int conId)
+    {
+        planContentsService.remove(conId);
+        return 1;
+    };
 
     @PutMapping("/imgUpdate.do")
     public @ResponseBody int imgUpdate(

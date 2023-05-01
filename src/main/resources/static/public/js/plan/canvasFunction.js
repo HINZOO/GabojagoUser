@@ -248,8 +248,8 @@ class CanvasCreate {
         let selectedLayer = null;
 
         function selectHandler(e){
-            let eX = e.offsetX;
-            let eY = e.offsetY;
+            let eX = co.xy(e.offsetX);
+            let eY = co.xy(e.offsetY);
 
             let sPath;
             let rPath; //확대축소 및 회전을 위한 클릭요소 위치를 저장하기 위한 변수
@@ -258,9 +258,9 @@ class CanvasCreate {
             while (selectedLayer == null){
                 for(let i = co.layerArr.length-1 ; i>=0 ; i--){
                     /*
-                      마우스클릭 위치(e.offset)는 pageSize을 보정하지 않았기때문에
-                      레이어의 range도 currentScale과 요소 자체 scale만 보정해서 범위 해당 여부 파악해주고
-                      나중에 그려줄때는 pageSize까지 보정해야 원하는 위치에 테두리가 그려짐
+                      마우스클릭 위치(e.offset)에 pageSize을 보정해주고 절대 좌표끼리 비교
+                      레이어의 range는 currentScale과 개체 자체 scale을 보정해서 범위 해당 여부 파악해주면
+                      원하는 위치에 테두리가 그려짐
                      */
                     let scale = co.layerArr[i].scale;
                     let minX = co.layerArr[i].range[0][0]*co.currentScale/scale;
@@ -274,13 +274,14 @@ class CanvasCreate {
                         co.ctx.lineWidth=1;
                         co.ctx.setLineDash([5, 5]);
                         co.ctx.strokeRect(
-                            co.xy(co.layerArr[i].range[0][0]*co.currentScale/co.layerArr[i].scale)-20,
-                            co.xy(co.layerArr[i].range[0][1]*co.currentScale/co.layerArr[i].scale)-20,
-                            co.xy((co.layerArr[i].range[1][0]-co.layerArr[i].range[0][0])*co.currentScale/co.layerArr[i].scale)+40,
-                            co.xy((co.layerArr[i].range[1][1]-co.layerArr[i].range[0][1])*co.currentScale/co.layerArr[i].scale)+40);
+                            co.layerArr[i].range[0][0]*co.currentScale/co.layerArr[i].scale-20,
+                            co.layerArr[i].range[0][1]*co.currentScale/co.layerArr[i].scale-20,
+                            (co.layerArr[i].range[1][0]-co.layerArr[i].range[0][0])*co.currentScale/co.layerArr[i].scale+40,
+                            (co.layerArr[i].range[1][1]-co.layerArr[i].range[0][1])*co.currentScale/co.layerArr[i].scale+40);
                         co.ctx.fillStyle="black";
 
                         // 마우스 이벤트에 pageSize를 보정하지 않기 때문에 클릭요소 좌표에도 보정해 줄 필요는 없다
+                        // pageSize 보정 버전으로 수정(05.01)
 
                         if(sPath===undefined){
                             sPath = new Path2D();
@@ -301,26 +302,26 @@ class CanvasCreate {
                             rPath=undefined
                         }
 
-                        co.ctx.fillRect(co.xy(minX)-25, co.xy(minY)-25, 10,10);
-                        co.ctx.fillRect(co.xy(minX)-25, co.xy(maxY)+15, 10,10);
-                        co.ctx.fillRect(co.xy(maxX)+15, co.xy(minY)-25, 10,10);
-                        co.ctx.fillRect(co.xy(maxX)+15, co.xy(maxY)+15, 10,10);
+                        co.ctx.fillRect(minX-25, minY-25, 10,10);
+                        co.ctx.fillRect(minX-25, maxY+15, 10,10);
+                        co.ctx.fillRect(maxX+15, minY-25, 10,10);
+                        co.ctx.fillRect(maxX+15, maxY+15, 10,10);
 
                         co.ctx.fillStyle="white";
-                        co.ctx.fillRect(co.xy(minX)-23, co.xy(minY)-23, 6,6);
-                        co.ctx.fillRect(co.xy(minX)-23, co.xy(maxY)+17, 6,6);
-                        co.ctx.fillRect(co.xy(maxX)+17, co.xy(minY)-23, 6,6);
-                        co.ctx.fillRect(co.xy(maxX)+17, co.xy(maxY)+17, 6,6);
+                        co.ctx.fillRect(minX-23, minY-23, 6,6);
+                        co.ctx.fillRect(minX-23, maxY+17, 6,6);
+                        co.ctx.fillRect(maxX+17, minY-23, 6,6);
+                        co.ctx.fillRect(maxX+17, maxY+17, 6,6);
 
                         co.ctx.setLineDash([5, 5]);
-                        co.ctx.moveTo(co.xy(maxX)+20,co.xy((maxY+minY)/2));
-                        co.ctx.lineTo(co.xy(maxX)+70,co.xy((maxY+minY)/2));
+                        co.ctx.moveTo(maxX+20,(maxY+minY)/2);
+                        co.ctx.lineTo(maxX+70,(maxY+minY)/2);
                         co.ctx.stroke();
 
                         co.ctx.beginPath();
                         co.ctx.fillStyle="black";
                         co.ctx.setLineDash([0, 0]);
-                        co.ctx.arc(co.xy(maxX)+70, co.xy((maxY+minY)/2), 6, 0, 2*Math.PI);
+                        co.ctx.arc(maxX+70, (maxY+minY)/2, 6, 0, 2*Math.PI);
                         co.ctx.stroke();
                         co.ctx.fill();
 
@@ -428,7 +429,7 @@ class CanvasCreate {
                     co.ctx.moveTo(co.xy(startX),co.xy(startY));
                     co.ctx.lineTo(co.xy(e.offsetX),co.xy(e.offsetY));
                     co.ctx.stroke();
-                    co.layerPush("line",[startX,startY],[e.offsetX,e.offsetY]);
+                    co.layerPush("line",[co.xy(startX),co.xy(startY)],[co.xy(e.offsetX),co.xy(e.offsetY)]);
                 },{once:true})
             }
         }
@@ -472,7 +473,7 @@ class CanvasCreate {
                         co.xy(e.offsetX)-co.xy(startX),
                         co.xy(e.offsetY)-co.xy(startY));
                     co.ctx.stroke();
-                    co.layerPush("rect",[startX,startY],[e.offsetX,e.offsetY]);
+                    co.layerPush("rect",[co.xy(startX),co.xy(startY)],[co.xy(e.offsetX),co.xy(e.offsetY)]);
                 },{once:true});
             }
         }
@@ -496,13 +497,13 @@ class CanvasCreate {
                 co.ctx.beginPath()
                 co.ctx.moveTo(co.xy(startX),co.xy(startY));
                 this.addEventListener("mousemove", moveHandler = function (e){
-                    pathArray.push([e.offsetX,e.offsetY])
+                    pathArray.push([co.xy(e.offsetX),co.xy(e.offsetY)])
                     co.ctx.lineTo(co.xy(e.offsetX),co.xy(e.offsetY));
                     co.ctx.stroke()
                 })
                 this.addEventListener("mouseup",(e)=>{
                     this.removeEventListener("mousemove", moveHandler)
-                    co.layerPush("pen",[startX,startY],undefined, pathArray)
+                    co.layerPush("pen",[co.xy(startX),co.xy(startY)],undefined, pathArray)
                 },{once:true})
             }
         }
@@ -608,35 +609,35 @@ class CanvasCreate {
 
         function modi(xy){
             if(receive === false) return xy;
-            else if(receive === true) return xy/c.pageSize;
+            else if(receive === true) return xy;
         }
 
         co.ctx.beginPath();
-        co.ctx.moveTo(modi(c.moveTo[0])/c.scale,modi(c.moveTo[1])/c.scale)
+        co.ctx.moveTo(c.moveTo[0]/c.scale,c.moveTo[1]/c.scale)
         if(c.type==="line") {
-            co.ctx.lineTo(modi(c.lineTo[0])/c.scale,modi(c.lineTo[1])/c.scale)
+            co.ctx.lineTo(c.lineTo[0]/c.scale,c.lineTo[1]/c.scale)
             co.ctx.stroke();
         } else if(c.type==="pen"){
             c.path.forEach((p)=>{
-                co.ctx.lineTo(modi(p[0])/c.scale,modi(p[1])/c.scale);
+                co.ctx.lineTo(p[0]/c.scale,p[1]/c.scale);
                 co.ctx.stroke();
             })
         } else if(c.type==="rect"){
             co.ctx.fillRect(
-                modi(c.moveTo[0])/c.scale,
-                modi(c.moveTo[1])/c.scale,
-                modi(c.lineTo[0])/c.scale-modi(c.moveTo[0])/c.scale,
-                modi(c.lineTo[1])/c.scale-modi(c.moveTo[1])/c.scale
+                c.moveTo[0]/c.scale,
+                c.moveTo[1]/c.scale,
+                c.lineTo[0]/c.scale-c.moveTo[0]/c.scale,
+                c.lineTo[1]/c.scale-c.moveTo[1]/c.scale
             );
         } else if(c.type==="stamp"){
             let img = new Image();
             img.src = c.src;
             img.onload = ()=>{
                 co.ctx.drawImage(img,
-                    modi(c.moveTo[0])/c.scale*co.currentScale,
-                    modi(c.moveTo[1])/c.scale*co.currentScale,
-                    modi(c.lineTo[0])/c.scale*co.currentScale-modi(c.moveTo[0])/c.scale*co.currentScale,
-                    modi(c.lineTo[1])/c.scale*co.currentScale-modi(c.moveTo[1])/c.scale*co.currentScale
+                    c.moveTo[0]/c.scale*co.currentScale,
+                    c.moveTo[1]/c.scale*co.currentScale,
+                    c.lineTo[0]/c.scale*co.currentScale-c.moveTo[0]/c.scale*co.currentScale,
+                    c.lineTo[1]/c.scale*co.currentScale-c.moveTo[1]/c.scale*co.currentScale
                 );
             }
         } else if(c.type==="img"){
@@ -644,10 +645,10 @@ class CanvasCreate {
             img.src = c.src;
             img.onload = ()=>{
                 co.ctx.drawImage(img,
-                    modi(c.moveTo[0])/c.scale*co.currentScale,
-                    modi(c.moveTo[1])/c.scale*co.currentScale,
-                    modi(c.lineTo[0])/c.scale*co.currentScale-modi(c.moveTo[0])/c.scale*co.currentScale,
-                    modi(c.lineTo[1])/c.scale*co.currentScale-modi(c.moveTo[1])/c.scale*co.currentScale
+                    c.moveTo[0]/c.scale*co.currentScale,
+                    c.moveTo[1]/c.scale*co.currentScale,
+                    c.lineTo[0]/c.scale*co.currentScale-c.moveTo[0]/c.scale*co.currentScale,
+                    c.lineTo[1]/c.scale*co.currentScale-c.moveTo[1]/c.scale*co.currentScale
                 );
             }
         }

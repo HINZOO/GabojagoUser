@@ -10,9 +10,9 @@
           <div class="row">
             <p class="sFormSection"><i class="bi bi-info-circle" style="font-size: 18px; margin-left: 10px"></i> INFO</p>
 
-                <input type="text" class="form-control" name="pId"  id="floatingId" placeholder="" hidden>
-                <input type="text" class="form-control" name="tId" value="" id="tId" placeholder="" hidden>
-                <input type="text" class="form-control" name="sId" value="" id="sId" placeholder="" hidden>
+                <input type="text" name="pId" placeholder="" hidden>
+                <input type="text" name="tId" value="" id="tId" placeholder="" hidden>
+                <input type="text" name="sId" value="" id="sId" placeholder="" hidden>
 
                 <div class="col-4 mb-3 px-1">
                   <div class="form-floating">
@@ -194,7 +194,9 @@
           </div>
 
           <div class="modal-footer">
-            <button class="btn btn-primary sB" onclick=registerSchedule()>만들기</button>
+            <button class="btn btn-primary sB dBtn" style="display: none">삭제</button>
+            <button class="btn btn-primary sB uBtn" style="display: none">수정</button>
+            <button class="btn btn-primary sB sBtn" onclick=registerSchedule()>만들기</button>
           </div>
 
       </div>
