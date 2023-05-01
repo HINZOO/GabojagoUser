@@ -2,8 +2,8 @@
   <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content">
       <form id="newPlanModalForm"  method="post" action="./modify.do" enctype="multipart/form-data">
-        <div class="modal-header bg-primary bg-opacity-25 py-2">
-          <h1 class="modal-title fs-4 planModalTitle" id="staticBackdropLabel">여행 일정 수정</h1>
+        <div class="modal-header py-2">
+          <h5 class="modal-title fs-6 planModalTitle" id="staticBackdropLabel">여행 일정 수정</h5>
           <div class="newPlanStatusBox">
             <input class="form-check-input statusC" type="radio" name="planStatus" id="flexRadioDefault1" value="PUBLIC" checked style="display: none" >
             <label class="form-check-label statusL" for="flexRadioDefault1">
@@ -14,7 +14,7 @@
               <i class="bi bi-lock-fill"></i>
             </label>
           </div>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <i class="bi bi-x-circle cB" data-bs-dismiss="modal" aria-label="Close"></i>
         </div>
         <div class="modal-body newPlanModalBody pb-1">
           <div class="row">

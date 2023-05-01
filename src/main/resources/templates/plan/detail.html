@@ -39,7 +39,6 @@
                                 <span>CHECKLIST</span>
                                 <span><span class="tdlPBtn" th:onclick="'tdlInsert('+${plan.getPId()}+')'" style="margin-right: 5px">+</span></span>
                             </div>
-
                             <div class="tdlContent">
                                 <th:block th:each="checkList:${plan.getCheckLists()}">
 <!--                                    <span th:text="${checkList}"></span>-->
@@ -70,11 +69,11 @@
                                 DAY 01
                             </button>
                             <ul class="dropdown-menu p-0 border-0" style="text-align: center" role="tablist">
-                                <li><a class="dropdown-item dayBtn mx-0 active" style="color: white" href="#" id="day01-tab" data-bs-toggle="tab"
+                                <li><a class="dropdown-item dayBtn mx-0 catBtnC" style="color: white" href="#" id="day01-tab" data-bs-toggle="tab"
                                        data-bs-target="#day01" type="button" role="tab" aria-controls="userinfo"
                                        aria-selected="true">DAY 02</a>
                                 </li>
-                                <li><a class="dropdown-item dayBtn mx-0" style="color: white" href="#" id="day02-tab" data-bs-toggle="tab"
+                                <li><a class="dropdown-item dayBtn mx-0 catBtnC" style="color: white " href="#" id="day02-tab" data-bs-toggle="tab"
                                        data-bs-target="#day02" type="button" role="tab" aria-controls="myreview"
                                        aria-selected="true">DAY 02</a>
                                 </li>
@@ -109,7 +108,7 @@
                                 <i class="bi bi-square"></i>
                             </button>
                             <!--텍스트입력-->
-                            <button type="button"  id="textBtn" style="background-color: #5d5d5d" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="텍스트">
+                            <button type="button"  id="textBtn" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="텍스트">
                                 <i class="bi bi-fonts"></i>
                             </button>
                             </button>
@@ -362,13 +361,35 @@
         // 북마크한 자료를 스케쥴 입력 폼에 삽입
         function tripBookMarkInsert(tId,title) {
             const scheduleForm = document.getElementById("scheduleInsertForm")
-            scheduleForm.title.value = title;
-            scheduleForm.tId.value = tId;
+            if(scheduleForm.tId.value) {
+                alert("카테고리별 하나의 아이템만 추가 가능!")
+            } else {
+                scheduleForm.title.value = title;
+                scheduleForm.bookmarked.value += "["+title+"], ";
+                scheduleForm.tId.value = tId;
+            }
+
         }
+
         function sellBookMarkInsert(sId,title) {
+            const scheduleForm = document.getElementById("scheduleInsertForm");
+            if(scheduleForm.sId.value) {
+                alert("카테고리별 하나의 아이템만 추가 가능!");
+            } else {
+                scheduleForm.title.value = title;
+                scheduleForm.bookmarked.value += "["+title+"], ";
+                scheduleForm.sId.value = sId;
+            }
+
+        }
+
+        function commBookMarkInsert(title,time,info){
             const scheduleForm = document.getElementById("scheduleInsertForm")
             scheduleForm.title.value = title;
-            scheduleForm.sId.value = sId;
+            scheduleForm.sTime.value = time.split(" ~ ")[0];
+            scheduleForm.eTime.value = time.split(" ~ ")[1];
+            scheduleForm.info.value = info;
+            scheduleForm.bookmarked.value += "["+title+"], ";
         }
 
 
@@ -506,6 +527,7 @@
                 let content = JSON.parse(path.body);
                 let writer = content.writer;
                 if(writer !== username ) {
+                    // console.log(canvasMap.get(content.pk))
                     canvasMap.get(content.pk).receiver(content.path);
                 }
             });

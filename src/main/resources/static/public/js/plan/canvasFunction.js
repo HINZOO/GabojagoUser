@@ -360,7 +360,40 @@ class CanvasCreate {
 
         this.canvas.addEventListener("mousedown",selectHandler)
     };
-    textTool(){};
+    textTool(){
+        let co = this;
+        let moveHandler;
+        let font = '18px Noto Sans KR';
+        co.currentCanvas.src = co.canvas.toDataURL()
+        function drawHandler(e) {
+            if(co.activatedTool!=="text"){
+                this.removeEventListener("mousedown", drawHandler)
+            } else {
+                let startX = e.offsetX;
+                this.addEventListener("mousemove", moveHandler = function (e){
+
+                    let  input = document.createElement('textarea');
+                    input.classList.add("cTextArea")
+                    input.style.left = (startX - 4) + "px";
+                    input.style.top = (startX - 4) + "px";
+
+                    // input.onkeydown = handleEnter;
+                    input.onkeydown = function (e){
+                        let keycode = e.keyCode;
+                        if (keycode === 13) {
+                            co.ctx.textAlign = 'left';
+                            co.ctx.font = font;
+                            co.ctx.fillText(this.value, 100, 100);
+                            // document.body.removeChild(this);
+                        }
+                    }
+                    document.body.appendChild(input);
+                    input.focus();
+                });
+            }
+        }
+        this.canvas.addEventListener("mousedown", drawHandler);
+    };
     palateTool(){};
     postTool(){};
 
@@ -533,7 +566,7 @@ class CanvasCreate {
         }
 
         let socket = JSON.stringify(tempObj)
-        stomp.send('/pub/plan/canvas', {}, JSON.stringify({roomId: roomId,pk:co.id, path: socket, writer: username}));
+        stomp.send('/pub/plan/canvas', {}, JSON.stringify({roomId: roomId,pk:co.pathId, path: socket, writer: username}));
         co.currentCanvas.src = co.canvas.toDataURL()
         return co.layerArr.push(tempObj);
 
