@@ -13,19 +13,21 @@
       <div class="card-deck mb-3 text-center" >
         <!-- 장바구니 항목 -->
         <div class="card mb-4 box-shadow"  >
-          <div class="d-flex justify-content-between card-header d-flex justify-content-between">
-<!--            <p><b>티켓사용:</b><span th:text="${d.isUseCheck() ? '사용' : '미사용'}"></span></p>-->
-            <h4 class="my-0 font-weight-normal"  ></h4>
-            <p></p>
+          <div class=" justify-content-between card-header">
+            <p style="font-weight: bold;font-size: 20px;color: orange">티켓 사용 여부</p>
           </div>
           <div class="card-body" >
 
 
-              <ul class="list-unstyled mt-3 mb-4 " th:each="t:${ticketList}" >
+              <ul class="list-unstyled mt-3 mb-4 " th:each="t:${ticketList}">
                   <li>
-                      <strong>티켓 번호:</strong>   <span th:text="${t.ticketNum}"></span>
-                      <b>사용 여부:</b>  <span th:text="${t.isUseCheck() ? '사용완료' : '미사용'}"></span>
-                      <b>사용 시간:</b>   <span th:text="${t.isUseCheck() ? t.getUseDate().toLocaleString() : '사용하셔야 표시됩니다.'}"></span>
+                      <strong>티켓 번호:</strong>
+                      <span th:text="${t.ticketNum}"></span>
+                      <b>사용 여부:</b>
+                      <span th:text="${t.useCheck == true ? '사용완료' : '미사용'}" th:style="${t.useCheck == true ? 'color: red' : 'color: blue'}"></span>
+                      <b>사용 시간:</b>
+                      <span th:text="${t.useCheck == true ? t.getUseDate().toLocaleString() : '사용하셔야 표시됩니다.'}"></span>
+
                   </li>
               </ul>
           </div>

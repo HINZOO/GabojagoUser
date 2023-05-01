@@ -4,8 +4,8 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout}">
+<head>
 
-    <div layout:fragment="content" class="container pb-5">
     <style>
         a{
             text-decoration: none;
@@ -17,6 +17,8 @@
             font-family: 'Do Hyeon', sans-serif;
         }
     </style>
+</head>
+    <div layout:fragment="content" class="container pb-5">
 <!--        도입부이미지-->
     <div class="carousel-inner h-25 my-2 ">
         <div class="carousel-item active" data-bs-interval="10000">
@@ -136,19 +138,17 @@
                     </button>
                 </div>
             </div>
-            <div class="card-body"  style="height: 100px">
-                <a th:href="@{'/comm/{sId}/detail.do'(sId=${s.getSId()})}"
+            <div class="card-body" style="margin-top: 40px;" >
+                <a th:href="@{'/sells/{sId}/detail.do'(sId=${s.getSId()})}"
                    class="link-dark"
-                ><h5 class="card-title link-primary" th:text="${s.title}"></h5></a>
-                <p class="card-text">상품정보</p>
+                ><h5 class="card-title link-primary" th:text="${#strings.substring(s.title, 0, 13)}+..."></h5></a>
             </div>
-            <div class="card-body" style="height:50px">
-                <p>가격정보</p>
-            </div>
+            <p th:text="${#dates.format(s.postTime, 'yyyy.MM.dd')}"></p>
         </div>
     </div>
 
 
+</div>
 
 </html>
 
