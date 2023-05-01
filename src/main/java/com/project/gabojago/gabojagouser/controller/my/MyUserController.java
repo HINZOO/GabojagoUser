@@ -85,8 +85,7 @@ public class MyUserController {
             Model model,
             @SessionAttribute UserDto loginUser
     ) {
-        Date date=new Date();
-        AttendanceChkDto attendanceChkDto=attendanceChkService.detail(loginUser.getUId(),date);
+        AttendanceChkDto attendanceChkDto=attendanceChkService.detail(loginUser.getUId());
         model.addAttribute("attendance",attendanceChkDto);
         return "/my/calendar";
     }

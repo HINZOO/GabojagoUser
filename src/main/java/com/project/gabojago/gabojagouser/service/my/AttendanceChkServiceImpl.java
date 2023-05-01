@@ -5,15 +5,13 @@ import com.project.gabojago.gabojagouser.mapper.my.AttendanceChkMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-
 @AllArgsConstructor
 @Service
 public class AttendanceChkServiceImpl implements AttendanceChkService{
     private AttendanceChkMapper attendanceChkMapper;
     @Override
     public AttendanceChkDto detail(String uId) {
-        AttendanceChkDto detail=attendanceChkMapper.findByUIdAndDate(uId);
+        AttendanceChkDto detail=attendanceChkMapper.findByUIdAndCurrentDate(uId);
         return detail;
     }
 

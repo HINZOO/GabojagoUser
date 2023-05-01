@@ -7,9 +7,9 @@
         <result property="uDate" column="u_date"/>
     </resultMap>
     <insert id="insertOne" useGeneratedKeys="true" keyProperty="dId">
-        INSERT INTO attendance_check (u_id, u_date) VALUES (#{uId},#{uDate})
+        INSERT INTO attendance_check (u_id) VALUES (#{uId})
     </insert>
-    <select id="findByUIdAndDate" resultMap="AttendanceChkMap">
+    <select id="findByUIdAndCurrentDate" resultMap="AttendanceChkMap">
         SELECT * FROM attendance_check WHERE u_id=#{uId} AND u_date=CURDATE();
     </select>
 </mapper>

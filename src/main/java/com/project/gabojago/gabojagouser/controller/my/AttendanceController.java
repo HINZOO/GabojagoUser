@@ -23,6 +23,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 
@@ -38,12 +40,14 @@ public class AttendanceController {
     class HandlerDto{
         private int handler;
     }
+    @GetMapping("/{uId}/attendance/handler.do")
+    public String attendance( @PathVariable String uId,@SessionAttribute UserDto loginUser){
+        return "/my/calendar";
+    }
 
-
-    @PostMapping("/{uId}/{date}/handler.do")
+    @PostMapping("/{uId}/attendance/handler.do")
     public HandlerDto attendanceRegister(
             @PathVariable String uId,
-            @PathVariable Date date,
             @SessionAttribute UserDto loginUser,
             RedirectAttributes redirectAttributes
     ){
@@ -51,15 +55,19 @@ public class AttendanceController {
         int register=0;
         AttendanceChkDto attendanceChk=attendanceChkService.detail(uId);
         if(attendanceChk!=null){
-            redirectAttributes.addAttribute("msg","오늘 이미 출석하셨습니다.");
+            handler.setHandler(0);
         }else{
             AttendanceChkDto attendanceChkDto= new AttendanceChkDto();
             attendanceChkDto.setUId(loginUser.getUId());
-            attendanceChkDto.setUDate(new Date());
             register=attendanceChkService.register(attendanceChkDto);
-            redirectAttributes.addAttribute("msg","등록완료!.");
+            MileageDto mileageDto=new MileageDto();
+            mileageDto.setUId(loginUser.getUId());
+            mileageDto.setMileage(10);
+            mileageDto.setContent("출석체크");
+            mileageService.register(mileageDto);
+            handler.setHandler(register);
         }
-        handler.setHandler(register);
+        log.info(handler);
         return handler;
     }
 

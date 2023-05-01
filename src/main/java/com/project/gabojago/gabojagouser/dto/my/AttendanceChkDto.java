@@ -11,5 +11,5 @@ import java.util.Date;
 public class AttendanceChkDto {
     private  int dId;
     private String uId;
-    private Date uDate;
+    private String uDate;
 }
