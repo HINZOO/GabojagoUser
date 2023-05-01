@@ -49,7 +49,7 @@
             </div>
               <th:block th:each="plan,index:${c.user.plans}">
                 <th:block th:if="${plan.pId}">
-                <div id="userPlanModal" class="modal" tabindex="-1">
+                <div th:id="'userPlanModal'+${plan.pId}" class="modal" tabindex="-1">
                   <div class="modal-dialog modal-dialog-scrollable">
                     <div class="modal-content">
                       <div class="modal-header">
@@ -93,7 +93,7 @@
 
   <script>
     function planDetail(id){
-      let planDetailModal=new bootstrap.Modal(document.getElementById(`userPlanModal`));
+      let planDetailModal=new bootstrap.Modal(document.getElementById(`userPlanModal`+id));
       planDetailModal.show();
     }
   </script>

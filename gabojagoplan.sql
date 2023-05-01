@@ -595,6 +595,14 @@ CREATE TABLE sell_tickets (
                               FOREIGN KEY (sod_id) REFERENCES sell_order_details(sod_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+#출석체크 테이블
+DROP TABLE  attendance_check;
+CREATE TABLE attendance_check (
+                              d_id INT AUTO_INCREMENT PRIMARY KEY COMMENT'출석체크인덱스',
+                              u_id VARCHAR(255) NOT NULL COMMENT'유저아이디',
+                              u_date DATE DEFAULT (CURRENT_DATE) COMMENT'현재날짜',
+                              FOREIGN KEY (u_id) REFERENCES users(u_id) ON DELETE CASCADE ON UPDATE CASCADE
+);
 
 
 #유저더미
