@@ -1,10 +1,13 @@
 package com.project.gabojago.gabojagouser.dto.my;
 
+import com.project.gabojago.gabojagouser.dto.comm.CommReplyDto;
 import com.project.gabojago.gabojagouser.dto.user.UserDto;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
+import java.util.List;
+
 @Data
 public class MyUserQnaDto {
     private int qId;
@@ -13,5 +16,6 @@ public class MyUserQnaDto {
     private String content;
     private String filePath;
     private java.util.Date postTime;
-    private UserDto user;
+//    private UserDto user;
+    private MyUserQnaReplyDto replys;
 }

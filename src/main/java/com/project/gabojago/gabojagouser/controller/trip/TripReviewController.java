@@ -7,6 +7,7 @@ import com.project.gabojago.gabojagouser.dto.trip.TripReviewImgDto;
 import com.project.gabojago.gabojagouser.dto.user.UserDto;
 import com.project.gabojago.gabojagouser.service.trip.TripReviewService;
 import com.project.gabojago.gabojagouser.service.trip.TripService;
+import com.project.gabojago.gabojagouser.service.user.UserService;
 import lombok.Data;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
@@ -28,15 +29,22 @@ import java.util.List;
 public class TripReviewController {
     private TripReviewService tripReviewService;
     private TripService tripService;
+    private UserService userService;
 
 //    public TripReviewController(TripReviewService tripReviewService) {
 //        this.tripReviewService = tripReviewService;
 //    }
 
+//    public TripReviewController(TripReviewService tripReviewService, TripService tripService) {
+//        this.tripReviewService = tripReviewService;
+//        this.tripService = tripService;
+//    }
 
-    public TripReviewController(TripReviewService tripReviewService, TripService tripService) {
+
+    public TripReviewController(TripReviewService tripReviewService, TripService tripService, UserService userService) {
         this.tripReviewService = tripReviewService;
         this.tripService = tripService;
+        this.userService = userService;
     }
 
     @Value("${static.path}")
@@ -47,7 +55,6 @@ public class TripReviewController {
     public @ResponseBody TripReviewDto detail(
             @PathVariable int trId,
             @SessionAttribute(required = false) UserDto loginUser) {
-
         TripReviewDto tripReview=tripReviewService.detail(trId);
         System.out.println("tripReview = " + tripReview);
         log.info(tripReview);
@@ -61,7 +68,17 @@ public class TripReviewController {
             @SessionAttribute UserDto loginUser,
             Model model) {
         List<TripReviewDto> reviews=tripReviewService.list(tId);
-        TripDto trip=tripService.detail(tId, loginUser);
+        TripDto trip=tripService.detail(tId);
+
+
+//        UserDto user=null;
+//        for(TripReviewDto review : reviews) {
+//            user=userService.idCheck(review.getUId());
+//        }
+//        model.addAttribute("u",user);
+//        System.out.println("user = " + user);
+
+
         model.addAttribute("t",trip);
         model.addAttribute("reviews",reviews);
         System.out.println("reviews = " + reviews);

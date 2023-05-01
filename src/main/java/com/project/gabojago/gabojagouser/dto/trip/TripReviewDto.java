@@ -22,8 +22,12 @@ public class TripReviewDto {
     private Date postTime; // default(기본값) CURRENT_TIMESTAMP(현재시간 등록)
     private Date updateTime; // 🔥default on update CURRENT_TIMESTAMP
     private int grade; // 별점(평가)
+//    private Integer grade; // 별점(평가)
     private List<TripReviewImgDto> imgs;
      private List<TripReviewCmtDto> comments; // 댓글 // 1:N = trip_reviews : trip_review_comments
     private UserDto user; // 리뷰 : 유저 = N : 1
+
+
+
 
 }

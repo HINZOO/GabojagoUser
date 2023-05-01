@@ -31,6 +31,7 @@ public class KakaoPayController {
     private SellsOptionMapper sellsOptionMapper;
     private MileageService mileageService;
 
+
 @PostMapping("/orderReady.do")
 public String orderReady(
         @RequestParam(value = "sId",required = false)int sId,
@@ -98,8 +99,12 @@ public String orderReady(
                            RedirectAttributes redirectAttributes,
                            HttpSession session) {
 
+    if (totalPrice==null){
+
+    }
         String redirectPage="redirect:/sells/"+sId+"/detail.do";
         String msg="";
+
 //        if (oId==null || oId.isEmpty()){
 //            msg="선택된 옵션이 존재하지 않습니다.";
 //            redirectAttributes.addFlashAttribute("msg",msg);

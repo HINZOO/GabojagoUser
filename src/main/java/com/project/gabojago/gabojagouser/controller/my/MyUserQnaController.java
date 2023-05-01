@@ -117,9 +117,11 @@ public class MyUserQnaController {
             @PathVariable int qId,
             @SessionAttribute(required = false) UserDto loginUser) {
         MyUserQnaDto qna = myUserQnaService.detail(qId, loginUser);
+        log.info(qna);
         model.addAttribute("q", qna);
         return "/my/qna/detail";
     }
+
 
 
     @GetMapping("/{qId}/modify.do")
@@ -184,6 +186,7 @@ public class MyUserQnaController {
             redirectAttributes.addFlashAttribute("msg", msg);
             return redirectPage;
         }
+
 
     }
 

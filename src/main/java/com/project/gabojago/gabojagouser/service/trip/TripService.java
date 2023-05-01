@@ -11,10 +11,13 @@ import java.util.List;
 public interface TripService {
     // 맞춤추천 서비스 : 리스트, 상세, 등록, 수정, 삭제
     List<TripDto> list(UserDto loginUser, TripPageDto pageDto);
+
+    List<TripDto> tagList(String tag, UserDto loginUser, TripPageDto pageDto);
+
     List<TripImgDto> imgList(List<Integer> tiId);
-    TripDto detail(int tId, UserDto loginUser);
-    int register(TripDto trip);
-    int modify(TripDto trip, List<Integer> delImgIds);
+    TripDto detail(int tId);
+    int register(TripDto trip, List<String> tags);
+    int modify(TripDto trip, List<Integer> delImgIds, List<String> tags, List<String> delTags);
     int remove(int tId, List<TripImgDto> imgDtos);
 
     List<TripDto> likesList(TripPageDto pageDto);

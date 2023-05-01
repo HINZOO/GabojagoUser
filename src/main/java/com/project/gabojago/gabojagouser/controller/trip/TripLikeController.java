@@ -43,11 +43,10 @@ public class TripLikeController {
    public @ResponseBody TriplikeHandlerDto handler(
            @PathVariable int tId,
            @SessionAttribute UserDto loginUser){
-      TriplikeHandlerDto tripLikeHandlerDto=new TriplikeHandlerDto();
-      boolean tripLiked=tripLikeService.detail(tId,loginUser.getUId());
-        // detail : 1번 게시글에 유저1 이 좋아요 한 개수(타입 boolean) == 했는지 안했는지 1(true) / 0(false)
 
       int handler=0;
+      TriplikeHandlerDto tripLikeHandlerDto=new TriplikeHandlerDto();
+      boolean tripLiked=tripLikeService.detail(tId,loginUser.getUId()); // detail : 1번 게시글에 유저1 이 좋아요 한 개수(타입 boolean) == 했는지 안했는지 1(true) / 0(false)
       TripLikeDto like=new TripLikeDto();
       like.setUId(loginUser.getUId());
       like.setTId(tId);

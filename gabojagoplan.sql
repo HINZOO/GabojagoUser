@@ -41,6 +41,12 @@ CREATE TABLE `hashtags` (
                             `tag_name`	varchar(255) UNICODE NOT NULL COMMENT '태그이름'
 );
 
+CREATE TABLE hashtags_new
+(
+    tag VARCHAR(255) PRIMARY KEY COMMENT '태그 내용'
+);
+
+
 #공지사항 테이블
 CREATE TABLE `notices` (
                            `n_id`	int unsigned AUTO_INCREMENT PRIMARY KEY COMMENT '공지사항 아이디',
@@ -187,14 +193,18 @@ CREATE TABLE `trip_review_likes` (
                                      FOREIGN KEY (tr_id) REFERENCES trip_reviews (tr_id) ON DELETE CASCADE ON UPDATE CASCADE,
                                      CONSTRAINT tr_likes UNIQUE (u_id, tr_id)
 );
-#가보자고( 해시태그 테이블)
-CREATE TABLE `trip_hashtags` (
-                                 `th_id`	 int unsigned AUTO_INCREMENT PRIMARY KEY COMMENT '가보자고해시태그 아이디',
-                                 `t_id`	int unsigned NOT NULL COMMENT '맞춤추천 아이디',
-                                 `tag_id`	int unsigned NOT NULL COMMENT '태그 아이디',
-                                 FOREIGN KEY (t_id) REFERENCES trips (t_id) ON DELETE CASCADE ON UPDATE CASCADE,
-                                 FOREIGN KEY (tag_id) REFERENCES hashtags (tag_id) ON DELETE CASCADE ON UPDATE CASCADE
+
+#가보자고 해시태그
+CREATE TABLE trip_hashtags
+(
+    th_id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT COMMENT '보드 해시태그 pk',
+    t_id  INT UNSIGNED COMMENT '게시글 아이디',
+    tag   VARCHAR(255) NOT NULL COMMENT '태그 내용',
+    UNIQUE (t_id, tag) COMMENT '게시글에 똑같은 태그가 등록되지 않도록',
+    FOREIGN KEY (t_id) REFERENCES trips (t_id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (tag) REFERENCES hashtags_new (tag) ON DELETE CASCADE ON UPDATE CASCADE
 );
+
 #가보자고( 리뷰 신고 테이블)
 CREATE TABLE `trip_review_reports` (
                                        `trr_id`	int unsigned AUTO_INCREMENT PRIMARY KEY COMMENT '가보자고신고글 아이디',
@@ -523,6 +533,7 @@ CREATE TABLE `qna_replys` (
                               `q_id`	int unsigned NOT NULL COMMENT '문의글 아이디',
                               `u_id`	varchar(255) NOT NULL COMMENT '유저 아이디',
                               `content`	text	COMMENT '댓글 내용',
+                              `status` boolean COMMENT '답변 상태',
                               `post_time`	TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '작성일',
                               `update_time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '최종 수정 시간',
                               `parent_qna_id`	INT UNSIGNED COMMENT '부모 댓글 아이디(대댓글)',
@@ -580,10 +591,17 @@ CREATE TABLE sell_tickets (
                               sod_id INT UNSIGNED NOT NULL COMMENT'구매옵션아이디',
                               ticket_num VARCHAR(20) NOT NULL COMMENT'티켓번호',
                               use_check BOOLEAN DEFAULT FALSE COMMENT'사용여부',
-                              used_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '사용시간',
+                              use_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '사용시간',
                               FOREIGN KEY (sod_id) REFERENCES sell_order_details(sod_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+#출석체크 테이블
+CREATE TABLE attendance_check (
+                              d_id INT AUTO_INCREMENT PRIMARY KEY COMMENT'출석체크인덱스',
+                              u_id VARCHAR(255) NOT NULL COMMENT'유저아이디',
+                              u_date DATE DEFAULT (CURRENT_DATE) COMMENT'현재날짜',
+                              FOREIGN KEY (u_id) REFERENCES users(u_id) ON DELETE CASCADE ON UPDATE CASCADE
+);
 
 
 #유저더미
@@ -679,10 +697,51 @@ VALUES
     ('user04', '전남', '판매글 제목14', '판매글 내용14', '레저', 7, '/public/img/sells/1682065508712_4507.jpeg'),
     ('user05', '경북', '판매글 제목15', '판매글 내용15', '박물관', 2, '/public/img/sells/1682065508720_8121.jpeg'),
     ('user06', '경남', '판매글 제목16', '판매글 내용16', '워터', 5, '/public/img/sells/1682065508723_666.jpeg'),
-    ('user07', '제주', '판매글 제목17', '판매글 내용17', '테마', 1, '/public/img/sells/1682152239247_5163.png'),
-    ('user07', '제주', '판매글 제목17', '판매글 내용17', '키즈', 1, '/public/img/sells/1682234090230_1592.png'),
-    ('user07', '제주', '판매글 제목171', '판매글 내용17', '레저', 1, '/public/img/sells/1682234803268_3166.png'),
-    ('user07', '제주', '판매글 제목171', '판매글 내용17', '테마', 1, '/public/img/sells/1682234803271_4526.png');
+    ('user10', '제주', '[쿠폰할인] 신화월드 테마파크&워터파크', '<p><img alt="" src="https://tourimg.wonderscdn.app/admin/20221230/7/5c8af2f7-572f-4546-a67d-23305ae47f2d.jpg" style="height:1246px; width:1000px" /><img alt="" src="https://tourimg.wonderscdn.app/admin/20230317/3/4a5d7b28-3bc4-411d-aa25-9e716f791fb8.jpg" />&nbsp;&nbsp;*</p>
+', '워터', 5, '/public/img/sells/1682912360964_9730.jpeg'),
+    ('user10', '경기', '[일산] 원마운트 종일권', '<p><img alt="" src="https://tour.wd.wemakeprice.com/activity/direct/detail/GD230000000080552" /><img alt="" src="https://tourimg.wonderscdn.app/admin/20230331/8/498a457c-3455-486e-a9d9-fde1d86270dc.jpg" style="height:1395px; width:1000px" /></p>
+
+<p><img alt="" src="https://tourimg.wonderscdn.app/admin/20230331/4/141da0c8-48f0-422d-8b27-a613c175167c.jpg" style="height:1339px; width:1000px" /> *</p>', '워터', 1, '/public/img/sells/1682911883176_2180.jpeg'),
+    ('user10', '경기', '[특가] 테르메덴 풀앤스파 미들시즌(~6/30)', '<p><img alt="" src="https://tourimg.wonderscdn.app/admin/20230428/3/8f32a283-e840-4e42-b75c-c4dc202ed0f6.jpg" style="height:23375px; width:1000px" /></p>
+
+<p>*</p>
+', '레저', 1, '/public/img/sells/1682911459818_3088.jpeg'),
+    ('user10', '경기', '[일산]행유행유 프리미엄 야외수영장', '<p><img alt="" src="https://tourimg.wonderscdn.app/admin/20220614/1/8558a09a-7e34-4de1-9ce2-c8a63de85de2.jpg" style="height:1633px; width:1000px" /></p>
+
+<p>&nbsp;</p>
+
+<h1>이용방법 [티켓 이용 안내]</h1>
+
+<p>1) 가보자고에서 이용날짜 옵션 선택 후 구매</p>
+
+<p>2) 예약일 현장 방문</p>
+
+<p>3) 구매인증 확인후 입장</p>
+
+<p>4) 행휴행유 즐기기!</p>
+
+<p>&nbsp;</p>
+
+<p>* 당일 예약의 경우 오전 9시 이후 가보자고를 통한 예약이 불가합니다.</p>
+
+<p>* 이용을 원하실경우 02-111-2222 으로 연락 부탁드립니다.</p>
+
+<p>* 본 티켓은 좌석예약 티켓으로 입장권은 별도 구매해 주셔야 합니다.</p>
+
+<p>* 1인당 입장권 별도 부과됩니다. (슬라이드 등 이용 시 현장문의) * 좌석 구매 후 당일 현장방문시 티켓 사용처리</p>
+
+<p>* 재판매시 전액 환불 불가 및 이용 불가 하오니 이점 양해 부탁드립니다.</p>
+
+<p>* 5/5~6/18 기간에는 유아풀과 중간풀(0.9m)는 미온수 / 자쿠지는 온수로 운영됩니다.</p>
+
+<p>* 5/5~6/18 기간에는 대수영장 온수 공급이 불가하여 얕은 수심으로 시간대별 보트를 운영합니다.</p>
+
+<p>* 내부사정으로 인해 5/5~5/7 일자는 공사 완료 시 오픈 예정입니다. 환불규정 취소가능여부 : 취소가능 환불규정에 따라 수수료가 발생할 수 있으니 확인해주시기 바랍니다. [환불규정] ▪ 이용 3일전까지 취소 요청시, 100% 환불이 가능합니다.</p>
+
+<p>▪ 현장 중복할인 불가합니다.</p>
+
+<p>▪ 사용한 티켓 환불 불가합니다. ▪ 부분환불 불가합니다. - 당일 취소는 불가합니다. - 일정변경은 이용3일전까지 취소후 재구매 하셔야 합니다. - 취소는 평일기준(월~금) 이용일 3일전 까지 가능하며, 이후 취소는 불가합니다. (티켓 사용처리 후에는 환불불가하며, 휴일의 경우 취소 응대가 불가합니다.) [우천으로 인한 취소 및 날짜변경] - 고양시 기준 호우 강풍 경보 사항을 제외하고는 우천시에도 영업을 하므로, 3일전 환불 규정에 따라 환불 및 날짜변경 불가 합니다.</p>
+', '워터', 1, '/public/img/sells/1682907222171_9307.jpeg');
 
 #판매글 북마크 더미
 INSERT INTO sell_bookmarks (sb_id, s_id, u_id) VALUES (11, 5, 'USER02');
@@ -697,14 +756,29 @@ INSERT INTO sell_bookmarks (sb_id, s_id, u_id) VALUES (3, 3, 'USER01');
 INSERT INTO sell_bookmarks (sb_id, s_id, u_id) VALUES (2, 2, 'USER01');
 INSERT INTO sell_bookmarks (sb_id, s_id, u_id) VALUES (1, 1, 'USER01');
 
-
+INSERT INTO sell_imgs (s_id, img_path)
+VALUES
+    (20,'/public/img/sells/1682911049003_3666.jpeg'),
+    (20,'/public/img/sells/1682911049002_495.jpeg'),
+    (20,'/public/img/sells/1682911049000_4141.jpeg'),
+    (20,'/public/img/sells/1682911048997_8303.jpeg'),
+    (17,'/public/img/sells/1682912360962_3101.jpeg'),
+    (17,'/public/img/sells/1682912360964_9730.jpeg'),
+    (18,'/public/img/sells/1682911883176_2180.jpeg'),
+    (18,'/public/img/sells/1682911883175_7243.jpeg'),
+    (19,'/public/img/sells/1682911459817_7471.jpeg'),
+    (19,'/public/img/sells/1682911459818_3088.jpeg');
 
 INSERT INTO `sell_options` (`s_id`, `name`, `price`, `stock`)
 
 VALUES
-    (1, '성인', '10000', 20),
-    (1, '청소년', '8000', 30),
-    (1, '소인', '5000', 10);
+    (20, '행유행유 성인권', '15000', 999),
+    (20, '행유행유 청소년권', '10000', 999),
+    (20, '행유행유 유아권(36개월이상)', '5000', 999),
+    (17, '신화월드 테마파크 자유이용권', '30000', 999),
+    (17, '신화월드 워터파크 종일권', '40000', 999),
+    (18, '종일권 1인(대소공통)', '25900', 999),
+    (19, '종일권 1인(대소공통)', '26800', 999);
 
 #가보자고 게시글 더미
 INSERT INTO trips (u_id, title, area, address, phone, url_address, content,
@@ -768,7 +842,12 @@ VALUES
     (1, 'user02', '여기는 가보자고 추천해준 곳 중에서 제일 좋았어요.', 1, 4),
     (1, 'user03', '다음에도 꼭 다시 방문하고 싶은 곳이에요!', 1, 4),
     (1, 'user04', '이곳은 정말 특별한 경험이었어요.', 1, 5),
-    (1, 'user05', '여기는 앞으로도 자주 찾게 될 것 같아요.', 1, 3);
+    (1, 'user05', '여기는 앞으로도 자주 찾게 될 것 같아요.', 1, 3),
+    (2, 'user01', '이곳이 정말 멋진 곳이에요!', 1, 3),
+    (2, 'user02', '여기는 가보자고 추천해준 곳 중에서 제일 좋았어요.', 1, 2),
+    (2, 'user03', '다음에도 꼭 다시 방문하고 싶은 곳이에요!', 1, 4),
+    (2, 'user04', '이곳은 정말 특별한 경험이었어요.', 1, 5),
+    (2, 'user05', '여기는 앞으로도 자주 찾게 될 것 같아요.', 1, 5);
 
 #팔로우 더미
 INSERT INTO follows(to_users, from_users)
@@ -851,3 +930,86 @@ VALUES
     (4, 'user09'),
     (4, 'user10');
 
+#해시태그
+INSERT INTO hashtags_new(tag)
+VALUES ('홍대'),
+       ('홍대놀이터'),
+       ('홍대맛집'),
+       ('홍대입구'),
+       ('홍대카페'),
+       ('홍대애견'),
+       ('food'),
+       ('travel'),
+       ('music'),
+       ('fashion'),
+       ('photography'),
+       ('한국'),
+       ('일본'),
+       ('미국'),
+       ('유럽'),
+       ('인테리어'),
+       ('뷰티'),
+       ('운동'),
+       ('영화'),
+       ('꽃'),
+       ('동물'),
+       ('일상'),
+       ('여름'),
+       ('가을'),
+       ('겨울'),
+       ('봄'),
+       ('풍경'),
+       ('먹방'),
+       ('먹심'),
+       ('먹보'),
+       ('먹짱'),
+       ('카페'),
+       ('선팔'),
+       ('소통'),
+       ('셀카'),
+       ('스타일'),
+       ('축구'),
+       ('야구'),
+       ('농구'),
+       ('배구'),
+       ('테니스'),
+       ('골프'),
+       ('스키'),
+       ('수영'),
+       ('춤'),
+       ('노래'),
+       ('기타'),
+       ('피아노'),
+       ('드라마'),
+       ('해외여행'),
+       ('국내여행'),
+       ('육아'),
+       ('공부'),
+       ('일'),
+       ('금요일'),
+       ('토요일'),
+       ('일요일'),
+       ('월요일'),
+       ('화요일'),
+       ('수요일'),
+       ('에이콘아카데미'),
+       ('에이콘'),
+       ('acornacademy'),
+       ('목요일');
+
+INSERT INTO trip_hashtags (t_id, tag)
+VALUES (1, '홍대'),
+       (2, '홍대'),
+       (3, '홍대'),
+       (4, '홍대'),
+       (5, '홍대'),
+       (7, '홍대'),
+       (10, '홍대'),
+       (1, '홍대맛집'),
+       (1, '한국'),
+       (1, 'food'),
+       (1, 'travel'),
+       (1, '먹심'),
+       (2, '홍대놀이터'),
+       (2, '홍대맛집'),
+       (2, '수요일');

@@ -370,6 +370,7 @@ public class SellsController {
 
     }
 
+
     @GetMapping("/orderList.do")
     public String orderList(@SessionAttribute UserDto loginUser,Model model
                             ){
@@ -388,5 +389,6 @@ public class SellsController {
        model.addAttribute("ticketList",sellTicketDto);
         return "/sells/ticketList";
     }
+
 
 }

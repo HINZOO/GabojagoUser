@@ -12,6 +12,7 @@ import java.util.List;
 public interface TripMapper {
     // 여행정보(맞춤추천) 리스트, 상세, 등록, 수정, 삭제
     List<TripDto> findAll(TripPageDto pageDto);
+    List<TripDto> findByTag(String tag);
     TripDto findByTId(int tId);
     int insertOne(TripDto trip);
     int updateOne(TripDto trip);
@@ -19,5 +20,8 @@ public interface TripMapper {
     int updateIncrementViewCountByTId(int tId);
 
     List<TripDto> countListBylikes(TripPageDto pageDto);
+
+
+
 
 }

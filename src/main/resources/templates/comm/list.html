@@ -13,6 +13,17 @@
         #mbtiChk>a:hover{
             color:black;
         }
+        #cateNav a {
+            text-decoration: none;
+            display: inline-block;
+            height: 40px;
+            line-height: 30px;
+            color: #3b3b3b;
+        }
+
+        #cateNav a:hover {
+            color: #0d6efd;
+        }
 
         #areaCont li a{
            text-decoration: none;
@@ -64,41 +75,64 @@
     <section id="commListContainer" class="row">
         <!--검색창-->
 
-        <div class= "mx-auto mt-3">
-            <th:block th:include="/comm/pageNav"></th:block>
-        </div>
-
 <!--   지역으로 검색 +     글쓰기-->
 <!--        http://localhost:7777/comm/list.do?searchField=area&searchValue=%EC%84%9C%EC%9A%B8-->
-        <div class="my-2 d-flex justify-content-between">
-            <div class="ms-4">
-                <ul  id="areaCont" class="list-group d-flex align-items-center  list-group-horizontal">
-                    <li class="list-group-item p-1"><a href="list.do"><i class="bi bi-geo-alt fs-5"></i></a></li>
-                    <li class="list-group-item p-1"><a href=list.do?searchField=area&searchValue=서울>서울</a></li>
-                    <li class="list-group-item p-1"><a href=list.do?searchField=area&searchValue=인천>인천</a></li>
-                    <li class="list-group-item p-1"><a href=list.do?searchField=area&searchValue=대전>대전</a></li>
-                    <li class="list-group-item p-1"><a href=list.do?searchField=area&searchValue=광주>광주</a></li>
-                    <li class="list-group-item p-1"><a href=list.do?searchField=area&searchValue=대구>대구</a></li>
-                    <li class="list-group-item p-1"><a href=list.do?searchField=area&searchValue=울산>울산</a></li>
-                    <li class="list-group-item p-1"><a href=list.do?searchField=area&searchValue=부산>부산</a></li>
-                    <li class="list-group-item p-1"><a href=list.do?searchField=area&searchValue=세종>세종</a></li>
-                    <li class="list-group-item p-1"><a href=list.do?searchField=area&searchValue=경기>경기</a></li>
-                    <li class="list-group-item p-1"><a href=list.do?searchField=area&searchValue=강원>강원</a></li>
-                    <li class="list-group-item p-1"><a href=list.do?searchField=area&searchValue=충북>충북</a></li>
-                    <li class="list-group-item p-1"><a href=list.do?searchField=area&searchValue=충남>충남</a></li>
-                    <li class="list-group-item p-1"><a href=list.do?searchField=area&searchValue=전북>전북</a></li>
-                    <li class="list-group-item p-1"><a href=list.do?searchField=area&searchValue=전남>전남</a></li>
-                    <li class="list-group-item p-1"><a href=list.do?searchField=area&searchValue=경북>경북</a></li>
-                    <li class="list-group-item p-1"><a href=list.do?searchField=area&searchValue=경남>경남</a></li>
-                    <li class="list-group-item p-1"><a href=list.do?searchField=area&searchValue=제주>제주</a></li>
-                </ul>
-            </div>
+        <div class="d-flex align-items-center justify-content-between mt-3 ">
+            <ul class="nav ms-5" id="cateNav">
+                <a class="nav_link " href="list.do"><i class="bi bi-geo-alt fs-5" ></i></a>
+                <a class="nav_link mx-1" href=list.do?searchField=area&searchValue=서울>서울</a>
+                <a class="nav_link mx-1" href=list.do?searchField=area&searchValue=인천>인천</a>
+                <a class="nav_link mx-1" href=list.do?searchField=area&searchValue=대전>대전</a>
+                <a class="nav_link mx-1" href=list.do?searchField=area&searchValue=광주>광주</a>
+                <a class="nav_link mx-1" href=list.do?searchField=area&searchValue=대구>대구</a>
+                <a class="nav_link mx-1" href=list.do?searchField=area&searchValue=울산>울산</a>
+                <a class="nav_link mx-1" href=list.do?searchField=area&searchValue=부산>부산</a>
+                <a class="nav_link mx-1" href=list.do?searchField=area&searchValue=세종>세종</a>
+                <a class="nav_link mx-1" href=list.do?searchField=area&searchValue=경기>경기</a>
+                <a class="nav_link mx-1" href=list.do?searchField=area&searchValue=강원>강원</a>
+                <a class="nav_link mx-1" href=list.do?searchField=area&searchValue=충북>충북</a>
+                <a class="nav_link mx-1" href=list.do?searchField=area&searchValue=충남>충남</a>
+                <a class="nav_link mx-1" href=list.do?searchField=area&searchValue=전북>전북</a>
+                <a class="nav_link mx-1" href=list.do?searchField=area&searchValue=전남>전남</a>
+                <a class="nav_link mx-1" href=list.do?searchField=area&searchValue=경북>경북</a>
+                <a class="nav_link mx-1" href=list.do?searchField=area&searchValue=경남>경남</a>
+                <a class="nav_link mx-1" href=list.do?searchField=area&searchValue=제주>제주</a>
+            </ul>
+            <div class="d-flex align-items-center">
 
-            <div>
-                <a class="btn btn-outline-success me-5" href="/comm/register.do">글쓰기</a>
+                <div class="text-end ms-2" th:if="${session.loginUser!=null}">
+                    <a class="btn btn-outline-success rounded-5 me-5 mb-1" href="/comm/register.do">글쓰기</a>
+                </div>
+
             </div>
         </div>
+        <hr>
+        <div class="d-flex justify-content-between">
+            <div class= " ms-5">
+                <th:block th:include="/comm/pageNav"></th:block>
+            </div>
 
+            <form class="d-flex w-25 my-2 me-5 " role="search">
+                <div class="input-group me-3" >
+                    <label class="input-group-text bi bi-filter-square text-warning"></label>
+                    <select name="order" class="form-control">
+                        <option value=" ">정렬기준</option>
+                        <option th:selected="(${#strings.equals(param.order,'c_id')})" value="c_id">글번호</option>
+                        <option th:selected="(${#strings.equals(param.order,'u_id')})" value="u_id">글쓴이</option>
+                        <option th:selected="(${#strings.equals(param.order,'post_time')})" value="post_time">작성일</option>
+                        <option th:selected="(${#strings.equals(param.order,'update_time')})" value="update_time">수정일</option>
+                        <option th:selected="(${#strings.equals(param.order,'title')})" value="title">제목</option>
+                        <option th:selected="(${#strings.equals(param.order,'view_count')})" value="view_count">조회수</option>
+                    </select>
+                    <select name="direct" id="" class="form-control">
+                        <option value=" ">정렬방향</option>
+                        <option th:selected="(${#strings.equals(param.direct,'DESC')})" value="DESC">내림차순</option>
+                        <option th:selected="(${#strings.equals(param.direct,'ASC')})" value="ASC">오름차순</option>
+                    </select>
+                    <button class="btn btn-warning">정렬</button>
+                </div>
+              </form>
+        </div>
         <div class="col-11 mx-auto my-2 " th:each="c:${communities}">
             <div class="card" >
                 <div class="row no-gutters">

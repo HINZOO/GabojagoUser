@@ -44,6 +44,16 @@
                     column="t_id"
                     fetchType="eager"/>
 
+        <association property="averageGrade"
+                        select="com.project.gabojago.gabojagouser.mapper.trip.TripReviewMapper.averageGradeByTId"
+                        column="t_id"
+                        fetchType="lazy"/>
+
+        <association property="totalGradeCnt"
+                        select="com.project.gabojago.gabojagouser.mapper.trip.TripReviewMapper.countGradeByTId"
+                        column="t_id"
+                        fetchType="lazy"/>
+
         <collection property="reviews"
                     select="com.project.gabojago.gabojagouser.mapper.trip.TripReviewMapper.findByTId"
                     column="t_id"
@@ -55,8 +65,10 @@
                     column="t_id"
                     fetchType="lazy"/>
 
-
-
+        <collection property="tags"
+                    select="com.project.gabojago.gabojagouser.mapper.trip.TripHashTagMapper.findByTId"
+                    column="t_id"
+                    fetchType="lazy"/>
     </resultMap>
 
     <insert useGeneratedKeys="true" keyProperty="tId" id="insertOne" parameterType="TripDto">
@@ -127,5 +139,12 @@
         GROUP BY t.t_id
         ORDER BY likes DESC;
     </select>
+
+    <select id="findByTag" resultMap="TripMap">
+        SELECT trips.* FROM trips INNER JOIN trip_hashtags
+            USING(t_id)
+            WHERE tag=#{tag}
+    </select>
+
 
 </mapper>
