@@ -14,14 +14,15 @@
 
     </style>
 </head>
-<div layout:fragment="content">
-    <div class="container">
+<div layout:fragment="content" >
+    <div style="margin-bottom: 100px;margin-top: 100px;">
+    <div class="container ">
         <div class="row align-items">
             <div class="col-md-6 " style="margin-left: 100px">
 
                 <form class="d-flex" role="search" id="searchForm">
+                    <button class="btn btn-outline-success m-lg-2" type="submit" id="searchBtn">Search</button>
                     <input class="form-control me-2" type="search" placeholder="제목을 입력해 주세요" aria-label="Search" id="searchInput">
-                    <button class="btn btn-outline-success" type="submit" id="searchBtn">Search</button>
                 </form>
                 <nav aria-label="Page navigation example">
                     <ul class="pagination">
@@ -92,6 +93,7 @@
                 </th:block>
             </div>
         </div>
+    </div>
     </div>
     <script>
         const searchButton = document.getElementById("searchBtn");

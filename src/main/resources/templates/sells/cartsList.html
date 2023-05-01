@@ -20,19 +20,17 @@
                     <div class="d-flex justify-content-between card-header">
                         <p><b>카트 ID:</b><span th:text="${c.cartId}"></span></p>
                         <h4 class="my-0 font-weight-normal">상품 정보</h4>
-                        <p></p>
+                        <p><a th:href="@{'/cart/{cartId}/{sId}/remove.do'(cartId=${c.cartId},sId=${c.getSId()})}" type="button" class="btn btn-danger">장바구니 취소</a></p>
                     </div>
                     <div class="card-body">
                         <ul class="list-unstyled mt-3 mb-4" th:each="s:${c.getSellList()}" th:if="${s.getSId()==c.getSId()}">
+                            <li ><img th:src="${s.imgMain}" style="width: 500px;height: 300px" class="img-thumbnail"></img></li>
                             <li ><b>제목:</b><span th:text="${s.getTitle()}"></span></li>
-                            <li><b>내용:</b><span th:text="${s.content}"></span></li>
                             <li><b>카테고리:</b><span th:text="${s.category}"></span></li>
                             <li><b>지역:</b><span th:text="${s.area}"></span></li>
                             <li><a th:href="@{'/sells/{sId}/detail.do'(sId=${s.getSId()})}"><span>상품 보러가기</span></a></li>
-                            <li></li>
                         </ul>
                         <!-- 장바구니 취소 버튼 -->
-                        <a th:href="@{'/cart/{cartId}/{sId}/remove.do'(cartId=${c.cartId},sId=${c.getSId()})}" type="button" class="btn btn-danger">장바구니 취소</a>
                     </div>
                 </div>
             </div>

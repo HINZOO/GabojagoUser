@@ -590,7 +590,7 @@ CREATE TABLE sell_tickets (
                               sod_id INT UNSIGNED NOT NULL COMMENT'구매옵션아이디',
                               ticket_num VARCHAR(20) NOT NULL COMMENT'티켓번호',
                               use_check BOOLEAN DEFAULT FALSE COMMENT'사용여부',
-                              used_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '사용시간',
+                              use_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '사용시간',
                               FOREIGN KEY (sod_id) REFERENCES sell_order_details(sod_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
