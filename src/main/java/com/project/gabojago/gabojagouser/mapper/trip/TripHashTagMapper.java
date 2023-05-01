@@ -8,7 +8,7 @@ import java.util.List;
 @Mapper
 public interface TripHashTagMapper {
     // 여행정보(맞춤추천) 해시태그 리스트, 수, 등록, 삭제
-    List<TripHashTagDto> findTId(int tId);
+    List<TripHashTagDto> findByTId(int tId);
     int countByTag(String tag);
     int insertOne(TripHashTagDto tripHastag);
     int deleteOne(TripHashTagDto tripHastag);

@@ -35,13 +35,19 @@
     <delete id="deleteOne">
         DELETE FROM trip_reviews WHERE tr_id=#{trId}
     </delete>
-
     <select id="findByTrId" resultMap="TripReviewMap">
         SELECT * FROM trip_reviews WHERE tr_id=#{trId}
     </select>
     <select id="findByTId" resultMap="TripReviewMap">
         SELECT tr.* FROM trip_reviews tr LEFT JOIN trip_review_likes trl ON tr.tr_id=trl.tr_id
         WHERE t_id=#{tId}
-
     </select>
+
+    <select id="averageGradeByTId" resultType="java.lang.Integer">
+        SELECT CEIL(AVG(grade)) AS average_grade FROM trip_reviews WHERE t_id=#{tId}
+    </select>
+    <select id="countGradeByTId" resultType="java.lang.Integer">
+        SELECT COUNT(grade) AS total_grade FROM trip_reviews WHERE t_id=#{tId}
+    </select>
+
 </mapper>

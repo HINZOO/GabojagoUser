@@ -301,16 +301,16 @@ public class TripController {
        return "/trip/tagList";
     }
 
-//    @GetMapping("/{tag}/ajaxTagList.do")
-//    public String ajaxTagList(
-//            @PathVariable String tag,
-//            Model model,
-//            @SessionAttribute(required = false)UserDto loginUser,
-//            TripPageDto pageDto){
-//        List<TripDto> trips;
-//        pageDto.setPageSize(4);
-//        return "/trip/includeList";
-//    }
+    @GetMapping("/{tag}/ajaxTagList.do")
+    public String ajaxTagList(
+            @PathVariable String tag,
+            Model model,
+            @SessionAttribute(required = false)UserDto loginUser,
+            TripPageDto pageDto){
+        List<TripDto> trips;
+        pageDto.setPageSize(4);
+        return "/trip/includeList";
+    }
 
 
 
