@@ -20,7 +20,7 @@ class MyUserQnaMapperTest {
 
     @Test
     void findByQId() {
-        MyUserQnaDto detail=myUserQnaMapper.findByQId(1);
+        MyUserQnaDto detail=myUserQnaMapper.findByQId(68);
         System.out.println("detail = " + detail);
     }
 

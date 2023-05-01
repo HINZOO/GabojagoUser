@@ -23,7 +23,9 @@ public class MyUserQnaReplyController {
     public String list(@PathVariable int qId,
                        Model model){
         List<MyUserQnaReplyDto> replys=myUserQnaReplyService.list(qId);
+        log.info(replys);
         model.addAttribute("replys",replys);
         return "/my/qna/replyList";
     }
+
 }

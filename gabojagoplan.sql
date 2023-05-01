@@ -533,6 +533,7 @@ CREATE TABLE `qna_replys` (
                               `q_id`	int unsigned NOT NULL COMMENT '문의글 아이디',
                               `u_id`	varchar(255) NOT NULL COMMENT '유저 아이디',
                               `content`	text	COMMENT '댓글 내용',
+                              `status` boolean COMMENT '답변 상태',
                               `post_time`	TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '작성일',
                               `update_time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '최종 수정 시간',
                               `parent_qna_id`	INT UNSIGNED COMMENT '부모 댓글 아이디(대댓글)',
