@@ -6,7 +6,11 @@ import com.project.gabojago.gabojagouser.dto.comm.CommunityDto;
 import com.project.gabojago.gabojagouser.dto.my.AttendanceChkDto;
 import com.project.gabojago.gabojagouser.dto.my.MileageDto;
 import com.project.gabojago.gabojagouser.dto.plan.PlanDto;
+import com.project.gabojago.gabojagouser.dto.sells.SellPageDto;
+import com.project.gabojago.gabojagouser.dto.sells.SellsDto;
 import com.project.gabojago.gabojagouser.dto.trip.TripBookmarkDto;
+import com.project.gabojago.gabojagouser.dto.trip.TripDto;
+import com.project.gabojago.gabojagouser.dto.trip.TripPageDto;
 import com.project.gabojago.gabojagouser.dto.user.UserDto;
 import com.project.gabojago.gabojagouser.service.comm.CommBookMarkService;
 import com.project.gabojago.gabojagouser.service.comm.CommunityService;
@@ -14,7 +18,9 @@ import com.project.gabojago.gabojagouser.service.my.AttendanceChkService;
 import com.project.gabojago.gabojagouser.service.my.MileageService;
 import com.project.gabojago.gabojagouser.service.my.MyUserQnaService;
 import com.project.gabojago.gabojagouser.service.plan.PlanService;
+import com.project.gabojago.gabojagouser.service.sells.SellsService;
 import com.project.gabojago.gabojagouser.service.trip.TripBookMarkService;
+import com.project.gabojago.gabojagouser.service.trip.TripService;
 import com.project.gabojago.gabojagouser.service.user.UserService;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -37,6 +43,8 @@ public class MyUserController {
     private CommBookMarkService commBookMarkService;
     private TripBookMarkService tripBookMarkService;
     private PlanService planService;
+    private TripService tripService;
+    private SellsService sellsService;
     private MileageService mileageService;
     private AttendanceChkService attendanceChkService;
     @GetMapping("/user.do")
@@ -46,7 +54,7 @@ public class MyUserController {
         return "/my/user";
     }
 
-    //내가쓴글
+    //내가쓴글(유저)
     @GetMapping("/written.do")
     public String writtenList(Model model,
                        @SessionAttribute UserDto loginUser){
@@ -54,6 +62,17 @@ public class MyUserController {
         model.addAttribute("user",loginUser);
         model.addAttribute("comm",communityList);
         return "/my/written";
+    }
+    //내가쓴글(파트너)
+    @GetMapping("/writtenPartner.do")
+    public String writtenListPartner(Model model,
+                              @SessionAttribute UserDto loginUser){
+       List<TripDto> tripDtos=tripService.list(loginUser,new TripPageDto());
+       List<SellsDto> sellsDtos=sellsService.List(new SellPageDto());
+        model.addAttribute("user",loginUser);
+        model.addAttribute("trips",tripDtos);
+        model.addAttribute("sells",sellsDtos);
+        return "/my/writtenPartner";
     }
     //북마크
     @GetMapping("/{uId}/bookMark.do")

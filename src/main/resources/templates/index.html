@@ -6,6 +6,7 @@
       layout:decorate="~{layout}">
 
     <div layout:fragment="content" class="container pb-5">
+    <script src="/public/js/CommLike.js" defer ></script>
     <style>
         a{
             text-decoration: none;
@@ -68,6 +69,11 @@
                     <div th:if="${c.imgs != null}"  class="carousel-inner">
                         <div class="carousel-item" th:each="img,state:${c.imgs}" th:classappend="${(state.first)?'active':''}">
                             <img th:src="@{'{path}'(path=${img.imgPath})}" class="d-block w-100" alt="게시글 이미지">
+                            <div class="card-img-overlay object-fit-contain p-1" >
+                                <div th:id="'likeCont'+${c.cId}"  th:with="likes=${c.likes},id=${c.cId}" class="d-flex justify-content-end">
+                                    <th:block  th:include="/comm/Likes"> </th:block>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <button class="carousel-control-prev visually-hidden" type="button" th:data-bs-target="'#carousel'+${c.cId}" data-bs-slide="prev" >
