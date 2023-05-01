@@ -178,7 +178,7 @@ class CanvasCreate {
                     co.canvas.offCtx.drawImage(imgElem, 0, 0,
                         co.xy(e.offsetX)-co.xy(startX),
                         co.xy(e.offsetY)-co.xy(startY));
-                    co.layerPush("img",[startX,startY],[e.offsetX,e.offsetY],undefined, co.canvas.offCanvas.toDataURL("image/jpeg",0.5))
+                    co.layerPush("img",[co.xy(startX),co.xy(startY)],[co.xy(e.offsetX),co.xy(e.offsetY)],undefined, co.canvas.offCanvas.toDataURL("image/jpeg",0.5))
                     co.canvas.offCtx.clearRect(0,0,1200,500)
                     co.canvas.removeEventListener("mousedown",drawHandler)
                     co.activatedTool = " ";
@@ -193,14 +193,15 @@ class CanvasCreate {
 
 
     //스템프 툴
-    stampTool() {
-        let co = this
+    stampTool(stamps) {
+        let co = this;
+        co.currentCanvas.src = co.canvas.toDataURL();
         let moveHandler;
         let imgElem = new Image();
-        let imgSrc = "/public/img/plan/star.png";
+        let imgSrc = `/public/img/plan/${stamps}.png`;
         imgElem.src = imgSrc;
         function drawHandler(e){
-            if(co.activatedTool!=="stamp"){
+            if(co.activatedTool!==stamps){
                 co.canvas.removeEventListener("mousedown",drawHandler)
             } else {
                 let startX = e.offsetX;
@@ -234,8 +235,10 @@ class CanvasCreate {
                         co.xy(startY),
                         co.xy(e.offsetX)-co.xy(startX),
                         co.xy(e.offsetY)-co.xy(startY));
-                    co.layerPush("stamp",[startX,startY],[e.offsetX,e.offsetY],undefined, imgSrc)
+                    co.layerPush("stamp",[co.xy(startX),co.xy(startY)],[co.xy(e.offsetX),co.xy(e.offsetY)],undefined, imgSrc)
+                    co.canvasRestore();
                 },{once:true});
+
             }
         }
         this.canvas.addEventListener("mousedown",drawHandler)
@@ -474,6 +477,7 @@ class CanvasCreate {
                         co.xy(e.offsetY)-co.xy(startY));
                     co.ctx.stroke();
                     co.layerPush("rect",[co.xy(startX),co.xy(startY)],[co.xy(e.offsetX),co.xy(e.offsetY)]);
+                    co.canvasRestore();
                 },{once:true});
             }
         }
@@ -658,22 +662,35 @@ class CanvasCreate {
 
     //사이드바 각 버튼에 기능부여
     toolActivation(){
-        const tools = ["stamp","pen","line","selector","rect","text","palate","post","img"];
+        const co = this;
+        const tools = ["pen","line","selector","rect","text","palate","img"];
         const colors = ["red","orange","yellow","green","blue","navy", "purple","black","white"];
+        const stamps = ["star", "postIt","postIt2", "polar","heart","marker"]
 
         tools.forEach((tool)=>{
             document.getElementById(tool+"Btn").addEventListener("click",()=>{
-                if(this.activatedTool===tool) return;
+                if(co.activatedTool===tool) return;
                 else {
-                    this.activatedTool=tool;
-                    this[tool+"Tool"]();
+                    co.activatedTool=tool;
+                    co[tool+"Tool"]();
                 }
             })
         });
+
         colors.forEach((color)=>{
             document.getElementById(color).addEventListener("click",()=>{
-                this.ctx.strokeStyle = color;
-                this.ctx.fillStyle = color;
+                co.ctx.strokeStyle = color;
+                co.ctx.fillStyle = color;
+            })
+        });
+
+        stamps.forEach((stamps)=>{
+            document.getElementById(stamps+"Btn").addEventListener("click",()=>{
+                if(co.activatedTool===stamps) return;
+                else {
+                    co.activatedTool=stamps;
+                    co.stampTool(stamps);
+                }
             })
         });
 
