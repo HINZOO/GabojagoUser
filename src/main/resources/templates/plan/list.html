@@ -93,10 +93,10 @@
                                         <img class="card-img-top" th:if="${plan.getImgPath()!=null}" th:src="${plan.getImgPath()}">
                                         <a th:href="@{'{pId}/detail.do'(pId=${plan.getPId()})}">
                                         <div class="card-body" style="width: 100%;">
+                                            <p class="cardSchedule text-end"><span th:text="${plan.getPlanFrom()}"/> ~ <span th:text="${plan.getPlanTo()}"/></p>
                                             <p class="cardTitle" th:text="${plan.getTitle()}"></p>
-                                            <hr style="width: 60px; color: grey">
+                                            <hr style="width: 60px; color: grey; margin: 5px 0px">
                                             <p class="card-text cardInfo mb-3" th:text="${plan.getInfo()}"></p>
-                                            <p class="cardSchedule text-start">일정 : <span th:text="${plan.getPlanFrom()}"/> ~ <span th:text="${plan.getPlanTo()}"/></p>
                                         </div>
                                         </a>
                                         <div class="card-footer">

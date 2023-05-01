@@ -180,16 +180,10 @@
                             </div>
                         </div>
 
-
                     </div>
-
-
                     <div class="tab-pane fade" id="day02" role="tabpanel"
                          aria-labelledby="day02-tab">탭2</div>
                 </div>
-
-
-
             </div> <!--메인섹션닫기-->
 
             <div class="col-md-2" ></div>
@@ -286,6 +280,7 @@
         // 화이트보드 삭제하는 경우
         async function newCanvasDel(ele){
             if(confirm("삭제한 데이터는 복구할 수 없습니다. 그래도 삭제 할까요?")){
+
                 let body = ele.nextElementSibling;
                 let [btn, canvas] = body.children;
                 let pathId = canvas.getAttribute("id")
@@ -293,9 +288,11 @@
                 const resp = await fetch(url,{method:"DELETE",body:pathId});
                 const result = await resp.json();
                 if(resp.status===200 && result===1){
+
                     canvas.remove();
                     btn.style.display="block"
                     body.style.height="130px"
+
                 }else {
                     alert("캔버스 삭제 실패 status :"+resp.status);
                 }
@@ -349,49 +346,56 @@
             let url = "/plan/contents/scheduleForm.do"
             const resp = await fetch(url,{method:"GET"});
             const result = await resp.text();
-            if(resp.status===200){
+            if (resp.status===200){
+
                 forModal.insertAdjacentHTML("beforeend",result)
                 scheduleModal = new bootstrap.Modal(document.getElementById('newScheduleModal'), {});
                 scheduleModal.show();
-            }else {
+
+            } else {
                 alert("입력 폼 로딩 실패 :"+resp.status);
             }
         }
 
-        // 북마크한 자료를 스케쥴 입력 폼에 삽입
+        // 북마크한 자료(트립)를 스케쥴 입력 폼에 삽입
         function tripBookMarkInsert(tId,title) {
             const scheduleForm = document.getElementById("scheduleInsertForm")
             if(scheduleForm.tId.value) {
                 alert("카테고리별 하나의 아이템만 추가 가능!")
             } else {
+
                 scheduleForm.title.value = title;
                 scheduleForm.bookmarked.value += "["+title+"], ";
                 scheduleForm.tId.value = tId;
-            }
 
+            }
         }
 
+        // 북마크한 자료(상품)를 스케쥴 입력 폼에 삽입
         function sellBookMarkInsert(sId,title) {
             const scheduleForm = document.getElementById("scheduleInsertForm");
-            if(scheduleForm.sId.value) {
+            if (scheduleForm.sId.value) {
                 alert("카테고리별 하나의 아이템만 추가 가능!");
             } else {
+
                 scheduleForm.title.value = title;
                 scheduleForm.bookmarked.value += "["+title+"], ";
                 scheduleForm.sId.value = sId;
-            }
 
+            }
         }
 
+        // 북마크한 자료(커뮤)를 스케쥴 입력 폼에 삽입
         function commBookMarkInsert(title,time,info){
+
             const scheduleForm = document.getElementById("scheduleInsertForm")
             scheduleForm.title.value = title;
             scheduleForm.sTime.value = time.split(" ~ ")[0];
             scheduleForm.eTime.value = time.split(" ~ ")[1];
             scheduleForm.info.value = info;
             scheduleForm.bookmarked.value += "["+title+"], ";
-        }
 
+        }
 
         // 새 스케쥴 등록 후 아코디언 생성
         async function registerSchedule(e){
@@ -411,9 +415,98 @@
                 forModal.innerHTML=' ';
             }else {
                 alert("등록 실패 status :"+resp.status);
+                forModal.innerHTML=' ';
             }
-
         }
+
+        // 수정 버튼 클릭 시 수정 폼 불러오기
+        async function scheduleModify(conId){
+            const header = document.querySelector("#content_"+conId).previousElementSibling
+            let url = "/plan/contents/scheduleForm.do"
+            const resp = await fetch(url,{method:"GET"});
+            const result = await resp.text();
+            if (resp.status===200){
+                forModal.insertAdjacentHTML("beforeend",result)
+
+                const form = document.getElementById("scheduleInsertForm");
+
+                let nTime =  header.querySelector(".scheduleTime").innerHTML.split(" ~ ");
+                form.sTime.value = nTime[0];
+                form.eTime.value = nTime[1];
+                form.title.value = header.querySelector(".scheduleTitle").innerHTML
+                form.info.value = header.querySelector(".scheduleContent").innerHTML
+
+                let modal = document.getElementById('newScheduleModal');
+                let dBtn = modal.querySelector(".dBtn");
+                let sBtn = modal.querySelector(".sBtn");
+                let uBtn = modal.querySelector(".uBtn");
+
+                uBtn.style.display = "inline";
+                dBtn.style.display = "inline";
+                sBtn.style.display = "none";
+
+                dBtn.onclick = (e) => {
+                    deleteSchedule(conId);
+                }
+                uBtn.onclick = (e) => {
+                    updateSchedule(conId)
+                }
+
+                scheduleModal = new bootstrap.Modal(modal, {});
+                scheduleModal.show();
+
+            }else {
+                alert("수정 폼 로딩 실패 :"+resp.status);
+            }
+        }
+
+        // 스케쥴 수정 버튼 클릭 시 실행
+        async function updateSchedule(conId){
+            const scheduleInsertForm = document.getElementById("scheduleInsertForm");
+            const header = document.querySelector("#content_"+conId).previousElementSibling
+
+            const data=new FormData(scheduleInsertForm);
+            let sTime = !data.get("sTime") ? "--:--" : data.get("sTime");
+            let eTime = !data.get("eTime") ? "--:--" : data.get("eTime");
+            data.append("time", sTime + " ~ " + eTime);
+            data.set("pId", [[${plan.getPId()}]]);
+
+            let url= `/plan/contents/${conId}/update.do`;
+            const resp = await fetch(url,{method:"PUT", body:data});
+            const json=await resp.json();
+
+            if(resp.status===200){
+
+                header.querySelector(".scheduleTime").innerHTML = json.time;
+                header.querySelector(".scheduleTitle").innerHTML = json.title;
+                header.querySelector(".scheduleContent").innerHTML = json.info;
+
+                scheduleModal.hide();
+                forModal.innerHTML=' ';
+
+            }else {
+                alert("수정 실패 status :"+resp.status);
+                forModal.innerHTML=' ';
+            }
+        }
+
+        // 스케쥴 삭제 버튼 클릭 시 실행
+        async function deleteSchedule(conId){
+            if(confirm("스케쥴을 삭제 할까요?")){
+                let url= `/plan/contents/${conId}/delete.do`;
+                const resp = await fetch(url,{method:"DELETE"});
+                const result = await resp.json();
+                if(resp.status === 200 && result===1){
+                    scheduleModal.hide();
+                    document.querySelector("#content_"+conId).parentElement.remove();
+                    forModal.innerHTML=' ';
+                } else {
+                    alert("삭제 실패! 관리자에게 문의하세요!");
+                    forModal.innerHTML=' ';
+                }
+            }
+        }
+
 
         // ############### 체크리스트 CRUD ############### //
 

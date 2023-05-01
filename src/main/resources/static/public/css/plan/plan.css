@@ -2,8 +2,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Anton&family=Do+Hyeon&family=DynaPuff:wght@400;600&family=Noto+Sans+KR:wght@400;500;700;900&family=Russo+One&display=swap');
 
 
-
-
+@font-face {
+    font-family: 'KoddiUDOnGothic-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/KoddiUDOnGothic-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
 
 @font-face {
     font-family: 'TheJamsil5Bold';
@@ -248,21 +252,17 @@ input[type='text'], input[type='text']:focus{
     height: 220px;
     opacity: 0.9;
 }
-.cardSchedule{
-    font-family: "Yu Gothic";
-    font-size: 12px;
-    margin: 0px;
-}
-
 
 .cardTitle{
     font-family: 'TheJamsil5Bold';
     color: dodgerblue;
     font-size: 22px;
+    margin-bottom: 7px;
 }
 .card-body{
     width: 100%;
     padding: 20px;
+    padding-top: 10px;
 }
 .card-img-top{
     object-fit: cover;
@@ -270,9 +270,16 @@ input[type='text'], input[type='text']:focus{
 }
 
 .cardInfo{
-    font-family: "Yu Gothic";
-    min-height: 30px;
+    font-family: 'KoddiUDOnGothic-Regular';
+    min-height: 50px;
     overflow: hidden;
+}
+.cardSchedule{
+    font-family: 'KoddiUDOnGothic-Regular';
+    color: gray;
+    font-size: 11px;
+    margin: 0px;
+    margin-bottom: 2px;
 }
 .card-footer{
     height: 50px;
