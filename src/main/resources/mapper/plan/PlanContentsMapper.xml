@@ -6,6 +6,7 @@
         <result column="p_id" property="pId"/>
         <result column="t_id" property="tId"/>
         <result column="s_id" property="sId"/>
+        <result column="day_n" property="dayN"/>
         <result column="title" property="title"/>
         <result column="info" property="info"/>
         <result column="time" property="time"/>

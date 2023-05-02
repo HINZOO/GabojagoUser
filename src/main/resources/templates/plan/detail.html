@@ -68,16 +68,16 @@
                             <button type="button" class="btn btn-secondary btn-lg dropdown-toggle dayBtn py-0 border-0" data-bs-toggle="dropdown" aria-expanded="false">
                                 DAY 01
                             </button>
+
                             <ul class="dropdown-menu p-0 border-0" style="text-align: center" role="tablist">
-                                <li><a class="dropdown-item dayBtn mx-0 catBtnC" style="color: white" href="#" id="day01-tab" data-bs-toggle="tab"
-                                       data-bs-target="#day01" type="button" role="tab" aria-controls="userinfo"
-                                       aria-selected="true">DAY 02</a>
+                                <th:block th:each="num : ${#numbers.sequence(1,period)}">
+                                <li><a th:classappend="${num==1 ? 'active' : ''}" class="dropdown-item dayBtn mx-0 catBtnC"  href="#" th:id="day+${num>9?num:'0'+num}+'-tab'" data-bs-toggle="tab"
+                                       th:data-bs-target="'#day'+${num>9?num:'0'+num}" type="button" role="tab" th:aria-controls="'day'+${num>9?num:'0'+num}"
+                                       th:aria-selected="${num==1 ? 'true' : 'false'}" th:text="DAY+${num>9?' '+num:' 0'+num}"></a>
                                 </li>
-                                <li><a class="dropdown-item dayBtn mx-0 catBtnC" style="color: white " href="#" id="day02-tab" data-bs-toggle="tab"
-                                       data-bs-target="#day02" type="button" role="tab" aria-controls="myreview"
-                                       aria-selected="true">DAY 02</a>
-                                </li>
+                                </th:block>
                             </ul>
+
                         </div>
                     </div>
                     <div class="col-md-8">
@@ -171,20 +171,22 @@
                     </div> <!--내부로우 수정필요-->
 
                 </div> <!--스케쥴헤더-->
+                    <div class="accordion .accordion-flush tab-content" id="accordionSection">
 
-                <div class="tab-content p-0 m-0">
-                    <div class="tab-pane fade active show" id="day01" role="tabpanel" aria-labelledby="day01-tab">
+                    <th:block th:each="num : ${#numbers.sequence(1,period)}">
+                        <div  th:class="${num==1 ? 'tab-pane fade active show' : 'tab-pane fade' }" th:id="'day'+${num>9?num:'0'+num}" role="tabpanel"
+                             th:aria-labelledby="day+${num>9?num:'0'+num}+'-tab'">
 
-                        <div class="accordion .accordion-flush" id="accordionSection">
-                            <div class="accordion-item" th:each="content:${plan.getContents()}">
-                                <th:block th:include="/plan/contents"></th:block>
-                            </div>
+                            <th:block th:each="content:${plan.getContents()}">
+                                <div th:if="${content.getDayN()==num}" class="accordion-item">
+                                    <th:block th:include="/plan/contents"></th:block>
+                                </div>
+                            </th:block>
+
                         </div>
-
+                    </th:block>
                     </div>
-                    <div class="tab-pane fade" id="day02" role="tabpanel"
-                         aria-labelledby="day02-tab">탭2</div>
-                </div>
+
             </div> <!--메인섹션닫기-->
 
             <div class="col-md-2" ></div>

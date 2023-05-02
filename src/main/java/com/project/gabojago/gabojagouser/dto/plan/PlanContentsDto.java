@@ -12,6 +12,7 @@ public class PlanContentsDto {
     private int pId; // FK 플랜 아이디
     private Integer tId; // FK 정보페이지 아이디
     private Integer sId; // FK 상품페이지 아이디
+    private Integer dayN; // n일째 일정인지를 표시
     private String title; // 개별 스케쥴 제목
     private String info; // 부가정보
     private String time; // 시간정보
