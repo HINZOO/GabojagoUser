@@ -33,7 +33,7 @@
                 column="u_id"
                 fetchType="eager"/>
     <collection property="plans"
-                select="com.project.gabojago.gabojagouser.mapper.plan.PlanMapper.findByUId"
+                select="com.project.gabojago.gabojagouser.mapper.plan.PlanMapper.findByUIdNotSearch"
                 column="u_id"
                 fetchType="lazy"/>
   </resultMap>

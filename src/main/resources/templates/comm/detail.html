@@ -63,7 +63,7 @@
 
             <div class="card-body">
                 <h5 class="card-title" >일정</h5>
-                <th:block th:each="plan,index:${c.user.plans}">
+                <th:block th:if="${c.user!=null}" th:each="plan,index:${c.user.plans}">
                     <th:block th:if="${plan.pId==c.pId}">
                         <th:block  th:each="p:${plan.contents}">
                             <div class="accordion accordion-flush" th:id="'accordionFlushExample'+${p.conId}">

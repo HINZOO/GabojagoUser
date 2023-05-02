@@ -11,6 +11,7 @@ import java.util.List;
 public interface PlanMapper {
     List<PlanDto> findAll();
     List<PlanDto> findByUId();
+    List<PlanDto> findByUIdNotSearch();
     List<PlanDto> findByUId(PlanPageDto pageDto);
     List<PlanDto> findByBookmarked(String uId);
     PlanDto findByPId(int pId);
