@@ -12,7 +12,7 @@ public class TripPageDto {
         post_time,update_time,view_count,
         area,content,
         istj,istp,isfj,isfp,intj,intp,infj,infp,
-        estj,estp,esfj,sefp,entj,entp,enfj,enfp,
+        estj,estp,esfj,esfp,entj,entp,enfj,enfp,
         category
     }
     public enum DirectType{

@@ -31,7 +31,6 @@
         <result column="category" property="category"/>
         <result column="view_count" property="viewCount"/>
 
-
         <!-- 조인) 리뷰, 좋아요한 유저, 이미지, 북마크, 좋아요, 조회수 -->
         <!-- association 은 collection 위에  // 출력안하고 로그인만 해도, 조인시키려고 eager-->
         <association property="likes"
@@ -53,6 +52,11 @@
                         select="com.project.gabojago.gabojagouser.mapper.trip.TripReviewMapper.countGradeByTId"
                         column="t_id"
                         fetchType="lazy"/>
+
+        <association property="totalReviewCnt"
+                     select="com.project.gabojago.gabojagouser.mapper.trip.TripReviewMapper.countReviewByTId"
+                     column="t_id"
+                     fetchType="lazy"/>
 
         <collection property="reviews"
                     select="com.project.gabojago.gabojagouser.mapper.trip.TripReviewMapper.findByTId"

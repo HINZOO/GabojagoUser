@@ -24,13 +24,14 @@ public class TripLikeController {
            @SessionAttribute(required = false)UserDto loginUser,
            Model model) {
       TripLikeStatusCntDto likes;
-      model.addAttribute("tId",tId);
+      model.addAttribute("id",tId); // 🔥
       if(loginUser!=null) {
          likes=tripLikeService.read(tId, loginUser.getUId()); // 게시글 유저 like 좋아요 개수
       }else{
          likes=tripLikeService.read(tId); // countStatusByTId // 게시글 like 좋아요 개수
       }
       model.addAttribute("likes",likes);
+      log.info(likes);
       return "/trip/likes";
    }
 
@@ -43,14 +44,12 @@ public class TripLikeController {
    public @ResponseBody TriplikeHandlerDto handler(
            @PathVariable int tId,
            @SessionAttribute UserDto loginUser){
-
       int handler=0;
       TriplikeHandlerDto tripLikeHandlerDto=new TriplikeHandlerDto();
       boolean tripLiked=tripLikeService.detail(tId,loginUser.getUId()); // detail : 1번 게시글에 유저1 이 좋아요 한 개수(타입 boolean) == 했는지 안했는지 1(true) / 0(false)
       TripLikeDto like=new TripLikeDto();
       like.setUId(loginUser.getUId());
       like.setTId(tId);
-
       if(tripLiked){ // 눌렀으면
          handler=tripLikeService.remove(like); // 좋아요 tId, uId 로 삭제 (성공 1, 실패 0)
       }else {

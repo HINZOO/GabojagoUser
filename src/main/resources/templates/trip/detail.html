@@ -20,7 +20,7 @@
         }
 
         .star-rating input[type="radio"] {
-            /*display: none;*/
+            display: none;
         }
 
          .star-rating label {
@@ -65,7 +65,6 @@
     </style>
 </head>
 <div layout:fragment="content" class="container">
-    <!--    <script src="/public/js/splideTest.js"></script>-->
     <h3 class="my-4">맞춤추천 상세</h3>
     <script src="/public/js/tripLike.js" defer></script>
     <section id="tripCont">
@@ -78,6 +77,7 @@
                                 <div class="likeCont" th:id="'likeCont'+${t.tId}">
                                     <th:block th:include="/trip/likes.html" th:with="likes=${t.likes},id=${t.tId}"></th:block>
                                 </div>
+<!--                                <th:block th:text="${t.likes}"></th:block>-->
                             </p>
                             <p class="card-text mb-0">
                                 <a href="javascript:void(0)" th:onclick="registerBookMark([[${t.tId}]],this)" >
@@ -156,7 +156,7 @@
                     <div class="pt-3">
                         <p class="d-flex justify-content-between align-items-center">
                             <span>
-                                여행가의 리뷰 <strong>52</strong>
+                                여행가의 리뷰 <strong th:text="${t.totalReviewCnt}"></strong>
                             </span>
                             <a th:if="${session.loginUser!=null}" class="btn btn-danger" href="javascript:void(0)" id="loadReviewRegister">
                                 리뷰 작성하기
@@ -385,7 +385,7 @@
                                 key=input.name;
                                 if(key==="grade" || key==="visit"){
                                     if(input.value==json[key]){ // grade 와 visit 는 정수라서 == 비교
-                                        input.setAttribute("checked","");
+                                        input.setAttribute("checked",""); // radio 버튼 체크 속성 주기
                                     }
                                 }else{
                                     input.value=json[key];

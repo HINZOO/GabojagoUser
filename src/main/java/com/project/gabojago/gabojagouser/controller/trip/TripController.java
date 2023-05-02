@@ -49,7 +49,7 @@ public class TripController {
         int remove=0;
         try{
             // 파라미터 tId 로 detail 정보를 db 에서 불러온다
-            trip=tripService.detail(tId);
+            trip=tripService.detail(tId,loginUser);
             imgDtos=trip.getImgs();
             remove=tripService.remove(tId,imgDtos);
         }catch (Exception e){
@@ -78,7 +78,7 @@ public class TripController {
     ) {
         log.info(staticPath);
         System.out.println("staticPath = " + staticPath);
-        TripDto trip = tripService.detail(tId);
+        TripDto trip = tripService.detail(tId,loginUser);
         model.addAttribute("t", trip);
         return "/trip/modify";
     }
@@ -96,7 +96,6 @@ public class TripController {
             RedirectAttributes redirectAttributes
     ) throws IOException {
         // requestParam : name 이 맞다. value 는 value 값을 미리 지정하는것.
-
         String redirectPage = "redirect:/trip/" + trip.getTId() + "/modify.do";
         String msg="";
 
@@ -130,7 +129,6 @@ public class TripController {
                         Path path = Paths.get(staticPath + "/public/img/trip/" + fileName);
                         img.transferTo(path);
                         TripImgDto imgDto = new TripImgDto();
-                        //Users/moon/eunjeong/GabojagoUser/src/main/resources/static/public/img/trip
                         if(!mainImg.isEmpty() && i==imgs.size()-1)imgDto.setImgMain(true);
                         imgDto.setTId(trip.getTId());
                         imgDto.setImgPath("/public/img/trip/" + fileName);
@@ -170,7 +168,7 @@ public class TripController {
     public String detail(Model model,
                          @PathVariable int tId,
                          @SessionAttribute(required = false) UserDto loginUser) {
-        TripDto trip = tripService.detail(tId);
+        TripDto trip = tripService.detail(tId,loginUser);
 
         String urlAddress=trip.getUrlAddress();
         model.addAttribute("t", trip);
@@ -260,7 +258,6 @@ public class TripController {
 //            msg="핸드폰 번호는 중복불가. 다시 입력해주세요";
 //            redirectAttributes.addFlashAttribute("msg",msg);
         }
-
         if (register > 0) { // 등록성공
             redirectPage = "redirect:/trip/list.do";
         } else { // 등록실패 -> 파일삭제하기
@@ -273,7 +270,6 @@ public class TripController {
         }
         return redirectPage;
     }
-
 
     @GetMapping("/list.do")
     public String list(Model model,
@@ -311,7 +307,5 @@ public class TripController {
         pageDto.setPageSize(4);
         return "/trip/includeList";
     }
-
-
 
 }

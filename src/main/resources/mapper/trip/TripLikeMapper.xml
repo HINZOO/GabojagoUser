@@ -33,7 +33,7 @@
         SELECT COUNT(*) status FROM trip_likes WHERE t_id=#{tId} AND u_id=@loginUserId
     </select>
     <select id="countStatusByTId" resultMap="TripLikeStatusCntMap">
-        SELECT COUNT(*) likes, tl.t_id FROM trip_likes tl WHERE t_id=#{tId}
+        SELECT COUNT(*) likes, t_id FROM trip_likes WHERE t_id=#{tId}
     </select>
 
     <select id="countStatusByUId" resultMap="TripLikeStatusCntMap">

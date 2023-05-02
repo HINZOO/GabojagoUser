@@ -60,9 +60,13 @@ public class TripServiceImp implements TripService {
     }
 
     @Override
-    public TripDto detail(int tId) {
+    public TripDto detail(int tId, UserDto loginUser) {
+        if(loginUser!=null){
+            userMapper.setLoginUserId(loginUser.getUId());
+        }
         tripMapper.updateIncrementViewCountByTId(tId);
         TripDto detail=tripMapper.findByTId(tId);
+        userMapper.setLoginUserIdNull();
         return detail;
     }
 
