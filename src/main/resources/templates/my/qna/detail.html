@@ -4,9 +4,13 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{/layout}">
 <body>
-<div layout:fragment="content" class="container">
+<div layout:fragment="content" class="container mb-50">
   <h3>고객센터/문의 상세 내역</h3>
-<br><br>
+  <div class="col-2 d-flex">
+    <a th:href="@{'/my/qna/{qId}/modify.do'(qId=${q.qId})}" class="btn btn-outline-primary btn-sm me-1">수정</a>
+    <a th:href="@{'/my/qna/{qId}/remove.do'(qId=${q.qId})}" class="btn btn-outline-danger btn-sm">삭제</a>
+  </div>
+  <br>
   <section id="boardCont" class="">
     <div class="col ps-0">
       <div class="card col" style="height: 75vh; overflow-y: auto" >
@@ -21,10 +25,6 @@
           <div class="col-auto">
             <span class="bg-primary bg-opacity-50 text-white rounded-4 p-1 mb-1">작성유저</span>
             <small th:text="${q.getUId()}"></small>
-          </div>
-          <div class="col-2 d-flex">
-            <a th:href="@{'/my/qna/{qId}/modify.do'(qId=${q.qId})}" class="btn btn-outline-primary btn-sm me-1">수정</a>
-            <a th:href="@{'/my/qna/{qId}/remove.do'(qId=${q.qId})}" class="btn btn-outline-danger btn-sm">삭제</a>
           </div>
         </div>
         <hr>

@@ -652,7 +652,21 @@ INSERT INTO gabojagoplan.plan_content_paths (path_id, con_id, can_path) VALUES (
 INSERT INTO plan_content_paths (path_id, con_id, can_path) VALUES (6, 2, null);
 INSERT INTO plan_content_paths (path_id, con_id, can_path) VALUES (7, 3, null);
 INSERT INTO plan_content_paths (path_id, con_id, can_path) VALUES (8, 4, null);
+#문의 더미
+INSERT INTO qnas (u_id,title,content,file_path)
+VALUES
+('user04','문의글입니다1','여행사이트에서 제공하는 후기를 신뢰할 수 있을까요?','/public/img/my/16817094242196_2855.jpeg'),
+('user04','문의글입니다2','여행사이트에서 제공하는 투어를 이용하면서 피해야 할 사항은 무엇인가요?','/public/img/my/16817094242196_2855.jpeg'),
+('user04','문의글입니다3','여행사이트에서 할인 이벤트를 알려주는 방법은 무엇인가요?','/public/img/my/16817094242196_2855.jpeg'),
+('user04','문의글입니다4','결제 시 안전한 방법은 무엇인가요?','/public/img/my/16817094242196_2855.jpeg'),
+('user04','문의글입니다6','여행 상품을 선택할 때 중요한 팁이 있다면 알려주세요!','/public/img/my/16817094242196_2855.jpeg'),
+('user04','문의글입니다7','계획을 세울 때 가장 필요한 기능은 무엇인가요?','/public/img/my/16817094242196_2855.jpeg'),
+('user04','문의글입니다8','적립금을 얻는 방법은 무엇인가요?','/public/img/my/16817094242196_2855.jpeg'),
+('user04','문의글입니다9','여행사이트에서 제공하는 후기를 신뢰할 수 있을까요?','/public/img/my/16817094242196_2855.jpeg');
 
+INSERT INTO qna_replys (q_id,u_id,content,parent_qna_id)
+VALUES
+    (1,'user01','답변에 대한 문의입니다.',NULL);
 
 #커뮤니티더미
 INSERT INTO communitys (u_id, p_id, title, content, area, istj, istp, isfj, isfp, intj, intp, infj, infp, estj, estp, esfj, esfp, entj, entp, enfj, enfp) VALUES

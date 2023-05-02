@@ -15,6 +15,7 @@
                 column="q_id"
                 fetchType="lazy"
         />
+
     </resultMap>
     <insert id="insertOne" useGeneratedKeys="true" keyProperty="qId" parameterType="com.project.gabojago.gabojagouser.dto.my.MyUserQnaDto">
         INSERT INTO qnas (u_id, title, content, file_path,status) VALUE
@@ -22,7 +23,7 @@
     </insert>
     <update id="updateOne">
         UPDATE qnas SET u_id=#{uId},title=#{title},content=#{content},
-                        file_path=#{filePath},post_time=#{postTime},status=
+                        file_path=#{filePath},post_time=#{postTime},status=#{status}
         WHERE q_id=#{qId}
     </update>
     <delete id="deleteOne">

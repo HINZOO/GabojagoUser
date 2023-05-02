@@ -33,7 +33,12 @@
                             <td>
                                 <span th:text="${#dates.format(q.postTime,'yyyy-MM-dd')}"></span>
                             </td>
-                            <td><button class="btn btn-danger">완료</button></td>
+                            <td th:if="${q.status}">
+                                <a href="#" class="btn btn-sm btn-danger me-1">답변</a>
+                            </td>
+                            <td th:unless="${q.status}">
+                                <a href="#" class="btn btn-sm btn-dark me-1">미답변</a>
+                            </td>
                         </tr>
                 </tbody>
             </table>
