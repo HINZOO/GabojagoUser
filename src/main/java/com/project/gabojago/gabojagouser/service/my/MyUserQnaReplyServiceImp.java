@@ -17,4 +17,9 @@ public class MyUserQnaReplyServiceImp implements MyUserQnaReplyService{
         List<MyUserQnaReplyDto> list=myUserQnaReplyMapper.findByQIdAndParentQrIdIsNull(qId);
         return list;
     }
+
+    @Override
+    public boolean replyStatus(int qrId) {
+        return false;
+    }
 }

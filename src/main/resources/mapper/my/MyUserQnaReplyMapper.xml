@@ -9,6 +9,7 @@
         <result property="postTime" column="post_time"/>
         <result property="updateTime" column="update_time"/>
         <result property="parentQnaId" column="parent_qna_id"/>
+        <result property="status" column="status"/>
     </resultMap>
 
     <select id="findByQIdAndParentQrIdIsNull"
@@ -18,5 +19,7 @@
     <select id="findAll"  resultMap="MyUserQnaReplyMap">
         SELECT * FROM qna_replys
     </select>
-
+    <select id="findByStatus" resultType="boolean">
+        SELECT COUNT(*) status FROM qna_replys WHERE q_id=#{qId} AND u_id=#{uId}
+    </select>
 </mapper>

@@ -53,10 +53,12 @@ public class MyUserQnaController {
     @GetMapping("/service.do")
     private String serviceForm(Model model,
                                @SessionAttribute(required = false) UserDto loginUser,
-                               RedirectAttributes redirectAttributes) {
+                               RedirectAttributes redirectAttributes,
+                               MyUserQnaDto board) {
         if (loginUser == null) {
             String msg = "로그인한 사용자만 이용할 수 있습니다.";
             redirectAttributes.addFlashAttribute("msg", msg);
+            model.addAttribute("board",board);
             return "redirect:/user/login.do";
         }
         return "/my/qna/service";

@@ -22,4 +22,6 @@ public class MyUserQnaReplyDto {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updateTime;
     private int parentQnaId;
+    private boolean status;
 }
+

@@ -523,6 +523,7 @@ CREATE TABLE `qnas` (
                         `title`	varchar(255) NOT NULL COMMENT '제목',
                         `content`	text	COMMENT '내용',
                         `file_path`	varchar(255)	COMMENT '파일첨부',
+                        `status` boolean COMMENT '답변 상태',
                         `post_time`	TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '문의 날짜',
                         FOREIGN KEY (u_id) REFERENCES users (u_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
