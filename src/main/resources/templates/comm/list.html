@@ -157,8 +157,10 @@
                                 <a href="#" class="profile text-decoration-none link-warning text-dark">
                                     <strong class="me-1" th:text="${c.user.nkName}"></strong>
                                 </a>
+                                <span class="text-dark"><i class="bi bi-geo-alt fs-5" ></i><span th:text="${c.area}"></span></span>
                                 <small class="text-muted me-1" th:text="작성일.+${#dates.format(c.postTime,'yyyy-MM-dd')}"></small>
-                                <small class="text-muted">조회수 <span th:text="${c.viewCount}"></span></small> </p>
+                                <small class="text-muted">조회수 <span th:text="${c.viewCount}"></span></small>
+                            </p>
                             <div class="card-text w-75 h-25" style="overflow: hidden; white-space:nowrap; text-overflow: ellipsis;" id="contantBox">
                                 <span th:utext="${c.content}"></span>
                             </div>...
