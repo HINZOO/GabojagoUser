@@ -42,4 +42,7 @@
     <select id="findByTitle" resultMap="sellsMap">
         SELECT * FROM sells WHERE title like CONCAT('%', #{title}, '%');
     </select>
+    <select id="findByUId" resultMap="sellsMap">
+        SELECT * FROM sells WHERE u_id=#{uId}
+    </select>
 </mapper>

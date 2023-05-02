@@ -2,6 +2,7 @@ package com.project.gabojago.gabojagouser.mapper.comm;
 
 import com.project.gabojago.gabojagouser.dto.comm.CommPageDto;
 import com.project.gabojago.gabojagouser.dto.comm.CommunityDto;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -20,12 +21,14 @@ class CommunityMapperTest {
         CommPageDto pageDto=new CommPageDto();
         List<CommunityDto> list=communityMapper.findAll(pageDto);
         System.out.println(list);
+        Assertions.assertNotNull(list);
     }
 
     @Test
     void findByCId() {
         CommunityDto detail=communityMapper.findByCId(2);
         System.out.println(detail);
+        Assertions.assertNotNull(detail);
     }
 
     @Test
@@ -39,6 +42,7 @@ class CommunityMapperTest {
 
 
         int insert=communityMapper.insertOne(comm);
+        Assertions.assertEquals(insert,1);
     }
 
     @Test
@@ -53,11 +57,13 @@ class CommunityMapperTest {
         int update=communityMapper.updateOne(comm);
         System.out.println(comm);
         System.out.println("update = " + update);
+        Assertions.assertEquals(update,1);
     }
 
     @Test
     void deleteOne() {
         int delete=communityMapper.deleteOne(3);
         System.out.println("delete = " + delete);
+        Assertions.assertEquals(delete,1);
     }
 }

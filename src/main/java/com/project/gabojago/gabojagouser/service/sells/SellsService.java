@@ -12,6 +12,7 @@ public interface SellsService {
     List<SellsDto> List(SellPageDto pageDto);
     List<SellsDto> findByTitle(String title);
     List<SellsDto> findByCategory(String category, SellPageDto pageDto);
+    List<SellsDto> list (String uId, SellPageDto pageDto);
     List<SellImgsDto> imgList(List<Integer> simgId);
     SellsDto detail(int sId);
     int optionRegister(SellsOptionDto sellsOption);

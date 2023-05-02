@@ -44,6 +44,13 @@ public class SellsServiceImp implements SellsService{
     }
 
     @Override
+    public List<SellsDto> list(String uId, SellPageDto pageDto) {
+        PageHelper.startPage(pageDto.getPageNum(),pageDto.getPageSize(),pageDto.getOrder());
+        List<SellsDto> list=sellsMapper.findByUId(uId);
+        return list;
+    }
+
+    @Override
     public List<SellImgsDto> imgList(List<Integer> simgId) {
         List<SellImgsDto> imgList=null;
         if(simgId!=null){

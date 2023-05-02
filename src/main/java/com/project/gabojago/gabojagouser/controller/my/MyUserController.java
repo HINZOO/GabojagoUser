@@ -1,5 +1,6 @@
 package com.project.gabojago.gabojagouser.controller.my;
 
+import com.github.pagehelper.PageInfo;
 import com.project.gabojago.gabojagouser.dto.comm.CommBookmarkDto;
 import com.project.gabojago.gabojagouser.dto.comm.CommPageDto;
 import com.project.gabojago.gabojagouser.dto.comm.CommunityDto;
@@ -67,10 +68,15 @@ public class MyUserController {
     @GetMapping("/writtenPartner.do")
     public String writtenListPartner(Model model,
                               @SessionAttribute UserDto loginUser){
-       List<TripDto> tripDtos=tripService.list(loginUser,new TripPageDto());
-       List<SellsDto> sellsDtos=sellsService.List(new SellPageDto());
+        TripPageDto tripPageDto=new TripPageDto();
+        SellPageDto sellPageDto=new SellPageDto();
+       List<TripDto> tripDtos=tripService.list(loginUser.getUId(),tripPageDto);
+       List<SellsDto> sellsDtos=sellsService.list(loginUser.getUId(),sellPageDto);
+        PageInfo<TripDto> tripDtoPageInfo=new PageInfo<>(tripDtos);
         model.addAttribute("user",loginUser);
         model.addAttribute("trips",tripDtos);
+        model.addAttribute("page",tripDtoPageInfo);
+        model.addAttribute("sellPage",tripDtoPageInfo);
         model.addAttribute("sells",sellsDtos);
         return "/my/writtenPartner";
     }

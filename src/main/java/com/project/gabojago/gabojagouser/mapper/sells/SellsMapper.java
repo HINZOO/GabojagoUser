@@ -13,6 +13,7 @@ public interface SellsMapper {
     Page<SellsDto> findAll(SellPageDto pageDto);
     List<SellsDto> findByCategory(String category, SellPageDto pageDto);
     List<SellsDto> findByTitle(String title);
+    List<SellsDto> findByUId(String uId);
 
     SellsDto findBySId(int sId);
 

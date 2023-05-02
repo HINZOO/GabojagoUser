@@ -51,6 +51,13 @@ public class TripServiceImp implements TripService {
     }
 
     @Override
+    public List<TripDto> list(String uId, TripPageDto pageDto) {
+        List<TripDto> list=tripMapper.findByUId(uId);
+        PageHelper.startPage(pageDto.getPageNum(),pageDto.getPageSize(),pageDto.getOrderBy());
+        return list;
+    }
+
+    @Override
     public List<TripDto> tagList(String tag, UserDto loginUser, TripPageDto pageDto) {
         if(loginUser!=null) userMapper.setLoginUserId(loginUser.getUId());
         PageHelper.startPage(pageDto.getPageNum(),pageDto.getPageSize(),pageDto.getOrderBy());

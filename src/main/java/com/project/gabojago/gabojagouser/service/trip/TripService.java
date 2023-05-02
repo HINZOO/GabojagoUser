@@ -11,6 +11,7 @@ import java.util.List;
 public interface TripService {
     // 맞춤추천 서비스 : 리스트, 상세, 등록, 수정, 삭제
     List<TripDto> list(UserDto loginUser, TripPageDto pageDto);
+    List<TripDto> list(String uId, TripPageDto pageDto);
 
     List<TripDto> tagList(String tag, UserDto loginUser, TripPageDto pageDto);
 
