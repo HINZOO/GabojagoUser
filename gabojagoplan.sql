@@ -524,7 +524,6 @@ CREATE TABLE `qnas` (
                         `content`	text	COMMENT '내용',
                         `status` boolean COMMENT '답변 상태',
                         `file_path`	varchar(255)	COMMENT '파일첨부',
-                        `status` boolean COMMENT '답변 상태',
                         `post_time`	TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '문의 날짜',
                         FOREIGN KEY (u_id) REFERENCES users (u_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
@@ -1053,18 +1052,4 @@ INSERT INTO `notices` (`u_id`, `title`, `content`, `img_path`) VALUES
                                                                                  ('admin', '새로운 루트 추가! 야경 구경하면서 강릉 여행을 떠나세요', '강릉으로 떠나는 여행을 더욱 특별하게 만들어줄 새로운 루트가 추가되었습니다! 야경을 감상하면서 차분한 여행을 즐겨보세요.','/images/notice/gangneung.jpg'),
                                                                                  ('admin', '추석 연휴 즐기기! 가족여행지 추천', '추석 연휴를 맞아 가족들과 함께 떠날만한 여행지를 추천해드립니다. 추석 연휴 기간 동안 다양한 이벤트가 열리니 놓치지 마세요!', '/images/notice/chuseok_trip.jpg'),
                                                                                  ('admin', '오는 추석에 꼭 먹어야 할 음식! 추석 한식 이벤트', '추석 연휴를 맞아 추석 전통 한식을 맛볼 수 있는 이벤트를 진행합니다. 쌀밥, 송편, 전, 고기, 밤 등 다양한 음식을 맛볼 수 있습니다.', '/images/notice/chuseok_food.jpg');
-#문의글 더미
-INSERT INTO qnas (u_id,title,content,file_path)
-VALUES
-    ('user04','문의글입니다1','여행사이트에서 제공하는 후기를 신뢰할 수 있을까요?','/public/img/my/16817094242196_2855.jpeg'),
-    ('user04','문의글입니다2','여행사이트에서 제공하는 투어를 이용하면서 피해야 할 사항은 무엇인가요?','/public/img/my/16817094242196_2855.jpeg'),
-    ('user04','문의글입니다3','여행사이트에서 할인 이벤트를 알려주는 방법은 무엇인가요?','/public/img/my/16817094242196_2855.jpeg'),
-    ('user04','문의글입니다4','결제 시 안전한 방법은 무엇인가요?','/public/img/my/16817094242196_2855.jpeg'),
-    ('user04','문의글입니다6','여행 상품을 선택할 때 중요한 팁이 있다면 알려주세요!','/public/img/my/16817094242196_2855.jpeg'),
-    ('user04','문의글입니다7','계획을 세울 때 가장 필요한 기능은 무엇인가요?','/public/img/my/16817094242196_2855.jpeg'),
-    ('user04','문의글입니다8','적립금을 얻는 방법은 무엇인가요?','/public/img/my/16817094242196_2855.jpeg'),
-    ('user04','문의글입니다9','여행사이트에서 제공하는 후기를 신뢰할 수 있을까요?','/public/img/my/16817094242196_2855.jpeg');
-#문의글 덧글 더미
-INSERT INTO qna_replys (q_id,u_id,content,parent_qna_id)
-VALUES
-     (1,'user01','답변에 대한 문의입니다.',NULL);
+
