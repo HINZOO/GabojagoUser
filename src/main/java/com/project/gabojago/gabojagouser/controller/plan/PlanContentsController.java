@@ -70,7 +70,7 @@ public class PlanContentsController {
             @SessionAttribute UserDto loginUser,
             Model model)
     {
-        List<PlanDto> planDtos = planService.list(loginUser.getUId());
+        List<PlanDto> planDtos = planService.bookmarkedList(loginUser.getUId());
         List<TripDto> bookmarkedTripDtos = tripBookMarkService.bookmarkedTripList(loginUser.getUId());
         List<SellsDto> bookmarkedSellDtos = sellBookMarksService.bookmarkedSellList(loginUser.getUId());
 
@@ -105,6 +105,8 @@ public class PlanContentsController {
         return 1;
     };
 
+    // 캔버스를 이미지 형태로 업로드 시
+    // canvas.toDataUrl()로 변환한 이미지 문자열을 읽어옴
     @PutMapping("/imgUpdate.do")
     public @ResponseBody int imgUpdate(
            @RequestParam(value = "conId", required = true) int conId,

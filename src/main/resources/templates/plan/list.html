@@ -63,8 +63,15 @@
                                     </ul>
                                 </div>
                             </div>
-                            <div class="col-md-8">
-
+                            <div class="col-md-8" style="text-align: right">
+                                <form role="search">
+                                    <select name="searchField" class="searchSelect">
+                                        <option th:selected="(${#strings.equals(param.searchField,'title')})" value="title">제 목</option>
+                                        <option th:selected="(${#strings.equals(param.searchField,'info')})" value="info">내 용</option>
+                                    </select>
+                                    <input type="text" name="searchValue" class="searchInput" placeholder="">
+                                    <button type="submit" class="searchBtn">검 색</button>
+                                </form>
                             </div> <!--col 8-->
 
                             <div class="col-md-2 scheduleInputBox">
@@ -198,7 +205,7 @@
                     <div class="modal-dialog modal-dialog-centered  modal-sm">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title">멤버 추가(임시)</h5>
+                                <h5 class="modal-title">멤버 추가</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <form id="memberSearchForm">

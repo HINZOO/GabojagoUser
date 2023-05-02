@@ -1,8 +1,10 @@
 package com.project.gabojago.gabojagouser.controller.plan;
 
+import com.github.pagehelper.PageInfo;
 import com.project.gabojago.gabojagouser.dto.plan.PlanCheckListsDto;
 import com.project.gabojago.gabojagouser.dto.plan.PlanDto;
 import com.project.gabojago.gabojagouser.dto.plan.PlanMembersDto;
+import com.project.gabojago.gabojagouser.dto.plan.PlanPageDto;
 import com.project.gabojago.gabojagouser.dto.user.UserDto;
 import com.project.gabojago.gabojagouser.mapper.plan.PlanMapper;
 import com.project.gabojago.gabojagouser.service.plan.PlanCheckListsService;
@@ -51,13 +53,19 @@ public class PlanController {
     public String list(
             @SessionAttribute(required = false) UserDto loginUser,
             RedirectAttributes redirectAttributes,
+            PlanPageDto pageDto,
             Model model)
     {
         if (loginUser!=null){
-            List<PlanDto> plans = planService.list(loginUser.getUId());
+            List<PlanDto> plans;
+            plans = planService.list(loginUser.getUId(),pageDto);
+            PageInfo<PlanDto> pagePlans = new PageInfo<>(plans);
+            model.addAttribute("page",pagePlans);
             model.addAttribute("plans", plans);
             return "/plan/list";
-        } else {
+
+        } else { //인터셉터 넘기는 코드로 바꾸기
+
             String msg = "로그인 한 유저만 이용 가능합니다.";
             redirectAttributes.addFlashAttribute("msg",msg);
             return "redirect:/user/login.do";
@@ -92,7 +100,7 @@ public class PlanController {
         }
         if (register>0){
             int pId = planDto.getPId();
-
+            // 폼에서 추가 한 멤버 등록
             if(members != null){
                 for(int i = 0 ; i<members.length ; i++){
                     PlanMembersDto dto = new PlanMembersDto();
@@ -111,11 +119,12 @@ public class PlanController {
         }
     }
 
+    // 플랜 detail 페이지
     @GetMapping("/{pId}/detail.do")
     public String detail(
             @PathVariable int pId,
             Model model) throws ParseException
-    { // 플랜 detail 보기
+    {
         PlanDto plan = planService.detail(pId);
 
         // 여행 기간이 여러 날인 경우 분리해서 렌더링 하기 위함
@@ -129,7 +138,7 @@ public class PlanController {
         return "/plan/detail";
     }
 
-    // 플랜 수정 폼 출력을 위한 조회 및 뷰 응답
+    // 플랜 수정 폼 출력을 위한 조회 및 뷰 응답(CSR)
     @GetMapping ("/{pId}/modify.do")
     public String modifyGet(
             @PathVariable int pId,
