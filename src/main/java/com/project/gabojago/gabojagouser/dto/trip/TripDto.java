@@ -1,6 +1,7 @@
 package com.project.gabojago.gabojagouser.dto.trip;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.ToString;
 
@@ -53,6 +54,7 @@ public class TripDto {
     // 리뷰 평점의 평균과 개수
     private Integer averageGrade; // 별점이 없는 게시물은 null 처리 위해서 Integer 타입
     private Integer totalGradeCnt;
+    private Integer totalReviewCnt;
 
 
 }

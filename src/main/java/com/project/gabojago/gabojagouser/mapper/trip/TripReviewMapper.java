@@ -20,5 +20,7 @@ public interface TripReviewMapper {
     // 리뷰 별점 _ 평균점수 & 총 점수
     Integer averageGradeByTId();
     int countGradeByTId();
+    int countReviewByTId();
+
 
 }

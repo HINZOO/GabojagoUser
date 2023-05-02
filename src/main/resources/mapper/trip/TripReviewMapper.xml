@@ -49,5 +49,9 @@
     <select id="countGradeByTId" resultType="java.lang.Integer">
         SELECT COUNT(grade) AS total_grade FROM trip_reviews WHERE t_id=#{tId}
     </select>
+    <select id="countReviewByTId" resultType="java.lang.Integer">
+        SELECT COUNT(*) AS total_review FROM trip_reviews WHERE t_id=#{tId}
+    </select>
+
 
 </mapper>
