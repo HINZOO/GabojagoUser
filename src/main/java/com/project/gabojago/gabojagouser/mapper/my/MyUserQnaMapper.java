@@ -7,6 +7,7 @@ import java.util.List;
 @Mapper
 public interface MyUserQnaMapper {
     List <MyUserQnaDto> findAll();
+    List <MyUserQnaDto> findByUId(String uId);
     MyUserQnaDto findByQId(int qId);
     int insertOne(MyUserQnaDto myUserQna);
     int updateOne(MyUserQnaDto myUserQna);

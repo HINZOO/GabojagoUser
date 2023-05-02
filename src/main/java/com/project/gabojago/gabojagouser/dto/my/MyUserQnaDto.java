@@ -15,6 +15,7 @@ public class MyUserQnaDto {
     private String title;
     private String content;
     private String filePath;
+    private Boolean status;
     private java.util.Date postTime;
 //    private UserDto user;
     private MyUserQnaReplyDto replys;

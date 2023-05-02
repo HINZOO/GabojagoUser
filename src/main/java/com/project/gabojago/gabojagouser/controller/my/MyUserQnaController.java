@@ -1,9 +1,11 @@
 package com.project.gabojago.gabojagouser.controller.my;
 
 import com.fasterxml.jackson.core.io.IOContext;
+import com.github.pagehelper.PageInfo;
 import com.project.gabojago.gabojagouser.dto.comm.CommImgDto;
 import com.project.gabojago.gabojagouser.dto.comm.CommunityDto;
 import com.project.gabojago.gabojagouser.dto.my.MyUserQnaDto;
+import com.project.gabojago.gabojagouser.dto.my.QnaPageDto;
 import com.project.gabojago.gabojagouser.dto.user.UserDto;
 import com.project.gabojago.gabojagouser.service.my.MyUserQnaService;
 import lombok.AllArgsConstructor;
@@ -41,10 +43,13 @@ public class MyUserQnaController {
     private String serviceList(Model model,
                                @ModelAttribute MyUserQnaDto myUserQna,
                                @SessionAttribute UserDto loginUser,
-                               @PathVariable String uId
+                               @PathVariable String uId,
+                               QnaPageDto qnaPageDto
     ) {
-
-        List<MyUserQnaDto> list = myUserQnaService.list();
+        List<MyUserQnaDto> list;
+         list= myUserQnaService.list(uId,qnaPageDto);
+        PageInfo<MyUserQnaDto> pageQnA=new PageInfo<>(list);
+        model.addAttribute("page", pageQnA);
         model.addAttribute("qnaList", list);
 
         return "/my/qna/serviceList";
@@ -53,10 +58,12 @@ public class MyUserQnaController {
     @GetMapping("/service.do")
     private String serviceForm(Model model,
                                @SessionAttribute(required = false) UserDto loginUser,
-                               RedirectAttributes redirectAttributes) {
+                               RedirectAttributes redirectAttributes,
+                               MyUserQnaDto board) {
         if (loginUser == null) {
             String msg = "로그인한 사용자만 이용할 수 있습니다.";
             redirectAttributes.addFlashAttribute("msg", msg);
+            model.addAttribute("board",board);
             return "redirect:/user/login.do";
         }
         return "/my/qna/service";

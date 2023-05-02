@@ -17,12 +17,17 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Nanum+Pen+Script&family=Noto+Sans+KR:wght@300;400;700&display=swap" rel="stylesheet">
     <script src="/public/js/Follow.js"></script>
+    <style>
+        a {
+            text-decoration: none;
+        }
+    </style>
 
 </head>
 <body>
     <header th:replace="/headerNav"></header>
-    <main class="container-fluid d-flex justify-content-evenly ">
-         <div class="" style="width:250px" th:include="/my/dropDownMenu"></div>
+    <main class="container-fluid d-flex justify-content-evenly " style="padding-left:0">
+         <div class="bg-secondary bg-opacity-10" style="width:250px" th:include="/my/dropDownMenu"></div>
          <div layout:fragment="content"></div>
     </main>
 

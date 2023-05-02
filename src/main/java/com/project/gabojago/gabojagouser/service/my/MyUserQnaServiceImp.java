@@ -1,6 +1,9 @@
 package com.project.gabojago.gabojagouser.service.my;
 
+import com.github.pagehelper.PageHelper;
 import com.project.gabojago.gabojagouser.dto.my.MyUserQnaDto;
+import com.project.gabojago.gabojagouser.dto.my.MyUserQnaReplyDto;
+import com.project.gabojago.gabojagouser.dto.my.QnaPageDto;
 import com.project.gabojago.gabojagouser.dto.user.UserDto;
 import com.project.gabojago.gabojagouser.mapper.my.MyUserQnaMapper;
 import com.project.gabojago.gabojagouser.mapper.user.UserMapper;
@@ -19,6 +22,13 @@ public class MyUserQnaServiceImp implements MyUserQnaService {
     @Override
     public List<MyUserQnaDto> list() {
         List<MyUserQnaDto> list=myUserQnaMapper.findAll();
+        return list;
+    }
+
+    @Override
+    public List<MyUserQnaDto> list(String uId, QnaPageDto pageDto) {
+        PageHelper.startPage(pageDto.getPageNum(),pageDto.getPageSize(),pageDto.getOrderBy());
+        List<MyUserQnaDto> list=myUserQnaMapper.findByUId(uId);
         return list;
     }
 
