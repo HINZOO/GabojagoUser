@@ -39,24 +39,6 @@
             <div class="carousel-caption d-none d-md-block">
                 <h1 class="display-2 fw-bold ">같이놀자</h1>
                 <form class="d-flex w-75 my-2 mx-auto" role="search">
-                    <div class="input-group me-3" >
-                        <label class="input-group-text bi bi-filter-square text-warning"></label>
-                        <select name="order" class="form-control">
-                            <option value=" ">정렬기준</option>
-                            <option th:selected="(${#strings.equals(param.order,'c_id')})" value="c_id">글번호</option>
-                            <option th:selected="(${#strings.equals(param.order,'u_id')})" value="u_id">글쓴이</option>
-                            <option th:selected="(${#strings.equals(param.order,'post_time')})" value="post_time">작성일</option>
-                            <option th:selected="(${#strings.equals(param.order,'update_time')})" value="update_time">수정일</option>
-                            <option th:selected="(${#strings.equals(param.order,'title')})" value="title">제목</option>
-                            <option th:selected="(${#strings.equals(param.order,'view_count')})" value="view_count">조회수</option>
-                        </select>
-                        <select name="direct" id="" class="form-control">
-                            <option value=" ">정렬방향</option>
-                            <option th:selected="(${#strings.equals(param.direct,'DESC')})" value="DESC">내림차순</option>
-                            <option th:selected="(${#strings.equals(param.direct,'ASC')})" value="ASC">오름차순</option>
-                        </select>
-                        <button class="btn btn-warning">정렬</button>
-                    </div>
                         <div class="input-group" >
                         <select name="searchField" class="form-control">
                             <option th:selected="(${#strings.equals(param.searchField,'c_id')})" value="c_id">글번호</option>
