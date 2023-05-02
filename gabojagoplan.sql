@@ -607,6 +607,7 @@ CREATE TABLE attendance_check (
 #유저더미
 INSERT INTO users (u_id, pw, name, nk_name, email, birth, phone, address, detail_address, pr_content, permission, mbti, img_path, store_name, business_id)
 VALUES
+    ('admin', 'admin123', '관리자', '관리자', 'admin@example.com', '1990-01-01', '010-1234-5523', '서울특별시 강남구', '삼성동 123-45', '안녕하세요. 저는 관리자입니다.', 'ADMIN', 'ISTJ', '/public/img/user/profile.jpg', NULL, NULL),
     ('user01', '1234', '김철수', '바보철수', 'user01@example.com', '1990-01-01', '010-1234-5678', '서울특별시 강남구', '삼성동 123-45', '안녕하세요. 저는 철수입니다.', 'USER', 'ISTJ', '/public/img/user/profile.jpg', NULL, NULL),
     ('user02', '1234', '김영수', '영수', 'kimyoungsoo@gmail.com', '1995-02-03', '010-1111-2222', '서울특별시 강남구', '신사동 123-1', '안녕하세요. 저는 웹 개발자입니다.', 'USER', 'ISTJ', '/public/img/user/profile.jpg', NULL, NULL),
     ('user03', '1234', '이은지', '은지', 'leeeunji@gmail.com', '1998-06-17', '010-1234-5679', '서울특별시 관악구', '신림동 543-2', '안녕하세요. 저는 디자이너입니다.', 'USER', 'INFP', '/public/img/user/profile.jpg', NULL, NULL),
@@ -1013,3 +1014,11 @@ VALUES (1, '홍대'),
        (2, '홍대놀이터'),
        (2, '홍대맛집'),
        (2, '수요일');
+
+#공지사항더미
+INSERT INTO `notices` (`u_id`, `title`, `content`, `img_path`) VALUES
+                                                                                 ('admin', '여름방학 기차여행 이벤트!', '여름방학에 맞춰 기차여행 이벤트를 진행합니다. 대상은 만 12세 이하 어린이와 학생입니다. 이벤트 기간 중에는 30% 할인 혜택도 제공됩니다.', '/images/notice/train_event.jpg'),
+                                                                                 ('admin', '해외여행 꿀팁! 호텔 예약할 때 이것만 주의하세요!', '해외여행을 계획하시는 분들에게 호텔 예약할 때 유의해야 할 점을 안내해드립니다. 호텔 예약 시 자세한 정보를 꼭 확인하시기 바랍니다!', '/images/notice/hotel_tips.jpg'),
+                                                                                 ('admin', '새로운 루트 추가! 야경 구경하면서 강릉 여행을 떠나세요', '강릉으로 떠나는 여행을 더욱 특별하게 만들어줄 새로운 루트가 추가되었습니다! 야경을 감상하면서 차분한 여행을 즐겨보세요.','/images/notice/gangneung.jpg'),
+                                                                                 ('admin', '추석 연휴 즐기기! 가족여행지 추천', '추석 연휴를 맞아 가족들과 함께 떠날만한 여행지를 추천해드립니다. 추석 연휴 기간 동안 다양한 이벤트가 열리니 놓치지 마세요!', '/images/notice/chuseok_trip.jpg'),
+                                                                                 ('admin', '오는 추석에 꼭 먹어야 할 음식! 추석 한식 이벤트', '추석 연휴를 맞아 추석 전통 한식을 맛볼 수 있는 이벤트를 진행합니다. 쌀밥, 송편, 전, 고기, 밤 등 다양한 음식을 맛볼 수 있습니다.', '/images/notice/chuseok_food.jpg');
