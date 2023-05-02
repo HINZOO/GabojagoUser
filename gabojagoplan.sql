@@ -697,17 +697,14 @@ VALUES
     ('user02', '충남', '판매글 제목12', '판매글 내용12', '테마', 6, '/public/img/sells/1681868521560_8515.jpeg'),
     ('user03', '전북', '판매글 제목13', '판매글 내용13', '키즈', 4, '/public/img/sells/1681868654202_3174.jpeg'),
     ('user04', '전남', '판매글 제목14', '판매글 내용14', '레저', 7, '/public/img/sells/1682065508712_4507.jpeg'),
-    ('user05', '경북', '판매글 제목15', '판매글 내용15', '박물관', 2, '/public/img/sells/1682065508720_8121.jpeg'),
-    ('user06', '경남', '판매글 제목16', '판매글 내용16', '워터', 5, '/public/img/sells/1682065508723_666.jpeg'),
+    ('user10', '제주', '[제주] 히어로플레이파크 제주 이용권', '더미', '키즈', 2, '/public/img/sells/1682998727973_8328.jpeg'),
+    ('user10', '서울', '[가정의달] 마술그리스신화 - 송파 ''올림포스 신''들의 유쾌, 상쾌, 통쾌한 이야기', '<p><img alt="" src="http://img3.tmon.kr/cdn4/deals/2023/01/09/12144041734/summary_fc83d.jpg" style="height:1373px; width:770px" /></p>
+
+<p><img alt="" src="http://img4.tmon.kr/cdn4/deals/2022/07/19/12144041734/summary_542fa.jpg" style="height:3861px; width:770px" /> *</p>
+', '테마', 5, '/public/img/sells/1682998207190_8092.jpeg'),
     ('user10', '제주', '[쿠폰할인] 신화월드 테마파크&워터파크', '<p><img alt="" src="https://tourimg.wonderscdn.app/admin/20221230/7/5c8af2f7-572f-4546-a67d-23305ae47f2d.jpg" style="height:1246px; width:1000px" /><img alt="" src="https://tourimg.wonderscdn.app/admin/20230317/3/4a5d7b28-3bc4-411d-aa25-9e716f791fb8.jpg" />&nbsp;&nbsp;*</p>
 ', '워터', 5, '/public/img/sells/1682912360964_9730.jpeg'),
-    ('user10', '경기', '[일산] 원마운트 종일권', '<p><img alt="" src="https://tour.wd.wemakeprice.com/activity/direct/detail/GD230000000080552" /><img alt="" src="https://tourimg.wonderscdn.app/admin/20230331/8/498a457c-3455-486e-a9d9-fde1d86270dc.jpg" style="height:1395px; width:1000px" /></p>
 
-<p><img alt="" src="https://tourimg.wonderscdn.app/admin/20230331/4/141da0c8-48f0-422d-8b27-a613c175167c.jpg" style="height:1339px; width:1000px" /> *</p>', '워터', 1, '/public/img/sells/1682911883176_2180.jpeg'),
-    ('user10', '경기', '[특가] 테르메덴 풀앤스파 미들시즌(~6/30)', '<p><img alt="" src="https://tourimg.wonderscdn.app/admin/20230428/3/8f32a283-e840-4e42-b75c-c4dc202ed0f6.jpg" style="height:23375px; width:1000px" /></p>
-
-<p>*</p>
-', '레저', 1, '/public/img/sells/1682911459818_3088.jpeg'),
     ('user10', '경기', '[일산]행유행유 프리미엄 야외수영장', '<p><img alt="" src="https://tourimg.wonderscdn.app/admin/20220614/1/8558a09a-7e34-4de1-9ce2-c8a63de85de2.jpg" style="height:1633px; width:1000px" /></p>
 
 <p>&nbsp;</p>
@@ -743,7 +740,14 @@ VALUES
 <p>▪ 현장 중복할인 불가합니다.</p>
 
 <p>▪ 사용한 티켓 환불 불가합니다. ▪ 부분환불 불가합니다. - 당일 취소는 불가합니다. - 일정변경은 이용3일전까지 취소후 재구매 하셔야 합니다. - 취소는 평일기준(월~금) 이용일 3일전 까지 가능하며, 이후 취소는 불가합니다. (티켓 사용처리 후에는 환불불가하며, 휴일의 경우 취소 응대가 불가합니다.) [우천으로 인한 취소 및 날짜변경] - 고양시 기준 호우 강풍 경보 사항을 제외하고는 우천시에도 영업을 하므로, 3일전 환불 규정에 따라 환불 및 날짜변경 불가 합니다.</p>
-', '워터', 1, '/public/img/sells/1682907222171_9307.jpeg');
+', '워터', 1, '/public/img/sells/1682907222171_9307.jpeg'),
+    ('user10', '경기', '[일산] 원마운트 종일권', '<p><img alt="" src="https://tour.wd.wemakeprice.com/activity/direct/detail/GD230000000080552" /><img alt="" src="https://tourimg.wonderscdn.app/admin/20230331/8/498a457c-3455-486e-a9d9-fde1d86270dc.jpg" style="height:1395px; width:1000px" /></p>
+
+<p><img alt="" src="https://tourimg.wonderscdn.app/admin/20230331/4/141da0c8-48f0-422d-8b27-a613c175167c.jpg" style="height:1339px; width:1000px" /> *</p>', '워터', 1, '/public/img/sells/1682911883176_2180.jpeg'),
+    ('user10', '경기', '[특가] 테르메덴 풀앤스파 미들시즌(~6/30)', '<p><img alt="" src="https://tourimg.wonderscdn.app/admin/20230428/3/8f32a283-e840-4e42-b75c-c4dc202ed0f6.jpg" style="height:23375px; width:1000px" /></p>
+
+<p>*</p>
+', '레저', 1, '/public/img/sells/1682911459818_3088.jpeg');
 
 #판매글 북마크 더미
 INSERT INTO sell_bookmarks (sb_id, s_id, u_id) VALUES (11, 5, 'USER02');
@@ -760,27 +764,34 @@ INSERT INTO sell_bookmarks (sb_id, s_id, u_id) VALUES (1, 1, 'USER01');
 
 INSERT INTO sell_imgs (s_id, img_path)
 VALUES
-    (20,'/public/img/sells/1682911049003_3666.jpeg'),
-    (20,'/public/img/sells/1682911049002_495.jpeg'),
-    (20,'/public/img/sells/1682911049000_4141.jpeg'),
-    (20,'/public/img/sells/1682911048997_8303.jpeg'),
+    (19,'/public/img/sells/1682911049003_3666.jpeg'),
+    (19,'/public/img/sells/1682911049002_495.jpeg'),
+    (19,'/public/img/sells/1682911049000_4141.jpeg'),
+    (19,'/public/img/sells/1682911048997_8303.jpeg'),
+    (15,'/public/img/sells/1682998727966_9047.jpeg'),
+    (15,'/public/img/sells/1682998727973_8328.jpeg'),
+    (16,'/public/img/sells/1682998207174_6726.jpeg'),
+    (16,'/public/img/sells/1682998207190_8092.jpeg'),
     (17,'/public/img/sells/1682912360962_3101.jpeg'),
     (17,'/public/img/sells/1682912360964_9730.jpeg'),
     (18,'/public/img/sells/1682911883176_2180.jpeg'),
     (18,'/public/img/sells/1682911883175_7243.jpeg'),
-    (19,'/public/img/sells/1682911459817_7471.jpeg'),
-    (19,'/public/img/sells/1682911459818_3088.jpeg');
+    (20,'/public/img/sells/1682911459817_7471.jpeg'),
+    (20,'/public/img/sells/1682911459818_3088.jpeg');
 
 INSERT INTO `sell_options` (`s_id`, `name`, `price`, `stock`)
 
 VALUES
-    (20, '행유행유 성인권', '15000', 999),
-    (20, '행유행유 청소년권', '10000', 999),
-    (20, '행유행유 유아권(36개월이상)', '5000', 999),
+    (19, '행유행유 성인권', '15000', 999),
+    (19, '행유행유 청소년권', '10000', 999),
+    (19, '행유행유 유아권(36개월이상)', '5000', 999),
+    (15, '주중 기본 소인권', '22800', 999),
+    (15, '주말 및 공휴일 기본 소인권', '24000', 999),
+    (16, '어린이날 1인 관람권', '19900', 999),
     (17, '신화월드 테마파크 자유이용권', '30000', 999),
     (17, '신화월드 워터파크 종일권', '40000', 999),
     (18, '종일권 1인(대소공통)', '25900', 999),
-    (19, '종일권 1인(대소공통)', '26800', 999);
+    (20, '종일권 1인(대소공통)', '26900', 999);
 
 #가보자고 게시글 더미
 INSERT INTO trips (u_id, title, area, address, phone, url_address, content,
